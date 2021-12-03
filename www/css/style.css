@@ -302,3 +302,19 @@ a.btn-border-shadow--color:before {
   font-size: 5em;
   color:#0080f0;
 }
+
+#item_name{
+  text-align: center;
+}
+
+.container_detail_name{
+  width: 70%;
+}
+
+.container_detail_info{
+  width: 80%;
+}
+
+#info_box{
+  background-color:#E6E6E6;
+}
