@@ -289,3 +289,17 @@ a.btn-border-shadow--color:before {
   border-radius: 0;
 }
 
+#prodact_lists{
+  background-color:#E6E6E6;
+}
+
+.container{
+  width: 100%;
+}
+
+#item_box{
+  margin-top: 30px; 
+  height: 130px;
+  background-color: white;
+
+}
