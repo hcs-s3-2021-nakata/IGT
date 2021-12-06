@@ -1,4 +1,3 @@
-/**/
 .center {
   display: block;
   text-align: center;
@@ -6,14 +5,10 @@
   font-size: 20px;
   font-family: Comic Sans MS;
 }
-
-.brand {
-  font-weight: bold;
-  font-size: 30px; }
  
 .site-header {
   position: relative;
-  background-color: #e6dfb3; }
+  background-color: #e6dfb3;}
  
 .site-header__wrapper {
   padding-top: 1rem;
@@ -46,17 +41,13 @@
       opacity: 1;
       transform: translateY(0); } }
  
-.nav__item a {
-  display: block;
-  padding: 1.5rem 1rem; }
- 
 .menu-btn {
     position: fixed;
     top: 10px;
     right: 10px;
     display: flex;
-    height: 60px;
-    width: 60px;
+    height: 50px;
+    width: 50px;
     justify-content: center;
     align-items: center;
     z-index: 90;
@@ -104,7 +95,7 @@
     background-color: #000000;
 }
 .menu-content ul {
-    padding: 50px 5px 0;
+    padding: 70px 10px 0;
 }
 .menu-content ul li {
     border-bottom: solid 1px #ffffff;
@@ -145,6 +136,7 @@
     left: 0;/*メニューを画面内へ*/
 }
 
+.mini-text{font-size:10px;}/*文字大きさ*/
 
 ul.bottom-menu {
     position: fixed;
@@ -155,26 +147,26 @@ ul.bottom-menu {
     margin:0;
     padding:0;
     background-color:#e6dfb3;/*背景色*/
-    z-index:10;}
+    z-index:30;}
 
 ul.bottom-menu li {
     float:left;
-    width:20%;
+    width:25%;
     background-color:#e6dfb3;/*背景色*/
     list-style-type:none;
     text-align:center;
-    font-size:30px;/*アイコンのサイズ*/}
+    font-size:25px;/*アイコンのサイズ*/}
 
 .bottom-menu li a {
     display: block;
-    color:#000000;/*アイコン＆文字の色*/
+    color:#808080;/*アイコン＆文字の色*/
     padding-top:10px;
     padding-bottom:5px;
     line-height:10px;
     text-decoration:none;}
 
 .bottom-menu li a:hover {
-    color:#2ca3ff;/*マウスオーバー時の色*/}
+    color:#a9a9a9;/*マウスオーバー時の色*/}
 
 /* === 展開メニュー === */
 
@@ -217,6 +209,14 @@ li.menu-width-max ul.menu-second-level li {
 #footer{margin-bottom:48px;}
 }
 
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../fonts/fontawesome-webfont.eot?v=4.4.0');
+  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.4.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.4.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.4.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.4.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.4.0#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
  /*センタリング*/
 .flex{
   padding:50px 0;
@@ -224,7 +224,7 @@ li.menu-width-max ul.menu-second-level li {
   justify-content:center;
 }
 
-/*譲渡ボタン*/
+　/*譲渡ボタン*/
 .btn,
 a.btn,
 button.btn {
@@ -289,8 +289,45 @@ a.btn-border-shadow--color:before {
   border-radius: 0;
 }
 
+
+/*画像アップロードボタン*/
+.btn-flat-border {
+  display: inline-block;
+  padding: 0.3em 1em;
+  text-decoration: none;
+  color: #67c5ff;
+  border: solid 2px #67c5ff;
+  border-radius: 3px;
+  transition: .4s;
+}
+
+.btn-flat-border:hover {
+  background: #67c5ff;
+  color: white;
+}
+
+　/*新規登録画面_画像アップロード*/
+#preview img {
+  width: 200px;
+  margin: 10px;
+  border: solid 1px silver;
+}
+
+/*input要素の横幅を画面に合わせる*/
+.width { width: 75%; }
+
+/*input要素を右寄せにする*/
+.right { text-align: right; }
+
+/*input要素の背景色をグレーにする*/
+.gray { background-color:#F5F5F5; }
+
 #prodact_lists{
   background-color:#E6E6E6;
+}
+
+#detail{	
+  text-align: center;
 }
 
 .container{
@@ -301,5 +338,69 @@ a.btn-border-shadow--color:before {
   margin-top: 30px; 
   height: 130px;
   background-color: white;
+}
 
+.container_right{
+  float: right;
+}
+.size{ 
+  font-size: 5em;
+  color:#0080f0;
+}
+
+#item_name{
+  text-align: center;
+}
+
+.container_detail_name{
+  width: 70%;
+}
+
+.container_detail_info{
+  width: 80%;
+}
+
+#info_box{
+  display: block;
+  margin: auto;
+  background-color:#E6E6E6;
+}
+
+table {
+  width: 80%;
+  margin: auto;
+  border: 1px solid;
+}
+
+th {
+  font-size: 15px;
+  width: 40%;
+  background-color: #F2F2F2;
+}
+
+td {
+  text-align: center;
+}
+
+button.primary{
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.5;
+  position: relative;
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  letter-spacing: 0.1rem;
+  color: #FFFFFF;
+  border-radius: 0.5rem;
+  background-color: #1CA5B8;
 }

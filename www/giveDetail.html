@@ -14,12 +14,12 @@
       
     </script>
 </head>
-<body id="prodact_lists">
+<body>
 	<!-- Header Start -->
     <header class="site-header">
       <div class="wrapper site-header__wrapper">
         <nav class="nav">
-          <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">譲渡品一覧</span>
+          <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">譲渡品詳細</span>
         <label for="menu-btn-check" class="menu-btn"><span></span></label>
         <div class="menu-content">
           <ul>
@@ -34,18 +34,41 @@
     <!-- Header End -->
 
     <!-- Body Start -->
-    <div class="container" id="item_box">
-      <a id="item_name">テキスト</a>
-      <div class="container_center">
-        <div class="container_right">
-          <a href="giveDetail.html">
-            <i class="fas fa-angle-right size"></i>
-          </a>
-        </div>
-      </div>
+    <div id="detail">
+    <br>
+    <br>
+    <div class="container_detail_name" id="info_box" >
+      <a id="item_name">商品名</a>  
     </div>
+    <br>
+    <a>譲渡品の説明</a>
+    <div class="container_detail_info" id="info_box">
+      <a id="item_name">商品説明</a>
+    </div>
+    <br>
+    <a>譲渡品の情報</a>
+    <table>
+      <tr>
+        <th>カテゴリ</th><td>値</td>
+      </tr>
+      <tr>
+        <th>商品の状態</th><td>値</td>
+      </tr>
+      <tr>
+        <th>受け渡し期間</th><td>値</td>
+      </tr>
+      <tr>
+        <th>受け渡し時間帯</th><td>値</td>
+      </tr>
+      <tr>
+        <th>受け渡し場所</th><td>値</td>
+      </tr>
+    </table>
+    <br>
+    <button type="button" class="primary"> 欲しい！ </button>
+    <div>
     <!-- Body End -->
-
+    
     <!-- Footer Start -->
     <ul class="bottom-menu">
     <li>
