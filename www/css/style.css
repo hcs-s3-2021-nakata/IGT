@@ -1,4 +1,4 @@
-/**/
+
 .center {
   display: block;
   text-align: center;
@@ -42,13 +42,14 @@
       opacity: 1;
       transform: translateY(0); } }
  
+
 .menu-btn {
     position: fixed;
     top: 10px;
     right: 10px;
     display: flex;
-    height: 60px;
-    width: 60px;
+    height: 50px;
+    width: 50px;
     justify-content: center;
     align-items: center;
     z-index: 90;
@@ -96,7 +97,7 @@
     background-color: #000000;
 }
 .menu-content ul {
-    padding: 50px 5px 0;
+    padding: 70px 10px 0;
 }
 .menu-content ul li {
     border-bottom: solid 1px #ffffff;
@@ -137,6 +138,7 @@
     left: 0;/*メニューを画面内へ*/
 }
 
+.mini-text{font-size:10px;}/*文字大きさ*/
 
 ul.bottom-menu {
     position: fixed;
@@ -147,7 +149,7 @@ ul.bottom-menu {
     margin:0;
     padding:0;
     background-color:#e6dfb3;/*背景色*/
-    z-index:10;}
+    z-index:30;}
 
 ul.bottom-menu li {
     float:left;
@@ -155,7 +157,7 @@ ul.bottom-menu li {
     background-color:#e6dfb3;/*背景色*/
     list-style-type:none;
     text-align:center;
-    font-size:30px;/*アイコンのサイズ*/}
+    font-size:25px;/*アイコンのサイズ*/}
 
 .bottom-menu li a {
     display: block;
@@ -209,6 +211,7 @@ li.menu-width-max ul.menu-second-level li {
 #footer{margin-bottom:48px;}
 }
 
+
  /*センタリング*/
 .flex{
   padding:50px 0;
@@ -216,7 +219,7 @@ li.menu-width-max ul.menu-second-level li {
   justify-content:center;
 }
 
-/*譲渡ボタン*/
+　/*譲渡ボタン*/
 .btn,
 a.btn,
 button.btn {
@@ -280,6 +283,39 @@ a.btn-border-shadow--color {
 a.btn-border-shadow--color:before {
   border-radius: 0;
 }
+
+
+/*画像アップロードボタン*/
+.btn-flat-border {
+  display: inline-block;
+  padding: 0.3em 1em;
+  text-decoration: none;
+  color: #67c5ff;
+  border: solid 2px #67c5ff;
+  border-radius: 3px;
+  transition: .4s;
+}
+
+.btn-flat-border:hover {
+  background: #67c5ff;
+  color: white;
+}
+
+　/*新規登録画面_画像アップロード*/
+#preview img {
+  width: 200px;
+  margin: 10px;
+  border: solid 1px silver;
+}
+
+/*input要素の横幅を画面に合わせる*/
+.width { width: 75%; }
+
+/*input要素を右寄せにする*/
+.right { text-align: right; }
+
+/*input要素の背景色をグレーにする*/
+.gray { background-color:#F5F5F5; }
 
 #prodact_lists{
   background-color:#E6E6E6;
