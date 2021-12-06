@@ -306,7 +306,7 @@ a.btn-border-shadow--color:before {
   color: white;
 }
 
-　/*新規登録画面_画像アップロード*/
+/*新規登録画面_画像アップロード*/
 #preview img {
   width: 200px;
   margin: 10px;
@@ -361,6 +361,11 @@ a.btn-border-shadow--color:before {
 .size{ 
   font-size: 5em;
   color:#0080f0;
+}
+
+.back_size{ 
+  font-size: 2em;
+  color:black;
 }
 
 #item_name{
