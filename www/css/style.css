@@ -9,7 +9,7 @@
  
 .site-header {
   position: relative;
-  background-color: #e6dfb3; }
+  background-color: #e6dfb3;}
  
 .site-header__wrapper {
   padding-top: 1rem;
@@ -285,6 +285,10 @@ a.btn-border-shadow--color:before {
   background-color:#E6E6E6;
 }
 
+#detail{	
+  text-align: center;
+}
+
 .container{
   width: 100%;
 }
@@ -316,5 +320,46 @@ a.btn-border-shadow--color:before {
 }
 
 #info_box{
+  display: block;
+  margin: auto;
   background-color:#E6E6E6;
+}
+
+table {
+  width: 80%;
+  margin: auto;
+  border: 1px solid;
+}
+
+th {
+  font-size: 15px;
+  width: 40%;
+  background-color: #F2F2F2;
+}
+
+td {
+  text-align: center;
+}
+
+button.primary{
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.5;
+  position: relative;
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  letter-spacing: 0.1rem;
+  color: #FFFFFF;
+  border-radius: 0.5rem;
+  background-color: #1CA5B8;
 }
