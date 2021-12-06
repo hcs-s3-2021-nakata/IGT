@@ -4,36 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
-    <script src="components/loader.js">
-    // APIキーの設定とSDK初期化
-
-    // API key.
-    var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
-    var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
-    // SDK initialization.
-    var ncmb = new NCMB(applicationKey, clientKey);
-    // サンプルコード
-    //保存先クラスの作成
-    var TestClass = ncmb.DataStore("TestClass");
-
-    //保存先クラスのインスタンスを生成
-    var testClass = new TestClass();
-
-    //値を設定と保存
-    testClass.set("message", "Hello, NCMB!")
-    .save()
-    .then(function(object){
-      //保存に成功した場合の処理
-       alert("New object created with objectId: " + testClass.objectId);
-
-    })
-    .catch(function(err){
-      //保存に失敗した場合の処理
-      alert("Failed to create new object, with error code: " + error.text);
-    });
-
-
-    </script>
+    <script src="components/loader.js"></script>
     <link rel="stylesheet" href="components/loader.css">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
@@ -42,12 +13,13 @@
     <script>
     </script>
 </head>
-<body id="prodact_lists">
+<body>
 	<!-- Header Start -->
     <header class="site-header">
       <div class="wrapper site-header__wrapper">
         <nav class="nav">
-          <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">商品一覧</span>
+          <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">取引選択</span>
+          <input class="hidden" type="checkbox" id="menu-btn-check">
         <label for="menu-btn-check" class="menu-btn"><span></span></label>
         <div class="menu-content">
           <ul>
@@ -55,28 +27,21 @@
             <li><a href="#">設定</a></li>
             <li><a href="#">ログアウト</a></li>
           </ul>
-        </div>
         </nav>
       </div>
     </header>
     <!-- Header End -->
-    
-    <!-- Body Start -->
-    <div class="container" id="item_box">
-      <a>閲覧履歴</a>
-      <a href="viewHistory.html">すべて見る</a>
-    </div>
-    <div class="container" id="item_box">
-      <a>譲渡品から探す</a>
-      <a href="giveList.html">すべて見る</a>
-    </div>
-    <div class="container" id="item_box">
-      <a>交換品から探す</a>
-      <a href="tradeList.html">すべて見る</a>
-    </div>
-    <!-- Body End -->
 
-    <!-- Footer Start -->
+    <!-- 取引選択ボタン_譲渡 -->
+    <a href="(URL_譲渡品登録画面)">
+    <button type="button">譲渡したい！</button>
+    </a>
+    <!-- 取引選択ボタン_交換 -->
+    <a href="(URL_交換品登録画面)">
+    <button type="button">交換したい！</button>
+    </a>
+
+   <!-- Footer Start -->
     <ul class="bottom-menu">
     <li>
         <a href="index.html">
@@ -86,8 +51,7 @@
         <a href="giveInsert.html"><i class="fas fa-random"></i></a>
     </li>
     <li>
-
- 	<a href="insert.html" target="_blank">
+ 	<a href="#">
 	<i class="blogicon-hatenablog"></i><i class="fas fa-plus"></i></a>
     </li>
     <li>
