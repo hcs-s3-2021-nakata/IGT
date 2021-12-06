@@ -13,12 +13,12 @@
     <script>
     </script>
 </head>
-<body>
+<body id="prodact_lists">
 	<!-- Header Start -->
     <header class="site-header">
       <div class="wrapper site-header__wrapper">
         <nav class="nav">
-          <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">一覧画面</span>
+          <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">商品一覧</span>
         <label for="menu-btn-check" class="menu-btn"><span></span></label>
         <div class="menu-content">
           <ul>
@@ -31,16 +31,33 @@
       </div>
     </header>
     <!-- Header End -->
+    
+    <!-- Body Start -->
+    <div class="container" id="item_box">
+      <a>閲覧履歴</a>
+      <a href="viewHistory.html">すべて見る</a>
+    </div>
+    <div class="container" id="item_box">
+      <a>譲渡品から探す</a>
+      <a href="giveList.html">すべて見る</a>
+    </div>
+    <div class="container" id="item_box">
+      <a>交換品から探す</a>
+      <a href="tradeList.html">すべて見る</a>
+    </div>
+    <!-- Body End -->
+
     <!-- Footer Start -->
     <ul class="bottom-menu">
     <li>
         <a href="index.html">
 	<i class="blogicon-home"></i><i class="far fa-list-alt"></i></a>
     </li>
-    <li class="menu-width-max">
-        <a href="#"><i class="fas fa-random"></i></a>
+    <li>
+        <a href="giveInsert.html"><i class="fas fa-random"></i></a>
     </li>
     <li>
+
  	<a href="insert.html" target="_blank">
 	<i class="blogicon-hatenablog"></i><i class="fas fa-plus"></i></a>
     </li>
