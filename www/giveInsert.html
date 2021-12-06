@@ -7,7 +7,9 @@
     <script src="components/loader.js"></script>
     <link rel="stylesheet" href="components/loader.css">
     <link rel="stylesheet" href="css/style.css">
-    <link href="./font-awesome.css" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <script>
     </script>
 </head>
@@ -17,7 +19,6 @@
       <div class="wrapper site-header__wrapper">
         <nav class="nav">
           <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">商品情報の入力</span>
-          <input class="hidden" type="checkbox" id="menu-btn-check">
         <label for="menu-btn-check" class="menu-btn"><span></span></label>
         <div class="menu-content">
           <ul>
@@ -25,30 +26,129 @@
             <li><a href="#">設定</a></li>
             <li><a href="#">ログアウト</a></li>
           </ul>
+        </div>
         </nav>
       </div>
     </header>
     <!-- Header End -->
-
-    <!-- 取引選択ボタン_譲渡 -->
-    <a href="(URL_譲渡品登録画面)">
-    <button type="button">譲渡したい！</button>
-    </a>
-    <!-- 取引選択ボタン_交換 -->
-    <a href="(URL_交換品登録画面)">
-    <button type="button">交換したい！</button>
-    </a>
+    
+    <!-- 商品画像選択 -->
+    <div class="right" name="item_image">
+        <a href="index.html" >投稿</a>　
+    </div>
+    
+    <!-- 商品画像選択 -->
+    <div class="flex" name="item_image">
+        <!-- カメラからアップロード -->
+        📷
+        <input type="file" class="btn-flat-border" onChange="imgPreView(event)"/>　　
+        
+        <!-- アルバムからアップロード -->
+        📚
+        <input type="file" class="btn-flat-border" onChange="imgPreView(event)" multiple>
+    </div>
+    
+     <!-- 👇ここにプレビュー画像を追加する -->
+    <div class="flex" id="preview">
+        プレビューがここにずらーーーってでるよ
+    </div>
+    
+    
+    <div class="gray">
+    <!-- カテゴリー -->
+        <label for="category">　　カテゴリー</label>
+        <div class="flex">
+            <select name="category" size=1 class="width">
+                <option value="1">おもちゃ・ゲーム</option>
+                <option value="2">本・テキスト</option>
+                <option value="3">音楽・ＤＶＤ</option>
+                <option value="4">服・コスメ</option>
+                <option value="5">キッチン</option>
+                <option value="6">スポーツ</option>
+                <option value="7">PC・スマホ用品</option>
+                <option value="100">その他</option>
+            </select>
+        </div><br><br><br>
+    
+    <!-- 商品の状態 -->
+        <label for="item_status">　　商品の状態</label>
+        <div class="flex">
+            <select name="item_status" size="1" class="width">
+                <option value="1">新品</option>
+                <option value="2">ほぼ新品</option>
+                <option value="3">多少の傷あり</option>
+                <option value="4">傷・汚れあり</option>
+                <option value="5">状態が悪い</option>
+            </select>
+        </div>
+    </div><br><br><br>
+    
+    
+    <div class="gray">
+    <!-- 商品名入力 -->
+        <label for="item_name">　　商品名</label>
+        <div class="flex" name="item_name">
+            <input type="text" id="name" class="width" name="name" required maxlength="50" size="52">
+        </div>
+    
+    <!-- 商品情報入力 -->
+        <label for="item_info">　　商品の説明</label>
+        <div class="flex" name="item_name" >
+            <textarea name="item_name" class="width" maxlength="250" rows="8"required></textarea>
+        </div>
+    </div><br><br><br>
+    
+    
+    <div class="gray">
+    <!-- 受け渡し期間 -->
+        <label for="delivery_start_date">　　受け渡し期間</label>
+        <div class="flex">
+            <input type="date" id="delivery_start_date" name="delivery_start_date" class="width">
+            <p>　～　　</p>
+            <input type="date" id="delivery_end_date" name="delivery_end_date" class="width">
+        </div><br><br><br>
+    
+    <!-- 受け渡し時間帯 -->
+        <label for="delivery_time">　　受け渡し時間帯</label>
+        <div class="flex">
+            <select name="delivery_time" size="1" class="width">
+                <option value="1">１コマ目終了後</option>
+                <option value="2">昼休み</option>
+                <option value="3">３コマ目終了後</option>
+                <option value="4">４コマ目終了後</option>
+            </select>
+        </div><br><br><br>
+    
+    <!-- 受け渡し場所 -->
+        <label for="location">　　受け渡し場所</label>
+        <div class="flex">
+            <select name="location" size="1" class="width">
+                <option value="1">本校舎3Fホール</option>
+                <option value="2">本校舎4Fホール</option>
+                <option value="3">本校舎5F</option>
+                <option value="4">本校舎6Fホール</option>
+                <option value="5">本校舎7F</option>
+                <option value="6">本校舎8F</option>
+                <option value="7">2号館入口</option>
+                <option value="8">3号館入口</option>
+                <option value="9">3号館ホール</option>
+                <option value="100">その他</option>
+            </select>
+        </div>
+    </div><br><br><br>
+	
+    
     <!-- Footer Start -->
     <ul class="bottom-menu">
     <li>
-        <a href="#">
+        <a href="index.html">
 	<i class="blogicon-home"></i><i class="far fa-list-alt"></i></a>
     </li>
     <li class="menu-width-max">
         <a href="#"><i class="fas fa-random"></i></a>
     </li>
     <li>
- 	<a href="https://blog.hatena.ne.jp/はてなID/自分のURL/subscribe" target="_blank">
+ 	<a href="insert.html" target="_blank">
 	<i class="blogicon-hatenablog"></i><i class="fas fa-plus"></i></a>
     </li>
     <li>
