@@ -297,6 +297,7 @@ a.btn-border-shadow--color:before {
 
 .container_right{
   float: right;
+  position: fixed;
 }
 .size{ 
   font-size: 5em;

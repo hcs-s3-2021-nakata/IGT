@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <script src="components/loader.js"></script>
+    <script src="qrcode.min.js"></script>
+    <script src="JsBarcode.all.min.js"></script>
+    <script>
+        function generate() {
+            let qrcode = document.getElementById("qrcode");
+            let barcode = document.getElementById("barcode");
+            let text = document.getElementById("text").value;
+            let format = document.getElementById("format").value;
+            if (format == "qrcode") {
+                qrcode.innerHTML = null;
+                new QRCode(
+                        qrcode, {
+                            text: text,
+                            width: 128,
+                            height: 128,
+                            colorDark : "#000000",
+                            colorLight : "#ffffff",
+                            correctLevel : QRCode.CorrectLevel.H
+                });
+                
+
+                qrcode.style.display = "block";
+                barcode.style.display = "none";
+            } else {
+                JsBarcode(
+                    "#barcode", 
+                    text, 
+                    {
+                        format: format,
+                        lineColor: "#000",
+                        width:2,
+                        height:100,
+                        displayValue: true
+                    });
+                qrcode.style.display = "none";
+                barcode.style.display = "block";
+
+            }
+        }
+    </script>
+</head>
+<body id="prodact_lists">
+  <!-- Header Start -->
+    <header class="site-header">
+      <div class="wrapper site-header__wrapper">
+        <nav class="nav">
+          <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">商品一覧</span>
+        <label for="menu-btn-check" class="menu-btn"><span></span></label>
+        <div class="menu-content">
+          <ul>
+            <li><a href="#">アカウント詳細</a></li>
+            <li><a href="#">設定</a></li>
+            <li><a href="#">ログアウト</a></li>
+          </ul>
+        </div>
+        </nav>
+      </div>
+    </header>
+    <!-- Header End -->
+   文字：<input type="text" id="text"><br>
+    種類：
+    <select id="format">
+        <option value="qrcode">QRコード</option>
+        <option value="CODE39">CODE39</option>
+        <option value="EAN13">JAN13・ISBNなど</option>
+        <option value="EAN8">EAN-8</option>
+        <option value="ITF">ITF</option>
+    </select><br>
+    <input type="button" value="生成" onclick="generate()">
+    <p>取引相手に<br>QRコードを見せてください</p>
+    <div id="qrcode"></div>
+    <img id="barcode"></div><button>cancel</button>
+    <!-- Footer Start -->
+    <ul class="bottom-menu">
+    <li>
+        <a href="index.html">
+	<i class="blogicon-home"></i><i class="far fa-list-alt"></i></a>
+    </li>
+    <li class="menu-width-max">
+        <a href="giveInsert.html"><i class="fas fa-random"></i></a>
+    </li>
+    <li>
+ 	<a href="insert.html">
+	<i class="blogicon-hatenablog"></i><i class="fas fa-plus"></i></a>
+    </li>
+    <li>
+        <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
+    </li>
+    <li>
+        <a href="voice.html"><i class="fas fa-bullhorn"></i></a>
+    </li>
+</ul>
+    <!-- Fotter End -->
+</body>
+</html>
