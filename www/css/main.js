@@ -37,3 +37,4 @@ function loadImage(obj) {
         fileReader.readAsDataURL(obj.files[i]);
     }
 }
+

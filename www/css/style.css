@@ -407,20 +407,17 @@ a.btn-border-shadow--color:before {
   background-color:#E6E6E6;
 }
 
-table {
+/* 詳細画面のテーブル書式 */
+table.detail_table {
   width: 80%;
   margin: auto;
   border: 1px solid;
 }
 
-th {
+th.detail_table {
   font-size: 15px;
   width: 40%;
   background-color: #F2F2F2;
-}
-
-td {
-  text-align: center;
 }
 
 button.plz{
@@ -455,6 +452,7 @@ button.transparent {
   outline: none;
 }
 
+/* 戻るボタン付きのヘッダー */
 .detail_head {
   display: flex;
   flex-wrap: wrap;
@@ -488,15 +486,29 @@ image{
 
 
 /* 詳細画面のモーダル関連機能 */
-#d_open,#d_close{
-	cursor:pointer;
-	width:200px;
-	border:1px solid #ccc;
+#d_button{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#d_ok{
+	width:100px;
+	border:2px solid #0085FC;
 	border-radius:4px;
 	text-align: center;
 	padding:12px 0;
 	margin:16px auto 0;
 }
+
+#d_cancel{
+	width:100px;
+	border:2px solid #FF0000;
+	border-radius:4px;
+	text-align: center;
+	padding:12px 0;
+	margin:16px auto 0;
+}
+
 #mask{
 	background:rgba(0,0,0,0.4);
 	position:fixed;
@@ -506,6 +518,7 @@ image{
 	right:0;
 	z-index:1;
 }
+
 #d_modal{
 	background:#fff;
 	width:300px;
@@ -519,12 +532,31 @@ image{
 	transition:transform 0.4s;
 	z-index:2;
 }
+
 #mask.hidden{
 	display:none;
 }
+
 #d_modal.hidden{
 	transform:translate(0,-500px);
 }
+
+.modal_box{
+  border: solid 2px #999999;
+  border-radius:20px;
+  padding: 1em 2em 2em;
+}
+
+table.modal_table {
+  width: 100%;
+  margin: auto;
+}
+
+th.modal_table {
+  font-size: 15px;
+  width: 50%;
+}
+/* モーダル終了 */
 
 #barcode{
     width: 200px;
