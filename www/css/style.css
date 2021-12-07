@@ -479,7 +479,12 @@ div figure{
     display: inline-block;
 }
 
-img{
+image{
     width: 65px;
     height: 65px;
+}
+
+#barcode{
+    width: 200px;
+    height: 200px;
 }
