@@ -129,7 +129,7 @@
     top: 16px;
 }
 .menu-content {
-    width: 80%;
+    width: 100%;
     height: 100%;
     position: fixed;
     top: 0;
@@ -156,7 +156,7 @@ ul.bottom-menu {
 
 ul.bottom-menu li {
     float:left;
-    width:25%;
+    width:20%;
     background-color:#e6dfb3;/*背景色*/
     list-style-type:none;
     text-align:center;
@@ -164,14 +164,14 @@ ul.bottom-menu li {
 
 .bottom-menu li a {
     display: block;
-    color:#808080;/*アイコン＆文字の色*/
+    color:#000000;/*アイコン＆文字の色*/
     padding-top:10px;
     padding-bottom:5px;
     line-height:10px;
     text-decoration:none;}
 
 .bottom-menu li a:hover {
-    color:#a9a9a9;/*マウスオーバー時の色*/}
+    color:#3ac3ff;/*マウスオーバー時の色*/}
 
 /* === 展開メニュー === */
 
@@ -466,31 +466,4 @@ div figure{
 img{
     width: 65px;
     height: 65px;
-}
-
-/* ボイス一覧 */
-ul {
-  background: whitesmoke;
-  padding: 0 0.5em;
-  position: relative;
-}
-
-ul li {
-  font-size: 20px;
-  line-height: 1.5;
-  padding: 0.5em 0 0.5em 1.5em;
-  border-bottom: 2px solid white;
-  list-style-type: none!important;
-}
-
-ul li:before {
-  font-family: "Font Awesome 5 Free";
-  content: "\f00c";/*アイコン種類*/
-  position: absolute;
-  left : 0.5em; /*左端からのアイコンまで*/
-  color: #668ad8; /*アイコン色*/
-}
-
-ul li:last-of-type {
-  border-bottom: none;/*最後の線だけ消す*/
 }
