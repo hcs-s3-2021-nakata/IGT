@@ -288,7 +288,7 @@ a.btn-border-shadow--color:before {
 /*画像アップロードボタン*/
 .btn-flat-border {
   display: inline-block;
-  padding: 0.3em 1em;
+  padding: 4em 1em;
   text-decoration: none;
   color: #67c5ff;
   border: solid 2px #67c5ff;
@@ -375,6 +375,21 @@ a.btn-border-shadow--color:before {
   width: 80%;
 }
 
+#justified {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#left_just{
+  width: 50%;
+  text-align: left;
+}
+
+#right_just{
+  width: 50%;
+  text-align: right;
+}
+
 #info_box{
   display: block;
   margin: auto;
@@ -418,4 +433,35 @@ button.primary{
   color: #FFFFFF;
   border-radius: 0.5rem;
   background-color: #1CA5B8;
+}
+
+button.transparent {
+  color: black;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+#detail_head {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#back_button{
+  width: 30%;
+  text-align: left;
+}
+
+#page_title{
+  width: 70%;
+  text-align: center;
+
+/*画像プレビュー*/
+div figure{
+    display: inline-block;
+}
+
+img{
+    width: 65px;
+    height: 65px;
 }

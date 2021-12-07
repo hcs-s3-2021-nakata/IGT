@@ -2,16 +2,6 @@
 <html>
 <head>
     <meta charset="utf-8">
-<<<<<<< HEAD
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
-  <script src="components/loader.js"></script>
-  <link rel="stylesheet" href="components/loader.css">
-  <link rel="stylesheet" href="css/style.css">
-  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script>
-=======
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
     <script src="components/loader.js"></script>
@@ -20,8 +10,7 @@
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
-    <script type="text/javascript" src="./js/main.js">
->>>>>>> a53caa4ed77276952f28bba7f6b72e383daaf3e0
+    <script>
     </script>
 </head>
 <body>
@@ -45,7 +34,7 @@
     
     <!-- 投稿ボタン -->
     <div class="right" name="item_image">
-        <a href="index.html" >投稿</a>
+        <a href="index.html" >投稿</a>　
     </div>
     
     <!-- 商品画像選択 -->
@@ -106,13 +95,20 @@
     
     <!-- 商品情報入力 -->
         <label for="item_info">　　商品の説明</label>
-        <div class="flex" name="item_info" >
+        <div class="flex" name="item_info">
             <textarea name="item_info" class="width" maxlength="250" rows="8"required></textarea>
         </div>
     </div><br><br><br>
     
+    <div class="gray"><br>
+    <!-- 交換希望品情報入力 -->
+        <label for="swap_item_info">　　交換希望品について</label>
+        <div class="flex" name="swap_item_info" >
+            <textarea name="swap_item_info" class="width" maxlength="250" rows="8"required></textarea>
+        </div>
+    </div><br><br><br>
     
-    <div class="gray">
+    <div class="gray"><br>
     <!-- 受け渡し期間 -->
         <label for="delivery_start_date">　　受け渡し期間</label>
         <div class="flex">
@@ -157,19 +153,19 @@
         <a href="index.html">
 	<i class="blogicon-home"></i><i class="far fa-list-alt"></i></a>
     </li>
-    <li>
-        <a href="giveInsert.html"><i class="fas fa-random"></i></a>
+    <li class="menu-width-max">
+        <a href="#"><i class="fas fa-random"></i></a>
     </li>
     <li>
-
- 	<a href="insert.html">
+ 	<a href="insert.html" target="_blank">
 	<i class="blogicon-hatenablog"></i><i class="fas fa-plus"></i></a>
     </li>
     <li>
-        <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
+        <a href="#"><i class="fas fa-qrcode"></i></a>
     </li>
     <li>
-        <a href="voice.html"><i class="fas fa-bullhorn"></i></a>
+        <a href="https://twitter.com/intent/follow?screen_name=自分のツイッターID">
+	<i class="blogicon-twitter"></i><i class="fas fa-bullhorn"></i></a>
     </li>
 </ul>
     <!-- Fotter End -->
