@@ -352,6 +352,10 @@ a.btn-border-shadow--color:before {
   font-size: 5em;
   color:#0080f0;
 }
+.back_size{ 
+  font-size: 2em;
+  color:black;
+}
 
 #item_name{
   text-align: center;
