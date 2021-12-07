@@ -345,8 +345,24 @@ a.btn-border-shadow--color:before {
   background-color: white;
 }
 
+.container_parent{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.container_left{
+  width: 35%;
+  text-align: center;
+}
+
+.container_center{
+  width: 45%;
+  text-align: left;
+}
+
 .container_right{
-  float: right;
+  width: 20%;
+  text-align: right;
 }
 .size{ 
   font-size: 5em;
