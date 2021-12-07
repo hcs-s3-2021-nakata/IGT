@@ -423,7 +423,7 @@ td {
   text-align: center;
 }
 
-button.modal{
+button.plz{
   font-size: 1.5rem;
   font-weight: 500;
   line-height: 1.5;
@@ -485,32 +485,7 @@ image{
     height: 65px;
 }
 
-/* ボイス一覧 */
-ul {
-  background: whitesmoke;
-  padding: 0 0.5em;
-  position: relative;
-}
 
-ul li {
-  font-size: 20px;
-  line-height: 1.5;
-  padding: 0.5em 0 0.5em 1.5em;
-  border-bottom: 2px solid white;
-  list-style-type: none!important;
-}
-
-ul li:before {
-  font-family: "Font Awesome 5 Free";
-  content: "\f00c";/*アイコン種類*/
-  position: absolute;
-  left : 0.5em; /*左端からのアイコンまで*/
-  color: #668ad8; /*アイコン色*/
-}
-
-ul li:last-of-type {
-  border-bottom: none;/*最後の線だけ消す*/
-}
 
 /* 詳細画面のモーダル関連機能 */
 #d_open,#d_close{
