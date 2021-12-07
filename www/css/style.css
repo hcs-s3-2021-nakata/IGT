@@ -1,4 +1,3 @@
-
 .center {
   display: block;
   text-align: center;
@@ -42,7 +41,6 @@
       opacity: 1;
       transform: translateY(0); } }
  
-
 .menu-btn {
     position: fixed;
     top: 10px;
@@ -153,7 +151,7 @@ ul.bottom-menu {
 
 ul.bottom-menu li {
     float:left;
-    width:20%;
+    width:25%;
     background-color:#e6dfb3;/*背景色*/
     list-style-type:none;
     text-align:center;
@@ -161,14 +159,14 @@ ul.bottom-menu li {
 
 .bottom-menu li a {
     display: block;
-    color:#000000;/*アイコン＆文字の色*/
+    color:#808080;/*アイコン＆文字の色*/
     padding-top:10px;
     padding-bottom:5px;
     line-height:10px;
     text-decoration:none;}
 
 .bottom-menu li a:hover {
-    color:#2ca3ff;/*マウスオーバー時の色*/}
+    color:#a9a9a9;/*マウスオーバー時の色*/}
 
 /* === 展開メニュー === */
 
@@ -211,6 +209,13 @@ li.menu-width-max ul.menu-second-level li {
 #footer{margin-bottom:48px;}
 }
 
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../fonts/fontawesome-webfont.eot?v=4.4.0');
+  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.4.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.4.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.4.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.4.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.4.0#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 
  /*センタリング*/
 .flex{
@@ -301,7 +306,7 @@ a.btn-border-shadow--color:before {
   color: white;
 }
 
-/*新規登録画面_画像アップロード*/
+　/*新規登録画面_画像アップロード*/
 #preview img {
   width: 200px;
   margin: 10px;
@@ -335,32 +340,12 @@ a.btn-border-shadow--color:before {
   background-color: white;
 }
 
-.container_parent{
-  display: flex;
-  padding: 30px 0px;
-  flex-wrap: wrap;
-}
-.container_left{
-  width: 30%;
-  text-align: center;
-}
-.container_center{
-  width: 50%;
-  text-align: center;
-}
 .container_right{
-  width: 20%;
-  text-align: right;
+  float: right;
 }
-
 .size{ 
   font-size: 5em;
   color:#0080f0;
-}
-
-.back_size{ 
-  font-size: 2em;
-  color:black;
 }
 
 #item_name{
@@ -420,7 +405,7 @@ button.primary{
   background-color: #1CA5B8;
 }
 
-/*画像プレビュー*/
+/* 画像プレビュー */
 div figure{
     display: inline-block;
 }
@@ -428,4 +413,31 @@ div figure{
 img{
     width: 65px;
     height: 65px;
+}
+
+/* ボイス一覧 */
+ul {
+  background: whitesmoke;
+  padding: 0 0.5em;
+  position: relative;
+}
+
+ul li {
+  font-size: 20px;
+  line-height: 1.5;
+  padding: 0.5em 0 0.5em 1.5em;
+  border-bottom: 2px solid white;
+  list-style-type: none!important;
+}
+
+ul li:before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f00c";/*アイコン種類*/
+  position: absolute;
+  left : 0.5em; /*左端からのアイコンまで*/
+  color: #668ad8; /*アイコン色*/
+}
+
+ul li:last-of-type {
+  border-bottom: none;/*最後の線だけ消す*/
 }
