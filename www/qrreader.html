@@ -12,43 +12,46 @@
     <script src="components/loader.js"></script>
     <script src="qrcode.min.js"></script>
     <script src="JsBarcode.all.min.js"></script>
+    <script src="css/jquery-3.6.0.min.js"></script> 
+<script src="css/jquery.qrcode.min.js"></script> 
     <script>
-        function generate() {
-            let qrcode = document.getElementById("qrcode");
-            let barcode = document.getElementById("barcode");
-            let text = document.getElementById("text").value;
-            let format = document.getElementById("format").value;
-            if (format == "qrcode") {
-                qrcode.innerHTML = null;
-                new QRCode(
-                        qrcode, {
-                            text: text,
-                            width: 200,
-                            height: 200,
-                            colorDark : "#000000",
-                            colorLight : "#ffffff",
-                            correctLevel : QRCode.CorrectLevel.H
-                });
-                
-
-                qrcode.style.display = "block";
-                barcode.style.display = "none";
-            } else {
-                JsBarcode(
-                    "#barcode", 
-                    text, 
-                    {
-                        format: format,
-                        lineColor: "#000",
-                        width:2,
-                        height:100,
-                        displayValue: true
-                    });
-                qrcode.style.display = "none";
-                barcode.style.display = "block";
-
-            }
+      /*バーコードスキャン*/
+        let options = {
+                preferFrontCamera : false,
+                showFlipCameraButton : true,
+                showTorchButton : true,
+                torchOn: true, // Android only
+                saveHistory: false, // Android only
+                prompt : "スキャンエリアの中にバーコードを入れてください", // Android
+                resultDisplayDuration: 500, // Android only
+                formats : "QR_CODE,EAN_13,CODE_39", 
+                orientation : "unset", // Android only (portrait|landscape)
+                disableAnimations : true, // iOS
+                disableSuccessBeep: false // iOS and Android
         }
+        function onSuccess (result) {
+            alert("結果: " + result.text + "\n" +
+                "バーコードの種類: " + result.format + "\n" +
+                "スキャンが中断されたかどうか: " + result.cancelled);
+        }
+        function onError (error) {
+            alert("スキャン失敗: " + error);
+        }
+        function scan() {
+            cordova.plugins.barcodeScanner.scan(
+                onSuccess,
+                onError,
+                options
+            );
+        }
+  </script>
+    <script type="text/JavaScript"> 
+    $(function(){
+      var qrtext = "ここにQRコード化したいテキストを入力";
+      var utf8qrtext = unescape(encodeURIComponent(qrtext));
+      $("#img-qr").html("");
+      $("#img-qr").qrcode({text:utf8qrtext}); 
+    });
     </script>
 </head>
 <body id="prodact_lists">
@@ -69,19 +72,8 @@
       </div>
     </header>
     <!-- Header End -->
-   文字：<input type="text" id="text"><br>
-    種類：
-    <select id="format">
-        <option value="qrcode">QRコード</option>
-        <option value="CODE39">CODE39</option>
-        <option value="EAN13">JAN13・ISBNなど</option>
-        <option value="EAN8">EAN-8</option>
-        <option value="ITF">ITF</option>
-    </select><br>
-    <input type="button" value="生成" onclick="generate()">
-    <p>取引相手に<br>QRコードを見せてください</p>
-    <div id="qrcode"></div>
-    <img class="qrcode" id="barcode"></div><button>cancel</button>
+    <button onclick="qrcode">自分のQRコードを相手に見せる</button>
+<div id="img-qr"></div>
     <!-- Footer Start -->
     <ul class="bottom-menu">
     <li>
