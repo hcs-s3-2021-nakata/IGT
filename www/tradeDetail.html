@@ -11,7 +11,28 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
     <script>
-      
+      // 詳細画面のモーダル表示用スクリプト（仮）
+      function modal_open(){
+        const open = document.getElementById('d_open');
+        const close = document.getElementById('d_cancel');
+        const modal = document.getElementById('d_modal');
+        const mask = document.getElementById('mask');
+        
+        open.addEventListener('click',()=>{
+          modal.classList.remove('hidden');
+          mask.classList.remove('hidden');
+        });
+        
+        close.addEventListener('click',()=>{
+          modal.classList.add('hidden');
+          mask.classList.add('hidden');
+        });
+        
+        mask.addEventListener('click',()=>{
+          close.click();
+        });
+      }
+    </script>
     </script>
 </head>
 <body>
@@ -58,25 +79,26 @@
     </div>
     <br>
     <a>交換品の情報</a>
-    <table>
-      <tr>
-        <th>カテゴリ</th><td>値</td>
-      </tr>
-      <tr>
-        <th>商品の状態</th><td>値</td>
-      </tr>
-      <tr>
-        <th>受け渡し期間</th><td>値</td>
-      </tr>
-      <tr>
-        <th>受け渡し時間帯</th><td>値</td>
-      </tr>
-      <tr>
-        <th>受け渡し場所</th><td>値</td>
-      </tr>
-    </table>
+    <table class="detail_table">
+        <tr>
+          <th class="detail_table">カテゴリ</th><td>値</td>
+        </tr>
+        <tr>
+          <th class="detail_table">商品の状態</th><td>値</td>
+        </tr>
+        <tr>
+          <th class="detail_table">受け渡し期間</th><td>値</td>
+        </tr>
+        <tr>
+          <th class="detail_table">受け渡し時間帯</th><td>値</td>
+        </tr>
+        <tr>
+          <th class="detail_table">受け渡し場所</th><td>値</td>
+        </tr>
+      </table>
     <br>
-    <button type="button" class="primary"> 交換する！ </button>
+      <button type="button" class="plz" id="d_open" onclick="modal_open()"> 欲しい！ </button>
+      <div id="mask" class="hidden"></div>
     <div>
     <!-- Body End -->
     
@@ -101,4 +123,37 @@
     </li>
 </ul>
     <!-- Fotter End -->
+    <!-- モーダルウィンドウ -->
+      <section id="d_modal" class="hidden">
+        <div class="modal_box">
+          <a>商品名</a>
+          <br>
+          <a>この辺に画像（でかい）</a>
+          <br>
+          <table class="modal_table">
+            <tr>
+              <th class="modal_table">出品者</th><td>値</td>
+            </tr>
+            <tr>
+              <th class="modal_table">受け渡し期間</th><td>値</td>
+            </tr>
+            <tr>
+              <th class="modal_table">受け渡し時間帯</th><td>値</td>
+            </tr>
+            <tr>
+              <th class="modal_table">受け渡し場所</th><td>値</td>
+            </tr>
+          </table>
+        </div>
+        <br>
+        <a>この取引を開始しますか？</a>
+        <div id="d_button">
+          <div id="d_cancel">
+          閉じる
+          </div>
+          <div id="d_ok">
+          進める
+          </div>
+        </div>
+      </section>
 </html>
