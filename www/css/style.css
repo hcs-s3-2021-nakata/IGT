@@ -483,7 +483,32 @@ image{
     height: 65px;
 }
 
+/* ボイス一覧 */
+ul.voice-list {
+  background: whitesmoke;
+  padding: 0 0.5em;
+  position: relative;
+}
 
+ul.voice-list li {
+  font-size: 21px;
+  line-height: 1.5;
+  padding: 0.5em 0 0.5em 1.5em;
+  border-bottom: 2px solid white;
+  list-style-type: none!important;
+}
+
+ul.voice-list li:before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f00c";/*アイコン種類*/
+  position: absolute;
+  left : 0.5em; /*左端からのアイコンまで*/
+  color: #668ad8; /*アイコン色*/
+}
+
+ul.voice-list li:last-of-type {
+  border-bottom: none;/*最後の線だけ消す*/
+}
 
 /* 詳細画面のモーダル関連機能 */
 #d_button{
@@ -561,5 +586,4 @@ th.modal_table {
 #barcode{
     width: 200px;
     height: 200px;
-
 }
