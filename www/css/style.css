@@ -477,10 +477,10 @@ button.transparent {
 
 /*画像プレビュー*/
 div figure{
-    display: inline-block;
+  display: inline-block;
 }
 
-#preview{
+img{
     width: 65px;
     height: 65px;
 }
@@ -529,5 +529,8 @@ div figure{
 #barcode{
     width: 200px;
     height: 200px;
-
+}
+#photo{
+    max-width: 80px;
+    max-height: 400px;
 }
