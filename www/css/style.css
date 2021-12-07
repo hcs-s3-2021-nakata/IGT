@@ -442,19 +442,25 @@ button.transparent {
   outline: none;
 }
 
-#detail_head {
+.detail_head {
   display: flex;
   flex-wrap: wrap;
 }
 
-#back_button{
-  width: 30%;
+.back_button{
+  width: 25%;
   text-align: left;
 }
 
-#page_title{
-  width: 70%;
+.page_title{
+  width: 50%;
   text-align: center;
+}
+
+.header_right{
+  width: 25%;
+  text-align: right;
+}
 
 /*画像プレビュー*/
 div figure{
