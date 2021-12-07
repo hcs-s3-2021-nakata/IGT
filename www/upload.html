@@ -1,42 +1,22 @@
-<html>
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>画像アップロード</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
 <body>
-  <code>accept="image/*"</code>
-  <form action="upload.php" method="post" enctype="multipart/form-data">
-    <p><input type="file" name="upfile" id="upfile" accept="image/*" /></p>
-    <p><input type="submit" name="save" value="保存" /></p>
-  </form>
-  
-  <code>accept="video/*"</code>
-  <form action="upload.php" method="post" enctype="multipart/form-data">
-    <p><input type="file" name="upfile" id="upfile" accept="video/*" /></p>
-    <p><input type="submit" name="save" value="保存" /></p>
-  </form>
-  
-  <code>accept=".gif"</code>
-  <form action="upload.php" method="post" enctype="multipart/form-data">
-    <p><input type="file" name="upfile" id="upfile" accept=".gif" /></p>
-    <p><input type="submit" name="save" value="保存" /></p>
-  </form>
-
-  <code>accept="image/*" capture="user"</code>
-  <form action="upload.php" method="post" enctype="multipart/form-data">
-    <p><input type="file" name="upfile" id="upfile" accept="image/*" capture="user" /></p>
-    <p><input type="submit" name="save" value="保存" /></p>
-  </form>
-
-  <code>accept="image/*" capture="environment"</code>
-  <form action="upload.php" method="post" enctype="multipart/form-data">
-    <p><input type="file" name="upfile" id="upfile" accept="image/*" capture="environment" /></p>
-    <p><input type="submit" name="save" value="保存" /></p>
-  </form>
-
-
-  <code>accept="image/*" capture="camera"</code>
-  <form action="upload.php" method="post" enctype="multipart/form-data">
-    <p><input type="file" name="upfile" id="upfile" accept="image/*" capture="camera" /></p>
-    <p><input type="submit" name="save" value="保存" /></p>
-  </form>
-  
-
+    <h1>画像アップロード</h1>
+    <form>
+        <input type="file" accept="image/*" multiple=" multiple" onchange="loadImage(this);">
+    </form>
+    <div id="preview">
+    </div>
+    <br>
+    <script type="text/javascript" src="./js/main.js">
+    </script>
 </body>
+
 </html>
