@@ -479,7 +479,7 @@ div figure{
     display: inline-block;
 }
 
-image{
+#preview{
     width: 65px;
     height: 65px;
 }
