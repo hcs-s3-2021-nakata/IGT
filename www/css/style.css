@@ -129,7 +129,7 @@
     top: 16px;
 }
 .menu-content {
-    width: 80%;
+    width: 100%;
     height: 100%;
     position: fixed;
     top: 0;
@@ -156,7 +156,7 @@ ul.bottom-menu {
 
 ul.bottom-menu li {
     float:left;
-    width:25%;
+    width:20%;
     background-color:#e6dfb3;/*背景色*/
     list-style-type:none;
     text-align:center;
@@ -164,14 +164,14 @@ ul.bottom-menu li {
 
 .bottom-menu li a {
     display: block;
-    color:#808080;/*アイコン＆文字の色*/
+    color:#000000;/*アイコン＆文字の色*/
     padding-top:10px;
     padding-bottom:5px;
     line-height:10px;
     text-decoration:none;}
 
 .bottom-menu li a:hover {
-    color:#a9a9a9;/*マウスオーバー時の色*/}
+    color:#3ac3ff;/*マウスオーバー時の色*/}
 
 /* === 展開メニュー === */
 
@@ -480,7 +480,7 @@ div figure{
     display: inline-block;
 }
 
-img{
+image{
     width: 65px;
     height: 65px;
 }
@@ -549,4 +549,10 @@ ul li:last-of-type {
 }
 #d_modal.hidden{
 	transform:translate(0,-500px);
+}
+
+#barcode{
+    width: 200px;
+    height: 200px;
+
 }

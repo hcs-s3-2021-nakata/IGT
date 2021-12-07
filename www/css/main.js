@@ -20,7 +20,7 @@ function loadImage(obj) {
             var field = document.getElementById("preview");
             var figure = document.createElement("figure");
             var rmBtn = document.createElement("input");
-            var img = new Image();
+            var image = new Image();
             img.src = e.target.result;
             rmBtn.type = "button";
             rmBtn.name = key;
@@ -29,7 +29,7 @@ function loadImage(obj) {
                 var element = document.getElementById("img-" + String(rmBtn.name)).remove();
             });
             figure.setAttribute("id", "img-" + key);
-            figure.appendChild(img);
+            figure.appendChild(image);
             figure.appendChild(rmBtn)
             field.appendChild(figure);
             key++;
