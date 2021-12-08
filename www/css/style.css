@@ -455,6 +455,8 @@ button.transparent {
 /* 戻るボタン付きのヘッダー */
 .detail_head {
   display: flex;
+  position: relative;
+  z-index: 50;
   flex-wrap: wrap;
 }
 
