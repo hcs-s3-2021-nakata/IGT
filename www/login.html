@@ -6,8 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
   <script src="components/loader.js"></script>
+  <script type="text/javascript" src="css/login.js"></script>
   <link rel="stylesheet" href="components/loader.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Oswald:700 rel=" stylesheet ">
+  <link rel="stylesheet " href="css/login.css ">
+
+<link href="https://fonts.googleapis.com/css?family=Montserrat+Subrayada rel="stylesheet">
+
   <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script>
@@ -143,94 +148,59 @@
   </script>
 </head>
 
-<body id="prodact_lists">
-  <!-- Header Start -->
-  <header class="site-header">
-    <div class="wrapper site-header__wrapper">
-      <nav class="nav">
-        <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">商品一覧</span>
-        <label for="menu-btn-check" class="menu-btn"><span></span></label>
-        <div class="menu-content">
-          <ul>
-            <li><a href="#">アカウント詳細</a></li>
-            <li><a href="#">設定</a></li>
-            <li><a href="login.html">ログアウト</a></li>
-          </ul>
+<body id="welcom">
+  <div id="form">
+    <!--div class="form-title">
+      <p class="form-title">ワインの窓</p>
+      <p class="subTitle" id="subTitle">_Wine Window_</p>
+    </div>
+    <div id="wine">
+      <img src="img/wineWindow.png" id="wineWindow">
+    </div>
+    <p>学籍番号</p>
+    <p class="text"><input type="text" name="student_number" /></p>
+    <p>Password</p>
+    <p class="pass"><input type="password" name="pass" /></p>
+
+    <div class="bt-wine">
+    <a href="#" class="bt-samp37">SIGN-IN</a>
+    </div>
+   
+  </div-->
+ <div class="form-title">
+          <p class="form-title">ワインの窓</p>
+          <p class="subTitle" id="subTitle">_Wine Window_</p>
         </div>
-      </nav>
-    </div>
-  </header>
-  <!-- Header End -->
+        <div id="wine">
+          <img src="img/wineWindow.png" id="wineWindow">
+        </div>
+        <!--以下お試しログイン・新規-->
+  <div class="login-page">
+    <div class="form">
+      <form class="register-form">
+        <input type="text" placeholder="name" />
+        <input type="password" placeholder="password" />
+        <input type="text" placeholder="email address" />
+        <div class="bt-wine">
+          <a href="#" class="bt-samp37">CREATE</a>
+        </div>
+        <p class="message">Already registered? <a href="#">Sign In</a></p>
+      </form>
+      <form class="login-form">
+       
+        <p>StudentNumber</p>
+        <p class="text"><input type="text" name="student_number" /></p>
+        <p>Password</p>
+        <p class="pass"><input type="password" name="pass" /></p>
 
-  <!-- Body Start -->
-  <div class="container" id="item_box">
-    <div id="justified">
-      <div id="left_just">
-        <a>閲覧履歴</a>
-      </div>
-      <div id="right_just">
-        <button class="transparent" onclick="location.href='viewHistory.html'">すべて見る<i class="fas fa-angle-right"></i></a></button>
-      </div>
-    </div>
-  </div>
-
-  <div class="container" id="item_box">
-    <div id="justified">
-      <div id="left_just">
-        <a>譲渡品から探す</a>
-      </div>
-      <div id="right_just">
-        <button class="transparent" onclick="location.href='giveList.html'">すべて見る<i class="fas fa-angle-right"></i></a></button>
-      </div>
-    </div>
-  </div>
-
-  <div class="container" id="item_box">
-    <div id="justified">
-      <div id="left_just">
-        <a>交換品から探す</a>
-      </div>
-      <div id="right_just">
-        <button class="transparent" onclick="location.href='tradeList.html'">すべて見る<i class="fas fa-angle-right"></i></a></button>
-      </div>
+        <div class="bt-wine">
+          <a href="#" class="bt-samp37">SIGN-IN</a>
+        </div>
+        <p class="message">Not registered? <a href="#" onclick="click()">Create an account</a></p>
+      </form>
     </div>
   </div>
-
-  <!-- お試しカメラ -->
-  <div>
-    <button onclick="takePicture()">撮影</button>
   </div>
-  <img id="photo" src="" style="max-width: 80%; mac-height: 400px;1">
-  <div id="title"></div>
-  <div id="comment"></div>
-  <div id="btn"></div>
-
-  <br><br><br><br>
-  <!-- お試しカメラエンド -->
-
-  <!-- Body End -->
-
-  <!-- Footer Start -->
-    <ul class="bottom-menu">
-    <li>
-        <a href="#">
-	<i class="far fa-list-alt"></i></a>
-    </li>
-    <li>
-        <a href="giveInsert.html"><i class="fas fa-random"></i></a>
-    </li>
-    <li>
- 	<a href="insert.html"><i class="fas fa-plus"></i></a>
-    </li>
-    <li>
-        <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
-    </li>
-    <li>
-        <a href="voice.html">
-	<i class="fas fa-bullhorn"></i></a>
-    </li>
-</ul>
-    <!-- Fotter End -->
 </body>
 
 </html>
