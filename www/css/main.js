@@ -39,9 +39,12 @@ function loadImage(obj) {
     }
 }
 
+<<<<<<< HEAD
 /* お気に入り登録（ボタン色反転） */
 function button(){
 document.getElementById("favorite-button").onclick = (function() {
   this.classList.toggle("blue");
 });
 }
+=======
+>>>>>>> 9f7371534640cc6f75e80765d62f16aa86eda323

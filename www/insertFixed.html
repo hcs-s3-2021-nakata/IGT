@@ -11,7 +11,17 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
     <script>
-      
+      var flag;
+      // 画面遷移の管理
+      function detail(){
+        flag = localStorage.getItem("flag");
+        if(flag == "give"){
+          document.location.href='giveDetail.html';
+        }
+        if(flag == "trade"){
+          document.location.href='tradeDetail.html';
+        }
+      }
     </script>
 </head>
 <body id="prodact_lists">
@@ -19,49 +29,24 @@
     <header class="site-header">
       <div class="wrapper site-header__wrapper">
         <nav class="nav">
-          <div class="detail_head">
-            <div class="back_button">
-              <a href="javascript:history.back()">
-                <i class="fas fa-angle-left back_size"></i>
-              </a>
-            </div>
-            <div class="page_title">
-              <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">譲渡品一覧</span>
-              <label for="menu-btn-check" class="menu-btn"><span></span></label>
-              <div style="text-align: left" class="menu-content">
-                <ul>
-                  <li><a href="#">アカウント詳細</a></li>
-                  <li><a href="#">設定</a></li>
-                  <li><a href="#">ログアウト</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="header_right">
-            </div>
-          </div>
+          <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">登録完了</span>
+        <label for="menu-btn-check" class="menu-btn"><span></span></label>
+        <div class="menu-content">
+          <ul>
+            <li><a href="#">アカウント詳細</a></li>
+            <li><a href="#">設定</a></li>
+            <li><a href="#">ログアウト</a></li>
+          </ul>
+        </div>
         </nav>
       </div>
     </header>
     <!-- Header End -->
-
-    <!-- Body Start -->
     <div class="container" id="item_box">
-      <div class="container_parent">
-        <div class="container_left">    
-          <a>画像</a>
-        </div>
-        <div class="container_center">    
-          <a id="item_name">ラブラビットのぬいぐるみ</a>
-        </div>
-        <div class="container_right">
-          <a href="giveDetail.html">
-            <i class="fas fa-angle-right size"></i>
-          </a>
-        </div>
-      </div>
+      <a>取引の登録が完了しました。</a>
+      <br><br>
+      <button onclick="detail()">詳細画面を見る</button>
     </div>
-    <!-- Body End -->
-
     <!-- Footer Start -->
     <ul class="bottom-menu">
     <li>

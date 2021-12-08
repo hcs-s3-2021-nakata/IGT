@@ -12,6 +12,35 @@
       rel="stylesheet">
     <script type="text/javascript" src="css/main.js">
     </script>
+    <script>
+      // モーダル表示用スクリプト（仮）
+      function modal_open(){
+        const open = document.getElementById('d_open');
+        const ok = document.getElementById('d_ok');
+        const close = document.getElementById('d_cancel');
+        const modal = document.getElementById('d_modal');
+        const mask = document.getElementById('mask');
+        
+        open.addEventListener('click',()=>{
+          modal.classList.remove('hidden');
+          mask.classList.remove('hidden');
+        });
+
+        ok.addEventListener('click',()=>{
+          localStorage.setItem("flag","give");
+          document.location.href='insertFixed.html';
+        });
+        
+        close.addEventListener('click',()=>{
+          modal.classList.add('hidden');
+          mask.classList.add('hidden');
+        });
+        
+        mask.addEventListener('click',()=>{
+          close.click();
+        });
+      }
+    </script>
 </head>
 <body>
 	<!-- Header Start -->
@@ -32,10 +61,8 @@
     </header>
     <!-- Header End -->
     
-    <!-- 投稿ボタン -->
-    <div class="right" name="item_image">
-        <a href="index.html" >投稿</a>　
-    </div>
+    <button type="button" class="right" name="item_image" id="d_open" onclick="modal_open()"> 投稿 </button>
+    <div id="mask" class="hidden"></div>
     
     <!-- 商品画像選択 -->
     <div class="flex" name="item_image">
@@ -163,5 +190,44 @@
     </li>
 </ul>
     <!-- Fotter End -->
+    <!-- モーダルウィンドウ -->
+      <section id="d_modal" class="hidden">
+        <div class="modal_box">
+          <a>商品名</a>
+          <br>
+          <a>この辺に画像（でかい）</a>
+          <br>
+          <table class="modal_table">
+            <tr>
+              <th class="modal_table">カテゴリー</th><td>値</td>
+            </tr>
+            <tr>
+              <th class="modal_table">商品の状態</th><td>値</td>
+            </tr>
+            <tr>
+              <th class="modal_table">商品名</th><td>値</td>
+            </tr>
+            <tr>
+              <th class="modal_table">受け渡し期間</th><td>値</td>
+            </tr>
+            <tr>
+              <th class="modal_table">受け渡し時間帯</th><td>値</td>
+            </tr>
+            <tr>
+              <th class="modal_table">受け渡し場所</th><td>値</td>
+            </tr>
+          </table>
+        </div>
+        <br>
+        <a>この商品を登録しますか？</a>
+        <div id="d_button">
+          <div id="d_cancel">
+          閉じる
+          </div>
+          <div id="d_ok">
+          進める
+          </div>
+        </div>
+      </section>
 </body>
 </html>
