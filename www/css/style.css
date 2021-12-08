@@ -557,7 +557,7 @@ ul.voice-list li:last-of-type {
 	right:0;
 	margin:0 auto;
 	transition:transform 0.4s;
-	z-index:2;
+	z-index:70;
 }
 
 #mask.hidden{
