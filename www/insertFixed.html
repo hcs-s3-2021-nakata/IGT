@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <script>
+      var flag;
+      // 画面遷移の管理
+      function detail(){
+        flag = localStorage.getItem("flag");
+        if(flag == "give"){
+          document.location.href='giveDetail.html';
+        }
+        if(flag == "trade"){
+          document.location.href='tradeDetail.html';
+        }
+      }
+    </script>
+</head>
+<body id="prodact_lists">
+	<!-- Header Start -->
+    <header class="site-header">
+      <div class="wrapper site-header__wrapper">
+        <nav class="nav">
+          <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">登録完了</span>
+        <label for="menu-btn-check" class="menu-btn"><span></span></label>
+        <div class="menu-content">
+          <ul>
+            <li><a href="#">アカウント詳細</a></li>
+            <li><a href="#">設定</a></li>
+            <li><a href="#">ログアウト</a></li>
+          </ul>
+        </div>
+        </nav>
+      </div>
+    </header>
+    <!-- Header End -->
+    <div class="container" id="item_box">
+      <a>取引の登録が完了しました。</a>
+      <br><br>
+      <button onclick="detail()">詳細画面を見る</button>
+    </div>
+    <!-- Footer Start -->
+    <ul class="bottom-menu">
+    <li>
+        <a href="index.html">
+	<i class="far fa-list-alt"></i></a>
+    </li>
+    <li>
+        <a href="giveInsert.html"><i class="fas fa-random"></i></a>
+    </li>
+    <li>
+ 	<a href="insert.html"><i class="fas fa-plus"></i></a>
+    </li>
+    <li>
+        <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
+    </li>
+    <li>
+        <a href="voice.html">
+	<i class="fas fa-bullhorn"></i></a>
+    </li>
+</ul>
+    <!-- Fotter End -->
+</html>
