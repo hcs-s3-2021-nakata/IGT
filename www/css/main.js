@@ -12,6 +12,7 @@
 /*eslint-env browser*/
 /*eslint no-console: 0*/
 
+/* 画像プレビュー */
 let key = 0;
 function loadImage(obj) {
     for (i = 0; i < obj.files.length; i++) {
@@ -36,4 +37,11 @@ function loadImage(obj) {
         });
         fileReader.readAsDataURL(obj.files[i]);
     }
+}
+
+/* お気に入り登録（ボタン色反転） */
+function button(){
+document.getElementById("favorite-button").onclick = (function() {
+  this.classList.toggle("blue");
+});
 }
