@@ -477,10 +477,10 @@ button.transparent {
 
 /*画像プレビュー*/
 div figure{
-    display: inline-block;
+  display: inline-block;
 }
 
-image{
+img{
     width: 65px;
     height: 65px;
 }
@@ -588,4 +588,8 @@ th.modal_table {
 #barcode{
     width: 200px;
     height: 200px;
+}
+#photo{
+    max-width: 80px;
+    max-height: 400px;
 }
