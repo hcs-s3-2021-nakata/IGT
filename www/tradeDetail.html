@@ -14,6 +14,7 @@
       // 詳細画面のモーダル表示用スクリプト（仮）
       function modal_open(){
         const open = document.getElementById('d_open');
+        const ok = document.getElementById('d_ok');
         const close = document.getElementById('d_cancel');
         const modal = document.getElementById('d_modal');
         const mask = document.getElementById('mask');
@@ -21,6 +22,17 @@
         open.addEventListener('click',()=>{
           modal.classList.remove('hidden');
           mask.classList.remove('hidden');
+        });
+
+        ok.addEventListener('click',()=>{
+          // 画面遷移の再現用（完成したら消える？）
+          localStorage.setItem("flag","trade");
+          // QRにするデータを格納
+          // 取引ID,渡す人のID,受け取る人のID
+          localStorage.setItem("objectID","torihiki01");
+          localStorage.setItem("give_userID","ギブ太郎");
+          localStorage.setItem("take_userID","テイク花子");
+          document.location.href='qrGenerater.html';
         });
         
         close.addEventListener('click',()=>{
