@@ -89,14 +89,14 @@ a.bt-samp37:hover:before{
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 .login-page {
-  width: 360px;
+  width: 290px;
   padding: 8% 0 0;
   margin: auto;
 }
 .form {
   position: relative;
   z-index: 1;
-  background: #CCC7A4;
+  background: #B1A161;
   max-width: 360px;
   margin: 0 auto 80px;
   padding: 45px;
@@ -116,16 +116,16 @@ a.bt-samp37:hover:before{
 }
 .form .message {
   margin: 15px 0 0;
-  color: #b3b3b3;
+  color: #95753d;
   font-size: 12px;
 }
 .form .message a {
-  color: #8B1B34;
+  color: #ffffff;
   text-decoration: none;
 }
-.form .register-form {
+/* .form .register-form {
   display: none;
-}
+} */
 .container {
   position: relative;
   z-index: 1;

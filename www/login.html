@@ -6,10 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
   <script src="components/loader.js"></script>
+  <script src="css/jquery-3.6.0.min.js"></script>
+  <script src="css/jquery.qrcode.min.js"></script>
   <script type="text/javascript" src="css/login.js"></script>
   <link rel="stylesheet" href="components/loader.css">
   <link href="https://fonts.googleapis.com/css?family=Oswald:700 rel=" stylesheet ">
   <link rel="stylesheet " href="css/login.css ">
+  
 
 <link href="https://fonts.googleapis.com/css?family=Montserrat+Subrayada rel="stylesheet">
 
@@ -22,129 +25,33 @@
     var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
     // SDK initialization.
     var ncmb = new NCMB(applicationKey, clientKey);
-    // サンプルコード
-    //保存先クラスの作成
-    var TestClass = ncmb.DataStore("TestClass");
 
-    //保存先クラスのインスタンスを生成
-    var testClass = new TestClass();
-
-    //値を設定と保存
-    testClass.set("message", "Hello, NCMB!")
-      .save()
-      .then(function(object) {
-        //保存に成功した場合の処理
-
-      })
-      .catch(function(err) {
-        //保存に失敗した場合の処理
-        alert("Failed to create new object, with error code: " + error.text);
-      });
-
-    // お試しカメラ
-    function takePicture() {
-      var options = {
-        sourceType: Camera.PictureSourceType.CAMERA,
-        destinationType: Camera.DestinationType.DATA_URL
-      };
-
-      navigator.camera.getPicture(onSuccess, onError, options);
-
-      function onSuccess(imageData) {
-        // ncmbに画像をアップロード
-        var fileName = makeUUID() + ".jpg";
-        var fileData = toBlob(imageData, "image/jpeg");
-        ncmb.File.upload(fileName, fileData)
-          .then(function(result) {
-            alert("画像アップロード成功");
-
-            //撮影した画像を画面に表示
-            var image = document.getElementById("photo");
-            image.src = "data:image/jpeg;base64," + imageData;
-
-            // タイトルと画像の説明の入力欄を作成
-            var title = document.createElement("input");
-            title.id = "titleData";
-            title.type = "text";
-            title.placeholder = "タイトル";
-            var comment = document.createElement("textarea");
-            comment.id = "commentData";
-            comment.placeholder = "画像の説明";
-            // 画像情報の登録ボタンの生成
-            var sendBtn = document.createElement("button");
-            sendBtn.onclick = saveData(fileName);
-            sendBtn.innerHTML = "情報を登録する";
-            // 画面に追加
-            document.getElementById("title").appendChild(title);
-            document.getElementById("comment").appendChild(comment);
-            document.getElementById("btn").appendChild(sendBtn);
-          })
-          .catch(function(error) {
-            alert("画像アップロード失敗" + error);
-          });
-      }
-      //撮影キャンセル
-      function onError(message) {
-        alert("エラー:" + message);
-      }
+    //新規ユーザ作成
+    function createNewUser() {
+      var createN = document.getElementById("cN").value;
+      var createP = document.getElementById("cP").value;
+      var createSN = document.getElementById("cSN").value;
+      // ユーザークラスのインスタンスを生成
+      var user = new ncmb.User();
+      //ユーザ名/パスワードで新規ユーザー登録
+      user.set("userName", createN)
+      .set("student_number", createSN)
+        .set("password", createP)
+        .signUpByAccount()
+        .then(function(user) {
+          //新規ユーザー登録成功
+          console.log("新規ユーザー登録成功：" + JSON.stringify(user));
+          document.location.href='index.html';
+        })
+    .catch(function(error) {
+      //新規ユーザー登録失敗時の処理
+      console.log("新規ユーザー登録失敗：" + JSON.stringify(error));
+    });
     }
 
-    //Blobを作成
-    function toBlob(base64, mime_type) {
-      var bin = atob(base64.replace(/^.*,/, ''));
-      var buffer = new Uint8Array(bin.length);
-      for (var i = 0; i < bin.length; i++) {
-        buffer[i] = bin.charCodeAt(i);
-      }
-
-      try {
-        var blob = new Blob([buffer.buffer], {
-          type: mime_type
-        });
-      } catch (e) {
-        return false;
-      }
-      return blob;
+    //ログイン機能
+    function login(){
     }
-
-    //UUID生成
-    function makeUUID() {
-      var d = +new Date();
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-        .replace(/[xy]/g, function(c) {
-          var r = (d + Math.random() * 16) % 16 | 0;
-          return (c == 'X' ? r : (r & 0x3 | 0x8)).toString(16);
-
-        });
-    }
-
-    function saveData(fileName) {
-      return function() {
-        var title = document.getElementById("titleData").value;
-        var comment = document.getElementById("commentData").value;
-
-        //入力チェック
-        if (title === "" || comment === "") {
-          return alert("未入力の項目があります")
-        }
-
-        var FileData = ncmb.DataStore("FileData");
-        var fileData = new FileData();
-        fileData.set("fileName", fileName)
-          .set("title", title)
-          .set("comment", comment)
-          .save()
-          .then(function(result) {
-            //保存成功
-            alert("画像情報保存成功")
-          })
-          .catch(function(error) {
-            //保存失敗
-            alert("画像情報保存失敗" + error);
-          });
-      }
-    }
-    //お試しカメラエンド
   </script>
 </head>
 
@@ -167,39 +74,39 @@
     </div>
    
   </div-->
- <div class="form-title">
-          <p class="form-title">ワインの窓</p>
-          <p class="subTitle" id="subTitle">_Wine Window_</p>
-        </div>
-        <div id="wine">
-          <img src="img/wineWindow.png" id="wineWindow">
-        </div>
-        <!--以下お試しログイン・新規-->
-  <div class="login-page">
-    <div class="form">
-      <form class="register-form">
-        <input type="text" placeholder="name" />
-        <input type="password" placeholder="password" />
-        <input type="text" placeholder="email address" />
-        <div class="bt-wine">
-          <a href="#" class="bt-samp37">CREATE</a>
-        </div>
-        <p class="message">Already registered? <a href="#">Sign In</a></p>
-      </form>
-      <form class="login-form">
-       
-        <p>StudentNumber</p>
-        <p class="text"><input type="text" name="student_number" /></p>
-        <p>Password</p>
-        <p class="pass"><input type="password" name="pass" /></p>
-
-        <div class="bt-wine">
-          <a href="#" class="bt-samp37">SIGN-IN</a>
-        </div>
-        <p class="message">Not registered? <a href="#" onclick="click()">Create an account</a></p>
-      </form>
+    <div class="form-title">
+      <p class="form-title">ワインの窓</p>
+      <p class="subTitle" id="subTitle">_Wine Window_</p>
     </div>
-  </div>
+    <div id="wine">
+      <img src="img/wineWindow.png" id="wineWindow">
+    </div>
+    <!--以下お試しログイン・新規-->
+    <div class="login-page">
+      <div class="form">
+        <form class="register-form">
+          <input type="text" id="cN" placeholder="name" name="createName" />
+          <input type="password" id="cP" placeholder="password" name="createPass" />
+          <input type="text" placeholder="studentNumber" id="cSN" idname="createStudentNumber" />
+          <div class="bt-wine">
+            <a href="javascript:createNewUser();" class="bt-samp37">CREATE</a>
+          </div>
+          <p class="message">Already registered? <a href="#">Sign In</a></p>
+        </form>
+        <form class="login-form">
+
+          <p>StudentNumber</p>
+          <p class="text"><input type="text" name="student_number" /></p>
+          <p>Password</p>
+          <p class="pass"><input type="password" name="pass" /></p>
+
+          <div class="bt-wine">
+            <a href="#" class="bt-samp37">SIGN-IN</a>
+          </div>
+          <p class="message">Not registered? <a href="#" class="change">Create an account</a></p>
+        </form>
+      </div>
+    </div>
   </div>
 </body>
 
