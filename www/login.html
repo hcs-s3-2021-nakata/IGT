@@ -41,6 +41,8 @@
         .then(function(user) {
           //新規ユーザー登録成功
           console.log("新規ユーザー登録成功：" + JSON.stringify(user));
+          //アクセスコントロール制御(未実装p100)
+          
           document.location.href='index.html';
         })
     .catch(function(error) {
@@ -49,8 +51,24 @@
     });
     }
 
+
     //ログイン機能
-    function login(){
+    function wineLogin(){
+      
+      var loginStudentNumber = document.getElementById("lSN").value;
+      var loginPassword = document.getElementById("loginPass").value;
+      alert(loginPassword + "パスワード" + loginStudentNumber + "名前")
+      var user = new ncmb.User({student_number:loginStudentNumber, password:loginPassword});
+      ncmb.User.login(user)
+      .then(function(user){
+        //ログイン成功時の処理
+        console.log("ログイン成功：" + JSON.stringify(user));
+        document.location.href='index.html';
+      })
+      .catch(function(error){
+        //ログイン失敗時の処理
+        console.log("ログイン失敗：" + JSON.stringify(error));
+      });
     }
   </script>
 </head>
@@ -96,12 +114,12 @@
         <form class="login-form">
 
           <p>StudentNumber</p>
-          <p class="text"><input type="text" name="student_number" /></p>
+          <p class="text"><input type="number" id="lSN" name="student_number" /></p>
           <p>Password</p>
-          <p class="pass"><input type="password" name="pass" /></p>
+          <p class="pass"><input type="password" id="loginPass" name="pass" /></p>
 
           <div class="bt-wine">
-            <a href="#" class="bt-samp37">SIGN-IN</a>
+            <a href="javascript:wineLogin();" class="bt-samp37">SIGN-IN</a>
           </div>
           <p class="message">Not registered? <a href="#" class="change">Create an account</a></p>
         </form>
