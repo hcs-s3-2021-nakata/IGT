@@ -304,6 +304,8 @@ a.btn-border-shadow--color:before {
   border: solid 2px #67c5ff;
   border-radius: 3px;
   transition: .4s;
+  height: 100px;
+  width: 100px;
 }
 
 .btn-flat-border:hover {
@@ -486,7 +488,16 @@ img{
 }
 
 /* ボイス一覧 */
+a,
+a:visited,
+a:hover,
+a:active {
+  color: inherit;
+  text-decoration: none;
+}
+
 ul.voice-list {
+  list-style-type: none;
   background: whitesmoke;
   padding: 0 0.5em;
   position: relative;
@@ -496,8 +507,13 @@ ul.voice-list li {
   font-size: 21px;
   line-height: 1.5;
   padding: 0.5em 0 0.5em 1.5em;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid #87cefa;
   list-style-type: none!important;
+}
+
+li.voice-list-first {
+  background:#87cefa;
+  color: azure;
 }
 
 ul.voice-list li:before {
@@ -509,7 +525,43 @@ ul.voice-list li:before {
 }
 
 ul.voice-list li:last-of-type {
-  border-bottom: none;/*最後の線だけ消す*/
+}
+
+ul.voice-list li:hover {
+  background-color:#f0f8ff;
+}
+
+li:nth-child(2n) {
+  background: #FFF;
+}
+
+/* ボイス一覧（先生＆お気に入り） */
+ul.next-voice-list {
+  list-style-type: none;
+  padding: 0 0.5em;
+  position: relative;
+}
+
+ul.next-voice-list li {
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 0.5em 0 0.5em 1.5em;
+  border-bottom: 2px solid gray;
+  list-style-type: none!important;
+}
+
+ul.next-voice-list li:before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f00c";/*アイコン種類*/
+  position: absolute;
+  left : 0.5em; /*左端からのアイコンまで*/
+  color: #668ad8; /*アイコン色*/
+}
+
+ul.next-voice-list li:last-of-type {
+}
+
+ul.next-voice-list li:hover {
 }
 
 /* 詳細画面のモーダル関連機能 */
@@ -558,6 +610,7 @@ ul.voice-list li:last-of-type {
 	margin:0 auto;
 	transition:transform 0.4s;
 	z-index:70;
+  text-align: center;
 }
 
 #mask.hidden{
@@ -589,6 +642,86 @@ th.modal_table {
     width: 200px;
     height: 200px;
 }
+
+/* お気に入りボタン */
+#favorite-button {
+  width: 100px;
+  height: 30px;
+  border-color:#3ac3ff;
+  background:#FFFFFF;
+    
+  
+}
+#favorite-button.blue {
+  background: #3ac3ff;
+  color: #FFFFFF;
+}
+
+div.btn-tag {
+  font-size: 20px;
+  padding: 0.08rem 0.08rem 0.08rem 40px;
+}
+
+div.btn-tag:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 0px;
+  height: 100%;
+
+  content: "";
+
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+
+div.btn-tag--favorite {
+  color: #3ac3ff;
+  background:#FFFFFF;
+  border: 1px solid #3ac3ff;
+}
+
+div.btn-tag--favorite:before {
+  background: #fff;
+}
+
+div.btn-tag--favorite i {
+  font-size: 100%;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 40px;
+  padding: 0.3rem 0;
+
+  -webkit-transition: all 0.3s;
+
+  transition: all 0.3s;
+  text-align: center;
+  letter-spacing: 0;
+
+  opacity: 0.5;
+  color: #f39800;
+}
+
+div.btn-tag--favorite:hover {
+  background: #3ac3ff;
+  color: #3ac3ff;
+}
+
+div.btn-tag--favorite:hover i {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+
+  opacity: 0.8;
+}
+
+div.btn-tag--favorite.blue {
+  background: #3ac3ff;
+  color: #FFFFFF;
+}
+
 #photo{
     max-width: 80px;
     max-height: 400px;
