@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <script src="css/jquery-3.6.0.min.js"></script>
+  <script src="css/jquery.qrcode.min.js"></script>
+  <script type="text/javascript" src="css/login.js"></script>
+  <link rel="stylesheet" href="components/loader.css">
+  <link href="https://fonts.googleapis.com/css?family=Oswald:700 rel=" stylesheet ">
+  <link rel="stylesheet " href="css/login.css ">
+  
+
+<link href="https://fonts.googleapis.com/css?family=Montserrat+Subrayada rel="stylesheet">
+
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script>
+    // APIキーの設定とSDK初期化
+    // API key.
+    var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+    var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+    // SDK initialization.
+    var ncmb = new NCMB(applicationKey, clientKey);
+
+    //新規ユーザ作成
+    function createNewUser() {
+      var createN = document.getElementById("cN").value;
+      var createP = document.getElementById("cP").value;
+      var createSN = document.getElementById("cSN").value;
+      // ユーザークラスのインスタンスを生成
+      var user = new ncmb.User();
+      //ユーザ名/パスワードで新規ユーザー登録
+      user.set("userName", createN)
+      .set("student_number", createSN)
+        .set("password", createP)
+        .signUpByAccount()
+        .then(function(user) {
+          //新規ユーザー登録成功
+          console.log("新規ユーザー登録成功：" + JSON.stringify(user));
+          //アクセスコントロール制御(未実装p100)
+          
+          document.location.href='index.html';
+        })
+    .catch(function(error) {
+      //新規ユーザー登録失敗時の処理
+      console.log("新規ユーザー登録失敗：" + JSON.stringify(error));
+    });
+    }
+
+
+    //ログイン機能
+    function wineLogin(){
+      
+      var loginStudentNumber = document.getElementById("lSN").value;
+      var loginPassword = document.getElementById("loginPass").value;
+      alert(loginPassword + "パスワード" + loginStudentNumber + "名前")
+      var user = new ncmb.User({student_number:loginStudentNumber, password:loginPassword});
+      ncmb.User.login(user)
+      .then(function(user){
+        //ログイン成功時の処理
+        console.log("ログイン成功：" + JSON.stringify(user));
+        document.location.href='index.html';
+      })
+      .catch(function(error){
+        //ログイン失敗時の処理
+        console.log("ログイン失敗：" + JSON.stringify(error));
+      });
+    }
+  </script>
+</head>
+
+<body id="welcom">
+  <div id="form">
+    <!--div class="form-title">
+      <p class="form-title">ワインの窓</p>
+      <p class="subTitle" id="subTitle">_Wine Window_</p>
+    </div>
+    <div id="wine">
+      <img src="img/wineWindow.png" id="wineWindow">
+    </div>
+    <p>学籍番号</p>
+    <p class="text"><input type="text" name="student_number" /></p>
+    <p>Password</p>
+    <p class="pass"><input type="password" name="pass" /></p>
+
+    <div class="bt-wine">
+    <a href="#" class="bt-samp37">SIGN-IN</a>
+    </div>
+   
+  </div-->
+    <div class="form-title">
+      <p class="form-title">ワインの窓</p>
+      <p class="subTitle" id="subTitle">_Wine Window_</p>
+    </div>
+    <div id="wine">
+      <img src="img/wineWindow.png" id="wineWindow">
+    </div>
+    <!--以下お試しログイン・新規-->
+    <div class="login-page">
+      <div class="form">
+        <form class="register-form">
+          <input type="text" id="cN" placeholder="name" name="createName" />
+          <input type="password" id="cP" placeholder="password" name="createPass" />
+          <input type="text" placeholder="studentNumber" id="cSN" idname="createStudentNumber" />
+          <div class="bt-wine">
+            <a href="javascript:createNewUser();" class="bt-samp37">CREATE</a>
+          </div>
+          <p class="message">Already registered? <a href="#">Sign In</a></p>
+        </form>
+        <form class="login-form">
+
+          <p>StudentNumber</p>
+          <p class="text"><input type="number" id="lSN" name="student_number" /></p>
+          <p>Password</p>
+          <p class="pass"><input type="password" id="loginPass" name="pass" /></p>
+
+          <div class="bt-wine">
+            <a href="javascript:wineLogin();" class="bt-samp37">SIGN-IN</a>
+          </div>
+          <p class="message">Not registered? <a href="#" class="change">Create an account</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
