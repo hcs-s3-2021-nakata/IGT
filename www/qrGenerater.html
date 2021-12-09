@@ -41,12 +41,12 @@
       }
     </script>
 </head>
-<body id="prodact_lists">
+<body>
   <!-- Header Start -->
     <header class="site-header">
       <div class="wrapper site-header__wrapper">
         <nav class="nav">
-          <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">商品一覧</span>
+          <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">取引成立</span>
         <label for="menu-btn-check" class="menu-btn"><span></span></label>
         <div class="menu-content">
           <ul>
@@ -59,14 +59,20 @@
       </div>
     </header>
     <!-- Header End -->
-    <!-- <button onclick="qrcode">自分のQRコードを相手に見せる</button> -->
-    <a>QRコードが作成されました！</a>
-    <br>
-    <br>
-    <div id="img-qr"></div>
-    <br>
-    <br>
-    <button onclick="detail()">詳細画面を見る</button>
+
+    <!-- Body Start -->
+    <div class="center">
+      <br>
+      <a>QRコードが作成されました！</a>
+      <br>
+      <br>
+      <div id="img-qr"></div>
+      <br>
+      <br>
+      <button onclick="detail()">詳細画面を見る</button>
+    </div>
+    <!-- Body End -->
+
     <!-- Footer Start -->
     <ul class="bottom-menu">
     <li>
@@ -80,7 +86,7 @@
  	<a href="insert.html"><i class="fas fa-plus"></i></a>
     </li>
     <li>
-        <a href="#"><i class="fas fa-qrcode"></i></a>
+        <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
     </li>
     <li>
         <a href="voice.html">

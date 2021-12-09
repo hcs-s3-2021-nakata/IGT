@@ -349,6 +349,7 @@ a.btn-border-shadow--color:before {
   margin-top: 30px; 
   height: 130px;
   background-color: white;
+  text-align: center;
 }
 
 .container_parent{
@@ -737,3 +738,27 @@ button.btn-tag--favorite.blue {
     max-width: 80px;
     max-height: 400px;
 }
+
+/* QRコード読み取り画面の関連 */
+#qr_detail{
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: .5em .5em 0;
+  background-color: white;
+}
+
+summary {
+    font-weight: bold;
+    margin: -.5em -.5em 0;
+    padding: .5em;
+}
+
+#qr_detail[open] {
+    padding: .5em;
+}
+
+#qr_detail[open] summary {
+    border-bottom: 1px solid black;
+    margin-bottom: .5em;
+}
+/* QRコード読み取り画面の関連(終了) */

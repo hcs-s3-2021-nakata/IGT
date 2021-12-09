@@ -73,11 +73,19 @@
       </div>
     </header>
     <!-- Header End -->
+    <!-- Body Start -->
     <br>
     <div class="qr">
-    <p>QRコードを相手に見せよう！</p>
-<div id="img-qr"></div><br>
-<button onclick="scan()" class="btn btn-malformation">QRコードを<br>読み取る！</button></div>
+      <p>QRコードを相手に見せよう！</p>
+      <!-- 折り畳み展開ポインタ -->
+      <details id="qr_detail">
+        <summary>クリックして展開</summary>
+        <div id="img-qr"></div><br>
+      </details>
+      <br>
+      <button onclick="scan()" class="btn btn-malformation">QRコードを<br>読み取る！</button>
+    </div>
+    <!-- Body End -->
     <!-- Footer Start -->
     <ul class="bottom-menu">
     <li>
