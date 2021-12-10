@@ -11,6 +11,38 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
     <script>
+      // // APIキーの設定とSDK初期化
+      // // API key.
+      // var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+      // var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+      // // SDK initialization.
+      // var ncmb = new NCMB(applicationKey, clientKey);
+
+      // function newDeal(){
+      //   var category = document.getElementById("category").value;
+      //   var delivery_end_date = document.getElementById("delivery_end_date").value;
+      //   var delivery_start_date = document.getElementById("delivery_start_date").value;
+      //   var delivery_time = document.getElementById("delivery_time").value;
+      //   var item_info = document.getElementById("item_info").value;
+      //   var item_name = document.getElementById("item_name").value;
+      //   var item_status = document.getElementById("item_status").value;
+      //   var location = document.getElementById("location").value;
+      //   // 保存先クラスの生成
+      //   var give = ncmb.DataStore("give");
+      //   // クラスインスタンスの生成
+      //   var give = new give();
+      //   // データを設定して保存する
+      //   give.set("category", category)
+      //   .set("delivery_end_date", delivery_end_date)
+      //   .set("delivery_start_date", delivery_start_date)
+      //   .set("delivery_time", delivery_time)
+      //   .set("item_info", item_info)
+      //   .set("item_name", item_name)
+      //   .set("item_status", item_status)
+      //   .set("location", location)
+      //   .save();
+      // }
+      
       // モーダル表示用スクリプト（仮）
       function modal_open(){
         const open = document.getElementById('d_open');
@@ -42,32 +74,46 @@
 </head>
 <body>
 	<!-- Header Start -->
+    <!-- Header Start -->
     <header class="site-header">
       <div class="wrapper site-header__wrapper">
         <nav class="nav">
-          <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">商品情報の入力</span>
-        <label for="menu-btn-check" class="menu-btn"><span></span></label>
-        <div class="menu-content">
-          <ul>
-            <li><a href="#">アカウント詳細</a></li>
-            <li><a href="#">設定</a></li>
-            <li><a href="#">ログアウト</a></li>
-          </ul>
-        </div>
+          <div class="detail_head">
+            <div class="back_button">
+              <a href="javascript:history.back()">
+                <i class="fas fa-angle-left back_size"></i>
+              </a>
+            </div>
+            <div class="page_title">
+              <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">商品情報の入力</span>
+              <label for="menu-btn-check" class="menu-btn"><span></span></label>
+              <div style="text-align: left" class="menu-content">
+                <ul>
+                  <li><a href="#">アカウント詳細</a></li>
+                  <li><a href="#">設定</a></li>
+                  <li><a href="#">ログアウト</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="header_right">
+            </div>
+          </div>
         </nav>
       </div>
     </header>
     <!-- Header End -->
     
     <!-- 投稿ボタン -->
-    <button type="button" class="right" name="item_image" id="d_open" onclick="modal_open()"> 投稿 </button>
-    <div id="mask" class="hidden"></div>
+    <div class="right">
+    <button type="button" class="newDeal-btn" name="item_image" id="d_open" onclick="modal_open()"> 出品する！ </button>
+    </div>
+    <div id="mask" class="hidden"></div><br><br>
     
     <!-- 商品画像選択 -->
-    <div class="flex" name="item_image">
+    <div class="flex" id="newDeal_info" name="item_image">
         <!-- カメラからアップロード -->
         <button class="btn-flat-border">
-        📷<input type="file"  onChange="imgPreView(event)"/>　　
+        📷<input type="file"  onChange="imgPreView(event)"/>
         </button>
         
         <!-- アルバムからアップロード -->
@@ -84,9 +130,9 @@
     
     <div class="gray"><br>
     <!-- カテゴリー -->
-        <label for="category">　　カテゴリー</label>
-        <div class="flex">
-            <select name="category" size=1 class="width">
+        <label for="category" class="leftmrg30px">カテゴリー</label>
+        <div class="flex" id="newDeal_info">
+            <select id="category" name="category" size=1 class="nd_size">
                 <option value="1">おもちゃ・ゲーム</option>
                 <option value="2">本・テキスト</option>
                 <option value="3">音楽・ＤＶＤ</option>
@@ -96,68 +142,68 @@
                 <option value="7">PC・スマホ用品</option>
                 <option value="100">その他</option>
             </select>
-        </div><br><br><br>
+        </div><br>
     
     <!-- 商品の状態 -->
-        <label for="item_status">　　商品の状態</label>
-        <div class="flex">
-            <select name="item_status" size="1" class="width">
+        <label for="item_status" class="leftmrg30px">商品の状態</label>
+        <div class="flex" id="newDeal_info">
+            <select id="item_status" name="item_status" size="1" class="nd_size">
                 <option value="1">新品</option>
                 <option value="2">ほぼ新品</option>
                 <option value="3">多少の傷あり</option>
                 <option value="4">傷・汚れあり</option>
                 <option value="5">状態が悪い</option>
             </select>
-        </div>
+        </div><br>
     </div><br><br><br>
     
     
     <div class="gray"><br>
     <!-- 商品名入力 -->
-        <label for="item_name">　　商品名</label>
-        <div class="flex" name="item_name">
-            <input type="text" id="name" class="width" name="name" required maxlength="50" size="52">
-        </div>
+        <label for="item_name" class="leftmrg30px">商品名</label>
+        <div class="flex" id="newDeal_info" name="item_name">
+            <input type="text" id="item_name" class="nd_size" name="name" required maxlength="50" size="52">
+        </div><br>
     
     <!-- 商品情報入力 -->
-        <label for="item_info">　　商品の説明</label>
-        <div class="flex" name="item_info">
-            <textarea name="item_info" class="width" maxlength="250" rows="8"required></textarea>
-        </div>
+        <label for="item_info" class="leftmrg30px">商品の説明</label>
+        <div class="flex" id="newDeal_info" name="item_info" >
+            <textarea id="item_info" name="item_info" class="width" maxlength="250" rows="8"required></textarea>
+        </div><br>
     </div><br><br><br>
     
     <div class="gray"><br>
     <!-- 交換希望品情報入力 -->
-        <label for="swap_item_info">　　交換希望品について</label>
-        <div class="flex" name="swap_item_info" >
+        <label for="swap_item_info" class="leftmrg30px">交換希望品について</label>
+        <div class="flex" id="newDeal_info" name="swap_item_info" >
             <textarea name="swap_item_info" class="width" maxlength="250" rows="8"required></textarea>
-        </div>
+        </div><br>
     </div><br><br><br>
     
     <div class="gray"><br>
     <!-- 受け渡し期間 -->
-        <label for="delivery_start_date">　　受け渡し期間</label>
-        <div class="flex">
-            <input type="date" id="delivery_start_date" name="delivery_start_date" class="width">
-            <p>　～　　</p>
-            <input type="date" id="delivery_end_date" name="delivery_end_date" class="width">
-        </div><br><br><br>
+        <label for="delivery_start_date" class="leftmrg30px">受け渡し期間</label>
+        <div class="flex" id="newDeal_info">
+            <input type="date" id="delivery_start_date" name="delivery_start_date" class="nd_size_times">
+            <p><span class="margin10px">～</span></p>
+            <input type="date" id="delivery_end_date" name="delivery_end_date" class="nd_size_times">
+        </div>
     
     <!-- 受け渡し時間帯 -->
-        <label for="delivery_time">　　受け渡し時間帯</label>
-        <div class="flex">
-            <select name="delivery_time" size="1" class="width">
+        <label for="delivery_time" class="leftmrg30px">受け渡し時間帯</label>
+        <div class="flex" id="newDeal_info">
+            <select name="delivery_time" size="1" class="nd_size">
                 <option value="1">１コマ目終了後</option>
                 <option value="2">昼休み</option>
                 <option value="3">３コマ目終了後</option>
                 <option value="4">４コマ目終了後</option>
             </select>
-        </div><br><br><br>
+        </div><br>
     
     <!-- 受け渡し場所 -->
-        <label for="location">　　受け渡し場所</label>
-        <div class="flex">
-            <select name="location" size="1" class="width">
+        <label for="location" class="leftmrg30px">受け渡し場所</label>
+        <div class="flex" id="newDeal_info">
+            <select id="location" name="location" size="1" class="nd_size">
                 <option value="1">本校舎3Fホール</option>
                 <option value="2">本校舎4Fホール</option>
                 <option value="3">本校舎5F</option>
@@ -169,7 +215,7 @@
                 <option value="9">3号館ホール</option>
                 <option value="100">その他</option>
             </select>
-        </div>
+        </div><br>
     </div><br><br><br>
 	
     
