@@ -35,40 +35,43 @@
       var user = new ncmb.User();
       //ユーザ名/パスワードで新規ユーザー登録
       user.set("userName", createN)
-      .set("student_number", createSN)
+        .set("student_number", createSN)
         .set("password", createP)
         .signUpByAccount()
         .then(function(user) {
           //新規ユーザー登録成功
           console.log("新規ユーザー登録成功：" + JSON.stringify(user));
           //アクセスコントロール制御(未実装p100)
-          
-          document.location.href='index.html';
+
+          document.location.href = 'index.html';
         })
-    .catch(function(error) {
-      //新規ユーザー登録失敗時の処理
-      console.log("新規ユーザー登録失敗：" + JSON.stringify(error));
-    });
+        .catch(function(error) {
+          //新規ユーザー登録失敗時の処理
+          console.log("新規ユーザー登録失敗：" + JSON.stringify(error));
+        });
     }
 
 
     //ログイン機能
-    function wineLogin(){
-      
+    function wineLogin() {
+
       var loginStudentNumber = document.getElementById("lSN").value;
       var loginPassword = document.getElementById("loginPass").value;
       alert(loginPassword + "パスワード" + loginStudentNumber + "名前")
-      var user = new ncmb.User({student_number:loginStudentNumber, password:loginPassword});
-      ncmb.User.login(user)
-      .then(function(user){
-        //ログイン成功時の処理
-        console.log("ログイン成功：" + JSON.stringify(user));
-        document.location.href='index.html';
-      })
-      .catch(function(error){
-        //ログイン失敗時の処理
-        console.log("ログイン失敗：" + JSON.stringify(error));
+      var user = new ncmb.User({
+        student_number: loginStudentNumber,
+        password: loginPassword
       });
+      ncmb.User.login(user)
+        .then(function(user) {
+          //ログイン成功時の処理
+          console.log("ログイン成功：" + JSON.stringify(user));
+          document.location.href = 'index.html';
+        })
+        .catch(function(error) {
+          //ログイン失敗時の処理
+          console.log("ログイン失敗：" + JSON.stringify(error));
+        });
     }
   </script>
 </head>
@@ -112,20 +115,49 @@
           <p class="message">Already registered? <a href="#">Sign In</a></p>
         </form>
         <form class="login-form">
+          <p class="text"><input type="number" id="lSN" name="student_number" placeholder="StudentNumber" /></p>
 
-          <p>StudentNumber</p>
-          <p class="text"><input type="number" id="lSN" name="student_number" /></p>
-          <p>Password</p>
-          <p class="pass"><input type="password" id="loginPass" name="pass" /></p>
+          <p class="pass"><input type="password" id="loginPass" name="pass" placeholder="Password" /></p>
 
           <div class="bt-wine">
             <a href="javascript:wineLogin();" class="bt-samp37">SIGN-IN</a>
           </div>
           <p class="message">Not registered? <a href="#" class="change">Create an account</a></p>
         </form>
-      </div>
+
+         <!--お試しタブ-->
+  <div class="wrap-tab">
+  <ul id="js-tab" class="list-tab">
+    <li class="active">ログイン</li>
+    <li>新規作成</li>
+  </ul>
+  
+  <div class="wrap-tab-content">
+    <div class="tab-content active">
+      <input type="text" id="cN" placeholder="name" name="createName" />
+          <input type="password" id="cP" placeholder="password" name="createPass" />
+          <input type="text" placeholder="studentNumber" id="cSN" idname="createStudentNumber" />
+          <div class="bt-wine">
+            <a href="javascript:createNewUser();" class="bt-samp37">CREATE</a>
+          </div>
+    </div>
+
+    <div class="tab-content">
+       <p class="text"><input type="number" id="lSN" name="student_number" placeholder="StudentNumber" /></p>
+
+          <p class="pass"><input type="password" id="loginPass" name="pass" placeholder="Password" /></p>
+          <div class="bt-wine">
+            <a href="javascript:wineLogin();" class="bt-samp37">SIGN-IN</a>
+          </div>
     </div>
   </div>
+</div>
+  <!--お試しタブエンド-->
+      </div>
+    </div>
+
+  </div>
+ 
 </body>
 
 </html>
