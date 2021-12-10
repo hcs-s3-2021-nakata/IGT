@@ -14,6 +14,7 @@
       // 詳細画面のモーダル表示用スクリプト（仮）
       function modal_open(){
         const open = document.getElementById('d_open');
+        const ok = document.getElementById('d_ok');
         const close = document.getElementById('d_cancel');
         const modal = document.getElementById('d_modal');
         const mask = document.getElementById('mask');
@@ -23,6 +24,14 @@
           mask.classList.remove('hidden');
         });
         
+        ok.addEventListener('click',()=>{
+          localStorage.setItem("flag","trade");
+          localStorage.setItem("objectID","g5y1d59s15");
+          localStorage.setItem("give_userID","20193029");
+          localStorage.setItem("take_userID","20191204");
+          document.location.href='qrGenerater.html';
+        });
+
         close.addEventListener('click',()=>{
           modal.classList.add('hidden');
           mask.classList.add('hidden');

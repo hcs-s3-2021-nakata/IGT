@@ -11,7 +11,13 @@
 }
 /*ヘッダー背景色*/
 .site-header {
+  /* 画面の調整が完了次第 relative から fixed に変更する */
+  /* position: fixed; */
   position: relative;
+  top: 0%;
+  right: 0%;
+  left: 0%;
+  width: 100%;
   background-color: #e6dfb3;
 }
 /*ヘッダー使用メディア別の大きさ*/
@@ -226,9 +232,28 @@ li.menu-width-max ul.menu-second-level li {
 
  /*センタリング*/
 .flex{
-  padding:50px 0;
+  padding:50px 0px;
   display:flex;
   justify-content:center;
+}
+
+/* 投稿ボタン */
+.newDeal-btn{
+  position: fixed;
+  top: 74px;
+  right: 1%;
+  border: none;
+  font-weight: 700;
+  font-size: 15px;
+  height: 40px;
+  width: 100%;
+  background-color: white;
+  color:#3a78ff;
+  text-align: center;
+}
+
+#newDeal_info{
+  padding:0px 0px;
 }
 
 　/*譲渡ボタン*/
@@ -325,11 +350,34 @@ a.btn-border-shadow--color:before {
 /*input要素の横幅を画面に合わせる*/
 .width { width: 75%; }
 
+/* input要素の縦横幅を画面に合わせる */
+.nd_size {
+  width: 75%;
+  height: 30px;
+}
+
+.nd_size_times{
+  width: 35%;
+  height: 30px;
+}
+/* 受け渡し期間の波線につけてる余白 */
+.margin10px{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.leftmrg30px{
+  margin-left: 30px;
+}
+
 /*input要素を右寄せにする*/
 .right { text-align: right; }
 
 /*input要素の背景色をグレーにする*/
-.gray { background-color:#F5F5F5; }
+.gray {
+  background-color:#F5F5F5;
+  padding: 0px 0px 10px;
+}
 
 
 
