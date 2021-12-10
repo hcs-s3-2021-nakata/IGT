@@ -11,7 +11,13 @@
 }
 /*ヘッダー背景色*/
 .site-header {
+  /* 画面の調整が完了次第 relative から fixed に変更する */
+  /* position: fixed; */
   position: relative;
+  top: 0%;
+  right: 0%;
+  left: 0%;
+  width: 100%;
   background-color: #e6dfb3;
 }
 /*ヘッダー使用メディア別の大きさ*/
