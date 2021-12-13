@@ -803,12 +803,12 @@ div.deal-detail_info{
 
 /* 取引詳細画面_ボタン */
 #deal-detail_button {
-  padding-top: 30px;
+  padding-top: 20px;
 }
 
 /* 取引詳細画面_青ボタン */
 button.showing{
-  font-size: 1rem;
+  font-size: 0.8rem;
   padding: 0.5rem 1.3rem 0.5rem 1.3rem;
   letter-spacing: 0.1rem;
   color: #FFFFFF;
@@ -820,7 +820,7 @@ button.showing{
 
 /* 取引詳細画面_赤ボタン */
 button.stop{
-  font-size: 1rem;
+  font-size: 0.8rem;
   padding: 0.5rem 1.3rem 0.5rem 1.3rem;
   letter-spacing: 0.1rem;
   color: #FFFFFF;
