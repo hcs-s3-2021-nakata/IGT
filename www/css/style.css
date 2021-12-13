@@ -796,11 +796,19 @@ img.deal-detail{
 
 /* 取引詳細画面_商品説明 */
 div.deal-detail_info{
-    width:85%; /* ボックスの横幅を指定 */
+    width:90%; /* ボックスの横幅を指定 */
     height: 200px; /* ボックスの高さを指定 */
     border: 3.5px dashed #000000; /* 境界線を実線で指定 */
     padding: 15px;
-    
+    border-radius: 30px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+div.deal-detail{
+    width:90%;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 /* 取引詳細画面_ボタン */
