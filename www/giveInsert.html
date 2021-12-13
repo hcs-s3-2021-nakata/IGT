@@ -25,6 +25,7 @@
         var delivery_end_date = document.getElementById("delivery_end_date").value;
         var delivery_start_date = document.getElementById("delivery_start_date").value;
         var delivery_time = document.getElementById("delivery_time").value;
+        var item_image = document.getElementById("item_image");
         var item_info = document.getElementById("item_info").value;
         var item_name = document.getElementById("item_name").value;
         var item_status = document.getElementById("item_status").value;
@@ -35,6 +36,7 @@
         var give = new Give();
         // データを設定して保存する
         give.set("category", category)
+        .set("deal_status", "成立待ち")
         .set("delivery_end_date", delivery_end_date)
         .set("delivery_start_date", delivery_start_date)
         .set("delivery_time", delivery_time)
@@ -43,6 +45,18 @@
         .set("item_status", item_status)
         .set("location", location)
         .save();
+        //
+        alert("画像 " + item_image);
+        // .then(function(give){
+        //   // 保存後の処理
+        //   alert("登録成功");
+        //   console.log("登録成功" + JSON.stringify(give));
+        //  })
+        //  .catch(function(error){
+        //    // エラー処理
+        //    alert("登録失敗");
+        //    console.log("登録失敗" + JSON.stringify(error));
+        //  });
       }
 
       // モーダル表示用スクリプト（仮）
@@ -59,7 +73,7 @@
         });
 
         ok.addEventListener('click',()=>{
-          newDeal(); // 凍結中のDB登録用関数
+          newDeal();
           localStorage.setItem("flag","give");
           document.location.href='insertFixed.html';
         });
@@ -112,13 +126,13 @@
     <!-- 商品画像選択 -->
     <div class="flex" id="newDeal_info" name="item_image">
         <!-- カメラからアップロード -->
-        <button class="btn-flat-border">
-        📷<input type="file"  onChange="imgPreView(event)"/>
+        <button class="btn-flat-border" id="item_image">
+        📷<input type="file" onChange="imgPreView(event)"/>
         </button>
         
         <!-- アルバムからアップロード -->
         <form>
-            <button class="btn-flat-border">
+            <button class="btn-flat-border" id="item_image">
             📚<input type="file" accept="image/*" multiple=" multiple" onchange="loadImage(this);">
             </button>
         </form>
