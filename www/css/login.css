@@ -88,12 +88,6 @@ a.bt-samp37:hover:before{
 }
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
-
-.login-page {
-  width: 290px;
-  padding: 8% 0 0;
-  margin: auto;
-}
 .form {
   position: relative;
   z-index: 1;
@@ -115,16 +109,6 @@ a.bt-samp37:hover:before{
   box-sizing: border-box;
   font-size: 14px;
 }
-.form .message {
-  margin: 15px 0 0;
-  color: #95753d;
-  font-size: 12px;
-}
-.form .message a {
-  color: #ffffff;
-  text-decoration: none;
-}
-
 
 /*以下お試しタブのCSS*/
 ul{
@@ -140,7 +124,7 @@ ul{
 .list-tab{
   display: flex;
   margin: 0 -2px;
-  border-bottom: 3px solid #A69E84;
+  border-bottom: 3px solid #8B1B34;
 }
 .list-tab > li{
   display: block;
@@ -161,6 +145,7 @@ ul{
 .tab-content{
   display: none;
   padding: 1em;
+
   border-bottom: 1px solid #8B1B34;
   border-left: 1px solid #8B1B34;
   border-right: 1px solid #8B1B34;

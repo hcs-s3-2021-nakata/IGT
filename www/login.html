@@ -34,14 +34,15 @@
       // ユーザークラスのインスタンスを生成
       var user = new ncmb.User();
       //ユーザ名/パスワードで新規ユーザー登録
-      user.set("userName", createN)
-        .set("student_number", createSN)
+      user.set("user_account_name", createN)
+        .set("userName", createSN)
         .set("password", createP)
         .signUpByAccount()
         .then(function(user) {
           //新規ユーザー登録成功
           console.log("新規ユーザー登録成功：" + JSON.stringify(user));
           //アクセスコントロール制御(未実装p100)
+          
 
           document.location.href = 'index.html';
         })
@@ -58,13 +59,9 @@
       var loginStudentNumber = document.getElementById("lSN").value;
       var loginPassword = document.getElementById("loginPass").value;
       alert(loginPassword + "パスワード" + loginStudentNumber + "名前")
-      var user = new ncmb.User({
-        student_number: loginStudentNumber,
-        password: loginPassword
-      });
-      ncmb.User.login(user)
+      ncmb.User.login(loginStudentNumber, loginPassword)
         .then(function(user) {
-          //ログイン成功時の処理
+          //ログイン成功時の処理(例)
           console.log("ログイン成功：" + JSON.stringify(user));
           document.location.href = 'index.html';
         })
@@ -72,29 +69,15 @@
           //ログイン失敗時の処理
           console.log("ログイン失敗：" + JSON.stringify(error));
         });
+
+
+
     }
   </script>
 </head>
 
 <body id="welcom">
   <div id="form">
-    <!--div class="form-title">
-      <p class="form-title">ワインの窓</p>
-      <p class="subTitle" id="subTitle">_Wine Window_</p>
-    </div>
-    <div id="wine">
-      <img src="img/wineWindow.png" id="wineWindow">
-    </div>
-    <p>学籍番号</p>
-    <p class="text"><input type="text" name="student_number" /></p>
-    <p>Password</p>
-    <p class="pass"><input type="password" name="pass" /></p>
-
-    <div class="bt-wine">
-    <a href="#" class="bt-samp37">SIGN-IN</a>
-    </div>
-   
-  </div-->
     <div class="form-title">
       <p class="form-title">ワインの窓</p>
       <p class="subTitle" id="subTitle">_Wine Window_</p>
@@ -102,62 +85,44 @@
     <div id="wine">
       <img src="img/wineWindow.png" id="wineWindow">
     </div>
-    <!--以下お試しログイン・新規-->
-    <div class="login-page">
-      <div class="form">
-        <form class="register-form">
-          <input type="text" id="cN" placeholder="name" name="createName" />
-          <input type="password" id="cP" placeholder="password" name="createPass" />
-          <input type="text" placeholder="studentNumber" id="cSN" idname="createStudentNumber" />
-          <div class="bt-wine">
-            <a href="javascript:createNewUser();" class="bt-samp37">CREATE</a>
+    <div class="form">
+      <div class="wrap-tab">
+        <ul id="js-tab" class="list-tab">
+          <li class="active">新規作成</li>
+          <li>ログイン</li>
+        </ul>
+
+        <div class="wrap-tab-content">
+          <!--新規作成-->
+          <div class="tab-content active">
+            <input type="text" id="cN" placeholder="name" name="createName" />
+            <input type="password" id="cP" placeholder="password" name="createPass" />
+            <input type="text" placeholder="studentNumber" id="cSN" idname="createStudentNumber" />
+            <div class="bt-wine">
+              <a href="javascript:createNewUser();" class="bt-samp37">CREATE</a>
+            </div>
           </div>
-          <p class="message">Already registered? <a href="#">Sign In</a></p>
-        </form>
-        <form class="login-form">
-          <p class="text"><input type="number" id="lSN" name="student_number" placeholder="StudentNumber" /></p>
 
-          <p class="pass"><input type="password" id="loginPass" name="pass" placeholder="Password" /></p>
+          <!--ログイン-->
+          <div class="tab-content">
+            <p class="text">
+              <input type="number" id="lSN" name="student_number" placeholder="StudentNumber" /></p>
 
-          <div class="bt-wine">
-            <a href="javascript:wineLogin();" class="bt-samp37">SIGN-IN</a>
+            <p class="pass">
+              <input type="password" id="loginPass" name="pass" placeholder="Password" /></p>
+            <div class="bt-wine">
+              <a href="javascript:wineLogin();" class="bt-samp37">SIGN-IN</a>
+            </div>
           </div>
-          <p class="message">Not registered? <a href="#" class="change">Create an account</a></p>
-        </form>
-
-         <!--お試しタブ-->
-  <div class="wrap-tab">
-  <ul id="js-tab" class="list-tab">
-    <li class="active">ログイン</li>
-    <li>新規作成</li>
-  </ul>
-  
-  <div class="wrap-tab-content">
-    <div class="tab-content active">
-      <input type="text" id="cN" placeholder="name" name="createName" />
-          <input type="password" id="cP" placeholder="password" name="createPass" />
-          <input type="text" placeholder="studentNumber" id="cSN" idname="createStudentNumber" />
-          <div class="bt-wine">
-            <a href="javascript:createNewUser();" class="bt-samp37">CREATE</a>
-          </div>
-    </div>
-
-    <div class="tab-content">
-       <p class="text"><input type="number" id="lSN" name="student_number" placeholder="StudentNumber" /></p>
-
-          <p class="pass"><input type="password" id="loginPass" name="pass" placeholder="Password" /></p>
-          <div class="bt-wine">
-            <a href="javascript:wineLogin();" class="bt-samp37">SIGN-IN</a>
-          </div>
-    </div>
-  </div>
-</div>
-  <!--お試しタブエンド-->
+        </div>
       </div>
     </div>
+    <!--お試しタブエンド-->
+  </div>
+  </div>
 
   </div>
- 
+
 </body>
 
 </html>
