@@ -617,6 +617,7 @@ ul.next-voice-list li {
 
 #d_ok{
 	width:100px;
+  color: #2496fc;
 	border:2px solid #0085FC;
 	border-radius:4px;
 	text-align: center;
@@ -626,6 +627,7 @@ ul.next-voice-list li {
 
 #d_cancel{
 	width:100px;
+  color: #ff3a3a;
 	border:2px solid #FF0000;
 	border-radius:4px;
 	text-align: center;
@@ -858,3 +860,4 @@ button.stop{
   background-color: #d7003a;
   border: none;
 }
+

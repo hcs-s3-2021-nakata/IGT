@@ -33,6 +33,37 @@
         });
       }
     </script>
+    <script>
+      /*バーコードスキャン(仮)*/
+        let options = {
+                preferFrontCamera : false,
+                showFlipCameraButton : true,
+                showTorchButton : true,
+                torchOn: true, // Android only
+                saveHistory: false, // Android only
+                prompt : "スキャンエリアの中にバーコードを入れてください", // Android
+                resultDisplayDuration: 500, // Android only
+                formats : "QR_CODE,EAN_13,CODE_39", 
+                orientation : "unset", // Android only (portrait|landscape)
+                disableAnimations : true, // iOS
+                disableSuccessBeep: false // iOS and Android
+        }
+        function onSuccess (result) {
+            alert("結果: " + result.text + "\n" +
+                "バーコードの種類: " + result.format + "\n" +
+                "スキャンが中断されたかどうか: " + result.cancelled);
+        }
+        function onError (error) {
+            alert("スキャン失敗: " + error);
+        }
+        function scan() {
+            cordova.plugins.barcodeScanner.scan(
+                onSuccess,
+                onError,
+                options
+            );
+        }
+  </script>
 </head>
 <body>
 	<!-- Header Start -->
@@ -96,8 +127,8 @@
         </div>
         
         <div id="deal-detail_button" class="flex">
-        <button type="button" class="showing"><img id="deal-detail_button" src="img/qr.png"><br><b>表示する</b></button>
-                <button type="button" class="showing"><img id="deal-detail_button" src="img/camera.png"><br><b>スキャン</b></button>
+        <a href="qrreader.html"><button type="button" class="showing"><img id="deal-detail_button" src="img/qr.png"><br><b>表示する</b></button></a>
+                <button type="button" class="showing" onclick="scan()"><img id="deal-detail_button" src="img/camera.png"><br><b>スキャン</b></button>
                 <button type="button" class="stop" id="d_open" onclick="modal_open()"><img id="deal-detail_button" src="img/stop.png"><br><b>取引中止</b></button>
         </div>
         
