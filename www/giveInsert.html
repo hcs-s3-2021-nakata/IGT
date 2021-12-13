@@ -29,10 +29,8 @@
       //   var item_name = document.getElementById("item_name").value;
       //   var item_status = document.getElementById("item_status").value;
       //   var location = document.getElementById("location").value;
-      //   // 保存先クラスの生成
-      //   var give = ncmb.DataStore("give");
       //   // クラスインスタンスの生成
-      //   var give = new give();
+      //   var give = new ncmb.Give();
       //   // データを設定して保存する
       //   give.set("category", category)
       //   .set("delivery_end_date", delivery_end_date)
@@ -59,6 +57,7 @@
         });
 
         ok.addEventListener('click',()=>{
+          // newDeal(); // 凍結中のDB登録用関数
           localStorage.setItem("flag","give");
           document.location.href='insertFixed.html';
         });
@@ -184,7 +183,7 @@
     <!-- 受け渡し時間帯 -->
         <label for="delivery_time" class="leftmrg30px">受け渡し時間帯</label>
         <div class="flex" id="newDeal_info">
-            <select name="delivery_time" size="1" class="nd_size">
+            <select id="delivery_time" name="delivery_time" size="1" class="nd_size">
                 <option value="1">１コマ目終了後</option>
                 <option value="2">昼休み</option>
                 <option value="3">３コマ目終了後</option>

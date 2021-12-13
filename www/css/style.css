@@ -110,12 +110,14 @@
 }
 .menu-content ul {
     padding: 70px 10px 0;
-}
-.menu-content ul li {
     border-bottom: solid 1px #ffffff;
     list-style: none;
 }
-.menu-content ul li a {
+.menu-content li {
+    border-bottom: solid 1px #ffffff;
+    list-style: none;
+}
+.menu-content li {
     display: block;
     width: 100%;
     font-size: 15px;
@@ -125,7 +127,7 @@
     padding: 9px 15px 10px 0;
     position: relative;
 }
-.menu-content ul li a::before {
+.menu-content li a::before {
     content: "";
     width: 15px;
     height: 15px;
@@ -149,7 +151,6 @@
 #menu-btn-check:checked ~ .menu-content {
     left: 0;/*メニューを画面内へ*/
 }
-.mini-text{font-size:20px;}/*文字大きさ*/
 
 ul.bottom-menu {
     position: fixed;
@@ -237,6 +238,9 @@ li.menu-width-max ul.menu-second-level li {
   justify-content:center;
 }
 
+
+/*譲渡ボタン*/
+
 /* 投稿ボタン */
 .newDeal-btn{
   position: fixed;
@@ -256,7 +260,6 @@ li.menu-width-max ul.menu-second-level li {
   padding:0px 0px;
 }
 
-　/*譲渡ボタン*/
 .btn,
 a.btn,
 button.btn {
@@ -564,7 +567,6 @@ ul.voice-list li {
   font-size: 25px;
   line-height: 1.6;
   padding: 0em 0 0em 1rem;
-  display:;
   vertical-align:middle;
   border-bottom: 2px solid #87cefa;
   list-style-type: none!important;
@@ -588,8 +590,8 @@ ul.voice-list li:hover {
   background-color:#f0f8ff;
 }
 
-li:nth-child(2n) {
-  background: #FFF;
+ul.voice-list li:nth-child(even) {
+  background-color: #FFF;
 }
 
 /* ボイス一覧（先生＆お気に入り） */
@@ -646,7 +648,7 @@ ul.next-voice-list li {
 	width:300px;
 	padding:20px;
 	border-radius:4px;
-	position:absolute;
+	position:fixed;
 	top:40px;
 	left:0;
 	right:0;
