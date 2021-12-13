@@ -586,12 +586,12 @@ ul.voice-list li.voice-list-first:hover {
   background-color:skyblue;
 }
 
-ul.voice-list li:hover {
-  background-color:#f0f8ff;
-}
-
 ul.voice-list li:nth-child(even) {
   background-color: #FFF;
+}
+
+ul.voice-list li:hover {
+  background-color:#f0f8ff;
 }
 
 /* ボイス一覧（先生＆お気に入り） */
@@ -782,6 +782,7 @@ button.btn-tag--favorite.blue {
   color: #FFFFFF;
   opacity: 0.8;
 }
+/*  */
 
 #photo{
     max-width: 80px;

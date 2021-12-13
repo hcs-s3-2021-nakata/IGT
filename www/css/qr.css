@@ -45,3 +45,17 @@ button.btn-malformation:hover {
   font-size: 20px;
   text-align:center;
 }
+
+/*QRリーダー読取画面の関連*/
+#qr_detail {
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: .5em .5em 0;
+  background-color: #ffffff;
+}
+
+summany {
+  font-weight: bold;
+  margin: -.5em -.5em 0;
+  padding: .5em;
+}
