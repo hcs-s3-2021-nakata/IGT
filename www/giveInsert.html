@@ -21,11 +21,16 @@
       var ncmb = new NCMB(applicationKey, clientKey);
 
       function newDeal(){
+        
+        // 画像ファイル生成
+        var imageData = document.getElementById("preview").file;
+        var item_image = imgUpload(imageData);// 先行して画像をアップロード。画像の名前を返す
+
         var category = document.getElementById("category").value;
         var delivery_end_date = document.getElementById("delivery_end_date").value;
         var delivery_start_date = document.getElementById("delivery_start_date").value;
         var delivery_time = document.getElementById("delivery_time").value;
-        var item_image = document.getElementById("item_image");
+
         var item_info = document.getElementById("item_info").value;
         var item_name = document.getElementById("item_name").value;
         var item_status = document.getElementById("item_status").value;
@@ -40,24 +45,59 @@
         .set("delivery_end_date", delivery_end_date)
         .set("delivery_start_date", delivery_start_date)
         .set("delivery_time", delivery_time)
+        .set("item_image", item_image)
         .set("item_info", item_info)
         .set("item_name", item_name)
         .set("item_status", item_status)
         .set("location", location)
         .save();
-        //
+        // 確認用アラート
         alert("画像 " + item_image);
-        // .then(function(give){
-        //   // 保存後の処理
-        //   alert("登録成功");
-        //   console.log("登録成功" + JSON.stringify(give));
-        //  })
-        //  .catch(function(error){
-        //    // エラー処理
-        //    alert("登録失敗");
-        //    console.log("登録失敗" + JSON.stringify(error));
-        //  });
       }
+
+      // 画像アップロード用スクリプト
+      function imgUpload(imageData) {
+        // ncmbに画像をアップロード
+        var fileName = makeUUID() + ".jpg";
+        ncmb.File.upload(fileName, imageData);
+        
+        // .then(function(result) {
+        //   alert("画像アップロード成功");
+        // })
+        // .catch(function(error) {
+        //   alert("画像アップロード失敗" + error);
+        // });
+        return fileName;
+      }
+
+      // Blob作成
+      function toBlob(base64, mime_type) {
+      var bin = atob(base64.replace(/^.*,/, ''));
+      var buffer = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) {
+        buffer[i] = bin.charCodeAt(i);
+      }
+
+      try {
+        var blob = new Blob([buffer.buffer], {
+          type: mime_type
+        });
+      } catch (e) {
+        return false;
+      }
+      return blob;
+    }
+
+    //UUID生成
+    function makeUUID() {
+      var d = +new Date();
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+        .replace(/[xy]/g, function(c) {
+          var r = (d + Math.random() * 16) % 16 | 0;
+          return (c == 'X' ? r : (r & 0x3 | 0x8)).toString(16);
+
+        });
+    }
 
       // モーダル表示用スクリプト（仮）
       function modal_open(){
@@ -126,14 +166,19 @@
     <!-- 商品画像選択 -->
     <div class="flex" id="newDeal_info" name="item_image">
         <!-- カメラからアップロード -->
-        <button class="btn-flat-border" id="item_image">
-        📷<input type="file" onChange="imgPreView(event)"/>
+        <button class="btn-flat-border">
+        📷<input type="file" id="item_image" onChange="imgPreView(event)"/>
         </button>
         
         <!-- アルバムからアップロード -->
         <form>
+<!-- <<<<<<< HEAD
             <button class="btn-flat-border" id="item_image">
             📚<input type="file" accept="image/*" multiple=" multiple" onchange="loadImage(this);">
+======= -->
+            <button class="btn-flat-border">
+            📚<input type="file" id="item_image" accept="image/*" multiple=" multiple" onchange="imgPreView(event)">
+
             </button>
         </form>
     </div>

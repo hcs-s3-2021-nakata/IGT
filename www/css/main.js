@@ -13,32 +13,24 @@
 /*eslint no-console: 0*/
 
 /* 画像プレビュー */
-let key = 0;
-function loadImage(obj) {
-    for (i = 0; i < obj.files.length; i++) {
-        var fileReader = new FileReader();
-        fileReader.onload = (function (e) {
-            var field = document.getElementById("preview");
-            var figure = document.createElement("figure");
-            var rmBtn = document.createElement("input");
-            var image = new Image();
-            img.src = e.target.result;
-            rmBtn.type = "button";
-            rmBtn.name = key;
-            rmBtn.value = "削除";
-            rmBtn.onclick = (function () {
-                var element = document.getElementById("img-" + String(rmBtn.name)).remove();
-            });
-            figure.setAttribute("id", "img-" + key);
-            figure.appendChild(image);
-            figure.appendChild(rmBtn)
-            field.appendChild(figure);
-            key++;
-        });
-        fileReader.readAsDataURL(obj.files[i]);
-    }
+function imgPreView(event) {
+  var file = event.target.files[0];
+  var reader = new FileReader();
+  var preview = document.getElementById("preview");
+  var previewImage = document.getElementById("previewImage");
+   
+  if(previewImage != null) {
+    preview.removeChild(previewImage);
+  }
+  reader.onload = function(event) {
+    var img = document.createElement("img");
+    img.setAttribute("src", reader.result);
+    img.setAttribute("id", "previewImage");
+    preview.appendChild(img);
+  };
+ 
+  reader.readAsDataURL(file);
 }
-
 
 /* お気に入り登録（ボタン色反転） */
 function button(){
