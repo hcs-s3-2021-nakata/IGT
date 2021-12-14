@@ -140,6 +140,28 @@
       }
     }
     //お試しカメラエンド
+
+    //ログアウト
+    function logout() {
+      // カレントユーザー情報の取得
+      var currentUser = ncmb.User.getCurrentUser();
+      if (currentUser) {
+        console.log("ログイン中のユーザー: " + currentUser.get("userName"));
+      } else {
+        console.log("未ログインまたは取得に失敗");
+      }
+      ncmb.User.logout()
+      .then(function(){
+        //成功
+        console.log("ログアウト成功" + JSON.stringify(user));
+
+      })
+      .catch(function(){
+        //失敗
+        console.log("ログアウト失敗" + JSON.stringify(error));
+      })
+      document.location.href = 'login.html';
+    }
   </script>
 </head>
 
@@ -150,11 +172,11 @@
       <nav class="nav">
         <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">商品一覧</span>
         <label for="menu-btn-check" class="menu-btn"><span></span></label>
-          <div class="menu-content">
-        <ul>
+        <div class="menu-content">
+          <ul>
             <li><a href="acount.html">アカウント詳細</a></li>
             <li><a href="#">設定</a></li>
-            <li><a href="login.html">ログアウト</a></li>
+            <li><a href="javascript:logout();">ログアウト</a></li>
           </ul>
         </div>
       </nav>
@@ -211,26 +233,28 @@
   <!-- Body End -->
 
   <!-- Footer Start -->
-    <ul class="bottom-menu">
+  <ul class="bottom-menu">
     <li>
-        <a href="#">
-	<i class="far fa-list-alt"></i></a>
+      <a href="#">
+        <i class="far fa-list-alt"></i></a>
     </li>
     <li>
-        <a href="deal.html"><i class="fas fa-random"></i></a>
+      <a href="deal.html"><i class="fas fa-random"></i></a>
     </li>
     <li>
- 	<a href="insert.html"><i class="fas fa-plus"></i></a>
+
+      <a href="insert.html"><i class="fas fa-plus"></i></a>
+
     </li>
     <li>
-        <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
+      <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
     </li>
     <li>
-        <a href="voice.html">
-	<i class="fas fa-bullhorn"></i></a>
+      <a href="voice.html">
+        <i class="fas fa-bullhorn"></i></a>
     </li>
-</ul>
-    <!-- Fotter End -->
+  </ul>
+  <!-- Fotter End -->
 </body>
 
 </html>

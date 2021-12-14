@@ -427,28 +427,57 @@ img{
 
 /* アカウント詳細 */
 div.acount{
-  	
-font-family: 'Permanent Marker', cursive;
+font-family: 'Amatic SC', cursive;
 }
 
-.cp_iptxt {
+ul.acount{
+  list-style-type: none;
+  padding: 0.5rem 1.3rem 0.5rem 1rem;
+}
+
+li.acount{
+  vertical-align: middle;
+  padding: 0.7rem 0rem;
+}
+
+img.acount{
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+}
+
+.ef {
 	position: relative;
 	width: 80%;
 	margin: 40px 3%;
 }
-.cp_iptxt input[type='text'] {
+.ef input[type='text'] {
 	font: 15px/24px sans-serif;
 	box-sizing: border-box;
 	width: 100%;
-	padding: 0.3em;
+	padding: 0rem 0rem 0.1rem 2rem;
 	transition: 0.3s;
 	letter-spacing: 1px;
-	color: #aaaaaa;
+	color: #000000;
 	border: none;
 	border-bottom: 2px solid #1b2538;
 	background: transparent;
 }
 .ef input[type='text']:focus {
-	border-bottom: 2px solid #da3c41;
+	border-bottom: 2px solid #b80b4dda;
 	outline: none;
+}
+
+div.acount-send{
+    text-align:center;
+}
+
+button.acount{
+  width: 130px;
+  height: 50px;
+  background-color: floralwhite;
+  color: #1CA5B8;
+  font-size: 20px;
+  border: none;
+  border-color: #1CA5B8;
 }
