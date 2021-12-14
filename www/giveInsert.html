@@ -25,8 +25,10 @@
       function newDeal(){
         
         // 画像ファイル生成
-        var imageData = document.getElementById("preview").file;
-        var item_image = imgUpload(imageData);// 先行して画像をアップロード。画像の名前を返す
+        var imageData = document.getElementById("previewImage");
+        var src = previewImage.getAttribute('src');
+        alert(src);
+        var item_image = imgUpload(src);// 先行して画像をアップロード。画像の名前を返す
 
         var category = document.getElementById("category").value;
         var delivery_end_date = document.getElementById("delivery_end_date").value;
@@ -61,7 +63,8 @@
       function imgUpload(imageData) {
         // ncmbに画像をアップロード
         var fileName = makeUUID() + ".jpg";
-        ncmb.File.upload(fileName, imageData);
+        var fileData = toBlob(imageData, "image/jpeg");
+        ncmb.File.upload(fileName, fileData);
         
         // .then(function(result) {
         //   alert("画像アップロード成功");
