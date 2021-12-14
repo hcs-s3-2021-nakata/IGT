@@ -117,7 +117,7 @@
     border-bottom: solid 1px #ffffff;
     list-style: none;
 }
-.menu-content li {
+.menu-content li a {
     display: block;
     width: 100%;
     font-size: 15px;
@@ -182,40 +182,6 @@ ul.bottom-menu li {
 .bottom-menu li a:hover {
     color:#3ac3ff;/*マウスオーバー時の色*/}
 
-/* === 展開メニュー === */
-
-ul.menu-second-level {
-    visibility: hidden;
-    opacity: 0;
-    z-index:1;}
-
-ul.menu-second-level li a{
-    border-top:1px dashed #a9a9a9;/*展開の枠点線*/
-        font-size:15px;/*展開メニューの文字サイズ*/
-        line-height:30px;/*文字の縦幅*/}
-
-.menu-second-level li a:hover {
-    height:100%;
-    background: lightgrey;/*マウスオーバーの色*/}
-
-li.menu-width-max ul.menu-second-level {
-    position: absolute;
-    bottom: 47px;/*高さ*/
-    left: 0;
-    box-sizing: border-box;
-    width: 100%;
-    padding:0;}
-
-li.menu-width-max:hover ul.menu-second-level {
-    bottom: 47px;/*高さ*/
-    visibility: visible;
-    opacity: 1;}
-
-li.menu-width-max ul.menu-second-level li {
-    float: left;
-    width: 100%;
-    border: none;}
-
   /*スマホの時だけ*/
 @media(max-width: 767px){ 
 
@@ -236,28 +202,6 @@ li.menu-width-max ul.menu-second-level li {
   padding:50px 0px;
   display:flex;
   justify-content:center;
-}
-
-
-/*譲渡ボタン*/
-
-/* 投稿ボタン */
-.newDeal-btn{
-  position: fixed;
-  top: 74px;
-  right: 1%;
-  border: none;
-  font-weight: 700;
-  font-size: 15px;
-  height: 40px;
-  width: 100%;
-  background-color: white;
-  color:#3a78ff;
-  text-align: center;
-}
-
-#newDeal_info{
-  padding:0px 0px;
 }
 
 .btn,
@@ -324,68 +268,9 @@ a.btn-border-shadow--color:before {
   border-radius: 0;
 }
 
-
-/*画像アップロードボタン*/
-.btn-flat-border {
-  display: inline-block;
-  padding: 4em 1em;
-  text-decoration: none;
-  color: #67c5ff;
-  border: solid 2px #67c5ff;
-  border-radius: 3px;
-  transition: .4s;
-  height: 100px;
-  width: 100px;
-}
-
-.btn-flat-border:hover {
-  background: #67c5ff;
-  color: white;
-}
-
-　/*新規登録画面_画像アップロード*/
-#preview img {
-  width: 200px;
-  margin: 10px;
-  border: solid 1px silver;
-}
-
-/*input要素の横幅を画面に合わせる*/
-.width { width: 75%; }
-
-/* input要素の縦横幅を画面に合わせる */
-.nd_size {
-  width: 75%;
-  height: 30px;
-}
-
-.nd_size_times{
-  width: 35%;
-  height: 30px;
-}
-/* 受け渡し期間の波線につけてる余白 */
-.margin10px{
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.leftmrg30px{
-  margin-left: 30px;
-}
-
-/*input要素を右寄せにする*/
-.right { text-align: right; }
-
-/*input要素の背景色をグレーにする*/
-.gray {
-  background-color:#F5F5F5;
-  padding: 0px 0px 10px;
-}
-
-
-
+/*全体の背景*/
 #prodact_lists{
-  background-color:#E6E6E6;
+  background-color:#f2f2f2;
 }
 
 #detail{	
@@ -464,19 +349,7 @@ a.btn-border-shadow--color:before {
   background-color:#E6E6E6;
 }
 
-/* 詳細画面のテーブル書式 */
-table.detail_table {
-  width: 80%;
-  margin: auto;
-  border: 1px solid;
-}
-
-th.detail_table {
-  font-size: 15px;
-  width: 40%;
-  background-color: #F2F2F2;
-}
-
+/*欲しい！ボタン*/
 button.plz{
   font-size: 1.5rem;
   font-weight: 500;
@@ -542,323 +415,14 @@ img{
     height: 65px;
 }
 
-/* ボイス一覧トップ */
-a,
-a:visited,
-a:hover,
-a:active {
-  color: inherit;
-  text-decoration: none;
-}
-
-img.voice-img{
-    width: 55px;
-    height: 55px;
-}
-
-ul.voice-list {
-  list-style-type: none;
-  background: whitesmoke;
-  padding: 0 0.5em;
-  position: relative;
-}
-
-ul.voice-list li {
-  font-size: 25px;
-  line-height: 1.6;
-  padding: 0em 0 0em 1rem;
-  vertical-align:middle;
-  border-bottom: 2px solid #87cefa;
-  list-style-type: none!important;
-}
-
-li.voice-list-first {
-  background:#87cefa;
-  color: azure;
-}
-
-a.voice-list  {
-   display: inline-block;
-   vertical-align: middle;
-}
-
-ul.voice-list li.voice-list-first:hover {
-  background-color:skyblue;
-}
-
-ul.voice-list li:nth-child(even) {
-  background-color: #FFF;
-}
-
-ul.voice-list li:hover {
-  background-color:#f0f8ff;
-}
-
-/* ボイス一覧（先生＆お気に入り） */
-ul.next-voice-list {
-  list-style-type: none;
-  padding: 0 0.5em;
-  position: relative;
-}
-
-ul.next-voice-list li {
-  font-size: 15px;
-  line-height: 1.5;
-  padding: 0.5em 0 0.5em 1.5em;
-  border-bottom: 2px solid gray;
-  list-style-type: none!important;
-}
-
-/* 詳細画面のモーダル関連機能 */
-#d_button{
-  display: flex;
-  flex-wrap: wrap;
-}
-
-#d_ok{
-	width:100px;
-  color: #2496fc;
-	border:2px solid #0085FC;
-	border-radius:4px;
-	text-align: center;
-	padding:12px 0;
-	margin:16px auto 0;
-}
-
-#d_cancel{
-	width:100px;
-  color: #ff3a3a;
-	border:2px solid #FF0000;
-	border-radius:4px;
-	text-align: center;
-	padding:12px 0;
-	margin:16px auto 0;
-}
-
-#mask{
-	background:rgba(0,0,0,0.4);
-	position:fixed;
-	top:0;
-	bottom:0;
-	left:0;
-	right:0;
-	z-index:1;
-}
-
-#d_modal{
-	background:#fff;
-	width:300px;
-	padding:20px;
-	border-radius:4px;
-	position:fixed;
-	top:40px;
-	left:0;
-	right:0;
-	margin:0 auto;
-	transition:transform 0.4s;
-	z-index:70;
-  text-align: center;
-}
-
-#mask.hidden{
-	display:none;
-}
-
-#d_modal.hidden{
-	transform:translate(0,-500px);
-}
-
-.modal_box{
-  border: solid 2px #999999;
-  border-radius:20px;
-  padding: 1em 2em 2em;
-}
-
-table.modal_table {
-  width: 100%;
-  margin: auto;
-}
-
-th.modal_table {
-  font-size: 15px;
-  width: 50%;
-}
-/* モーダル終了 */
-
 #barcode{
     width: 200px;
     height: 200px;
 }
 
-/* お気に入りボタン */
-#favorite-button {
-  width: 100px;
-  height: 30px;
-  border-color:#3ac3ff;
-  background:#FFFFFF;
-}
-#favorite-button.blue {
-  background: #3ac3ff;
-  color: #FFFFFF;
-}
-
-div.btn-tag {
-  font-size: 20px;
-  padding: 0.08rem 0.08rem 0.08rem 40px;
-}
-
-div.btn-tag:before {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 0px;
-  height: 100%;
-
-  content: "";
-
-  border-radius: 0.5rem 0 0 0.5rem;
-}
-
-.btn,
-button.btn {
-  font-size: 0.85rem;
-  font-weight: 700;
-  line-height: 1.5;
-  position: relative;
-  display: inline-block;
-  padding: 1rem 4rem;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-  text-align: center;
-  vertical-align: middle;
-  text-decoration: none;
-  letter-spacing: 0.1em;
-  color: #212529;
-  border-radius: 0.5rem;
-}
-
-button.btn-tag--favorite {
-  color: #3ac3ff;
-  background:#FFFFFF;
-  border: 1px solid #3ac3ff;
-}
-
-button.btn-tag--favorite:before {
-  background: #fff;
-}
-
-button.btn-tag--favorite i {
-  font-size: 100%;
-
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 100px;
-  padding: 0.55rem 0.55rem;
-
-  -webkit-transition: all 0.3s;
-
-  transition: all 0.3s;
-  text-align: center;
-  letter-spacing: 0;
-
-  opacity: 0.8;
-  color: #3ac3ff;
-}
-
-button.btn-tag--favorite.orange i {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-  color: #ffffff;
-}
-
-button.btn-tag--favorite.blue {
-  background: #3ac3ff;
-  color: #FFFFFF;
-  opacity: 0.8;
-}
-/*  */
-
 #photo{
     max-width: 80px;
     max-height: 400px;
-}
-
-/* 取引画面_写真サイズ */
-img.deal{
-  width: 80px;
-  height: 80px;
-  padding: 10px;
-}
-
-/* 取引画面_写真サイズ */
-a.deal{
-  width: 80px;
-  height: 80px;
-  padding: 10rem 10px 10px 10px;
-}
-
-/* 取引詳細画面_写真サイズ */
-img.deal-detail{
-  width: 150px;
-  height: 150px;
-}
-
-/* 取引詳細画面_商品説明 */
-div.deal-detail_info{
-    width:90%; /* ボックスの横幅を指定 */
-    border: 3.5px dashed #000000; /* 境界線を実線で指定 */
-    padding: 15px;
-    border-radius: 30px;
-    margin-left:auto;
-    margin-right:auto;
-    display: inline-block;
-}
-
-div.deal-detail{
-    width:90%;
-    margin-left:auto;
-    margin-right:auto;
-}
-
-/* 取引詳細画面_ボタン */
-div#deal-detail_button {
-  padding-top: 20px;
-}
-
-img#deal-detail_button {
-  width: 40px;
-  height: 40px;
-}
-
-/* 取引詳細画面_青ボタン */
-button.showing{
-  font-size: 0.8rem;
-  padding: 0.5rem 1rem 0.5rem 1rem;
-  letter-spacing: 0.1rem;
-  color: #FFFFFF;
-  border-radius: 0.7rem;
-  background-color: #1CA5B8;
-  margin-right: 20px;
-  border: none;
-}
-
-/* 取引詳細画面_赤ボタン */
-button.stop{
-  font-size: 0.8rem;
-  padding: 0.5rem 1.3rem 0.5rem 1.3rem;
-  letter-spacing: 0.1rem;
-  color: #FFFFFF;
-  border-radius: 0.5rem;
-  background-color: #d7003a;
-  border: none;
 }
 
 /* アカウント詳細 */

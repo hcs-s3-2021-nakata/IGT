@@ -1,0 +1,162 @@
+/* ボイス一覧トップ */
+a,
+a:visited,
+a:hover,
+a:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+img.voice-img{
+    width: 55px;
+    height: 55px;
+}
+
+ul.voice-list {
+  list-style-type: none;
+  background: whitesmoke;
+  padding: 0 0.5em;
+  position: relative;
+}
+
+ul.voice-list li {
+  font-size: 25px;
+  line-height: 1.6;
+  padding: 0em 0 0em 1rem;
+  vertical-align:middle;
+  border-bottom: 2px solid #87cefa;
+  list-style-type: none!important;
+}
+
+li.voice-list-first {
+  background:#87cefa;
+  color: azure;
+}
+
+a.voice-list  {
+   display: inline-block;
+   vertical-align: middle;
+}
+
+ul.voice-list li.voice-list-first:hover {
+  background-color:skyblue;
+}
+
+ul.voice-list li:nth-child(even) {
+  background-color: #FFF;
+}
+
+ul.voice-list li:hover {
+  background-color:#f0f8ff;
+}
+
+/* ボイス一覧（先生＆お気に入り） */
+ul.next-voice-list {
+  list-style-type: none;
+  padding: 0 0.5em;
+  position: relative;
+}
+
+ul.next-voice-list li {
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 0.5em 0 0.5em 1.5em;
+  border-bottom: 2px solid gray;
+  list-style-type: none!important;
+}
+
+/* お気に入りボタン */
+#favorite-button {
+  width: 100px;
+  height: 30px;
+  border-color:#3ac3ff;
+  background:#FFFFFF;
+}
+#favorite-button.blue {
+  background: #3ac3ff;
+  color: #FFFFFF;
+}
+
+div.btn-tag {
+  font-size: 20px;
+  padding: 0.08rem 0.08rem 0.08rem 40px;
+}
+
+div.btn-tag:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 0px;
+  height: 100%;
+
+  content: "";
+
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+
+.btn,
+button.btn {
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.5;
+  position: relative;
+  display: inline-block;
+  padding: 1rem 4rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  color: #212529;
+  border-radius: 0.5rem;
+}
+
+button.btn-tag--favorite {
+  color: #3ac3ff;
+  background:#FFFFFF;
+  border: 1px solid #3ac3ff;
+}
+
+button.btn-tag--favorite:before {
+  background: #fff;
+}
+
+button.btn-tag--favorite i {
+  font-size: 100%;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100px;
+  padding: 0.55rem 0.55rem;
+
+  -webkit-transition: all 0.3s;
+
+  transition: all 0.3s;
+  text-align: center;
+  letter-spacing: 0;
+
+  opacity: 0.8;
+  color: #3ac3ff;
+}
+
+button.btn-tag--favorite.orange i {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+  color: #ffffff;
+}
+
+button.btn-tag--favorite.blue {
+  background: #3ac3ff;
+  color: #FFFFFF;
+  opacity: 0.8;
+}
+/*  */

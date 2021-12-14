@@ -1,0 +1,77 @@
+/*画像アップロードボタン*/
+.btn-flat-border {
+  display: inline-block;
+  padding: 2em 6em;
+  color: #67c5ff;
+  border: solid 2px #67c5ff;
+  border-radius: 3px;
+  transition: .2s;
+  height: 100px;
+  width: 100px;
+}
+
+/* 投稿ボタン */
+.newDeal-btn{
+  position: fixed;
+  top: 74px;
+  right: 1%;
+  border: none;
+  font-weight: 700;
+  font-size: 15px;
+  height: 40px;
+  width: 100%;
+  background-color: white;
+  color:#3a78ff;
+  text-align: center;
+}
+
+#newDeal_info{
+  padding:0px 0px;
+  width: 100%;
+}
+
+.btn-flat-border:hover {
+  background: #67c5ff;
+  color: white;
+}
+
+/*新規登録画面_画像アップロード*/
+#preview img {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  border: solid 1px silver;
+}
+
+/*input要素の横幅を画面に合わせる*/
+.width { width: 75%; }
+
+/* input要素の縦横幅を画面に合わせる */
+.nd_size {
+  width: 75%;
+  height: 30px;
+}
+
+.nd_size_times{
+  width: 35%;
+  height: 30px;
+}
+/* 受け渡し期間の波線につけてる余白 */
+.margin10px{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.leftmrg30px{
+  margin-left: 30px;
+}
+
+/*input要素を右寄せにする*/
+.right { text-align: right; }
+
+/*input要素の背景色をグレーにする*/
+.gray {
+  background-color:#fcfcfc;
+  padding: 0px 0px 10px;
+}
+

@@ -1,0 +1,76 @@
+/* 詳細画面のモーダル関連機能 */
+#d_button{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#d_ok{
+	width:100px;
+  color: #2496fc;
+	border:2px solid #0085FC;
+	border-radius:4px;
+	text-align: center;
+	padding:12px 0;
+	margin:16px auto 0;
+}
+
+#d_cancel{
+	width:100px;
+  color: #ff3a3a;
+	border:2px solid #FF0000;
+	border-radius:4px;
+	text-align: center;
+	padding:12px 0;
+	margin:16px auto 0;
+}
+
+#mask{
+	background:rgba(0,0,0,0.4);
+	position:fixed;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	z-index:1;
+}
+
+#d_modal{
+	background:#fff;
+	width:300px;
+	padding:20px;
+	border-radius:4px;
+	position:fixed;
+	top:40px;
+	left:0;
+	right:0;
+	margin:0 auto;
+	transition:transform 0.4s;
+	z-index:70;
+  text-align: center;
+}
+
+#mask.hidden{
+	display:none;
+}
+
+#d_modal.hidden{
+	transform:translate(0,-500px);
+}
+
+.modal_box{
+  border: solid 2px #999999;
+  border-radius:20px;
+  padding: 1em 2em 2em;
+}
+
+table.modal_table {
+  width: 100%;
+  margin: auto;
+}
+
+th.modal_table {
+  font-size: 15px;
+  width: 50%;
+}
+/* モーダル終了 */
+

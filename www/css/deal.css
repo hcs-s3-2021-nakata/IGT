@@ -1,0 +1,93 @@
+/* 詳細画面のテーブル書式 */
+table.deal-detail_table {
+  width: 80%;
+  margin: auto;
+  border: 1px solid;
+}
+
+.deal-detail_table th {
+  font-size: 15px;
+  width: 50%;
+  background-color: #F2F2F2;
+}
+
+.deal-detail_table td {
+  text-align: center;
+  width: 50%;
+  background-color: #ffffff;
+}
+
+/* 取引画面_写真サイズ */
+img.deal{
+  width: 80px;
+  height: 80px;
+  padding: 10px;
+}
+
+/* 取引画面_写真サイズ */
+a.deal{
+  width: 80px;
+  height: 80px;
+  padding: 10rem 10px 10px 10px;
+}
+
+div#img-deal {
+  text-align: center;
+}
+/* 取引詳細画面_写真サイズ */
+img.deal-detail{
+  width: 150px;
+  height: 150px;
+}
+
+/* 取引詳細画面_商品説明 */
+div.deal-detail_info{
+    width:90%; /* ボックスの横幅を指定 */
+    border: 3.5px dashed #000000; /* 境界線を実線で指定 */
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 30px;
+    margin-left:auto;
+    margin-right:auto;
+    display: inline-block;
+}
+
+div.deal-detail{
+    width:90%;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+/* 取引詳細画面_ボタン */
+div#deal-detail_button {
+  padding-top: 20px;
+}
+
+img#deal-detail_button {
+  width: 40px;
+  height: 40px;
+}
+
+/* 取引詳細画面_青ボタン */
+button.showing{
+  font-size: 0.8rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  letter-spacing: 0.1rem;
+  color: #FFFFFF;
+  border-radius: 0.7rem;
+  background-color: #1CA5B8;
+  margin-right: 20px;
+  border: none;
+}
+
+/* 取引詳細画面_赤ボタン */
+button.stop{
+  font-size: 0.8rem;
+  padding: 0.5rem 1.3rem 0.5rem 1.3rem;
+  letter-spacing: 0.1rem;
+  color: #FFFFFF;
+  border-radius: 0.5rem;
+  background-color: #d7003a;
+  border: none;
+}
+

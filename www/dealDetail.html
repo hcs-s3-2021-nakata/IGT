@@ -7,6 +7,8 @@
     <script src="components/loader.js"></script>
     <link rel="stylesheet" href="components/loader.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/deal.css">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
@@ -65,7 +67,7 @@
         }
   </script>
 </head>
-<body>
+<body id="prodact_lists">
 	<!-- Header Start -->
     <header class="site-header">
       <div class="wrapper site-header__wrapper">
@@ -96,25 +98,26 @@
     <!-- Header End -->
 
     <!-- Body Start -->
-    <div id="deal-detail">
-        <div><h3>　交換品　　　タックスくん</h3></div>
-        
-        <a><img class="deal-detail" src="img/gondo.png" style="float:left"></a>
+    <h3>　交換品　　　タックスくん</h3>
+        <div id="img-deal">
+        <img class="deal-detail" src="img/gondo.png">
+        </div><br>
+
       <table class="deal-detail_table">
         <tr>
-          <th>　出品者</th><td>値</td>
+          <th>出品者</th><td>値</td>
         </tr>
         <tr>
-          <th>商品の状態　</th><td>値</td>
+          <th>商品の状態</th><td>値</td>
         </tr>
         <tr>
-          <th>カテゴリー　</th><td>値</td>
+          <th>カテゴリー</th><td>値</td>
         </tr>
         <tr>
-          <th>　受け渡し場所　　　</th><td>値</td>
+          <th>受け渡し場所</th><td>値</td>
         </tr>
         <tr>
-          <th>　受け渡し日時　　　</th><td>値</td>
+          <th>受け渡し日時</th><td>値</td>
         </tr>
       </table>
         
@@ -131,8 +134,6 @@
                 <button type="button" class="showing" onclick="scan()"><img id="deal-detail_button" src="img/camera.png"><br><b>スキャン</b></button>
                 <button type="button" class="stop" id="d_open" onclick="modal_open()"><img id="deal-detail_button" src="img/stop.png"><br><b>取引中止</b></button>
         </div>
-        
-    </div>
       <div id="mask" class="hidden"></div>
     <!-- Body End -->
     
