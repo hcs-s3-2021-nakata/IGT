@@ -1,90 +1,91 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
-    <script src="components/loader.js"></script>
-    <link rel="stylesheet" href="components/loader.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-    <script>
-      
-    </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script>
+  </script>
 </head>
+
 <body id="prodact_lists">
-	<!-- Header Start -->
-    <header class="site-header">
-      <div class="wrapper site-header__wrapper">
-        <nav class="nav">
-          <div class="detail_head">
-            <div class="back_button">
-              <a href="javascript:history.back()">
-                <i class="fas fa-angle-left back_size"></i>
-              </a>
-            </div>
-            <div class="page_title">
-              <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">交換品一覧</span>
-              <label for="menu-btn-check" class="menu-btn"><span></span></label>
-              <div style="text-align: left" class="menu-content">
-        <ul>
-            <li><a href="acount.html">アカウント詳細</a></li>
-            <li><a href="#">通知</a></li>
-            <li><a href="#">取引履歴</a></li>
-            <li><a href="#">出品した譲渡品</a></li>
-            <li><a href="#">出品した交換品</a></li>
-            <li><a href="javascript:logout();">ログアウト</a></li>
-          </ul>
-        </div>
-              </div>
-            </div>
-            <div class="header_right">
+  <!-- Header Start -->
+  <header class="site-header">
+    <div class="wrapper site-header__wrapper">
+      <nav class="nav">
+        <div class="detail_head">
+          <div class="back_button">
+            <a href="javascript:history.back()">
+              <i class="fas fa-angle-left back_size"></i>
+            </a>
+          </div>
+          <div class="page_title">
+            <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">交換品一覧</span>
+            <label for="menu-btn-check" class="menu-btn"><span></span></label>
+            <div style="text-align: left" class="menu-content">
+              <ul>
+                <li><a href="acount.html">アカウント詳細</a></li>
+                <li><a href="message.html">通知</a></li>
+                <li><a href="dealHistory.html">取引履歴</a></li>
+                <li><a href="myGiveItem.html">出品した譲渡品</a></li>
+                <li><a href="myTradeItem.html">出品した交換品</a></li>
+                <li><a href="javascript:logout();">ログアウト</a></li>
+              </ul>
             </div>
           </div>
-        </nav>
-      </div>
-    </header>
-    <!-- Header End -->
+        </div>
+        <div class="header_right">
+        </div>
+    </div>
+    </nav>
+    </div>
+  </header>
+  <!-- Header End -->
 
-    <!-- Body Start -->
-    <div class="container" id="item_box">
-      <div class="container_parent">
-        <div class="container_left">    
-          <a>画像</a>
-        </div>
-        <div class="container_center">    
-          <a id="item_name">レオナのコードマスコット</a>
-        </div>
-        <div class="container_right">
-          <a href="tradeDetail.html">
-            <i class="fas fa-angle-right size"></i>
-          </a>
-        </div>
+  <!-- Body Start -->
+  <div class="container" id="item_box">
+    <div class="container_parent">
+      <div class="container_left">
+        <a>画像</a>
+      </div>
+      <div class="container_center">
+        <a id="item_name">レオナのコードマスコット</a>
+      </div>
+      <div class="container_right">
+        <a href="tradeDetail.html">
+          <i class="fas fa-angle-right size"></i>
+        </a>
       </div>
     </div>
-    <!-- Body End -->
-    
-    <!-- Footer Start -->
-    <ul class="bottom-menu">
+  </div>
+  <!-- Body End -->
+
+  <!-- Footer Start -->
+  <ul class="bottom-menu">
     <li>
-        <a href="index.html">
-	<i class="far fa-list-alt"></i></a>
+      <a class="icon-blue" href="index.html">
+        <i class="far fa-list-alt"></i></a>
     </li>
     <li>
-        <a href="deal.html"><i class="fas fa-random"></i></a>
+      <a href="deal.html"><i class="fas fa-random"></i></a>
     </li>
     <li>
- 	<a href="insert.html"><i class="fas fa-plus"></i></a>
+      <a href="insert.html"><i class="fas fa-plus"></i></a>
     </li>
     <li>
-        <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
+      <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
     </li>
     <li>
-        <a href="voice.html">
-	<i class="fas fa-bullhorn"></i></a>
+      <a href="voice.html">
+        <i class="fas fa-bullhorn"></i></a>
     </li>
-</ul>
-    <!-- Fotter End -->
+  </ul>
+  <!-- Fotter End -->
+
 </html>

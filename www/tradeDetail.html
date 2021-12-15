@@ -1,91 +1,92 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
-    <script src="components/loader.js"></script>
-    <link rel="stylesheet" href="components/loader.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/modal.css">
-    <link rel="stylesheet" href="css/deal.css">
-    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-    <script>
-      // 詳細画面のモーダル表示用スクリプト（仮）
-      function modal_open(){
-        const open = document.getElementById('d_open');
-        const ok = document.getElementById('d_ok');
-        const close = document.getElementById('d_cancel');
-        const modal = document.getElementById('d_modal');
-        const mask = document.getElementById('mask');
-        
-        open.addEventListener('click',()=>{
-          modal.classList.remove('hidden');
-          mask.classList.remove('hidden');
-        });
-        
-        ok.addEventListener('click',()=>{
-          localStorage.setItem("flag","trade");
-          localStorage.setItem("objectID","g5y1d59s15");
-          localStorage.setItem("give_userID","20193029");
-          localStorage.setItem("take_userID","20191204");
-          document.location.href='qrGenerater.html';
-        });
 
-        close.addEventListener('click',()=>{
-          modal.classList.add('hidden');
-          mask.classList.add('hidden');
-        });
-        
-        mask.addEventListener('click',()=>{
-          close.click();
-        });
-      }
-    </script>
-    </script>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/deal.css">
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script>
+    // 詳細画面のモーダル表示用スクリプト（仮）
+    function modal_open() {
+      const open = document.getElementById('d_open');
+      const ok = document.getElementById('d_ok');
+      const close = document.getElementById('d_cancel');
+      const modal = document.getElementById('d_modal');
+      const mask = document.getElementById('mask');
+
+      open.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+        mask.classList.remove('hidden');
+      });
+
+      ok.addEventListener('click', () => {
+        localStorage.setItem("flag", "trade");
+        localStorage.setItem("objectID", "g5y1d59s15");
+        localStorage.setItem("give_userID", "20193029");
+        localStorage.setItem("take_userID", "20191204");
+        document.location.href = 'qrGenerater.html';
+      });
+
+      close.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        mask.classList.add('hidden');
+      });
+
+      mask.addEventListener('click', () => {
+        close.click();
+      });
+    }
+  </script>
+  </script>
 </head>
+
 <body id="prodact_lists">
-	<!-- Header Start -->
-    <header class="site-header">
-      <div class="wrapper site-header__wrapper">
-        <nav class="nav">
-          <div class="detail_head">
-            <div class="back_button">
-              <a href="javascript:history.back()">
-                <i class="fas fa-angle-left back_size"></i>
-              </a>
-            </div>
-            <div class="page_title">
-              <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">交換品詳細</span>
-              <label for="menu-btn-check" class="menu-btn"><span></span></label>
-              <div style="text-align: left" class="menu-content">
-        <ul>
-            <li><a href="acount.html">アカウント詳細</a></li>
-            <li><a href="#">通知</a></li>
-            <li><a href="#">取引履歴</a></li>
-            <li><a href="#">出品した譲渡品</a></li>
-            <li><a href="#">出品した交換品</a></li>
-            <li><a href="javascript:logout();">ログアウト</a></li>
-          </ul>
-        </div>
-              </div>
-            </div>
-            <div class="header_right">
+  <!-- Header Start -->
+  <header class="site-header">
+    <div class="wrapper site-header__wrapper">
+      <nav class="nav">
+        <div class="detail_head">
+          <div class="back_button">
+            <a href="javascript:history.back()">
+              <i class="fas fa-angle-left back_size"></i>
+            </a>
+          </div>
+          <div class="page_title">
+            <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">交換品詳細</span>
+            <label for="menu-btn-check" class="menu-btn"><span></span></label>
+            <div style="text-align: left" class="menu-content">
+              <ul>
+                <li><a href="acount.html">アカウント詳細</a></li>
+                <li><a href="message.html">通知</a></li>
+                <li><a href="dealHistory.html">取引履歴</a></li>
+                <li><a href="myGiveItem.html">出品した譲渡品</a></li>
+                <li><a href="myTradeItem.html">出品した交換品</a></li>
+                <li><a href="javascript:logout();">ログアウト</a></li>
+              </ul>
             </div>
           </div>
-        </nav>
-      </div>
-    </header>
-    <!-- Header End -->
+        </div>
+        <div class="header_right">
+        </div>
+    </div>
+    </nav>
+    </div>
+  </header>
+  <!-- Header End -->
 
-    <!-- Body Start -->
-    <div id="detail">
+  <!-- Body Start -->
+  <div id="detail">
     <br>
     <br>
-    <div class="container_detail_name" id="info_box" >
-      <a id="item_name">商品名</a>  
+    <div class="container_detail_name" id="info_box">
+      <a id="item_name">商品名</a>
     </div>
     <br>
     <a>交換品の説明</a>
@@ -95,50 +96,55 @@
     <br>
     <a>交換品の情報</a>
     <table class="deal-detail_table">
-        <tr>
-          <th>カテゴリ</th><td>値</td>
-        </tr>
-        <tr>
-          <th>商品の状態</th><td>値</td>
-        </tr>
-        <tr>
-          <th>受け渡し期間</th><td>値</td>
-        </tr>
-        <tr>
-          <th>受け渡し時間帯</th><td>値</td>
-        </tr>
-        <tr>
-          <th>受け渡し場所</th><td>値</td>
-        </tr>
-      </table>
+      <tr>
+        <th>カテゴリ</th>
+        <td>値</td>
+      </tr>
+      <tr>
+        <th>商品の状態</th>
+        <td>値</td>
+      </tr>
+      <tr>
+        <th>受け渡し期間</th>
+        <td>値</td>
+      </tr>
+      <tr>
+        <th>受け渡し時間帯</th>
+        <td>値</td>
+      </tr>
+      <tr>
+        <th>受け渡し場所</th>
+        <td>値</td>
+      </tr>
+    </table>
     <br>
-      <button type="button" class="plz" id="d_open" onclick="modal_open()"> 欲しい！ </button>
-      <div id="mask" class="hidden"></div>
+    <button type="button" class="plz" id="d_open" onclick="modal_open()"> 欲しい！ </button>
+    <div id="mask" class="hidden"></div>
     <div>
-    <!-- Body End -->
-    
-   <!-- Footer Start -->
-    <ul class="bottom-menu">
-    <li>
-        <a href="index.html">
-	<i class="far fa-list-alt"></i></a>
-    </li>
-    <li>
-        <a href="deal.html"><i class="fas fa-random"></i></a>
-    </li>
-    <li>
- 	<a href="insert.html"><i class="fas fa-plus"></i></a>
-    </li>
-    <li>
-        <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
-    </li>
-    <li>
-        <a href="voice.html">
-	<i class="fas fa-bullhorn"></i></a>
-    </li>
-</ul>
-    <!-- Fotter End -->
-    <!-- モーダルウィンドウ -->
+      <!-- Body End -->
+
+      <!-- Footer Start -->
+      <ul class="bottom-menu">
+        <li>
+          <a class="icon-blue" href="index.html">
+            <i class="far fa-list-alt"></i></a>
+        </li>
+        <li>
+          <a href="deal.html"><i class="fas fa-random"></i></a>
+        </li>
+        <li>
+          <a href="insert.html"><i class="fas fa-plus"></i></a>
+        </li>
+        <li>
+          <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
+        </li>
+        <li>
+          <a href="voice.html">
+            <i class="fas fa-bullhorn"></i></a>
+        </li>
+      </ul>
+      <!-- Fotter End -->
+      <!-- モーダルウィンドウ -->
       <section id="d_modal" class="hidden">
         <div class="modal_box">
           <a>商品名</a>
@@ -147,16 +153,20 @@
           <br>
           <table class="modal_table">
             <tr>
-              <th class="modal_table">出品者</th><td>値</td>
+              <th class="modal_table">出品者</th>
+              <td>値</td>
             </tr>
             <tr>
-              <th class="modal_table">受け渡し期間</th><td>値</td>
+              <th class="modal_table">受け渡し期間</th>
+              <td>値</td>
             </tr>
             <tr>
-              <th class="modal_table">受け渡し時間帯</th><td>値</td>
+              <th class="modal_table">受け渡し時間帯</th>
+              <td>値</td>
             </tr>
             <tr>
-              <th class="modal_table">受け渡し場所</th><td>値</td>
+              <th class="modal_table">受け渡し場所</th>
+              <td>値</td>
             </tr>
           </table>
         </div>
@@ -164,12 +174,13 @@
         <a>この取引を開始しますか？</a>
         <div id="d_button">
           <div id="d_cancel">
-          閉じる
+            閉じる
           </div>
           <div id="d_ok">
-          進める
+            進める
           </div>
         </div>
       </section>
 </body>
+
 </html>

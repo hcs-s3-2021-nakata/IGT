@@ -180,7 +180,12 @@ ul.bottom-menu li {
     text-decoration:none;}
 
 .bottom-menu li a:hover {
-    color:#3ac3ff;/*マウスオーバー時の色*/}
+    color:#c0c7ca;/*マウスオーバー時の色*/}
+
+/* 選択中のフッターの色を変える */
+.bottom-menu li a.icon-blue{
+    color:#3ac3ff;/*アイコンの色*/
+}
 
   /*スマホの時だけ*/
 @media(max-width: 767px){ 
@@ -447,6 +452,7 @@ img.acount{
   vertical-align: middle;
 }
 
+/* アカウント詳細・通知 */
 .ef {
 	position: relative;
 	width: 80%;
@@ -481,4 +487,25 @@ button.acount{
   font-size: 20px;
   border: none;
   border-color: #1CA5B8;
+}
+
+/* 通知 */
+div.message{
+font-family: 'Amatic SC', cursive;
+}
+
+ul.message{
+  list-style-type: none;
+  padding: 0.5rem 1.3rem 0.5rem 1rem;
+}
+
+li.message{
+  vertical-align: middle;
+  padding: 0.7rem 0rem;
+}
+
+img.message{
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
 }

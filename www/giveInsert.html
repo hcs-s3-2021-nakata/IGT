@@ -1,66 +1,66 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
-    <script src="components/loader.js"></script>
-    <link rel="stylesheet" href="components/loader.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/modal.css">
-    <link rel="stylesheet" href="css/insert.css">
-    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-    <script type="text/javascript" src="css/main.js">
-    </script>
-    <script>
-      // APIキーの設定とSDK初期化
-      // API key.
-      var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
-      var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
-      // SDK initialization.
-      var ncmb = new NCMB(applicationKey, clientKey);
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+<script src="components/loader.js"></script>
+<link rel="stylesheet" href="components/loader.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/modal.css">
+<link rel="stylesheet" href="css/insert.css">
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script type="text/javascript" src="css/main.js">
+</script>
+<script>
+  // APIキーの設定とSDK初期化
+  // API key.
+  var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+  var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+  // SDK initialization.
+  var ncmb = new NCMB(applicationKey, clientKey);
 
-      const wait = (sec) => { // タイマ
-        return new Promise((resolve, reject) => {
-          setTimeout(resolve, sec*1000);
-          //setTimeout(() => {reject(new Error("エラー！"))}, sec*1000);
-        });
-      };
+    const wait = (sec) => { // タイマ
+      return new Promise((resolve, reject) => {
+        setTimeout(resolve, sec*1000);
+        //setTimeout(() => {reject(new Error("エラー！"))}, sec*1000);
+      });
+    };
 
-      async function transition() {
-        try {
-          await wait(1); // ここで処理待ち
-          localStorage.setItem("flag","give");
-          document.location.href='insertFixed.html';
-        } catch (err) {
-          console.error(err);
-        }
+    async function transition() {
+      try {
+        await wait(1); // ここで処理待ち
+        localStorage.setItem("flag","give");
+        document.location.href='insertFixed.html';
+      } catch (err) {
+        console.error(err);
       }
+    }
 
-      function newDeal(){
+    function newDeal(){
         
-        // 画像ファイル生成
-        var imageData = document.getElementById("previewImage");
-        var src = previewImage.getAttribute('src');
-        var item_image = imgUpload(src);// 先行して画像をアップロード。画像の名前を返す
+      // 画像ファイル生成
+      var imageData = document.getElementById("previewImage");
+      var src = previewImage.getAttribute('src');
+      var item_image = imgUpload(src);// 先行して画像をアップロード。画像の名前を返す
 
-        var category = document.getElementById("category").value;
-        var delivery_end_date = document.getElementById("delivery_end_date").value;
-        var delivery_start_date = document.getElementById("delivery_start_date").value;
-        var delivery_time = document.getElementById("delivery_time").value;
+      var category = document.getElementById("category").value;
+      var delivery_end_date = document.getElementById("delivery_end_date").value;
+      var delivery_start_date = document.getElementById("delivery_start_date").value;
+      var delivery_time = document.getElementById("delivery_time").value;
 
-        var item_info = document.getElementById("item_info").value;
-        var item_name = document.getElementById("item_name").value;
-        var item_status = document.getElementById("item_status").value;
-        var location = document.getElementById("location").value;
-        // 
-        var Give = ncmb.DataStore("give");
-        // クラスインスタンスの生成
-        var give = new Give();
-        // データを設定して保存する
-        give.set("category", category)
+      var item_info = document.getElementById("item_info").value;
+      var item_name = document.getElementById("item_name").value;
+      var item_status = document.getElementById("item_status").value;
+      var location = document.getElementById("location").value;
+      // 
+      var Give = ncmb.DataStore("give");
+      // クラスインスタンスの生成
+      var give = new Give();
+      // データを設定して保存する
+      give.set("category", category)
         .set("deal_status", "成立待ち")
         .set("delivery_end_date", delivery_end_date)
         .set("delivery_start_date", delivery_start_date)
@@ -74,17 +74,17 @@
         transition();
       }
 
-      // 画像アップロード用スクリプト
-      function imgUpload(imageData) {
-        // ncmbに画像をアップロード
-        var fileName = makeUUID() + ".jpg";
-        var fileData = toBlob(imageData, "image/jpeg");
-        ncmb.File.upload(fileName, fileData);
-        return fileName;
-      }
+    // 画像アップロード用スクリプト
+    function imgUpload(imageData) {
+      // ncmbに画像をアップロード
+      var fileName = makeUUID() + ".jpg";
+      var fileData = toBlob(imageData, "image/jpeg");
+      ncmb.File.upload(fileName, fileData);
+      return fileName;
+    }
 
-      // Blob作成
-      function toBlob(base64, mime_type) {
+    // Blob作成
+    function toBlob(base64, mime_type) {
       var bin = atob(base64.replace(/^.*,/, ''));
       var buffer = new Uint8Array(bin.length);
       for (var i = 0; i < bin.length; i++) {
@@ -148,68 +148,69 @@
       }
     </script>
 </head>
+
 <body id="prodact_lists">
-	<!-- Header Start -->
-    <header class="site-header">
-      <div class="wrapper site-header__wrapper">
-        <nav class="nav">
-          <div class="detail_head">
-            <div class="back_button">
-              <a href="javascript:history.back()">
-                <i class="fas fa-angle-left back_size"></i>
-              </a>
-            </div>
-            <div class="page_title">
-              <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">商品情報の入力</span>
-              <label for="menu-btn-check" class="menu-btn"><span></span></label>
-              <div style="text-align: left" class="menu-content">
-                <ul>
-            <li><a href="acount.html">アカウント詳細</a></li>
-            <li><a href="#">通知</a></li>
-            <li><a href="#">取引履歴</a></li>
-            <li><a href="#">出品した譲渡品</a></li>
-            <li><a href="#">出品した交換品</a></li>
-            <li><a href="javascript:logout();">ログアウト</a></li>
-          </ul>
-              </div>
-            </div>
-            <div class="header_right">
+  <!-- Header Start -->
+  <header class="site-header">
+    <div class="wrapper site-header__wrapper">
+      <nav class="nav">
+        <div class="detail_head">
+          <div class="back_button">
+            <a href="javascript:history.back()">
+              <i class="fas fa-angle-left back_size"></i>
+            </a>
+          </div>
+          <div class="page_title">
+            <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">商品情報の入力</span>
+            <label for="menu-btn-check" class="menu-btn"><span></span></label>
+            <div style="text-align: left" class="menu-content">
+              <ul>
+                <li><a href="acount.html">アカウント詳細</a></li>
+                <li><a href="message.html">通知</a></li>
+                <li><a href="dealHistory.html">取引履歴</a></li>
+                <li><a href="myGiveItem.html">出品した譲渡品</a></li>
+                <li><a href="myTradeItem.html">出品した交換品</a></li>
+                <li><a href="javascript:logout();">ログアウト</a></li>
+              </ul>
             </div>
           </div>
-        </nav>
-      </div>
-    </header>
-    <!-- Header End -->
-    <div class="right">
-    <button type="button" class="newDeal-btn" name="item_image" id="d_open" onclick="modal_open()"> 出品する！ </button>
+          <div class="header_right">
+          </div>
+        </div>
+      </nav>
     </div>
-    <div id="mask" class="hidden"></div><br><br><br>
-    
-    <!-- 商品画像選択 -->
-    <div class="flex" id="newDeal_info" name="item_image">
-        <!-- カメラからアップロード -->
-        <button class="btn-flat-border">
+  </header>
+  <!-- Header End -->
+  <div class="right">
+    <button type="button" class="newDeal-btn" name="item_image" id="d_open" onclick="modal_open()"> 出品する！ </button>
+  </div>
+  <div id="mask" class="hidden"></div><br><br><br>
+
+  <!-- 商品画像選択 -->
+  <div class="flex" id="newDeal_info" name="item_image">
+    <!-- カメラからアップロード -->
+    <button class="btn-flat-border">
         📷<input type="file" id="item_image" onChange="imgPreView(event)"/>
         </button>
-        
-        <!-- アルバムからアップロード -->
-        <form>
-            <button class="btn-flat-border">
+
+    <!-- アルバムからアップロード -->
+    <form>
+      <button class="btn-flat-border">
             📚<input type="file" id="item_image" accept="image/*" multiple=" multiple" onchange="imgPreView(event)">
 
             </button>
-        </form>
-    </div>
-     <!-- 👇ここにプレビュー画像を追加する -->
-    <div class="flex" id="preview" width="300" height="200">
-    </div>
-    
-    
-    <div class="gray"><br>
+    </form>
+  </div>
+  <!-- 👇ここにプレビュー画像を追加する -->
+  <div class="flex" id="preview" width="300" height="200">
+  </div>
+
+
+  <div class="gray"><br>
     <!-- カテゴリー -->
-        <label for="category" class="leftmrg30px">カテゴリー</label>
-        <div class="flex" id="newDeal_info">
-            <select id="category" name="category" size=1 class="nd_size">
+    <label for="category" class="leftmrg30px">カテゴリー</label>
+    <div class="flex" id="newDeal_info">
+      <select id="category" name="category" size=1 class="nd_size">
                 <option value="1">おもちゃ・ゲーム</option>
                 <option value="2">本・テキスト</option>
                 <option value="3">音楽・ＤＶＤ</option>
@@ -219,61 +220,61 @@
                 <option value="7">PC・スマホ用品</option>
                 <option value="100">その他</option>
             </select>
-        </div><br>
-    
+    </div><br>
+
     <!-- 商品の状態 -->
-        <label for="item_status" class="leftmrg30px">商品の状態</label>
-        <div class="flex" id="newDeal_info">
-            <select id="item_status" name="item_status" size="1" class="nd_size">
+    <label for="item_status" class="leftmrg30px">商品の状態</label>
+    <div class="flex" id="newDeal_info">
+      <select id="item_status" name="item_status" size="1" class="nd_size">
                 <option value="1">新品</option>
                 <option value="2">ほぼ新品</option>
                 <option value="3">多少の傷あり</option>
                 <option value="4">傷・汚れあり</option>
                 <option value="5">状態が悪い</option>
             </select>
-        </div><br>
-    </div><br><br><br>
-    
-    
-    <div class="gray"><br>
+    </div><br>
+  </div><br><br><br>
+
+
+  <div class="gray"><br>
     <!-- 商品名入力 -->
-        <label for="item_name" class="leftmrg30px">商品名</label>
-        <div class="flex" id="newDeal_info" name="item_name">
-            <input type="text" id="item_name" class="nd_size" name="name" required maxlength="50" size="52">
-        </div><br>
-    
+    <label for="item_name" class="leftmrg30px">商品名</label>
+    <div class="flex" id="newDeal_info" name="item_name">
+      <input type="text" id="item_name" class="nd_size" name="name" required maxlength="50" size="52">
+    </div><br>
+
     <!-- 商品情報入力 -->
-        <label for="item_info" class="leftmrg30px">商品の説明</label>
-        <div class="flex" id="newDeal_info" name="item_info" >
-            <textarea id="item_info" name="item_info" class="width" maxlength="250" rows="8"required></textarea>
-        </div><br>
-    </div><br><br><br>
-    
-    
-    <div class="gray"><br>
+    <label for="item_info" class="leftmrg30px">商品の説明</label>
+    <div class="flex" id="newDeal_info" name="item_info">
+      <textarea id="item_info" name="item_info" class="width" maxlength="250" rows="8" required></textarea>
+    </div><br>
+  </div><br><br><br>
+
+
+  <div class="gray"><br>
     <!-- 受け渡し期間 -->
-        <label for="delivery_start_date" class="leftmrg30px">受け渡し期間</label>
-        <div class="flex" id="newDeal_info">
-            <input type="date" id="delivery_start_date" name="delivery_start_date" class="nd_size_times">
-            <p><span class="margin10px">～</span></p>
-            <input type="date" id="delivery_end_date" name="delivery_end_date" class="nd_size_times">
-        </div>
-    
+    <label for="delivery_start_date" class="leftmrg30px">受け渡し期間</label>
+    <div class="flex" id="newDeal_info">
+      <input type="date" id="delivery_start_date" name="delivery_start_date" class="nd_size_times">
+      <p><span class="margin10px">～</span></p>
+      <input type="date" id="delivery_end_date" name="delivery_end_date" class="nd_size_times">
+    </div>
+
     <!-- 受け渡し時間帯 -->
-        <label for="delivery_time" class="leftmrg30px">受け渡し時間帯</label>
-        <div class="flex" id="newDeal_info">
-            <select id="delivery_time" name="delivery_time" size="1" class="nd_size">
+    <label for="delivery_time" class="leftmrg30px">受け渡し時間帯</label>
+    <div class="flex" id="newDeal_info">
+      <select id="delivery_time" name="delivery_time" size="1" class="nd_size">
                 <option value="1">１コマ目終了後</option>
                 <option value="2">昼休み</option>
                 <option value="3">３コマ目終了後</option>
                 <option value="4">４コマ目終了後</option>
             </select>
-        </div><br>
-    
+    </div><br>
+
     <!-- 受け渡し場所 -->
-        <label for="location" class="leftmrg30px">受け渡し場所</label>
-        <div class="flex" id="newDeal_info">
-            <select id="location" name="location" size="1" class="nd_size">
+    <label for="location" class="leftmrg30px">受け渡し場所</label>
+    <div class="flex" id="newDeal_info">
+      <select id="location" name="location" size="1" class="nd_size">
                 <option value="1">本校舎3Fホール</option>
                 <option value="2">本校舎4Fホール</option>
                 <option value="3">本校舎5F</option>
@@ -285,31 +286,32 @@
                 <option value="9">3号館ホール</option>
                 <option value="100">その他</option>
             </select>
-        </div><br>
-    </div><br><br><br>
-	
-    
-    <!-- Footer Start -->
-    <ul class="bottom-menu">
+    </div><br>
+  </div><br><br><br>
+
+
+  <!-- Footer Start -->
+  <ul class="bottom-menu">
     <li>
-        <a href="index.html">
-	<i class="far fa-list-alt"></i></a>
+      <a href="index.html">
+        <i class="far fa-list-alt"></i></a>
     </li>
 
     <li>
-        <a href="deal.html"><i class="fas fa-random"></i></a>
+      <a href="deal.html"><i class="fas fa-random"></i></a>
 
     </li>
     <li>
- 	<a href="insert.html"><i class="fas fa-plus"></i></a>
+      <a class="icon-blue" href="insert.html"><i class="fas fa-plus"></i></a>
     </li>
     <li>
-        <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
+      <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
     </li>
     <li>
-        <a href="voice.html">
-	<i class="fas fa-bullhorn"></i></a>
+      <a href="voice.html">
+        <i class="fas fa-bullhorn"></i></a>
     </li>
+<<<<<<< HEAD
 </ul>
     <!-- Fotter End -->
     <!-- モーダルウィンドウ -->
@@ -346,5 +348,55 @@
           </div>
         </div>
       </section>
+=======
+  </ul>
+  <!-- Fotter End -->
+  <!-- モーダルウィンドウ -->
+  <section id="d_modal" class="hidden">
+    <div class="modal_box">
+      <a>商品名</a>
+      <br>
+      <a>この辺に画像（でかい）</a>
+      <br>
+      <table class="modal_table">
+        <tr>
+          <th class="modal_table">カテゴリー</th>
+          <td>値</td>
+        </tr>
+        <tr>
+          <th class="modal_table">商品の状態</th>
+          <td>値</td>
+        </tr>
+        <tr>
+          <th class="modal_table">商品名</th>
+          <td>値</td>
+        </tr>
+        <tr>
+          <th class="modal_table">受け渡し期間</th>
+          <td>値</td>
+        </tr>
+        <tr>
+          <th class="modal_table">受け渡し時間帯</th>
+          <td>値</td>
+        </tr>
+        <tr>
+          <th class="modal_table">受け渡し場所</th>
+          <td>値</td>
+        </tr>
+      </table>
+    </div>
+    <br>
+    <a>この商品を登録しますか？</a>
+    <div id="d_button">
+      <div id="d_cancel">
+        閉じる
+      </div>
+      <div id="d_ok">
+        進める
+      </div>
+    </div>
+  </section>
+>>>>>>> be45d18834b0c626a26b6a94209dbdd1afcabf75
 </body>
+
 </html>
