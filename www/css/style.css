@@ -180,7 +180,12 @@ ul.bottom-menu li {
     text-decoration:none;}
 
 .bottom-menu li a:hover {
-    color:#3ac3ff;/*マウスオーバー時の色*/}
+    color:#c0c7ca;/*マウスオーバー時の色*/}
+
+/* 選択中のフッターの色を変える */
+.bottom-menu li a.icon-blue{
+    color:#3ac3ff;/*アイコンの色*/
+}
 
   /*スマホの時だけ*/
 @media(max-width: 767px){ 

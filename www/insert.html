@@ -1,73 +1,75 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
-    <script src="components/loader.js"></script>
-    <link rel="stylesheet" href="components/loader.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link href="./font-awesome.css" rel="stylesheet">
 
-    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-    <script>
-    </script>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="./font-awesome.css" rel="stylesheet">
+
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script>
+  </script>
 </head>
+
 <body id="prodact_lists">
-	<!-- Header Start -->
-    <header class="site-header">
-      <div class="wrapper site-header__wrapper">
-        <nav class="nav">
-          <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">取引選択</span>
+  <!-- Header Start -->
+  <header class="site-header">
+    <div class="wrapper site-header__wrapper">
+      <nav class="nav">
+        <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">取引選択</span>
         <label for="menu-btn-check" class="menu-btn"><span></span></label>
         <div class="menu-content">
-        <ul>
+          <ul>
             <li><a href="acount.html">アカウント詳細</a></li>
-            <li><a href="#">通知</a></li>
-            <li><a href="#">取引履歴</a></li>
-            <li><a href="#">出品した譲渡品</a></li>
-            <li><a href="#">出品した交換品</a></li>
+            <li><a href="message.html">通知</a></li>
+            <li><a href="dealHistory.html">取引履歴</a></li>
+            <li><a href="myGiveItem.html">出品した譲渡品</a></li>
+            <li><a href="myTradeItem.html">出品した交換品</a></li>
             <li><a href="javascript:logout();">ログアウト</a></li>
           </ul>
         </div>
-        </nav>
-      </div>
-    </header>
-    <!-- Header End -->
-    
-       <!-- 取引選択ボタン_譲渡 -->
-    <div class="flex">
-        <a href="giveInsert.html" class="btn btn-border-shadow btn-border-shadow--color">譲渡したい！
-        </a>
+      </nav>
     </div>
-    <!-- 取引選択ボタン_交換 -->
-    <div class="flex">
-        <a href="tradeInsert.html" class="btn btn-border-shadow btn-border-shadow--color">交換したい！
+  </header>
+  <!-- Header End -->
+
+  <!-- 取引選択ボタン_譲渡 -->
+  <div class="flex">
+    <a href="giveInsert.html" class="btn btn-border-shadow btn-border-shadow--color">譲渡したい！
         </a>
-    </div>
-    
-    <!-- Footer Start -->
-    <ul class="bottom-menu">
+  </div>
+  <!-- 取引選択ボタン_交換 -->
+  <div class="flex">
+    <a href="tradeInsert.html" class="btn btn-border-shadow btn-border-shadow--color">交換したい！
+        </a>
+  </div>
+
+  <!-- Footer Start -->
+  <ul class="bottom-menu">
     <li>
-        <a href="index.html">
-	<i class="far fa-list-alt"></i></a>
+      <a href="index.html">
+        <i class="far fa-list-alt"></i></a>
     </li>
     <li>
-        <a href="deal.html"><i class="fas fa-random"></i></a>
+      <a href="deal.html"><i class="fas fa-random"></i></a>
     </li>
     <li>
- 	<a href="#"><i class="fas fa-plus"></i></a>
+      <a class="icon-blue" href="#"><i class="fas fa-plus"></i></a>
     </li>
     <li>
-        <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
+      <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
     </li>
     <li>
-        <a href="voice.html">
-	<i class="fas fa-bullhorn"></i></a>
+      <a href="voice.html">
+        <i class="fas fa-bullhorn"></i></a>
     </li>
-</ul>
-    <!-- Fotter End -->
+  </ul>
+  <!-- Fotter End -->
 </body>
+
 </html>

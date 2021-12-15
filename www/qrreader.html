@@ -1,114 +1,114 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
-    <link rel="stylesheet" href="components/loader.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/qr.css">
-    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-    <script src="components/loader.js"></script>
-    <script src="qrcode.min.js"></script>
-    <script src="JsBarcode.all.min.js"></script>
-    <script src="css/jquery-3.6.0.min.js"></script> 
-<script src="css/jquery.qrcode.min.js"></script> 
-    <script>
-      /*バーコードスキャン*/
-        let options = {
-                preferFrontCamera : false,
-                showFlipCameraButton : true,
-                showTorchButton : true,
-                torchOn: true, // Android only
-                saveHistory: false, // Android only
-                prompt : "スキャンエリアの中にバーコードを入れてください", // Android
-                resultDisplayDuration: 500, // Android only
-                formats : "QR_CODE,EAN_13,CODE_39", 
-                orientation : "unset", // Android only (portrait|landscape)
-                disableAnimations : true, // iOS
-                disableSuccessBeep: false // iOS and Android
-        }
-        function onSuccess (result) {
-            alert("結果: " + result.text + "\n" +
-                "バーコードの種類: " + result.format + "\n" +
-                "スキャンが中断されたかどうか: " + result.cancelled);
-        }
-        function onError (error) {
-            alert("スキャン失敗: " + error);
-        }
-        function scan() {
-            cordova.plugins.barcodeScanner.scan(
-                onSuccess,
-                onError,
-                options
-            );
-        }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/qr.css">
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="components/loader.js"></script>
+  <script src="qrcode.min.js"></script>
+  <script src="JsBarcode.all.min.js"></script>
+  <script src="css/jquery-3.6.0.min.js"></script>
+  <script src="css/jquery.qrcode.min.js"></script>
+  <script>
+    /*バーコードスキャン*/
+    let options = {
+      preferFrontCamera: false,
+      showFlipCameraButton: true,
+      showTorchButton: true,
+      torchOn: true, // Android only
+      saveHistory: false, // Android only
+      prompt: "スキャンエリアの中にバーコードを入れてください", // Android
+      resultDisplayDuration: 500, // Android only
+      formats: "QR_CODE,EAN_13,CODE_39",
+      orientation: "unset", // Android only (portrait|landscape)
+      disableAnimations: true, // iOS
+      disableSuccessBeep: false // iOS and Android
+    }
+
+    function onSuccess(result) {
+      alert("結果: " + result.text + "\n" +
+        "バーコードの種類: " + result.format + "\n" +
+        "スキャンが中断されたかどうか: " + result.cancelled);
+    }
+
+    function onError(error) {
+      alert("スキャン失敗: " + error);
+    }
+
+    function scan() {
+      cordova.plugins.barcodeScanner.scan(
+        onSuccess,
+        onError,
+        options
+      );
+    }
   </script>
-    <script type="text/JavaScript"> 
-    $(function(){
-      var qrtext = "ここにQRコード化したいテキストを入力";
-      var utf8qrtext = unescape(encodeURIComponent(qrtext));
-      $("#img-qr").html("");
-      $("#img-qr").qrcode({text:utf8qrtext}); 
-    });
-    </script>
+  <script type="text/JavaScript">
+    $(function(){ var qrtext = "ここにQRコード化したいテキストを入力"; var utf8qrtext = unescape(encodeURIComponent(qrtext)); $("#img-qr").html(""); $("#img-qr").qrcode({text:utf8qrtext}); });
+  </script>
 </head>
+
 <body id="prodact_lists">
   <!-- Header Start -->
-    <header class="site-header">
-      <div class="wrapper site-header__wrapper">
-        <nav class="nav">
-          <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">あなたのQRコード</span>
+  <header class="site-header">
+    <div class="wrapper site-header__wrapper">
+      <nav class="nav">
+        <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">あなたのQRコード</span>
         <label for="menu-btn-check" class="menu-btn"><span></span></label>
         <div class="menu-content">
-        <ul>
+          <ul>
             <li><a href="acount.html">アカウント詳細</a></li>
-            <li><a href="#">通知</a></li>
-            <li><a href="#">取引履歴</a></li>
-            <li><a href="#">出品した譲渡品</a></li>
-            <li><a href="#">出品した交換品</a></li>
+            <li><a href="message.html">通知</a></li>
+            <li><a href="dealHistory.html">取引履歴</a></li>
+            <li><a href="myGiveItem.html">出品した譲渡品</a></li>
+            <li><a href="myTradeItem.html">出品した交換品</a></li>
             <li><a href="javascript:logout();">ログアウト</a></li>
           </ul>
         </div>
-        </nav>
-      </div>
-    </header>
-    <!-- Header End -->
-    <!-- Body Start -->
-    <br>
-    <div class="qr">
-      <p>QRコードを相手に見せよう！</p>
-      <!-- 折り畳み展開ポインタ -->
-      <details id="qr_detail">
-        <summary>タップして展開</summary>
-        <div id="img-qr"></div>
-      </details>
-      <br>
-      <button onclick="scan()" class="btn btn-malformation">QRコードを<br>読み取る！</button>
+      </nav>
     </div>
-    <!-- Body End -->
-    <!-- Footer Start -->
-    <ul class="bottom-menu">
+  </header>
+  <!-- Header End -->
+  <!-- Body Start -->
+  <br>
+  <div class="qr">
+    <p>QRコードを相手に見せよう！</p>
+    <!-- 折り畳み展開ポインタ -->
+    <details id="qr_detail">
+      <summary>タップして展開</summary>
+      <div id="img-qr"></div>
+    </details>
+    <br>
+    <button onclick="scan()" class="btn btn-malformation">QRコードを<br>読み取る！</button>
+  </div>
+  <!-- Body End -->
+  <!-- Footer Start -->
+  <ul class="bottom-menu">
     <li>
-        <a href="index.html">
-	<i class="far fa-list-alt"></i></a>
+      <a href="index.html">
+        <i class="far fa-list-alt"></i></a>
     </li>
     <li>
-        <a href="deal.html"><i class="fas fa-random"></i></a>
+      <a href="deal.html"><i class="fas fa-random"></i></a>
     </li>
     <li>
- 	<a href="insert.html"><i class="fas fa-plus"></i></a>
+      <a href="insert.html"><i class="fas fa-plus"></i></a>
     </li>
     <li>
-        <a href="#"><i class="fas fa-qrcode"></i></a>
+      <a class="icon-blue" href="#"><i class="fas fa-qrcode"></i></a>
     </li>
     <li>
-        <a href="voice.html">
-	<i class="fas fa-bullhorn"></i></a>
+      <a href="voice.html">
+        <i class="fas fa-bullhorn"></i></a>
     </li>
-</ul>
-    <!-- Fotter End -->
+  </ul>
+  <!-- Fotter End -->
 </body>
+
 </html>
