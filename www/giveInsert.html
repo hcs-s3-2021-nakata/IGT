@@ -31,7 +31,7 @@
 
     async function transition() {
       try {
-        await wait(1); // ここで処理待ち
+        await wait(3); // ここで処理待ち
         localStorage.setItem("flag","give");
         document.location.href='insertFixed.html';
       } catch (err) {
@@ -113,6 +113,68 @@
     }
     </script>
     <script>
+    // 値を書き換える
+    function changeDtime(){
+      var delivery_time = document.getElementById("delivery_time").value;
+      switch (delivery_time){
+            case '1':
+              delivery_time = "１コマ目終了後";
+              break;
+            case '2':
+              delivery_time = "昼休み";
+              break;
+            case '3':
+              delivery_time = "３コマ目終了後";
+              break;
+            case '4':
+              delivery_time = "４コマ目終了後";
+              break;
+            default:
+              break;
+          }
+      return delivery_time;
+    }
+
+    function changeLocation(){
+      var location = document.getElementById("location").value;
+      switch (location){
+            case '1':
+              location = "本校舎3Fホール";
+              break;
+            case '2':
+              location = "本校舎4Fホール";
+              break;
+            case '3':
+              location = "本校舎5F";
+              break;
+            case '4':
+              location = "本校舎6Fホール";
+              break;
+            case '5':
+              location = "本校舎7F";
+              break;
+            case '6':
+              location = "本校舎8F";
+              break;
+            case '7':
+              location = "2号館入口";
+              break;
+            case '8':
+              location = "3号館入口";
+              break;
+            case '9':
+              location = "3号館ホール";
+              break;
+            case '100':
+              location = "その他";
+              break;
+            default:
+              break;
+          }
+      return location;
+    }
+    </script>
+    <script>
       // モーダル表示用スクリプト
       function modal_open(){
         const open = document.getElementById('d_open');
@@ -122,20 +184,19 @@
         const mask = document.getElementById('mask');
         
         open.addEventListener('click',()=>{
+          // 値を置き換える関数を呼ぶ
+          var delivery_time = changeDtime();
+          var location = changeLocation();
+          
           // モーダルの値を書き換える
           document.getElementById('m_item_name').innerHTML = document.getElementById("item_name").value;
           document.getElementById('m_delivery_date').innerHTML = document.getElementById("delivery_start_date").value + "<br>～<br>" + document.getElementById("delivery_end_date").value;
-          document.getElementById('m_delivery_time').innerHTML = document.getElementById("delivery_time").value;
-          document.getElementById('m_location').innerHTML = document.getElementById("location").value;
+          document.getElementById('m_delivery_time').innerHTML = delivery_time;
+          document.getElementById('m_location').innerHTML = location;
           // 表示
           modal.classList.remove('hidden');
           mask.classList.remove('hidden');
         });
-
-        // ok.addEventListener('click',()=>{
-        //   newDeal();
-          
-        // });
         
         close.addEventListener('click',()=>{
           modal.classList.add('hidden');
