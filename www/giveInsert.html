@@ -22,6 +22,23 @@
       // SDK initialization.
       var ncmb = new NCMB(applicationKey, clientKey);
 
+      const wait = (sec) => { // タイマ
+        return new Promise((resolve, reject) => {
+          setTimeout(resolve, sec*1000);
+          //setTimeout(() => {reject(new Error("エラー！"))}, sec*1000);
+        });
+      };
+
+      async function transition() {
+        try {
+          await wait(1); // ここで処理待ち
+          localStorage.setItem("flag","give");
+          document.location.href='insertFixed.html';
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
       function newDeal(){
         
         // 画像ファイル生成
@@ -54,6 +71,7 @@
         .set("item_status", item_status)
         .set("location", location)
         .save();
+        transition();
       }
 
       // 画像アップロード用スクリプト
@@ -95,7 +113,7 @@
     }
     </script>
     <script>
-      // モーダル表示用スクリプト（仮）
+      // モーダル表示用スクリプト
       function modal_open(){
         const open = document.getElementById('d_open');
         const ok = document.getElementById('d_ok');
@@ -104,21 +122,22 @@
         const mask = document.getElementById('mask');
         
         open.addEventListener('click',()=>{
-          alert("open");
+          // モーダルの値を書き換える
+          document.getElementById('m_item_name').innerHTML = document.getElementById("item_name").value;
+          document.getElementById('m_delivery_date').innerHTML = document.getElementById("delivery_start_date").value + "<br>～<br>" + document.getElementById("delivery_end_date").value;
+          document.getElementById('m_delivery_time').innerHTML = document.getElementById("delivery_time").value;
+          document.getElementById('m_location').innerHTML = document.getElementById("location").value;
+          // 表示
           modal.classList.remove('hidden');
           mask.classList.remove('hidden');
         });
 
-        ok.addEventListener('click',()=>{
-          alert("ok");
-          newDeal();
-          // alert("ok");
-          localStorage.setItem("flag","give");
-          document.location.href='insertFixed.html';
-        });
+        // ok.addEventListener('click',()=>{
+        //   newDeal();
+          
+        // });
         
         close.addEventListener('click',()=>{
-          alert("close");
           modal.classList.add('hidden');
           mask.classList.add('hidden');
         });
@@ -296,28 +315,23 @@
     <!-- モーダルウィンドウ -->
       <section id="d_modal" class="hidden">
         <div class="modal_box">
-          <a>商品名</a>
+          <a id="m_item_name">商品名</a>
           <br>
-          <a>この辺に画像（でかい）</a>
+          <div class="flex" id="preview" width="300" height="200">
+          </div>
           <br>
           <table class="modal_table">
             <tr>
-              <th class="modal_table">カテゴリー</th><td>値</td>
+              <th class="modal_table">出品者</th><td id="m_user">値</td>
             </tr>
             <tr>
-              <th class="modal_table">商品の状態</th><td>値</td>
+              <th class="modal_table">受け渡し期間</th><td id="m_delivery_date">値</td>
             </tr>
             <tr>
-              <th class="modal_table">商品名</th><td>値</td>
+              <th class="modal_table">受け渡し時間帯</th><td id="m_delivery_time">値</td>
             </tr>
             <tr>
-              <th class="modal_table">受け渡し期間</th><td>値</td>
-            </tr>
-            <tr>
-              <th class="modal_table">受け渡し時間帯</th><td>値</td>
-            </tr>
-            <tr>
-              <th class="modal_table">受け渡し場所</th><td>値</td>
+              <th class="modal_table">受け渡し場所</th><td id="m_location">値</td>
             </tr>
           </table>
         </div>
@@ -327,7 +341,7 @@
           <div id="d_cancel">
           閉じる
           </div>
-          <div id="d_ok">
+          <div id="d_ok" onclick="newDeal()">
           進める
           </div>
         </div>
