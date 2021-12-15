@@ -37,32 +37,41 @@
       user.set("user_account_name", createN)
         .set("userName", createSN)
         .set("password", createP)
+        .set("acl", (new ncmb.Acl()).setPublicWriteAccess(true).setPublicReadAccess(true))
         .signUpByAccount()
-        .then(function(user) {
+        .then(function(newUser) {
           //新規ユーザー登録成功
-          console.log("新規ユーザー登録成功：" + JSON.stringify(user));
-          //アクセスコントロール制御(未実装p100)
-          
-
-          document.location.href = 'index.html';
+          console.log("新規ユーザー登録成功：" + JSON.stringify(newUser));
+          const userAcl = new ncmb.Acl();
+          userAcl.setPublicReadAccess(true)
+            .setUserWriteAccess(newUser, true)
+            .setUserReadAccess(newUser, true);
+          return newUser.set("acl", userAcl).update();
+        })
+        .then(function(user) {
+          // アクセスコントロール更新成功時の処理
+          console.log("更新成功:" + JSON.stringify(user));
+          return ncmb.User.login(user);
+        })
+        .then(function(user) {
+          location.href = "./index.html";
         })
         .catch(function(error) {
           //新規ユーザー登録失敗時の処理
-          console.log("新規ユーザー登録失敗：" + JSON.stringify(error));
+          console.log("新規ユーザー登録・更新失敗：" + JSON.stringify(error));
         });
     }
-
 
     //ログイン機能
     function wineLogin() {
 
       var loginStudentNumber = document.getElementById("lSN").value;
       var loginPassword = document.getElementById("loginPass").value;
-      alert(loginPassword + "パスワード" + loginStudentNumber + "名前")
       ncmb.User.login(loginStudentNumber, loginPassword)
         .then(function(user) {
           //ログイン成功時の処理(例)
-          console.log("ログイン成功：" + JSON.stringify(user));
+          //console.log("ログイン成功：" + JSON.stringify(user));
+          console.log("ログイン成功：" + ncmb.User.getCurrentUser());
           document.location.href = 'index.html';
         })
         .catch(function(error) {
@@ -71,6 +80,42 @@
         });
 
 
+
+    }
+
+    //検索機能
+    function wineSearch() {
+      var loginStudentNumber = document.getElementById("searchSN").value;
+      let lowNumber = 0;
+      ncmb.User.fetchAll()
+        .then(users => {
+          users.forEach(user => {
+            console.log(user);
+            //ここで登録されている学籍番号かチェック
+            if (user.userName === loginStudentNumber) {
+              console.log("あった！");
+              console.log(user.user_account_name);
+              lowNumber = lowNumber + 1;
+            }
+          })
+          console.log("検索結果：" + lowNumber + "件");
+        }).catch(err => {
+          console.log("変数データ取得エラー")
+        });
+
+      
+    }
+
+    //ログイン中ユーザ確認
+    function confarm() {
+      // カレントユーザー情報の取得
+      alert("確認")
+      var currentUser = ncmb.User.getCurrentUser();
+      if (currentUser) {
+        console.log("ログイン中のユーザー: " + currentUser.get("userName"));
+      } else {
+        console.log("未ログインまたは取得に失敗");
+      }
 
     }
   </script>
@@ -118,6 +163,9 @@
       </div>
     </div>
     <!--お試しタブエンド-->
+    <input type="text" id="searchSN" />
+    <a href="javascript:wineSearch();">検索</a><br>
+    <a href="javascript:confarm();">ログインアカウント確認</a>
   </div>
   </div>
 
