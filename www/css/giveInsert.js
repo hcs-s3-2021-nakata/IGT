@@ -280,7 +280,7 @@
       // クラスインスタンスの生成
       var trade = new Trade();
       // データを設定して保存する
-      give.set("category", category)
+      trade.set("category", category)
         .set("deal_status", "成立待ち")
         .set("delivery_end_date", delivery_end_date)
         .set("delivery_start_date", delivery_start_date)
