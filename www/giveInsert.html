@@ -2,212 +2,19 @@
 <html>
 
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
-<script src="components/loader.js"></script>
-<link rel="stylesheet" href="components/loader.css">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/modal.css">
-<link rel="stylesheet" href="css/insert.css">
-<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<script type="text/javascript" src="css/main.js">
-</script>
-<script>
-  // APIキーの設定とSDK初期化
-  // API key.
-  var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
-  var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
-  // SDK initialization.
-  var ncmb = new NCMB(applicationKey, clientKey);
-
-    const wait = (sec) => { // タイマ
-      return new Promise((resolve, reject) => {
-        setTimeout(resolve, sec*1000);
-        //setTimeout(() => {reject(new Error("エラー！"))}, sec*1000);
-      });
-    };
-
-    async function transition() {
-      try {
-        await wait(3); // ここで処理待ち
-        localStorage.setItem("flag","give");
-        document.location.href='insertFixed.html';
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    function newDeal(){
-        
-      // 画像ファイル生成
-      var imageData = document.getElementById("previewImage");
-      var src = previewImage.getAttribute('src');
-      var item_image = imgUpload(src);// 先行して画像をアップロード。画像の名前を返す
-
-      var category = document.getElementById("category").value;
-      var delivery_end_date = document.getElementById("delivery_end_date").value;
-      var delivery_start_date = document.getElementById("delivery_start_date").value;
-      var delivery_time = document.getElementById("delivery_time").value;
-
-      var item_info = document.getElementById("item_info").value;
-      var item_name = document.getElementById("item_name").value;
-      var item_status = document.getElementById("item_status").value;
-      var location = document.getElementById("location").value;
-      // 
-      var Give = ncmb.DataStore("give");
-      // クラスインスタンスの生成
-      var give = new Give();
-      // データを設定して保存する
-      give.set("category", category)
-        .set("deal_status", "成立待ち")
-        .set("delivery_end_date", delivery_end_date)
-        .set("delivery_start_date", delivery_start_date)
-        .set("delivery_time", delivery_time)
-        .set("item_image", item_image)
-        .set("item_info", item_info)
-        .set("item_name", item_name)
-        .set("item_status", item_status)
-        .set("location", location)
-        .save();
-        transition();
-      }
-
-    // 画像アップロード用スクリプト
-    function imgUpload(imageData) {
-      // ncmbに画像をアップロード
-      var fileName = makeUUID() + ".jpg";
-      var fileData = toBlob(imageData, "image/jpeg");
-      ncmb.File.upload(fileName, fileData);
-      return fileName;
-    }
-
-    // Blob作成
-    function toBlob(base64, mime_type) {
-      var bin = atob(base64.replace(/^.*,/, ''));
-      var buffer = new Uint8Array(bin.length);
-      for (var i = 0; i < bin.length; i++) {
-        buffer[i] = bin.charCodeAt(i);
-      }
-
-      try {
-        var blob = new Blob([buffer.buffer], {
-          type: mime_type
-        });
-      } catch (e) {
-        return false;
-      }
-      return blob;
-    }
-
-    //UUID生成
-    function makeUUID() {
-      var d = +new Date();
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-        .replace(/[xy]/g, function(c) {
-          var r = (d + Math.random() * 16) % 16 | 0;
-          return (c == 'X' ? r : (r & 0x3 | 0x8)).toString(16);
-
-        });
-    }
-    </script>
-    <script>
-    // 値を書き換える
-    function changeDtime(){
-      var delivery_time = document.getElementById("delivery_time").value;
-      switch (delivery_time){
-            case '1':
-              delivery_time = "１コマ目終了後";
-              break;
-            case '2':
-              delivery_time = "昼休み";
-              break;
-            case '3':
-              delivery_time = "３コマ目終了後";
-              break;
-            case '4':
-              delivery_time = "４コマ目終了後";
-              break;
-            default:
-              break;
-          }
-      return delivery_time;
-    }
-
-    function changeLocation(){
-      var location = document.getElementById("location").value;
-      switch (location){
-            case '1':
-              location = "本校舎3Fホール";
-              break;
-            case '2':
-              location = "本校舎4Fホール";
-              break;
-            case '3':
-              location = "本校舎5F";
-              break;
-            case '4':
-              location = "本校舎6Fホール";
-              break;
-            case '5':
-              location = "本校舎7F";
-              break;
-            case '6':
-              location = "本校舎8F";
-              break;
-            case '7':
-              location = "2号館入口";
-              break;
-            case '8':
-              location = "3号館入口";
-              break;
-            case '9':
-              location = "3号館ホール";
-              break;
-            case '100':
-              location = "その他";
-              break;
-            default:
-              break;
-          }
-      return location;
-    }
-    </script>
-    <script>
-      // モーダル表示用スクリプト
-      function modal_open(){
-        const open = document.getElementById('d_open');
-        const ok = document.getElementById('d_ok');
-        const close = document.getElementById('d_cancel');
-        const modal = document.getElementById('d_modal');
-        const mask = document.getElementById('mask');
-        
-        open.addEventListener('click',()=>{
-          // 値を置き換える関数を呼ぶ
-          var delivery_time = changeDtime();
-          var location = changeLocation();
-          
-          // モーダルの値を書き換える
-          document.getElementById('m_item_name').innerHTML = document.getElementById("item_name").value;
-          document.getElementById('m_delivery_date').innerHTML = document.getElementById("delivery_start_date").value + "<br>～<br>" + document.getElementById("delivery_end_date").value;
-          document.getElementById('m_delivery_time').innerHTML = delivery_time;
-          document.getElementById('m_location').innerHTML = location;
-          // 表示
-          modal.classList.remove('hidden');
-          mask.classList.remove('hidden');
-        });
-        
-        close.addEventListener('click',()=>{
-          modal.classList.add('hidden');
-          mask.classList.add('hidden');
-        });
-        
-        mask.addEventListener('click',()=>{
-          close.click();
-        });
-      }
-    </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/insert.css">
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script type="text/javascript" src="css/main.js">
+  </script>
+  <script type="text/javascript" src="css/giveInsert.js"></script>
 </head>
 
 <body id="prodact_lists">
@@ -243,7 +50,7 @@
   </header>
   <!-- Header End -->
   <div class="right">
-    <button type="button" class="newDeal-btn" name="item_image" id="d_open" onclick="modal_open()"> 出品する！ </button>
+    <button type="button" class="newDeal-btn" name="item_image" id="d_open" onclick="give_modal_open()"> 出品する！ </button>
   </div>
   <div id="mask" class="hidden"></div><br><br><br>
 
@@ -377,35 +184,41 @@
     <!-- Fotter End -->
     <!-- モーダルウィンドウ -->
       <section id="d_modal" class="hidden">
-        <div class="modal_box">
-          <a id="m_item_name">商品名</a>
-          <br>
-          <div class="flex" id="preview" width="300" height="200">
+        <div class="modal_center">
+          <div class="modal_box">
+            <a id="m_item_name">商品名</a>
+            <br>
+            <br>
+            <table class="modal_table">
+              <tr>
+                <th class="modal_table">カテゴリー</th><td id="m_category">値</td>
+              </tr>
+              <tr>
+                <th class="modal_table">商品状態</th><td id="m_item_status">値</td>
+              </tr>
+              <tr>
+                <th class="modal_table">商品説明</th><td id="m_item_info">値</td>
+              </tr>
+              <tr>
+                <th class="modal_table">受渡期間</th><td id="m_delivery_date">値</td>
+              </tr>
+              <tr>
+                <th class="modal_table">受渡時間帯</th><td id="m_delivery_time">値</td>
+              </tr>
+              <tr>
+                <th class="modal_table">受渡場所</th><td id="m_location">値</td>
+              </tr>
+            </table>
           </div>
           <br>
-          <table class="modal_table">
-            <tr>
-              <th class="modal_table">出品者</th><td id="m_user">値</td>
-            </tr>
-            <tr>
-              <th class="modal_table">受け渡し期間</th><td id="m_delivery_date">値</td>
-            </tr>
-            <tr>
-              <th class="modal_table">受け渡し時間帯</th><td id="m_delivery_time">値</td>
-            </tr>
-            <tr>
-              <th class="modal_table">受け渡し場所</th><td id="m_location">値</td>
-            </tr>
-          </table>
-        </div>
-        <br>
-        <a>この商品を登録しますか？</a>
-        <div id="d_button">
-          <div id="d_cancel">
-          閉じる
-          </div>
-          <div id="d_ok" onclick="newDeal()">
-          進める
+          <a>この商品を登録しますか？</a>
+          <div id="d_button">
+            <div id="d_cancel">
+            閉じる
+            </div>
+            <div id="d_ok" onclick="give_newDeal()">
+            進める
+            </div>
           </div>
         </div>
       </section>
