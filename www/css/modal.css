@@ -36,6 +36,7 @@
 
 #d_modal{
 	background:#fff;
+  height: 415px;
 	width:300px;
 	padding:20px;
 	border-radius:4px;
@@ -47,6 +48,8 @@
 	transition:transform 0.4s;
 	z-index:70;
   text-align: center;
+  /* overflow-y: auto; */
+  overflow-y: scroll;
 }
 
 #mask.hidden{
@@ -54,23 +57,37 @@
 }
 
 #d_modal.hidden{
-	transform:translate(0,-600px);
+	transform:translate(0,-750px);
+}
+
+.modal_center{
+  vertical-align: middle;
 }
 
 .modal_box{
   border: solid 2px #999999;
   border-radius:20px;
-  padding: 1em 2em 2em;
+  padding: 10px 5px 10px 5px;
 }
 
 table.modal_table {
   width: 100%;
   margin: auto;
+  text-align: left;
 }
 
 th.modal_table {
   font-size: 15px;
-  width: 50%;
+  width: 40%;
+  text-align: center;
+}
+
+#m_item_info{
+  text-align: left;
+}
+
+.wave{
+  margin-left: 40px;
 }
 /* モーダル終了 */
 
