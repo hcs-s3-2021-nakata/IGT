@@ -12,10 +12,34 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script type="text/javascript" src="css/logout.js"></script>
   <script>
+    // APIキーの設定とSDK初期化
+    // API key.
+    var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+    var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+    // SDK initialization.
+    var ncmb = new NCMB(applicationKey, clientKey);
+
+    function give_lists(){
+      var Give = ncmb.DataStore("give");
+      Give.equalTo("deal_status", "成立待ち")
+          .fetchAll()
+          .then(function(results){
+              console.log("Successfully retrieved " + results.length);
+              for (var i = 0; i < results.length; i++) {
+                var object = results[i];
+                // 商品の箱を追加していく
+                var itemlist_element = document.getElementById('itemlist'); 
+                itemlist_element.insertAdjacentHTML("afterbegin",'<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="item_image"> </div> <div class="container_center"> <a id="item_name">'+object.item_name+'</a> </div> <div class="container_right"> <a href="giveDetail.html"> <i class="fas fa-angle-right size"></i></a></div></div></div>');                                
+              }
+            })
+          .catch(function(err){
+              console.log(err);
+            });
+    }
   </script>
 </head>
 
-<body id="prodact_lists">
+<body id="prodact_lists" onload="give_lists()">
   <!-- Header Start -->
   <header class="site-header">
     <div class="wrapper site-header__wrapper">
@@ -49,21 +73,12 @@
   <!-- Header End -->
 
   <!-- Body Start -->
-  <div class="container" id="item_box">
-    <div class="container_parent">
-      <div class="container_left">
-        <a>画像</a>
-      </div>
-      <div class="container_center">
-        <a id="item_name">ラブラビットのぬいぐるみ</a>
-      </div>
-      <div class="container_right">
-        <a href="giveDetail.html">
-          <i class="fas fa-angle-right size"></i>
-        </a>
-      </div>
-    </div>
+  <div id="itemlist">
+    <!-- ここに商品が入る -->
   </div>
+  <br>
+  <br>
+  <br>
   <!-- Body End -->
 
   <!-- Footer Start -->
