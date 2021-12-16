@@ -153,3 +153,8 @@ ul{
 .tab-content.active{
   display: block;
 }
+
+#errMessage{
+  color: rgba(175, 10, 10, 0.993);
+  font-size: 12px;
+}
