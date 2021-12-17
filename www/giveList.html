@@ -64,7 +64,7 @@
             .then(function(results){
                 for (var i = 0; i <= results.length; i++) {
                   var object = results[i];
-                  var image_id = "image" + (i + 1);
+                  var image_id = "image" + (i+1);
                   // 商品の箱を追加していく
                   var itemlist_element = document.getElementById('itemlist'); 
                   itemlist_element.insertAdjacentHTML("afterbegin",'<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="'+image_id+'" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">'+object.item_name+'</a> </div> <div class="container_right"> <a href="giveDetail.html"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
@@ -81,13 +81,14 @@
             .catch(function(err){
                 console.log(err);
               });
+      setImg();
     }
 
     async function setImg(){
-      for(var j = 0; j < imgs.length; j++){
+      for(var j = imgs.length; 0 <= j; j--){
         downloadImage(imgs[j]);
         setImage(j);
-        await wait(3);
+        await wait(1.5);
       }
     }
 
