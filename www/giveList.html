@@ -18,24 +18,79 @@
     var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
     // SDK initialization.
     var ncmb = new NCMB(applicationKey, clientKey);
+    var reader = new FileReader();
+    var imgs = [] // 配列の初期化
 
-    function give_lists(){
-      var Give = ncmb.DataStore("give");
-      Give.equalTo("deal_status", "成立待ち")
-          .fetchAll()
-          .then(function(results){
-              console.log("Successfully retrieved " + results.length);
-              for (var i = 0; i < results.length; i++) {
-                var object = results[i];
-                // 商品の箱を追加していく
-                var itemlist_element = document.getElementById('itemlist'); 
-                itemlist_element.insertAdjacentHTML("afterbegin",'<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="item_image"> </div> <div class="container_center"> <a id="item_name">'+object.item_name+'</a> </div> <div class="container_right"> <a href="giveDetail.html"> <i class="fas fa-angle-right size"></i></a></div></div></div>');                                
-              }
-            })
-          .catch(function(err){
-              console.log(err);
-            });
+    // 共通機能
+    const wait = (sec) => { // タイマ
+      return new Promise((resolve, reject) => {
+        setTimeout(resolve, sec*1000);
+        //setTimeout(() => {reject(new Error("エラー！"))}, sec*1000);
+      });
+    };
+
+    // 画像を読み込む promiceを導入する
+    function setImage(i){
+      reader.onload = function(e) {
+        var dataUrl = reader.result;
+        // var image_id = "image"+(i+1);
+        // console.log(image_id);
+        var image_id;
+        // for(j = i+1; j > 0; j--){
+        image_id = "image"+(i+1);
+        // }
+        console.log(image_id);
+        document.getElementById(image_id).src = dataUrl;
+      }
     }
+
+    function downloadImage(fileName){  
+      // ダウンロード（データ形式をblobを指定）
+      ncmb.File.download(fileName, "blob")
+           .then(function(blob) {
+           // ファイルリーダーにデータを渡す
+           reader.readAsDataURL(blob);
+           })
+           .catch(function(err) {
+              console.error(err);
+           })
+    }
+
+    // 商品のリストを展開する
+    function give_lists(){
+        var Give = ncmb.DataStore("give");
+        Give.equalTo("deal_status", "成立待ち")
+            .fetchAll()
+            .then(function(results){
+                for (var i = 0; i <= results.length; i++) {
+                  var object = results[i];
+                  var image_id = "image" + (i + 1);
+                  // 商品の箱を追加していく
+                  var itemlist_element = document.getElementById('itemlist'); 
+                  itemlist_element.insertAdjacentHTML("afterbegin",'<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="'+image_id+'" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">'+object.item_name+'</a> </div> <div class="container_right"> <a href="giveDetail.html"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+                  imgs[i] = object.item_image;
+                  console.log(imgs[i]);
+                  // 配列imgsにobject_item_imageを全て格納
+                  // imgsでforループ
+                  // downloadImageを実行
+
+                  // downloadImage(object.item_image);
+                  // setImage(i);
+                }
+              })
+            .catch(function(err){
+                console.log(err);
+              });
+    }
+
+    async function setImg(){
+      for(var j = 0; j < imgs.length; j++){
+        downloadImage(imgs[j]);
+        setImage(j);
+        await wait(3);
+      }
+    }
+
   </script>
 </head>
 
@@ -73,6 +128,7 @@
   <!-- Header End -->
 
   <!-- Body Start -->
+  <button onclick="setImg()">クリック</button>
   <div id="itemlist">
     <!-- ここに商品が入る -->
   </div>
