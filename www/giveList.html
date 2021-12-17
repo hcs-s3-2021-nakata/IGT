@@ -57,7 +57,7 @@
     }
 
     // 商品のリストを展開する
-    function give_lists(){
+    async function give_lists(){
         var Give = ncmb.DataStore("give");
         Give.equalTo("deal_status", "成立待ち")
             .fetchAll()
@@ -81,6 +81,7 @@
             .catch(function(err){
                 console.log(err);
               });
+      await wait(2);
       setImg();
     }
 
@@ -129,7 +130,7 @@
   <!-- Header End -->
 
   <!-- Body Start -->
-  <button onclick="setImg()">クリック</button>
+  <!-- <button onclick="setImg()">画像が表示されないときはここをクリック</button> -->
   <div id="itemlist">
     <!-- ここに商品が入る -->
   </div>
