@@ -29,7 +29,7 @@
       });
     };
 
-    // 画像を読み込む promiceを導入する
+    // 画像を読み込む
     function setImage(i){
       reader.onload = function(e) {
         var dataUrl = reader.result;
@@ -56,7 +56,7 @@
            })
     }
 
-    // 商品のリストを展開する
+    // 商品のリストを展開する URLを詳細画面用に書き換える
     async function give_lists(){
         var Give = ncmb.DataStore("give");
         Give.equalTo("deal_status", "成立待ち")
@@ -130,7 +130,7 @@
   <!-- Header End -->
 
   <!-- Body Start -->
-  <!-- <button onclick="setImg()">画像が表示されないときはここをクリック</button> -->
+  <button onclick="setImg()">画像のリロード</button>
   <div id="itemlist">
     <!-- ここに商品が入る -->
   </div>
