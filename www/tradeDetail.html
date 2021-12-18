@@ -182,11 +182,12 @@
       });
 
       ok.addEventListener('click', () => {
+        var objectID = location.search.replace('?', '');
         localStorage.setItem("flag", "trade");
-        localStorage.setItem("objectID", "g5y1d59s15");
-        localStorage.setItem("give_userID", "20193029");
-        localStorage.setItem("take_userID", "20191204");
-        document.location.href = 'qrGenerater.html';
+        localStorage.setItem("objectID", objectID);
+        localStorage.setItem("give_userID", "仮");
+        localStorage.setItem("take_userID", "仮");
+        document.location.href = 'qrGenerater.html?'+objectId;
       });
 
       close.addEventListener('click', () => {
