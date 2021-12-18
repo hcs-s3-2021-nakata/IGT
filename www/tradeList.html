@@ -12,10 +12,85 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script type="text/javascript" src="css/logout.js"></script>
   <script>
+    // APIキーの設定とSDK初期化
+    // API key.
+    var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+    var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+    // SDK initialization.
+    var ncmb = new NCMB(applicationKey, clientKey);
+    var reader = new FileReader();
+    var imgs = [] // 配列の初期化
+
+    // 処理を一時停止する
+    const wait = (sec) => { // タイマ
+      return new Promise((resolve, reject) => {
+        setTimeout(resolve, sec*1000);
+        //setTimeout(() => {reject(new Error("エラー！"))}, sec*1000);
+      });
+    };
+
+    // 画像を読み込む
+    function setImage(i){
+      reader.onload = function(e) {
+        var dataUrl = reader.result;
+        var image_id;
+        image_id = "image"+(i+1);
+        console.log(image_id);
+        document.getElementById(image_id).src = dataUrl;
+      }
+    }
+
+    // 画像を読み込む
+    function downloadImage(fileName){  
+      // ダウンロード（データ形式をblobを指定）
+      ncmb.File.download(fileName, "blob")
+           .then(function(blob) {
+           // ファイルリーダーにデータを渡す
+           reader.readAsDataURL(blob);
+           })
+           .catch(function(err) {
+              console.error(err);
+           })
+    }
+
+    // 商品のリストを展開する
+    async function trade_lists(){
+        var Trade = ncmb.DataStore("trade");
+        Trade.equalTo("deal_status", "成立待ち")
+            .fetchAll()
+            .then(function(results){
+                for (var i = 0; i <= results.length; i++) {
+                  var object = results[i];
+                  var image_id = "image" + (i+1);
+                  var objectId = object.objectId;
+                  console.log(objectId);
+                  // 商品の箱を追加していく
+                  var itemlist_element = document.getElementById('itemlist'); 
+                  itemlist_element.insertAdjacentHTML("afterbegin",'<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="'+image_id+'" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">'+object.item_name+'</a> </div> <div class="container_right"> <a href="tradeDetail.html?'+objectId+'"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+                  imgs[i] = object.item_image;
+                  console.log(imgs[i]);
+                }
+              })
+            .catch(function(err){
+                console.log(err);
+              });
+      await wait(2);
+      setImg();
+    }
+
+    // サムネイル画像を上から順に表示する
+    async function setImg(){
+      for(var j = imgs.length; 0 <= j; j--){
+        downloadImage(imgs[j]);
+        setImage(j);
+        await wait(1.5);
+      }
+    }
+
   </script>
 </head>
 
-<body id="prodact_lists">
+<body id="prodact_lists" onload="trade_lists()">
   <!-- Header Start -->
   <header class="site-header">
     <div class="wrapper site-header__wrapper">
@@ -50,21 +125,15 @@
   <!-- Header End -->
 
   <!-- Body Start -->
-  <div class="container" id="item_box">
-    <div class="container_parent">
-      <div class="container_left">
-        <a>画像</a>
-      </div>
-      <div class="container_center">
-        <a id="item_name">レオナのコードマスコット</a>
-      </div>
-      <div class="container_right">
-        <a href="tradeDetail.html">
-          <i class="fas fa-angle-right size"></i>
-        </a>
-      </div>
-    </div>
+  <!-- Body Start -->
+  <button onclick="setImg()">画像のリロード</button>
+  <div id="itemlist">
+    <!-- ここに商品が入る -->
   </div>
+  <br>
+  <br>
+  <br>
+  <!-- Body End -->
   <!-- Body End -->
 
   <!-- Footer Start -->
