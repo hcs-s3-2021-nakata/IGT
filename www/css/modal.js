@@ -217,6 +217,7 @@
         .set("location", location)
         .save();
         localStorage.setItem("flag","give");
+        localStorage.setItem("item_image",item_image);
         transition();
       }
 
@@ -293,6 +294,7 @@
         .set("location", location)
         .save();
         localStorage.setItem("flag","trade");
+        localStorage.setItem("item_image",item_image);
         transition();
       }
 

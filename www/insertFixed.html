@@ -14,15 +14,59 @@
   <script type="text/javascript" src="https://leaverou.github.io/prefixfree/prefixfree.min.js"></script>
   <script type="text/javascript" src="css/logout.js"></script>
   <script>
+    // APIキーの設定とSDK初期化
+  // API key.
+  var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+  var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+  // SDK initialization.
+  var ncmb = new NCMB(applicationKey, clientKey);
+  var reader = new FileReader();
+
+ // 処理を一時停止する
+    const wait = (sec) => { // タイマ
+      return new Promise((resolve, reject) => {
+        setTimeout(resolve, sec*1000);
+        //setTimeout(() => {reject(new Error("エラー！"))}, sec*1000);
+      });
+    };
+
     var flag;
     // 画面遷移の管理
-    function detail() {
+    async function detail() {
       flag = localStorage.getItem("flag");
       if (flag == "give") {
-        document.location.href = 'giveDetail.html';
+        var item_image = localStorage.getItem("item_image");
+      var Give = ncmb.DataStore("give");
+      var objectId;
+      Give.equalTo("item_image", item_image)
+            .fetchAll()
+            .then(function(results){
+              var object = results[0];
+              objectId = object.objectId;
+              return objectId;
+            })
+            .catch(function(err){
+                console.log(err);
+            });
+        await wait(0.5);
+        document.location.href = 'giveDetail.html?'+ objectId;
       }
+      
       if (flag == "trade") {
-        document.location.href = 'tradeDetail.html';
+        var item_image = localStorage.getItem("item_image");
+      var Trade = ncmb.DataStore("trade");
+      var objectId;
+      Trade.equalTo("item_image", item_image)
+            .fetchAll()
+            .then(function(results){
+              var object = results[0];
+              objectId = object.objectId;
+            })
+            .catch(function(err){
+                console.log(err);
+            });
+        await wait(0.5);
+        document.location.href = 'tradeDetail.html?'+ objectId;
       }
     }
   </script>
