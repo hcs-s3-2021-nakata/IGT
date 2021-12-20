@@ -348,10 +348,19 @@ a.btn-border-shadow--color:before {
   text-align: right;
 }
 
+#name_box{
+  display: block;
+  margin: auto;
+  background-color: white;
+  text-align: center;
+  /* background-color:#E6E6E6; */
+}
+
 #info_box{
   display: block;
   margin: auto;
   background-color: white;
+  text-align: left;
   /* background-color:#E6E6E6; */
 }
 
@@ -424,6 +433,11 @@ img{
 img#detail_image{
     width: 240px;
     height: 240px;
+}
+
+img#modal_image{
+    width: 200px;
+    height: 200px;
 }
 
 #barcode{
