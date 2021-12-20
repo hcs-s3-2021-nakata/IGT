@@ -14,6 +14,185 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script type="text/javascript" src="css/logout.js"></script>
   <script>
+    // APIキーの設定とSDK初期化
+    // API key.
+    var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+    var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+    // SDK initialization.
+    var ncmb = new NCMB(applicationKey, clientKey);
+    var reader = new FileReader();
+
+    // 画像を読み込む
+    function setImage(){
+      reader.onload = function(e) {
+        var dataUrl = reader.result;
+        document.getElementById("detail_image").src = dataUrl;
+      }
+    }
+
+    // 画像を読み込む
+    function downloadImage(fileName){  
+      // ダウンロード（データ形式をblobを指定）
+      ncmb.File.download(fileName, "blob")
+           .then(function(blob) {
+           // ファイルリーダーにデータを渡す
+           reader.readAsDataURL(blob);
+           })
+           .catch(function(err) {
+              console.error(err);
+           })
+    }
+
+    // 取得した情報で画面を上書き
+    function detailLoad(){
+      var objectID = location.search.replace('?', '');
+      var Trade = ncmb.DataStore("trade");
+      Trade.equalTo("objectId", objectID)
+            .fetchAll()
+            .then(function(results){
+              var object = results[0];
+              // 値の書き換え
+              var category = changeCategory(object.category);
+              var item_status = changeItemStatus(object.item_status);
+              var delivery_time = changeDtime(object.delivery_time);
+              var location = changeLocation(object.location);
+
+              downloadImage(object.item_image);
+              setImage(object.item_image);
+
+              document.getElementById('item_name').innerHTML = object.item_name;
+              document.getElementById('item_info').innerHTML = object.item_info;
+              document.getElementById('swap_item_info').innerHTML = object.swap_item_info;
+              document.getElementById('category').innerHTML = category;
+              document.getElementById('item_status').innerHTML = item_status;
+              document.getElementById('delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
+              document.getElementById('delivery_time').innerHTML = delivery_time;
+              document.getElementById('location').innerHTML = location;
+              
+              
+            })
+            .catch(function(err){
+                console.log(err);
+            });
+    }
+
+    // カテゴリーを書き換える
+    function changeCategory(category){
+      switch (category){
+            case '1':
+              category = "おもちゃ・ゲーム";
+              break;
+            case '2':
+              category = "本・テキスト";
+              break;
+            case '3':
+              category = "音楽・ＤＶＤ";
+              break;
+            case '4':
+              category = "服・コスメ";
+              break;
+            case '5':
+              category = "キッチン";
+              break;
+            case '6':
+              category = "スポーツ";
+              break;
+            case '7':
+              category = "PC・スマホ用品";
+              break;
+            case '100':
+              category = "その他";
+              break;
+            default:
+              break;
+          }
+      return category;
+    }
+
+    // 商品状態を書き換える
+    function changeItemStatus(item_status){
+      switch (item_status){
+            case '1':
+              item_status = "新品";
+              break;
+            case '2':
+              item_status = "ほぼ新品";
+              break;
+            case '3':
+              item_status = "多少の傷あり";
+              break;
+            case '4':
+              item_status = "傷・汚れあり";
+              break;
+            case '5':
+              item_status = "状態が悪い";
+              break;
+            default:
+              break;
+          }
+      return item_status;
+    }
+
+    // 受け渡し時間帯を書き換える
+    function changeDtime(delivery_time){
+      switch (delivery_time){
+            case '1':
+              delivery_time = "１コマ目終了後";
+              break;
+            case '2':
+              delivery_time = "昼休み";
+              break;
+            case '3':
+              delivery_time = "３コマ目終了後";
+              break;
+            case '4':
+              delivery_time = "４コマ目終了後";
+              break;
+            default:
+              break;
+          }
+      return delivery_time;
+    }
+
+    // 受け渡し場所を書き換える
+    function changeLocation(location){
+      switch (location){
+            case '1':
+              location = "本校舎3Fホール";
+              break;
+            case '2':
+              location = "本校舎4Fホール";
+              break;
+            case '3':
+              location = "本校舎5F";
+              break;
+            case '4':
+              location = "本校舎6Fホール";
+              break;
+            case '5':
+              location = "本校舎7F";
+              break;
+            case '6':
+              location = "本校舎8F";
+              break;
+            case '7':
+              location = "2号館入口";
+              break;
+            case '8':
+              location = "3号館入口";
+              break;
+            case '9':
+              location = "3号館ホール";
+              break;
+            case '100':
+              location = "その他";
+              break;
+            default:
+              break;
+          }
+      return location;
+    }
+
     // 詳細画面のモーダル表示用スクリプト（仮）
     function modal_open() {
       const open = document.getElementById('d_open');
@@ -28,11 +207,12 @@
       });
 
       ok.addEventListener('click', () => {
+        var objectID = location.search.replace('?', '');
         localStorage.setItem("flag", "trade");
-        localStorage.setItem("objectID", "g5y1d59s15");
-        localStorage.setItem("give_userID", "20193029");
-        localStorage.setItem("take_userID", "20191204");
-        document.location.href = 'qrGenerater.html';
+        localStorage.setItem("objectID", objectID);
+        localStorage.setItem("give_userID", "仮");
+        localStorage.setItem("take_userID", "仮");
+        document.location.href = 'qrGenerater.html?'+objectID;
       });
 
       close.addEventListener('click', () => {
@@ -48,7 +228,7 @@
   </script>
 </head>
 
-<body id="prodact_lists">
+<body id="prodact_lists" onload="detailLoad()">
   <!-- Header Start -->
   <header class="site-header">
     <div class="wrapper site-header__wrapper">
@@ -85,6 +265,9 @@
   <!-- Body Start -->
   <div id="detail">
     <br>
+    <div>
+      <img src="" id="detail_image"/>
+    </div>
     <br>
     <div class="container_detail_name" id="info_box">
       <a id="item_name">商品名</a>
@@ -92,36 +275,41 @@
     <br>
     <a>交換品の説明</a>
     <div class="container_detail_info" id="info_box">
-      <a id="item_name">商品説明</a>
+      <a id="item_info">商品説明</a>
+    </div>
+    <br>
+    <a>交換希望品について</a>
+    <div class="container_detail_info" id="info_box">
+      <a id="swap_item_info">交換希望品</a>
     </div>
     <br>
     <a>交換品の情報</a>
     <table class="deal-detail_table">
       <tr>
         <th>カテゴリ</th>
-        <td>値</td>
+        <td id="category">値</td>
       </tr>
       <tr>
         <th>商品の状態</th>
-        <td>値</td>
+        <td id="item_status">値</td>
       </tr>
       <tr>
         <th>受け渡し期間</th>
-        <td>値</td>
+        <td id="delivery_date">値</td>
       </tr>
       <tr>
         <th>受け渡し時間帯</th>
-        <td>値</td>
+        <td id="delivery_time">値</td>
       </tr>
       <tr>
         <th>受け渡し場所</th>
-        <td>値</td>
+        <td id="location">値</td>
       </tr>
     </table>
     <br>
     <button type="button" class="plz" id="d_open" onclick="modal_open()"> 欲しい！ </button>
     <div id="mask" class="hidden"></div>
-    <div>
+    <div><br><br><br><br><br>
       <!-- Body End -->
 
       <!-- Footer Start -->

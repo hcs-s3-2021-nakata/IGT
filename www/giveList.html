@@ -21,7 +21,7 @@
     var reader = new FileReader();
     var imgs = [] // 配列の初期化
 
-    // 共通機能
+    // 処理を一時停止する
     const wait = (sec) => { // タイマ
       return new Promise((resolve, reject) => {
         setTimeout(resolve, sec*1000);
@@ -33,17 +33,14 @@
     function setImage(i){
       reader.onload = function(e) {
         var dataUrl = reader.result;
-        // var image_id = "image"+(i+1);
-        // console.log(image_id);
         var image_id;
-        // for(j = i+1; j > 0; j--){
         image_id = "image"+(i+1);
-        // }
         console.log(image_id);
         document.getElementById(image_id).src = dataUrl;
       }
     }
 
+    // 画像を読み込む
     function downloadImage(fileName){  
       // ダウンロード（データ形式をblobを指定）
       ncmb.File.download(fileName, "blob")
@@ -56,7 +53,7 @@
            })
     }
 
-    // 商品のリストを展開する URLを詳細画面用に書き換える
+    // 商品のリストを展開する
     async function give_lists(){
         var Give = ncmb.DataStore("give");
         Give.equalTo("deal_status", "成立待ち")
@@ -65,17 +62,13 @@
                 for (var i = 0; i <= results.length; i++) {
                   var object = results[i];
                   var image_id = "image" + (i+1);
+                  var objectId = object.objectId;
+                  console.log(objectId);
                   // 商品の箱を追加していく
                   var itemlist_element = document.getElementById('itemlist'); 
-                  itemlist_element.insertAdjacentHTML("afterbegin",'<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="'+image_id+'" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">'+object.item_name+'</a> </div> <div class="container_right"> <a href="giveDetail.html"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+                  itemlist_element.insertAdjacentHTML("afterbegin",'<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="'+image_id+'" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">'+object.item_name+'</a> </div> <div class="container_right"> <a href="giveDetail.html?'+objectId+'"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
                   imgs[i] = object.item_image;
                   console.log(imgs[i]);
-                  // 配列imgsにobject_item_imageを全て格納
-                  // imgsでforループ
-                  // downloadImageを実行
-
-                  // downloadImage(object.item_image);
-                  // setImage(i);
                 }
               })
             .catch(function(err){
@@ -85,11 +78,12 @@
       setImg();
     }
 
+    // サムネイル画像を上から順に表示する
     async function setImg(){
       for(var j = imgs.length; 0 <= j; j--){
         downloadImage(imgs[j]);
         setImage(j);
-        await wait(1.5);
+        await wait(1);
       }
     }
 

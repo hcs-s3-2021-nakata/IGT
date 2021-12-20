@@ -17,7 +17,8 @@
   <script src="css/jquery.qrcode.min.js"></script>
 
   <script type="text/JavaScript">
-    // QRコードを生成するjquery...? $(function(){ var objectid = localStorage.getItem("objectID"); var give = localStorage.getItem("give_userID"); var take = localStorage.getItem("take_userID"); var qrtext = "objectId:" + objectid + ", giveId:" + give + ",takeId:"
+    // QRコードを生成するjquery...? 
+    $(function(){ var objectid = localStorage.getItem("objectID"); var give = localStorage.getItem("give_userID"); var take = localStorage.getItem("take_userID"); var qrtext = "objectId:" + objectid + ", giveId:" + give + ",takeId:"
     + take; var utf8qrtext = unescape(encodeURIComponent(qrtext)); $("#img-qr").html(""); $("#img-qr").qrcode({text:utf8qrtext}); });
   </script>
   <script>
