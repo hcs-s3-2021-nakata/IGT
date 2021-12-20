@@ -471,8 +471,25 @@ img.acount{
 	background: transparent;
 }
 .ef input[type='text']:focus {
-	border-bottom: 2px solid #b80b4dda;
+	border-bottom: 2px solid #832742da;
 	outline: none;
+}
+div.ef_img{
+  position: relative;
+}
+div.ef_div{
+  position: relative;
+	margin: 8px 3%;
+  font: 15px/24px sans-serif;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0rem 0rem 0.1rem 1.5em;
+	transition: 0.s;
+	letter-spacing: 1px;
+	color: #000000;
+	border: none;
+	border-bottom: 2px solid #1b2538;
+	background: transparent;
 }
 
 div.acount-send{
@@ -501,7 +518,7 @@ ul.message{
 
 li.message{
   vertical-align: middle;
-  padding: 0.7rem 0rem;
+  padding: 0rem 0rem;
 }
 
 img.message{
