@@ -27,6 +27,7 @@
       reader.onload = function(e) {
         var dataUrl = reader.result;
         document.getElementById("detail_image").src = dataUrl;
+        document.getElementById("modal_image").src = dataUrl;
       }
     }
 
@@ -61,14 +62,20 @@
               setImage(object.item_image);
 
               document.getElementById('item_name').innerHTML = object.item_name;
-              document.getElementById('item_info').innerHTML = object.item_info;
+              document.getElementById('item_info').innerHTML = object.item_info.replace(/\n/g, '<br>');
               document.getElementById('category').innerHTML = category;
               document.getElementById('item_status').innerHTML = item_status;
               document.getElementById('delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
               document.getElementById('delivery_time').innerHTML = delivery_time;
               document.getElementById('location').innerHTML = location;
               
-              
+              // モーダルの書き換え
+              document.getElementById('m_item_name').innerHTML = object.item_name;
+              // この辺に出品者の書き換えをあとで入れる
+              document.getElementById('m_delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
+              document.getElementById('m_delivery_time').innerHTML = delivery_time;
+              document.getElementById('m_location').innerHTML = location;
+
             })
             .catch(function(err){
                 console.log(err);
@@ -201,6 +208,7 @@
       const mask = document.getElementById('mask');
 
       open.addEventListener('click', () => {
+        // 表示
         modal.classList.remove('hidden');
         mask.classList.remove('hidden');
       });
@@ -330,26 +338,26 @@
       <!-- モーダルウィンドウ -->
       <section id="d_modal" class="hidden">
         <div class="modal_box">
-          <a>商品名</a>
+          <a id="m_item_name">商品名</a>
           <br>
-          <a>この辺に画像（でかい）</a>
+          <img src="" id="modal_image"/>
           <br>
           <table class="modal_table">
             <tr>
               <th class="modal_table">出品者</th>
-              <td>値</td>
+              <td id="m_give_userID">値</td>
             </tr>
             <tr>
               <th class="modal_table">受け渡し期間</th>
-              <td>値</td>
+              <td id="m_delivery_date">値</td>
             </tr>
             <tr>
               <th class="modal_table">受け渡し時間帯</th>
-              <td>値</td>
+              <td id="m_delivery_time">値</td>
             </tr>
             <tr>
               <th class="modal_table">受け渡し場所</th>
-              <td>値</td>
+              <td id="m_location">値</td>
             </tr>
           </table>
         </div>
