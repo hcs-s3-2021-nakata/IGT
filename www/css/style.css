@@ -421,6 +421,11 @@ img{
     height: 65px;
 }
 
+img#detail_image{
+    width: 240px;
+    height: 240px;
+}
+
 #barcode{
     width: 200px;
     height: 200px;

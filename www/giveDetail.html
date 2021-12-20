@@ -22,6 +22,27 @@
     var ncmb = new NCMB(applicationKey, clientKey);
     var reader = new FileReader();
 
+    // 画像を読み込む
+    function setImage(){
+      reader.onload = function(e) {
+        var dataUrl = reader.result;
+        document.getElementById("detail_image").src = dataUrl;
+      }
+    }
+
+    // 画像を読み込む
+    function downloadImage(fileName){  
+      // ダウンロード（データ形式をblobを指定）
+      ncmb.File.download(fileName, "blob")
+           .then(function(blob) {
+           // ファイルリーダーにデータを渡す
+           reader.readAsDataURL(blob);
+           })
+           .catch(function(err) {
+              console.error(err);
+           })
+    }
+
     // 取得した情報で画面を上書き
     function detailLoad(){
       var objectID = location.search.replace('?', '');
@@ -35,6 +56,9 @@
               var item_status = changeItemStatus(object.item_status);
               var delivery_time = changeDtime(object.delivery_time);
               var location = changeLocation(object.location);
+
+              downloadImage(object.item_image);
+              setImage(object.item_image);
 
               document.getElementById('item_name').innerHTML = object.item_name;
               document.getElementById('item_info').innerHTML = object.item_info;
@@ -240,7 +264,7 @@
   <div id="detail">
     <br>
     <div>
-      <a>この辺に画像(でかい)</a>
+      <img src="" id="detail_image"/>
     </div>
     <br>
     <div class="container_detail_name" id="info_box">
