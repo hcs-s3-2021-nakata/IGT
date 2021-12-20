@@ -62,6 +62,7 @@
 
               document.getElementById('item_name').innerHTML = object.item_name;
               document.getElementById('item_info').innerHTML = object.item_info;
+              document.getElementById('swap_item_info').innerHTML = object.swap_item_info;
               document.getElementById('category').innerHTML = category;
               document.getElementById('item_status').innerHTML = item_status;
               document.getElementById('delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
@@ -211,7 +212,7 @@
         localStorage.setItem("objectID", objectID);
         localStorage.setItem("give_userID", "仮");
         localStorage.setItem("take_userID", "仮");
-        document.location.href = 'qrGenerater.html?'+objectId;
+        document.location.href = 'qrGenerater.html?'+objectID;
       });
 
       close.addEventListener('click', () => {
@@ -275,6 +276,11 @@
     <a>交換品の説明</a>
     <div class="container_detail_info" id="info_box">
       <a id="item_info">商品説明</a>
+    </div>
+    <br>
+    <a>交換希望品について</a>
+    <div class="container_detail_info" id="info_box">
+      <a id="swap_item_info">交換希望品</a>
     </div>
     <br>
     <a>交換品の情報</a>
