@@ -14,8 +14,9 @@
   <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script type="text/javascript" src="css/logout.js"></script>
-  <script type="text/javascript" src="css/main.js">
-  </script>
+  <script type="text/javascript" src="css/main.js"></script>
+  <script src="css/voice.js"></script>
+  
 </head>
 
 <body id="prodact_lists">
@@ -53,15 +54,18 @@
 
   <!-- お気に入りボイス -->
   <ul class="next-voice-list">
-    <li><audio src="voice/sample.ogg" controls loop></audio>
-      <br>萬年先生による応援ボイス（男の子に向けて）
-      <button id="favorite-button" onclick="button()" class="btn btn-tag btn-tag--favorite"><i class="fas fa-star">お気に入り</i></button></li>
-    <li><audio src="voice/sample.ogg" controls loop></audio>
-      <br>萬年先生による応援ボイス（女の子に向けて）
-      <button id="favorite-button" onclick="button()" class="btn btn-tag btn-tag--favorite"><i class="fas fa-star">お気に入り</i></button></li>
-    <li>3</li>
-    <li>4</li>
-    <li>5</li>
+    <li>男の子に向けて<br>
+      <button id="favorite-button" onclick="boy()" calss="btn btn-tag btn-tag--favorite">再生する！！</button><button id="favorite-button" onclick="button()" class="btn btn-tag btn-tag--favorite"><i class="fas fa-star">お気に入り</i></button></li>
+    <li>女の子に向けて<br>
+      <button id="favorite-button" onclick="girl()" calss="btn btn-tag btn-tag--favorite">再生する！！</button><button id="favorite-button" onclick="button()" class="btn btn-tag btn-tag--favorite"><i class="fas fa-star">お気に入り</i></button></li>
+    <li>心を込めて<br>
+      <button id="favorite-button" onclick="kokoro()" calss="btn btn-tag btn-tag--favorite">再生する！！</button><button id="favorite-button" onclick="button()" class="btn btn-tag btn-tag--favorite"><i class="fas fa-star">お気に入り</i></button></li>
+    <li>コミュニケーションは挨拶から！！<br>
+      <button id="favorite-button" onclick="man_com()" calss="btn btn-tag btn-tag--favorite">再生する！！</button><button id="favorite-button" onclick="button()" class="btn btn-tag btn-tag--favorite"><i class="fas fa-star">お気に入り</i></button></li>
+    <li>頑張れ！！<br>
+      <button id="favorite-button" onclick="man_grad()" calss="btn btn-tag btn-tag--favorite">再生する！！</button><button id="favorite-button" onclick="button()" class="btn btn-tag btn-tag--favorite"><i class="fas fa-star">お気に入り</i></button></li>
+    <li>Free！！<br>
+      <button id="favorite-button" onclick="man_free()" calss="btn btn-tag btn-tag--favorite">再生する！！</button><button id="favorite-button" onclick="button()" class="btn btn-tag btn-tag--favorite"><i class="fas fa-star">お気に入り</i></button></li>
   </ul>
 
 
