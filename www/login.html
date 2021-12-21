@@ -42,22 +42,42 @@
     }
 
 
-   
+
     //ログイン機能
     function wineLogin() {
 
       var loginStudentNumber = document.getElementById("lSN").value;
       var loginPassword = document.getElementById("loginPass").value;
+
+var loginFlag = false;
+      if (loginStudentNumber === "") {
+        document.getElementById('errMessageLogNum').innerHTML = "学籍番号が未入力です";
+        loginFlag = true;
+      }else{
+        document.getElementById('errMessageLogNum').innerHTML = "";
+      }
+      if(loginPassword === ""){
+        document.getElementById('errMessageLogPass').innerHTML = "パスワードが未入力です";
+        loginFlag = true;
+      }else{
+        document.getElementById('errMessageLogPass').innerHTML = "";
+      }
+      if(loginFlag){
+        return;
+      }
+
+
       ncmb.User.login(loginStudentNumber, loginPassword)
         .then(function(user) {
           //ログイン成功時の処理(例)
           //console.log("ログイン成功：" + JSON.stringify(user));
-          console.log("ログイン成功：" + ncmb.User.getCurrentUser());
+          console.log("ログイン成功：" + ncmb.User.getCurrentUser().user_account_name);
           document.location.href = 'index.html';
         })
         .catch(function(error) {
           //ログイン失敗時の処理
           console.log("ログイン失敗：" + JSON.stringify(error));
+          document.getElementById('errMessageLogPass').innerHTML = "学籍番号かパスワードが間違っています";
         });
 
 
@@ -138,20 +158,27 @@
 
           <!--ログイン-->
           <div class="tab-content">
-            <p class="text">
-              <input type="number" id="lSN" name="student_number" placeholder="StudentNumber" /></p>
+            <!--p class="text"-->
+              <input type="number" id="lSN" name="student_number" placeholder="StudentNumber" />
+            <!--/p-->
+            <span id="errMessageLogNum" class="errMessage"></span><br>
 
-            <p class="pass">
-              <input type="password" id="loginPass" name="pass" placeholder="Password" /></p>
+            <!--p class="pass"-->
+              <input type="password" id="loginPass" name="pass" placeholder="Password" /><!--/p-->
+            <span id="errMessageLogPass" class="errMessage"></span><br><br>
             <div class="bt-wine">
               <a href="javascript:wineLogin();" class="bt-samp37">SIGN-IN</a>
             </div>
+            <br><br>
+            <a class="rePass" href="sendMail.html">パスワードを忘れた方はこちら</a>
           </div>
+
         </div>
       </div>
     </div>
+  
     <!--お試しタブエンド-->
-    <input type="text" id="searchSN" />
+    <!--input type="text" id="searchSN" />
     <a href="javascript:wineSearch();">検索</a><br>
     <a href="javascript:confarm();">ログインアカウント確認</a><br><br>
 
@@ -160,7 +187,7 @@
     <p id="wineNumErr"></p>
     <input type="password" id="winePass" />
     <p id="winePassErr"></p>
-    <a href="javascript:try_multh();" class="tryWine">複数の値</a>
+    <a href="javascript:try_multh();" class="tryWine">複数の値</a-->
   </div>
   </div>
 

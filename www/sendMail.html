@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <script src="css/jquery-3.6.0.min.js"></script>
+  <script src="css/jquery.qrcode.min.js"></script>
+  <link rel="stylesheet" href="components/loader.css">
+  <link href="https://fonts.googleapis.com/css?family=Oswald:700 rel=" stylesheet ">
+  <link rel="stylesheet " href="css/rePassword.css ">
+  
+
+<link href="https://fonts.googleapis.com/css?family=Montserrat+Subrayada rel="stylesheet">
+
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script>
+    // APIキーの設定とSDK初期化
+    // API key.
+    var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+    var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+    // SDK initialization.
+    var ncmb = new NCMB(applicationKey, clientKey);
+
+    //ざっくり
+    function wineRePass() {
+      //document.getElementById('repass').innerHTML = "回ってるよ";
+      var studentNumber = document.getElementById("number").value;
+      var mailAddress = document.getElementById("mail").value;
+
+      var user = new ncmb.User();
+      user.set("mailAddress", mailAddress);
+      user.requestPasswordReset()
+        .then(function(data) {
+          // 送信後処理
+          console.log("送信した");
+          location.href = "./login.html";
+        })
+        .catch(function(err) {
+          // エラー処理
+          console.log("エラった");
+        });
+
+
+    }
+  </script>
+</head>
+
+<body id="boddy">
+
+  <div class="kakomi-tape3"">
+    <span class="title-tape3">パスワード再設定画面</span>
+    <p>StudentNumber</p>
+  <input type="number" id="number" />
+  <p>メールアドレス</p>
+  <input type="email" id="mail" />
+  <br>
+
+
+
+ <a class="btn btn-custom01">
+  <span class="btn-custom01-front" onclick="wineRePass();">PUSH</span>
+  <i class="fas fa-angle-right fa-position-right"></i>
+</a>
+
+
+
+  </div>
+<a href="login.html">戻る</a>
+
+
+</body>
+
+</html>
