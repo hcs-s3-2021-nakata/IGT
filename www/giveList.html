@@ -20,6 +20,8 @@
     var ncmb = new NCMB(applicationKey, clientKey);
     var reader = new FileReader();
     var imgs = [] // 配列の初期化
+    var cnt = 0;
+    var cntSwitch = 1;
 
     // 処理を一時停止する
     const wait = (sec) => { // タイマ
@@ -35,7 +37,6 @@
         var dataUrl = reader.result;
         var image_id;
         image_id = "image"+(i+1);
-        console.log("image_id："+image_id);
         document.getElementById(image_id).src = dataUrl;
       }
     }
@@ -47,7 +48,6 @@
            .then(function(blob) {
            // ファイルリーダーにデータを渡す
            reader.readAsDataURL(blob);
-           console.log("fileName："+fileName);
            })
            .catch(function(err) {
               console.error(err);
@@ -60,16 +60,14 @@
         Give.equalTo("deal_status", "成立待ち")
             .fetchAll()
             .then(function(results){
-                for (var i = results.length - 6; i <= results.length; i++) {
+                for (var i = results.length-cntSwitch-(cnt*6); i > results.length - 6*(cnt+1); i--) {
                   var object = results[i];
                   var image_id = "image" + (i+1);
                   var objectId = object.objectId;
-                  console.log(objectId);
                   // 商品の箱を追加していく
                   var itemlist_element = document.getElementById('itemlist'); 
-                  itemlist_element.insertAdjacentHTML("afterbegin",'<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="'+image_id+'" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">'+object.item_name+'</a> </div> <div class="container_right"> <a href="giveDetail.html?'+objectId+'"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+                  itemlist_element.insertAdjacentHTML("beforebegin",'<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="'+image_id+'" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">'+object.item_name+'</a> </div> <div class="container_right"> <a href="giveDetail.html?'+objectId+'"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
                   imgs[i] = object.item_image;
-                  console.log(imgs[i]);
                 }
               })
             .catch(function(err){
@@ -86,6 +84,17 @@
         setImage(j);
         await wait(1);
       }
+    }
+
+    // 商品のリストを追加で読み込む
+    function reload(){
+      count();
+      give_lists();
+    }
+
+    function count(){
+      cnt = cnt + 1;
+      cntSwitch = 0;
     }
 
   </script>
@@ -129,7 +138,7 @@
   <div id="itemlist">
     <!-- ここに商品が入る -->
   </div>
-  <button onclick="">もっと読み込む</button>
+  <button onclick="reload()">もっと読み込む</button>
   <br>
   <br>
   <br>
