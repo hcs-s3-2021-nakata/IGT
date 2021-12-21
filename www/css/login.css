@@ -44,6 +44,7 @@
     }
 
 input[type="text"],
+input[type="number"],
 input[type="password"] {
     width: 230px;
     padding: 4px;
@@ -104,7 +105,7 @@ a.bt-samp37:hover:before{
   background: #f2f2f2;
   width: 100%;
   border: 0;
-  margin: 0 0 15px;
+  margin: 0 0 5px;
   padding: 15px;
   box-sizing: border-box;
   font-size: 14px;
@@ -154,7 +155,7 @@ ul{
   display: block;
 }
 
-#errMessage{
+.errMessage{
   color: rgba(175, 10, 10, 0.993);
   font-size: 12px;
 }

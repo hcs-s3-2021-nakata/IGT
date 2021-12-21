@@ -26,42 +26,23 @@
     // SDK initialization.
     var ncmb = new NCMB(applicationKey, clientKey);
 
-    //新規ユーザ作成
-    function createNewUser() {
+
+
+
+    //入力値に対してエラーチェック
+    function inputCheck() {
+      //入力値取得
       var createN = document.getElementById("cN").value;
       var createP = document.getElementById("cP").value;
       var createSN = document.getElementById("cSN").value;
-      // ユーザークラスのインスタンスを生成
-      var user = new ncmb.User();
-      //ユーザ名/パスワードで新規ユーザー登録
-      user.set("user_account_name", createN)
-        .set("userName", createSN)
-        .set("password", createP)
-        .set("acl", (new ncmb.Acl()).setPublicWriteAccess(true).setPublicReadAccess(true))
-        .signUpByAccount()
-        .then(function(newUser) {
-          //新規ユーザー登録成功
-          console.log("新規ユーザー登録成功：" + JSON.stringify(newUser));
-          const userAcl = new ncmb.Acl();
-          userAcl.setPublicReadAccess(true)
-            .setUserWriteAccess(newUser, true)
-            .setUserReadAccess(newUser, true);
-          return newUser.set("acl", userAcl).update();
-        })
-        .then(function(user) {
-          // アクセスコントロール更新成功時の処理
-          console.log("更新成功:" + JSON.stringify(user));
-          return ncmb.User.login(user);
-        })
-        .then(function(user) {
-          location.href = "./index.html";
-        })
-        .catch(function(error) {
-          //新規ユーザー登録失敗時の処理
-          console.log("新規ユーザー登録・更新失敗：" + JSON.stringify(error));
-        });
+      //
+
+
+
     }
 
+
+   
     //ログイン機能
     function wineLogin() {
 
@@ -83,7 +64,7 @@
 
     }
 
-    //検索機能
+    //学籍番号検索機能
     function wineSearch() {
       var loginStudentNumber = document.getElementById("searchSN").value;
       let lowNumber = 0;
@@ -103,19 +84,22 @@
           console.log("変数データ取得エラー")
         });
 
-      
+
     }
 
     //ログイン中ユーザ確認
     function confarm() {
       // カレントユーザー情報の取得
-      alert("確認")
+      // alert("確認")
       var currentUser = ncmb.User.getCurrentUser();
-      if (currentUser) {
+      if (currentUser != null) {
         console.log("ログイン中のユーザー: " + currentUser.get("userName"));
       } else {
         console.log("未ログインまたは取得に失敗");
       }
+      // カレントユーザーかどうかの確認
+      var user = new ncmb.User();
+      console.log(user.isCurrentUser()); /* true or false */
 
     }
   </script>
@@ -141,10 +125,14 @@
           <!--新規作成-->
           <div class="tab-content active">
             <input type="text" id="cN" placeholder="name" name="createName" />
+            <span id="errMessageName" class="errMessage"></span><br>
             <input type="password" id="cP" placeholder="password" name="createPass" />
-            <input type="text" placeholder="studentNumber" id="cSN" idname="createStudentNumber" />
+            <span id="errMessagePass" class="errMessage"></span><br>
+            <input type="number" placeholder="studentNumber" id="cSN" idname="createStudentNumber" maxlength="8" minlength="8" required />
+            <span id="errMessageNum" class="errMessage"></span>
+            <br><br>
             <div class="bt-wine">
-              <a href="javascript:createNewUser();" class="bt-samp37">CREATE</a>
+              <a onclick="createNewUserCheck()" class="bt-samp37">CREATE</a>
             </div>
           </div>
 
@@ -165,7 +153,14 @@
     <!--お試しタブエンド-->
     <input type="text" id="searchSN" />
     <a href="javascript:wineSearch();">検索</a><br>
-    <a href="javascript:confarm();">ログインアカウント確認</a>
+    <a href="javascript:confarm();">ログインアカウント確認</a><br><br>
+
+
+    <input type="number" id="wineNum" />
+    <p id="wineNumErr"></p>
+    <input type="password" id="winePass" />
+    <p id="winePassErr"></p>
+    <a href="javascript:try_multh();" class="tryWine">複数の値</a>
   </div>
   </div>
 
