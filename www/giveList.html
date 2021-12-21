@@ -97,6 +97,34 @@
       cntSwitch = 0;
     }
 
+    // 検索
+    async function search(){
+      var keyword = document.getElementById("keyword").value;
+      var c_cnt = document.getElementsByClassName("container").length;
+      for (var c = 0; c < c_cnt; c++){
+        document.getElementById("item_box").remove();
+      }
+      var Give = ncmb.DataStore("give");
+      Give.equalTo("item_name", keyword)
+         .fetchAll()
+         .then(function(results){
+            for (var i = 0; i < results.length; i++) {
+              var object = results[i];
+              var image_id = "image" + (i+1);
+              var objectId = object.objectId;
+              // 商品の箱を追加していく
+              var itemlist_element = document.getElementById('itemlist');
+              itemlist_element.insertAdjacentHTML("beforebegin",'<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="'+image_id+'" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">'+object.item_name+'</a> </div> <div class="container_right"> <a href="giveDetail.html?'+objectId+'"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+              imgs[i] = object.item_image;
+            }
+          })
+         .catch(function(err){
+            console.log(err);
+          });
+      await wait(2);
+      setImg();
+    }
+
   </script>
 </head>
 
@@ -134,6 +162,10 @@
   <!-- Header End -->
 
   <!-- Body Start -->
+  <form>
+    <input type="text" id="keyword" placeholder="検索ワードを入力">
+    <input type="button" onclick="search()" value="検索"></button>
+  </form>
   <button onclick="setImg()">画像のリロード</button>
   <div id="itemlist">
     <!-- ここに商品が入る -->
