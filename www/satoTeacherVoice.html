@@ -16,10 +16,38 @@
   <script type="text/javascript" src="css/logout.js"></script>
   <script type="text/javascript" src="css/main.js"></script>
   <script src="css/voice.js"></script>
-  
+  <script>
+    // APIキーの設定とSDK初期化
+    // API key.
+    var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+    var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+    // SDK initialization.
+    var ncmb = new NCMB(applicationKey, clientKey);
+    var reader = new FileReader();
+
+
+    // 取得した情報で画面を上書き
+    function satoVoice() {
+      var Voice = ncmb.DataStore("voice");
+      Voice.equalTo("teacher_name", "佐藤先生")
+        .fetchAll()
+        .then(function(results) {
+          for (var i = 0; i <= results.length - 1; i++) {
+            var object = results[i];
+            var objectId = object.objectId;
+            //ボイスをリストに格納
+            var voicelist_element = document.getElementById('voicelist');
+            voicelist_element.insertAdjacentHTML("beforebegin", '<li class="next-voice-list">' + object.voice_name + '<br><button id="voice-button" onclick="' + object.script + '"class="btn btn-tag btn-tag--favorite"><i>再生する！！</i></button></li>');
+          }
+          document.getElementById('voice_name').innerHTML = object.voice_name;
+        }).catch(function(err) {
+          console.log(err);
+        });
+    }
+  </script>
 </head>
 
-<body id="prodact_lists">
+<body id="prodact_lists" onload="satoVoice()">
   <!-- Header Start -->
   <header class="site-header">
     <div class="wrapper site-header__wrapper">
@@ -31,7 +59,7 @@
             </a>
           </div>
           <div class="page_title">
-            <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">○○先生のボイス</span>
+            <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">佐藤先生のボイス</span>
             <label for="menu-btn-check" class="menu-btn"><span></span></label>
             <div style="text-align: left" class="menu-content">
               <ul>
@@ -53,19 +81,7 @@
   <!-- Header End -->
 
   <!-- お気に入りボイス -->
-  <ul class="next-voice-list">
-    <li>男の子に向けて<br>
-      <button id="favorite-button" onclick="boy()" calss="btn btn-tag btn-tag--favorite">再生する！！</button><button id="favorite-button" onclick="button()" class="btn btn-tag btn-tag--favorite"><i class="fas fa-star">お気に入り</i></button></li>
-    <li>女の子に向けて<br>
-      <button id="favorite-button" onclick="girl()" calss="btn btn-tag btn-tag--favorite">再生する！！</button><button id="favorite-button" onclick="button()" class="btn btn-tag btn-tag--favorite"><i class="fas fa-star">お気に入り</i></button></li>
-    <li>心を込めて<br>
-      <button id="favorite-button" onclick="kokoro()" calss="btn btn-tag btn-tag--favorite">再生する！！</button><button id="favorite-button" onclick="button()" class="btn btn-tag btn-tag--favorite"><i class="fas fa-star">お気に入り</i></button></li>
-    <li>コミュニケーションは挨拶から！！<br>
-      <button id="favorite-button" onclick="man_com()" calss="btn btn-tag btn-tag--favorite">再生する！！</button><button id="favorite-button" onclick="button()" class="btn btn-tag btn-tag--favorite"><i class="fas fa-star">お気に入り</i></button></li>
-    <li>頑張れ！！<br>
-      <button id="favorite-button" onclick="man_grad()" calss="btn btn-tag btn-tag--favorite">再生する！！</button><button id="favorite-button" onclick="button()" class="btn btn-tag btn-tag--favorite"><i class="fas fa-star">お気に入り</i></button></li>
-    <li>Free！！<br>
-      <button id="favorite-button" onclick="man_free()" calss="btn btn-tag btn-tag--favorite">再生する！！</button><button id="favorite-button" onclick="button()" class="btn btn-tag btn-tag--favorite"><i class="fas fa-star">お気に入り</i></button></li>
+  <ul class="next-voice-list" id="voicelist">
   </ul>
 
 

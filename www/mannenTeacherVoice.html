@@ -14,11 +14,42 @@
   <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script type="text/javascript" src="css/logout.js"></script>
-  <script type="text/javascript" src="css/main.js">
+  <script type="text/javascript" src="css/main.js"></script>
+  <script src="css/voice.js"></script>
+  <script>
+// APIキーの設定とSDK初期化
+// API key.
+var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+// SDK initialization.
+var ncmb = new NCMB(applicationKey, clientKey);
+var reader = new FileReader();
+
+
+// 取得した情報で画面を上書き
+ function mannenVoice(){
+  var Voice = ncmb.DataStore("voice");
+  Voice.equalTo("teacher_name", "萬年先生")
+   .fetchAll()
+   .then(function(results){
+    for (var i = 0; i <= results.length -1; i++) {
+      var object = results[i];
+      var objectId = object.objectId;
+      //ボイスをリストに格納
+      var voicelist_element = document.getElementById('voicelist'); 
+      voicelist_element.insertAdjacentHTML("beforebegin",'<li class="next-voice-list">' +object.voice_name+'<br><button id="favorite-button" onclick="'+object.script+'"class="btn btn-tag btn-tag--favorite"><i>再生する！！</i></button><button id="favorite-button" onclick="button()" class="btn btn-tag btn-tag--favorite"><i class="fas fa-star">お気に入り</i></button></li>');
+    }
+
+    document.getElementById('teacher_name').innerHTML = object.teacher_name;
+    document.getElementById('voice_name').innerHTML = object.voice_name;
+  }).catch(function(err){
+    console.log(err);
+  });
+}
   </script>
 </head>
 
-<body id="prodact_lists">
+<body id="prodact_lists" onload="mannenVoice()">
   <!-- Header Start -->
   <header class="site-header">
     <div class="wrapper site-header__wrapper">
@@ -30,7 +61,7 @@
             </a>
           </div>
           <div class="page_title">
-            <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">お気に入りボイス</span>
+            <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">萬年先生のボイス</span>
             <label for="menu-btn-check" class="menu-btn"><span></span></label>
             <div style="text-align: left" class="menu-content">
               <ul>
@@ -52,16 +83,9 @@
   <!-- Header End -->
 
   <!-- お気に入りボイス -->
-  <ul class="next-voice-list">
-    <li><audio src="voice/sample.ogg" controls loop></audio>
-      <!-- お気に入りボタン -->
-      <br>萬年先生による応援ボイス（男の子に向けて）
-      <button id="favorite-button" onclick="button()" class="btn btn-tag btn-tag--favorite"><i class="fas fa-star">お気に入り</i></button></li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>5</li>
+  <ul class="next-voice-list" id="voicelist">
   </ul>
+
 
 
   <!-- Footer Start -->

@@ -14,7 +14,7 @@ img.voice-img{
 
 ul.voice-list {
   list-style-type: none;
-  background: whitesmoke;
+  background: white;
   padding: 0 0.5em;
   position: relative;
 }
@@ -43,7 +43,7 @@ ul.voice-list li.voice-list-first:hover {
 }
 
 ul.voice-list li:nth-child(even) {
-  background-color: #FFF;
+  background-color: whitesmoke;
 }
 
 ul.voice-list li:hover {
@@ -57,7 +57,7 @@ ul.next-voice-list {
   position: relative;
 }
 
-ul.next-voice-list li {
+li.next-voice-list {
   font-size: 15px;
   line-height: 1.5;
   padding: 0.5em 0 0.5em 1.5em;
@@ -66,23 +66,32 @@ ul.next-voice-list li {
 }
 
 /* お気に入りボタン */
+#voice-button {
+  width: 100px;
+  height: 30px;
+  border-color:#3ac3ff;
+  background:#FFFFFF;
+  color: #ffffff;
+  border: 1px solid #3ac3ff;
+}
 #favorite-button {
   width: 100px;
   height: 30px;
   border-color:#3ac3ff;
   background:#FFFFFF;
+  color: #ffffff;
+  border: 1px solid #3ac3ff;
 }
 #favorite-button.blue {
   background: #3ac3ff;
   color: #FFFFFF;
 }
 
-div.btn-tag {
-  font-size: 20px;
+button.btn-tag {
   padding: 0.08rem 0.08rem 0.08rem 40px;
 }
 
-div.btn-tag:before {
+button.btn-tag:before {
   position: absolute;
   top: 0;
   left: 0;
@@ -99,7 +108,7 @@ div.btn-tag:before {
 button.btn {
   font-size: 0.85rem;
   font-weight: 700;
-  line-height: 1.5;
+  line-height: 1.2;
   position: relative;
   display: inline-block;
   padding: 1rem 4rem;
@@ -136,7 +145,7 @@ button.btn-tag--favorite i {
   left: 0;
 
   width: 100px;
-  padding: 0.55rem 0.55rem;
+  padding: 0.6rem 0.7rem;
 
   -webkit-transition: all 0.3s;
 
@@ -148,15 +157,11 @@ button.btn-tag--favorite i {
   color: #3ac3ff;
 }
 
-button.btn-tag--favorite.orange i {
+button.btn-tag--favorite:hover  {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
-  color: #ffffff;
-}
-
-button.btn-tag--favorite.blue {
   background: #3ac3ff;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.8;
 }
 /*  */
