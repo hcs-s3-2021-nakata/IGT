@@ -17,6 +17,11 @@
   <script src="css/jquery-3.6.0.min.js"></script>
   <script src="css/jquery.qrcode.min.js"></script>
   <script>
+    // API key.
+    var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+    var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+    // SDK initialization.
+    var ncmb = new NCMB(applicationKey, clientKey);
     /*バーコードスキャン*/
     let options = {
       preferFrontCamera: false,
@@ -36,6 +41,7 @@
       alert("結果: " + result.text + "\n" +
         "バーコードの種類: " + result.format + "\n" +
         "スキャンが中断されたかどうか: " + result.cancelled);
+      takeUserConfirm(result.text);
     }
 
     function onError(error) {
@@ -48,6 +54,79 @@
         onError,
         options
       );
+    }
+
+    /* 以下読み取り後の認証 */
+    function takeUserConfirm(text) {
+      //譲渡か交換か(flag)
+      //objectIdが一致している取引の
+      //giveid or tradeIdがcurrentUserと一致している
+      // splitにて、名前・電話番号・所在をそれぞれ抽出
+
+      var result = text.split(',');
+      //必要な情報だけを切り取る
+      var primaryId = result[0].substr(10);
+      var dealStyle = result[1].substr(5); 
+      var dealFlag = true; //譲渡：true、交換：false
+      if(dealStyle === "give"){
+        dealFlag = true;
+      }else{
+        dealFlag = false;
+      }
+      var giveUserId = result[2].substr(7);
+      var takeUserId = result[3].substr(7);
+
+      /* お試し直入れ */
+      giveUserId = "jIIsM5MWYX9buZwS";
+      var sameUser = confarm(giveUserId);
+
+      /* 結果 */
+      console.log("主キー：" + primaryId);
+      console.log("取引形態：" + dealStyle);
+      console.log("出品者：" + giveUserId);
+      console.log("落札者：" + takeUserId);
+      console.log("一致したユーザ：" + sameUser.user_account_name);
+      
+
+    }
+
+    function getUserInfo(userId){
+      //userID(objectId)をもとに一致するユーザ情報を引っ張る
+       let lowNumber = 0;
+       var sameUser;
+      ncmb.User.fetchAll()
+        .then(users => {
+          users.forEach(user => {
+            console.log(user);
+            //ここで登録されている学籍番号かチェック
+            if (user.objectId === userId) {
+              console.log("あった！");
+              console.log(user.user_account_name);
+              sameUser = user;
+              lowNumber = lowNumber + 1;
+            }
+          })
+          console.log("検索結果：" + lowNumber + "件");
+          return sameUser;
+        }).catch(err => {
+          console.log("変数データ取得エラー")
+        });
+
+    }
+
+    function confarm() {
+      // カレントユーザー情報の取得
+      alert("確認")
+      var currentUser = ncmb.User.getCurrentUser();
+      if (currentUser != null) {
+        console.log("ログイン中のユーザー: " + currentUser.get("userName"));
+      } else {
+        console.log("未ログインまたは取得に失敗");
+      }
+      // カレントユーザーかどうかの確認
+      var user = new ncmb.User();
+      console.log(user.isCurrentUser()); /* true or false */
+
     }
   </script>
   <script type="text/JavaScript">

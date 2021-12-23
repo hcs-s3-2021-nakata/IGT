@@ -1,6 +1,5 @@
 // This is a JavaScript file
-
-//ログアウト
+///ログアウト
 function logout_button() {
   
   function getNowUser(user) {
