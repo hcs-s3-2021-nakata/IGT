@@ -292,6 +292,12 @@ a.btn-border-shadow--color:before {
   background-color: white;
 }
 
+#index_item_box{
+  margin-top: 30px; 
+  height: 180px;
+  background-color: white;
+}
+
 .container_parent{
   display: flex;
   padding: 25px 0px;
@@ -346,6 +352,21 @@ a.btn-border-shadow--color:before {
 #right_just{
   width: 50%;
   text-align: right;
+}
+
+#left_just_image{
+  width: 33%;
+  text-align: center;
+}
+
+#center_just_image{
+  width: 33%;
+  text-align: center;
+}
+
+#right_just_image{
+  width: 33%;
+  text-align: center;
 }
 
 #name_box{
@@ -438,6 +459,11 @@ img#detail_image{
 img#modal_image{
     width: 200px;
     height: 200px;
+}
+
+img.index_image{
+  width: 100px;
+  height: 100px;
 }
 
 #barcode{
