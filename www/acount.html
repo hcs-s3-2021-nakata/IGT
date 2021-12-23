@@ -13,10 +13,123 @@
   <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
   <script type="text/javascript" src="css/logout.js"></script>
   <script>
+    // APIキーの設定とSDK初期化
+    // API key.
+    var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+    var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+    // SDK initialization.
+    var ncmb = new NCMB(applicationKey, clientKey);
+    var reader = new FileReader();
+
+    function accountLoad() {
+      // カレントユーザー情報の取得
+      var currentUser = ncmb.User.getCurrentUser();
+      console.log("ログイン中のユーザー: " + currentUser.get("userName"));
+
+      //ユーザーテーブルから値を取得
+      var User = ncmb.User;
+      var item = User
+        .fetchById(currentUser.get("objectId")) //オブジェクトIDを指定
+        .then(item => {
+          console.log('データあり' + item.user_account_name);
+
+          //学籍番号を表示させる
+          document.getElementById('userName').innerHTML = item.userName;
+
+          //クラスを表示させる
+          if (item.userClass !== null) {
+            document.getElementById('userClass').innerHTML = "<input id='userClassInput' class='acount' type='text' placeholder='S3A3' value=" + item.user_class + ">";
+          }
+
+          //番号を表示させる
+          if (item.userNumber !== null) {
+            document.getElementById('userNumber').innerHTML = "<input id='userNumberInput' class='acount' type='text' placeholder='00' value=" + item.user_number + ">";
+          }
+
+          //名前を表示させる
+          document.getElementById('userAccountName').innerHTML = "<input id='userAccountNameInput' class='acount' type='text' placeholder='ワイン一郎' value=" + item.user_account_name + ">";
+
+          //メールアドレスを表示させる
+          if (item.mailAddress !== null) {
+            document.getElementById('mailAddress').innerHTML = "<input id='mailAddressInput' class='acount' type='text' placeholder='wine_window@gmail.com' value=" + item.mailAddress + ">";
+          }
+        })
+        .catch(e => {
+          console.log('取得データなし');
+        });
+    }
+
+    // function accountErrCheck() {
+    //   console.log('エラーチェック');
+    //   //エラーメッセージ
+    //   var returnFlag = false;
+    //   //正規表現パターン（半角英数４桁に一致）
+    //   var halfEN4 = new RegExp(/^\w{4}$/);
+
+    //   //テキストボックスの入力値を取得
+    //   var userClass = document.getElementById("userClass").value;
+    //   var userNumber = document.getElementById("userNumber").value;
+    //   var userAccountName = document.getElementById("userAccountName").value;
+    //   var mailAddress = document.getElementById("mailAddress").value;
+
+    //   if (halfEN4.test(userClass)) {
+    //     console.log('if文入った');
+    //     document.getElementById('classErr').innerHTML = "半角数字4桁で入力してください";
+    //     console.log('文字表示された？');
+    //     returnFlag = true;
+    //   }
+    //   //問題なしで変更処理を実行
+    //   if (!returnFlag) {
+    //     accountUpdate();
+    //   }
+    // }
+
+    function accountUpdate() {
+      //変更しますかアラート
+      changeFlag = confirm("アカウント情報を変更すると一度ログアウトします。よろしいですか？");
+
+      if (changeFlag) {
+        // 「はい」
+
+        var updateFlag = false;
+        //テキストボックスの入力値を取得
+        var userClass = document.getElementById("userClassInput").value;
+        var userNumber = document.getElementById("userNumberInput").value;
+        var userAccountName = document.getElementById("userAccountNameInput").value;
+        var mailAddress = document.getElementById("mailAddressInput").value;
+
+        // カレントユーザー情報の取得
+        var currentUser = ncmb.User.getCurrentUser();
+
+        //ユーザーテーブルから値を取得
+        var User = ncmb.User;
+        var item = User
+
+          .fetchById(currentUser.get("objectId"))
+          .then(item => {
+            item.set("user_class", userClass)
+              .set("user_number", userNumber)
+              .set("user_account_name", userAccountName)
+              .set("mailAddress", mailAddress).update();
+            console.log('変更できた');
+
+          }).then(function() {
+            alert("ログイン画面に戻ります");
+            logout_button();
+          })
+          .catch(e => {
+            console.log('変更失敗');
+          });
+
+        // 「いいえ」
+      } else {
+        alert("何もしません");
+      }
+    }
   </script>
 </head>
 
-<body id="prodact_lists">
+<body id="prodact_lists" onload="javascript:accountLoad()">
   <!-- Header Start -->
   <header class="site-header">
     <div class="wrapper site-header__wrapper">
@@ -48,39 +161,44 @@
   <!-- Header End -->
 
   <!-- Body Start -->
-  <form class="acount" method="post">
-    <div class="acount" style="text-align: left">
-      <ul class="acount">
-        <li class="acount">
-          <a><img class="acount" src="img/botle.png">StudentNumber *</a>
-          <label class="ef">
-            <input class="acount" type="text" placeholder="20190000"> 
+  <div class="acount" style="text-align: left">
+    <ul class="acount">
+      <li class="acount">
+        <a><img class="acount" src="img/botle.png">StudentNumber *</a>
+        <br>
+        <label class="ef_first">
+            <a id="userName" class="acount" type="text"></a>
+          </label>
+      </li>
+      <li class="acount">
+        <a><img class="acount" src="img/glass.png">Class</a>
+        <label id="userClass" class="ef">
+            <a id="classErr"></a>
             </label>
-        </li>
-        <li class="acount">
-          <a><img class="acount" src="img/glass.png">Class</a>
-          <label class="ef">
-            <input class="acount" type="text" placeholder="S3A3">
+      </li>
+      <li class="acount">
+        <a><img class="acount" src="img/glass.png">Number</a>
+        <label id="userNumber" class="ef">
+            <a id="numberErr"></a>
             </label>
-        </li>
-        <li class="acount">
-          <a><img class="acount" src="img/glass.png">Number</a>
-          <label class="ef">
-            <input class="acount" type="text" placeholder="00"> 
+      </li>
+      <li class="acount">
+        <a><img class="acount" src="img/glass.png">Name *</a>
+        <label id="userAccountName" class="ef">
+            <a id="nameErr"></a>
             </label>
-        </li>
-        <li class="acount">
-          <a><img class="acount" src="img/glass.png">Name *</a>
-          <label class="ef">
-            <input class="acount" type="text" placeholder="情報太郎"> 
+      </li>
+      <li class="acount">
+        <a><img class="acount" src="img/glass.png">MailAddress</a>
+        <label id="mailAddress" class="ef">
+            <a id="mailErr"></a>
             </label>
-        </li>
-      </ul>
-    </div>
-    <div class="acount-send">
-      <button class="acount" type="submit"><b>変更する！</b></button>
-    </div>
-  </form>
+      </li>
+    </ul>
+  </div>
+  <div class="acount-send">
+    <button class="acount" type="submit" onclick="accountUpdate()"><b>変更する！</b></button>
+  </div>
   <!-- Body End -->
 
   <!-- Footer Start -->

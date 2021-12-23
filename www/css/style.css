@@ -497,12 +497,35 @@ img.acount{
   vertical-align: middle;
 }
 
+a.acount{
+    font: 15px/24px sans-serif;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0rem 0rem 0.1rem 2rem;
+	transition: 0.3s;
+	letter-spacing: 1px;
+	color: #000000;
+	border: none;
+	border-bottom: 2px solid #1b2538;
+	background: transparent;
+    display:inline-block; 
+}
+
+::placeholder {
+  color: rgba(196, 195, 194, 0.959);
+}
+
 /* アカウント詳細・通知 */
 .ef {
 	position: relative;
 	width: 80%;
 	margin: 40px 3%;
 }
+
+.ef_first {
+	padding: 2rem 0rem 2rem 0.6rem;
+}
+
 .ef input[type='text'] {
 	font: 15px/24px sans-serif;
 	box-sizing: border-box;
@@ -515,6 +538,7 @@ img.acount{
 	border-bottom: 2px solid #1b2538;
 	background: transparent;
 }
+
 .ef input[type='text']:focus {
 	border-bottom: 2px solid #832742da;
 	outline: none;
@@ -550,6 +574,7 @@ button.acount{
   border: none;
   border-color: #1CA5B8;
 }
+
 
 /* 通知 */
 div.message{
