@@ -38,7 +38,7 @@
     }
 
     function onSuccess(result) {
-      alert("結果: " + result.text + "\n" +
+      console.log("スキャン結果: " + result.text + "\n" +
         "バーコードの種類: " + result.format + "\n" +
         "スキャンが中断されたかどうか: " + result.cancelled);
       takeUserConfirm(result.text);
@@ -65,66 +65,88 @@
 
       var result = text.split(',');
       //必要な情報だけを切り取る
-      var primaryId = result[0].substr(10);
-      var dealStyle = result[1].substr(5); 
+      var primaryId = result[0].substr(9);
+      var dealStyle = result[1].substr(5);
       var dealFlag = true; //譲渡：true、交換：false
-      if(dealStyle === "give"){
+      if (dealStyle === "give") {
         dealFlag = true;
-      }else{
+      } else {
         dealFlag = false;
       }
       var giveUserId = result[2].substr(7);
       var takeUserId = result[3].substr(7);
 
       /* お試し直入れ */
-      giveUserId = "jIIsM5MWYX9buZwS";
-      var sameUser = confarm(giveUserId);
+      //giveUserId = "jIIsM5MWYX9buZwS";
+
+      /* ユーザ認証 */
+      var resultFlag = pairConfirmation(giveUserId);
+
 
       /* 結果 */
       console.log("主キー：" + primaryId);
       console.log("取引形態：" + dealStyle);
       console.log("出品者：" + giveUserId);
       console.log("落札者：" + takeUserId);
-      console.log("一致したユーザ：" + sameUser.user_account_name);
-      
+      console.log("ユーザ認証結果：" + resultFlag);
+
+      if (resultFlag) {
+        /* 認証成功でDBの状態を変更 */
+        console.log("認証完了です。");
+        giveUpdate(primaryId);
+      } else {
+        /* 認証失敗で再読み込みと取引内容の促しを追加 */
+        alert("認証失敗です。もう一度読み込むか、取引内容を再確認してね");
+
+      }
+
 
     }
 
-    function getUserInfo(userId){
-      //userID(objectId)をもとに一致するユーザ情報を引っ張る
-       let lowNumber = 0;
-       var sameUser;
-      ncmb.User.fetchAll()
-        .then(users => {
-          users.forEach(user => {
-            console.log(user);
-            //ここで登録されている学籍番号かチェック
-            if (user.objectId === userId) {
-              console.log("あった！");
-              console.log(user.user_account_name);
-              sameUser = user;
-              lowNumber = lowNumber + 1;
-            }
-          })
-          console.log("検索結果：" + lowNumber + "件");
-          return sameUser;
-        }).catch(err => {
-          console.log("変数データ取得エラー")
+    /* 譲渡：DBを更新する */
+    function giveUpdate(objectId) {
+      console.log("-----更新開始-----");
+      var give = ncmb.DataStore("give");
+      var object = new give;
+      object
+        .set('objectId', objectId)
+        .set('deal_status', '取引完了')
+        .update()
+        .then(function(data) {
+          // 更新完了
+          alert("取引完了です。");
+        })
+        .catch(function(err) {
+          // エラー
+          console.log("ERROR:" + err);
         });
+    }
 
+
+    /*ログインユーザと出品者が同じか確認するファンクション*/
+    function pairConfirmation(userId) {
+      console.log("-----相互確認-----");
+      var currentUser = ncmb.User.getCurrentUser();
+      if (currentUser.objectId === userId) {
+        console.log("-----確認完了-----");
+        return true;
+      } else {
+        console.log("-----確認失敗-----");
+        return false;
+      }
     }
 
     function confarm() {
       // カレントユーザー情報の取得
       alert("確認")
       var currentUser = ncmb.User.getCurrentUser();
+      console.log("currentUser:" + currentUser);
       if (currentUser != null) {
         console.log("ログイン中のユーザー: " + currentUser.get("userName"));
       } else {
         console.log("未ログインまたは取得に失敗");
       }
       // カレントユーザーかどうかの確認
-      var user = new ncmb.User();
       console.log(user.isCurrentUser()); /* true or false */
 
     }
@@ -143,12 +165,24 @@
         <label for="menu-btn-check" class="menu-btn"><span></span></label>
         <div class="menu-content">
           <ul>
-            <li><a href="acount.html">アカウント詳細</a></li>
-            <li><a href="message.html">通知</a></li>
-            <li><a href="dealHistory.html">取引履歴</a></li>
-            <li><a href="myGiveItem.html">出品した譲渡品</a></li>
-            <li><a href="myTradeItem.html">出品した交換品</a></li>
-            <li><a onclick="logout_button()">ログアウト</a></li>
+            <li>
+              <a href="acount.html">アカウント詳細</a>
+            </li>
+            <li>
+              <a href="message.html">通知</a>
+            </li>
+            <li>
+              <a href="dealHistory.html">取引履歴</a>
+            </li>
+            <li>
+              <a href="myGiveItem.html">出品した譲渡品</a>
+            </li>
+            <li>
+              <a href="myTradeItem.html">出品した交換品</a>
+            </li>
+            <li>
+              <a onclick="logout_button()">ログアウト</a>
+            </li>
           </ul>
         </div>
       </nav>
