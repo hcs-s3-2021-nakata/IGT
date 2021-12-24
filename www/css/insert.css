@@ -11,7 +11,7 @@
 }
 
 /* 投稿ボタン */
-.newDeal-btn{
+/* .newDeal-btn{
   top: 74px;
   right: 1%;
   border: none;
@@ -22,7 +22,7 @@
   background-color: white;
   color:#3a78ff;
   text-align: center;
-}
+} */
 
 #newDeal_info{
   padding:0px 0px;
@@ -32,6 +32,88 @@
 .btn-flat-border:hover {
   background: #67c5ff;
   color: white;
+}
+div#insertImg {
+  color: white;  
+  background-color: red;
+  padding: 6px;
+  border-radius: 12px;
+}
+
+
+/*出品ボタン*/
+#newDeal-btn {
+  text-align: center;
+}
+button.newDeal-btn {
+ position: relative;
+ padding: 20px 0px;
+ display: block;
+ text-decoration: none;
+ text-transform: uppercase;
+ width: 200px;
+ overflow: hidden;
+ border-radius: 40px;
+ border: none;
+}
+
+button span {
+ position: relative;
+ color: #fff;
+ font-size: 20px;
+ font-weight:bold;
+ font-family: Arial;
+ letter-spacing: 8px;
+ z-index: 1;
+}
+
+button .liquid {
+ position: absolute;
+ top: -80px;
+ left: 0;
+ width: 200px;
+ height: 200px;
+ background: #832742;
+ box-shadow: inset 0 0 50px rgba(0, 0, 0, .5);
+ transition: .5s;
+}
+
+button .liquid::after,
+button .liquid::before {
+ content: '';
+ width: 200%;
+ height: 200%;
+ position: absolute;
+ top: 0;
+ left: 50%;
+ transform: translate(-50%, -75%);
+ background: #fff;
+}
+
+button .liquid::before {
+ border-radius: 45%;
+ background: rgba(60, 60, 60, .7);
+ animation: animate 5s linear infinite;
+}
+
+button .liquid::after {
+ border-radius: 40%;
+ background: rgba(20, 20, 20, .5);
+ animation: animate 10s linear infinite;
+}
+
+button:hover .liquid {
+ top: -120px;
+}
+
+@keyframes animate {
+ 0% {
+  transform: translate(-50%, -75%) rotate(0deg);
+ }
+
+ 100% {
+  transform: translate(-50%, -75%) rotate(360deg);
+ }
 }
 
 /*新規登録画面_画像アップロード*/

@@ -63,7 +63,9 @@
   <div class="flex" id="newDeal_info" name="item_image">
     <!-- アルバムからアップロード -->
     <form>
-      📚<input type="file" id="insertImg" accept="image/*" multiple=" multiple" onchange="imgPreView(event)">
+      <div id="insertImg">
+      📚写真を選択<input type="file"id="insertImg" accept="image/*" multiple=" multiple" style="display:none;" onchange="imgPreView(event)">
+      </div>
     </form>
   </div>
   <!-- 👇ここにプレビュー画像を追加する -->
@@ -152,9 +154,10 @@
                 <option value="100">その他</option>
             </select>
     </div><br>
-  </div><br>
-  <div>
-    <button type="button" class="newDeal-btn" name="item_image" id="d_open" onclick="give_modal_open()"> 出品する！ </button>
+  </div>
+  <div class="flex">
+    <button type="button" class="newDeal-btn" name="item_image" id="d_open" onclick="give_modal_open()"><span>出品する!</span><div class="liquid"></div> 
+    </button>
   </div><br><br><br>
 
   <!-- Footer Start -->
