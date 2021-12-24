@@ -35,17 +35,20 @@
     // 画像の配置を統括する
     async function setImg(flg) {
       if (flg == "g") {
-        for (var i = 1; i < 4; i++) {
-          downloadImage(g_imgs[i - 1]);
-          setImage(i);
+        for (var i = 1; i <= 3; i++) {
+          await downloadImage(g_imgs[i - 1]);
           await wait(1);
+          await setImage(i);
+          await wait(1.2);
+          console.log("setImg(g)");
         }
-      }
-      if (flg == "t") {
-        for (var i = 4; i < 7; i++) {
-          downloadImage(t_imgs[i - 4]);
-          setImage(i);
-          await wait(0.5);
+      } else if (flg == "t") {
+        for (var i = 4; i <= 6; i++) {
+          await downloadImage(t_imgs[i - 4]);
+          await wait(1);
+          await setImage(i);
+          await wait(1.2);
+          console.log("setImg(t)");
         }
       }
     }
@@ -57,6 +60,7 @@
         .then(function(blob) {
           // ファイルリーダーにデータを渡す
           reader.readAsDataURL(blob);
+          console.log("downloaded");
         })
         .catch(function(err) {
           console.error(err);
@@ -69,8 +73,8 @@
         var dataUrl = reader.result;
         var image_id;
         image_id = "image" + (i);
-        console.log(image_id);
         document.getElementById(image_id).src = dataUrl;
+        console.log(image_id);
       }
     }
 
@@ -78,8 +82,12 @@
     // 画像の検索を統括する
     async function search() {
       await give_search();
-      await wait(2);
-      trade_search();
+      console.log("trade");
+      await trade_search();
+      var flg = "g";
+      await setImg(flg);
+      flg = "t";
+      setImg(flg);
     }
 
     // 画像を全件取得(譲渡)
@@ -87,7 +95,7 @@
       // 検索
       var cnt = 0;
       var Give = ncmb.DataStore("give");
-      Give.equalTo("deal_status", "成立待ち")
+      await Give.equalTo("deal_status", "成立待ち")
         .fetchAll()
         .then(function(results) {
           // 4件分のみ配列に格納
@@ -97,16 +105,15 @@
             // 配列に格納
             g_imgs[cnt] = object.item_image;
             var name = object.item_name;
-            console.log(name + " " + g_imgs[cnt]);
             cnt++;
+            console.log(object);
           }
         })
         .catch(function(err) {
           console.log(err);
         });
-      await wait(1);
-      var flg = "g";
-      setImg(flg);
+      await wait(1.5);
+
     }
 
     // 画像を全件取得(交換)
@@ -114,27 +121,24 @@
       // 検索
       var cnt = 0;
       var Trade = ncmb.DataStore("trade");
-      Trade.equalTo("deal_status", "成立待ち")
+      await Trade.equalTo("deal_status", "成立待ち")
         .fetchAll()
         .then(function(results) {
           // 3件分のみ配列に格納
           for (var i = results.length - 1; i > results.length - 4; i--) {
             var object = results[i];
-            console.log(object);
             var objectId = object.objectId;
             // 配列に格納
             t_imgs[cnt] = object.item_image;
             var name = object.item_name;
-            console.log(name + " " + t_imgs[cnt]);
             cnt++;
+            console.log(object);
           }
         })
         .catch(function(err) {
           console.log(err);
         });
-      await wait(1);
-      var flg = "t";
-      setImg(flg);
+      await wait(1.5);
     }
   </script>
 </head>
