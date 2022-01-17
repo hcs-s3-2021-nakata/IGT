@@ -23,6 +23,7 @@
     // 定義
     var g_imgs = [];
     var t_imgs = [];
+    var image_id = "image";
 
     // 処理を一時停止する
     const wait = (sec) => { // タイマ
@@ -38,16 +39,16 @@
         for (var i = 1; i <= 3; i++) {
           downloadImage(g_imgs[i - 1]);
           await wait(1);
-          setImage(i);
-          await wait(1.2);
+          setImage(image_id + i);
+          await wait(1.05);
           console.log("setImg(g)");
         }
       } else if (flg == "t") {
         for (var i = 4; i <= 6; i++) {
           downloadImage(t_imgs[i - 4]);
           await wait(1);
-          setImage(i);
-          await wait(1.2);
+          setImage(image_id + i);
+          await wait(1.05);
           console.log("setImg(t)");
         }
       }
@@ -68,11 +69,11 @@
     }
 
     // 画像を配置する
-    function setImage(i) {
+    function setImage(image_id) {
       reader.onload = function(e) {
         var dataUrl = reader.result;
-        var image_id;
-        image_id = "image" + (i);
+        // var image_id = "image1";
+        // image_id = "image" + (i);
         document.getElementById(image_id).src = dataUrl;
         console.log(image_id);
       }
