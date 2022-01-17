@@ -79,3 +79,55 @@ function sato_free() {
   audio = new Audio("voice/mr.sato/sato_free.m4a");
   audio.play();
 }
+
+/* 飯野先生ボイス */
+function dare() {
+  audio = new Audio("voice/mr.iino/iino_dare.m4a");
+  audio.play();
+}
+function know() {
+  audio = new Audio("voice/mr.iino/iino_know.m4a");
+  audio.play();
+}
+function doit() {
+  audio = new Audio("voice/mr.iino/iino_doit.m4a");
+  audio.play();
+}
+function iino_com() {
+  audio = new Audio("voice/mr.iino/iino_com.m4a");
+  audio.play();
+}
+function iino_grad() {
+  audio = new Audio("voice/mr.iino/iino_grad.m4a");
+  audio.play();
+}
+function iino_free() {
+  audio = new Audio("voice/mr.iino/iino_free.m4a");
+  audio.play();
+}
+
+/* 廣瀬先生ボイス */
+function kimi() {
+  audio = new Audio("voice/mr.hirose/oka_kimi.m4a");
+  audio.play();
+}
+function damare() {
+  audio = new Audio("voice/mr.hirose/oka_damare.m4a");
+  audio.play();
+}
+function exam() {
+  audio = new Audio("voice/mr.hirose/oka_exam.m4a");
+  audio.play();
+}
+function oka_com() {
+  audio = new Audio("voice/mr.hirose/oka_com.m4a");
+  audio.play();
+}
+function oka_grad() {
+  audio = new Audio("voice/mr.hirose/oka_grad.m4a");
+  audio.play();
+}
+function oka_free() {
+  audio = new Audio("voice/mr.hirose/oka_free.m4a");
+  audio.play();
+}

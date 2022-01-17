@@ -23,6 +23,7 @@
     // 定義
     var g_imgs = [];
     var t_imgs = [];
+    var image_id = "image";
 
     // 処理を一時停止する
     const wait = (sec) => { // タイマ
@@ -35,17 +36,20 @@
     // 画像の配置を統括する
     async function setImg(flg) {
       if (flg == "g") {
-        for (var i = 1; i < 4; i++) {
+        for (var i = 1; i <= 3; i++) {
           downloadImage(g_imgs[i - 1]);
-          setImage(i);
           await wait(1);
+          setImage(image_id + i);
+          await wait(1.05);
+          console.log("setImg(g)");
         }
-      }
-      if (flg == "t") {
-        for (var i = 4; i < 7; i++) {
+      } else if (flg == "t") {
+        for (var i = 4; i <= 6; i++) {
           downloadImage(t_imgs[i - 4]);
-          setImage(i);
-          await wait(0.5);
+          await wait(1);
+          setImage(image_id + i);
+          await wait(1.05);
+          console.log("setImg(t)");
         }
       }
     }
@@ -57,6 +61,7 @@
         .then(function(blob) {
           // ファイルリーダーにデータを渡す
           reader.readAsDataURL(blob);
+          console.log("downloaded");
         })
         .catch(function(err) {
           console.error(err);
@@ -64,13 +69,13 @@
     }
 
     // 画像を配置する
-    function setImage(i) {
+    function setImage(image_id) {
       reader.onload = function(e) {
         var dataUrl = reader.result;
-        var image_id;
-        image_id = "image" + (i);
-        console.log(image_id);
+        // var image_id = "image1";
+        // image_id = "image" + (i);
         document.getElementById(image_id).src = dataUrl;
+        console.log(image_id);
       }
     }
 
@@ -78,8 +83,12 @@
     // 画像の検索を統括する
     async function search() {
       await give_search();
-      await wait(2);
-      trade_search();
+      console.log("trade");
+      await trade_search();
+      var flg = "g";
+      await setImg(flg);
+      flg = "t";
+      setImg(flg);
     }
 
     // 画像を全件取得(譲渡)
@@ -87,7 +96,7 @@
       // 検索
       var cnt = 0;
       var Give = ncmb.DataStore("give");
-      Give.equalTo("deal_status", "成立待ち")
+      await Give.equalTo("deal_status", "成立待ち")
         .fetchAll()
         .then(function(results) {
           // 4件分のみ配列に格納
@@ -97,16 +106,15 @@
             // 配列に格納
             g_imgs[cnt] = object.item_image;
             var name = object.item_name;
-            console.log(name + " " + g_imgs[cnt]);
             cnt++;
+            console.log(object);
           }
         })
         .catch(function(err) {
           console.log(err);
         });
-      await wait(1);
-      var flg = "g";
-      setImg(flg);
+      await wait(1.5);
+
     }
 
     // 画像を全件取得(交換)
@@ -114,27 +122,24 @@
       // 検索
       var cnt = 0;
       var Trade = ncmb.DataStore("trade");
-      Trade.equalTo("deal_status", "成立待ち")
+      await Trade.equalTo("deal_status", "成立待ち")
         .fetchAll()
         .then(function(results) {
           // 3件分のみ配列に格納
           for (var i = results.length - 1; i > results.length - 4; i--) {
             var object = results[i];
-            console.log(object);
             var objectId = object.objectId;
             // 配列に格納
             t_imgs[cnt] = object.item_image;
             var name = object.item_name;
-            console.log(name + " " + t_imgs[cnt]);
             cnt++;
+            console.log(object);
           }
         })
         .catch(function(err) {
           console.log(err);
         });
-      await wait(1);
-      var flg = "t";
-      setImg(flg);
+      await wait(1.5);
     }
   </script>
 </head>
@@ -163,6 +168,7 @@
 
   <!-- Body Start -->
 
+  <button class="transparent" onclick="location.href='giveList.html'">
   <div class="container" id="index_item_box">
     <div id="justified">
       <div id="left_just">
@@ -171,7 +177,7 @@
       <br>
       <br>
       <div id="right_just">
-        <button class="transparent" onclick="location.href='giveList.html'">すべて見る<i class="fas fa-angle-right"></i></a></button>
+        すべて見る<i class="fas fa-angle-right"></i></a>
       </div>
       <div id="left_just_image">
         <img src="" class="index_image" id="image1" />
@@ -185,7 +191,9 @@
       </div>
     </div>
   </div>
+  </button>
 
+  <button class="transparent" onclick="location.href='tradeList.html'">
   <div class="container" id="index_item_box">
     <div id="justified">
       <div id="left_just">
@@ -193,9 +201,11 @@
       </div>
       <br>
       <br>
+      
       <div id="right_just">
-        <button class="transparent" onclick="location.href='tradeList.html'">すべて見る<i class="fas fa-angle-right"></i></a></button>
+        すべて見る<i class="fas fa-angle-right"></i></a>
       </div>
+     
       <div id="left_just_image">
         <img src="" class="index_image" id="image4" />
       </div>
@@ -208,6 +218,7 @@
       </div>
     </div>
   </div>
+  </button>
   <a href="login.html">ログイン画面</a>
   <button onclick="search()">画像表示</button>
   <!-- Body End -->
