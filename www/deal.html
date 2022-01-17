@@ -8,9 +8,11 @@
   <script src="components/loader.js"></script>
   <link rel="stylesheet" href="components/loader.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/deal.css">
   <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script type="text/javascript" src="css/logout.js"></script>
+  <script type="text/javascript" src="css/lists.js"></script>
   <script>
   </script>
 </head>
@@ -62,6 +64,28 @@
       </div>
     </div>
   </div>
+  
+  <br>
+  <button class="deallist_btn" onclick="deal_give_lists()">
+    <div class="container" id="deallist_box">
+      <a>譲渡取引の一覧（クリックで表示）</a>
+    </div>
+  </button>
+  <div id="itemlist_give">
+    <!-- ここに商品が入る -->
+  </div>
+  <br>
+  <button class="deallist_btn" onclick="deal_trade_lists()">
+    <div class="container" id="deallist_box">
+      <a>交換取引の一覧（クリックで表示）</a>
+    </div>
+  </button>
+  <div id="itemlist_trade">
+    <!-- ここに商品が入る -->
+  </div>
+  <br>
+  <br>
+  <br>
   <!-- Body End -->
 
   <!-- Footer Start -->
