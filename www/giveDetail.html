@@ -23,7 +23,7 @@
     var reader = new FileReader();
 
     // 画像を読み込む
-    function setImage(){
+    function setImage() {
       reader.onload = function(e) {
         var dataUrl = reader.result;
         document.getElementById("detail_image").src = dataUrl;
@@ -32,170 +32,170 @@
     }
 
     // 画像を読み込む
-    function downloadImage(fileName){  
+    function downloadImage(fileName) {
       // ダウンロード（データ形式をblobを指定）
       ncmb.File.download(fileName, "blob")
-           .then(function(blob) {
-           // ファイルリーダーにデータを渡す
-           reader.readAsDataURL(blob);
-           })
-           .catch(function(err) {
-              console.error(err);
-           })
+        .then(function(blob) {
+          // ファイルリーダーにデータを渡す
+          reader.readAsDataURL(blob);
+        })
+        .catch(function(err) {
+          console.error(err);
+        })
     }
 
     // 取得した情報で画面を上書き
-    function detailLoad(){
+    function detailLoad() {
       var objectID = location.search.replace('?', '');
       var Give = ncmb.DataStore("give");
       Give.equalTo("objectId", objectID)
-            .fetchAll()
-            .then(function(results){
-              var object = results[0];
-              // 値の書き換え
-              var category = changeCategory(object.category);
-              var item_status = changeItemStatus(object.item_status);
-              var delivery_time = changeDtime(object.delivery_time);
-              var location = changeLocation(object.location);
+        .fetchAll()
+        .then(function(results) {
+          var object = results[0];
+          // 値の書き換え
+          var category = changeCategory(object.category);
+          var item_status = changeItemStatus(object.item_status);
+          var delivery_time = changeDtime(object.delivery_time);
+          var location = changeLocation(object.location);
 
-              downloadImage(object.item_image);
-              setImage(object.item_image);
+          downloadImage(object.item_image);
+          setImage(object.item_image);
 
-              document.getElementById('item_name').innerHTML = object.item_name;
-              document.getElementById('item_info').innerHTML = object.item_info.replace(/\n/g, '<br>');
-              document.getElementById('category').innerHTML = category;
-              document.getElementById('item_status').innerHTML = item_status;
-              document.getElementById('delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
-              document.getElementById('delivery_time').innerHTML = delivery_time;
-              document.getElementById('location').innerHTML = location;
-              
-              // モーダルの書き換え
-              document.getElementById('m_item_name').innerHTML = object.item_name;
-              // この辺に出品者の書き換えをあとで入れる
-              document.getElementById('m_delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
-              document.getElementById('m_delivery_time').innerHTML = delivery_time;
-              document.getElementById('m_location').innerHTML = location;
+          document.getElementById('item_name').innerHTML = object.item_name;
+          document.getElementById('item_info').innerHTML = object.item_info.replace(/\n/g, '<br>');
+          document.getElementById('category').innerHTML = category;
+          document.getElementById('item_status').innerHTML = item_status;
+          document.getElementById('delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
+          document.getElementById('delivery_time').innerHTML = delivery_time;
+          document.getElementById('location').innerHTML = location;
 
-            })
-            .catch(function(err){
-                console.log(err);
-            });
+          // モーダルの書き換え
+          document.getElementById('m_item_name').innerHTML = object.item_name;
+          // この辺に出品者の書き換えをあとで入れる
+          document.getElementById('m_delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
+          document.getElementById('m_delivery_time').innerHTML = delivery_time;
+          document.getElementById('m_location').innerHTML = location;
+
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
     }
 
     // カテゴリーを書き換える
-    function changeCategory(category){
-      switch (category){
-            case '1':
-              category = "おもちゃ・ゲーム";
-              break;
-            case '2':
-              category = "本・テキスト";
-              break;
-            case '3':
-              category = "音楽・ＤＶＤ";
-              break;
-            case '4':
-              category = "服・コスメ";
-              break;
-            case '5':
-              category = "キッチン";
-              break;
-            case '6':
-              category = "スポーツ";
-              break;
-            case '7':
-              category = "PC・スマホ用品";
-              break;
-            case '100':
-              category = "その他";
-              break;
-            default:
-              break;
-          }
+    function changeCategory(category) {
+      switch (category) {
+        case '1':
+          category = "おもちゃ・ゲーム";
+          break;
+        case '2':
+          category = "本・テキスト";
+          break;
+        case '3':
+          category = "音楽・ＤＶＤ";
+          break;
+        case '4':
+          category = "服・コスメ";
+          break;
+        case '5':
+          category = "キッチン";
+          break;
+        case '6':
+          category = "スポーツ";
+          break;
+        case '7':
+          category = "PC・スマホ用品";
+          break;
+        case '100':
+          category = "その他";
+          break;
+        default:
+          break;
+      }
       return category;
     }
 
     // 商品状態を書き換える
-    function changeItemStatus(item_status){
-      switch (item_status){
-            case '1':
-              item_status = "新品";
-              break;
-            case '2':
-              item_status = "ほぼ新品";
-              break;
-            case '3':
-              item_status = "多少の傷あり";
-              break;
-            case '4':
-              item_status = "傷・汚れあり";
-              break;
-            case '5':
-              item_status = "状態が悪い";
-              break;
-            default:
-              break;
-          }
+    function changeItemStatus(item_status) {
+      switch (item_status) {
+        case '1':
+          item_status = "新品";
+          break;
+        case '2':
+          item_status = "ほぼ新品";
+          break;
+        case '3':
+          item_status = "多少の傷あり";
+          break;
+        case '4':
+          item_status = "傷・汚れあり";
+          break;
+        case '5':
+          item_status = "状態が悪い";
+          break;
+        default:
+          break;
+      }
       return item_status;
     }
 
     // 受け渡し時間帯を書き換える
-    function changeDtime(delivery_time){
-      switch (delivery_time){
-            case '1':
-              delivery_time = "１コマ目終了後";
-              break;
-            case '2':
-              delivery_time = "昼休み";
-              break;
-            case '3':
-              delivery_time = "３コマ目終了後";
-              break;
-            case '4':
-              delivery_time = "４コマ目終了後";
-              break;
-            default:
-              break;
-          }
+    function changeDtime(delivery_time) {
+      switch (delivery_time) {
+        case '1':
+          delivery_time = "１コマ目終了後";
+          break;
+        case '2':
+          delivery_time = "昼休み";
+          break;
+        case '3':
+          delivery_time = "３コマ目終了後";
+          break;
+        case '4':
+          delivery_time = "４コマ目終了後";
+          break;
+        default:
+          break;
+      }
       return delivery_time;
     }
 
     // 受け渡し場所を書き換える
-    function changeLocation(location){
-      switch (location){
-            case '1':
-              location = "本校舎3Fホール";
-              break;
-            case '2':
-              location = "本校舎4Fホール";
-              break;
-            case '3':
-              location = "本校舎5F";
-              break;
-            case '4':
-              location = "本校舎6Fホール";
-              break;
-            case '5':
-              location = "本校舎7F";
-              break;
-            case '6':
-              location = "本校舎8F";
-              break;
-            case '7':
-              location = "2号館入口";
-              break;
-            case '8':
-              location = "3号館入口";
-              break;
-            case '9':
-              location = "3号館ホール";
-              break;
-            case '100':
-              location = "その他";
-              break;
-            default:
-              break;
-          }
+    function changeLocation(location) {
+      switch (location) {
+        case '1':
+          location = "本校舎3Fホール";
+          break;
+        case '2':
+          location = "本校舎4Fホール";
+          break;
+        case '3':
+          location = "本校舎5F";
+          break;
+        case '4':
+          location = "本校舎6Fホール";
+          break;
+        case '5':
+          location = "本校舎7F";
+          break;
+        case '6':
+          location = "本校舎8F";
+          break;
+        case '7':
+          location = "2号館入口";
+          break;
+        case '8':
+          location = "3号館入口";
+          break;
+        case '9':
+          location = "3号館ホール";
+          break;
+        case '100':
+          location = "その他";
+          break;
+        default:
+          break;
+      }
       return location;
     }
 
@@ -207,6 +207,7 @@
       const modal = document.getElementById('d_modal');
       const mask = document.getElementById('mask');
 
+
       open.addEventListener('click', () => {
         // 表示
         modal.classList.remove('hidden');
@@ -215,12 +216,18 @@
 
       ok.addEventListener('click', () => {
         var objectID = location.search.replace('?', '');
+        /*takeuserIDのセットとgiveuserIdのゲット*/
+        var take_user_id = getCurrentUserId();
+        console.log("ゲットした落札者ID:" + take_user_id);
+        takeUserUpdate(objectID, take_user_id);
+        var give_user_id = getGiveUserId(objectID);
+
         console.log(objectID);
         localStorage.setItem("flag", "give");
         localStorage.setItem("objectID", objectID);
-        localStorage.setItem("give_userID", "仮");
-        localStorage.setItem("take_userID", "仮");
-        document.location.href = 'qrGenerater.html?'+objectID;
+        localStorage.setItem("give_userID", give_user_id);
+        localStorage.setItem("take_userID", take_user_id);
+        document.location.href = 'qrGenerater.html?' + objectID;
       });
 
       close.addEventListener('click', () => {
@@ -231,6 +238,67 @@
       mask.addEventListener('click', () => {
         close.click();
       });
+    }
+
+    //カレントユーザーのID取得
+    function getCurrentUserId() {
+      // カレントユーザー情報の取得
+      var currentUser = ncmb.User.getCurrentUser();
+      console.log("currentUser:" + currentUser);
+      if (currentUser != null) {
+        console.log("ユーザー: " + currentUser.get("userName"));
+        return currentUser.get("objectId");
+      } else {
+        console.log("未ログインまたは取得に失敗");
+        return null;
+      }
+    }
+
+    //give_user_idの取得(譲渡)
+    function getGiveUserId(objectID) {
+      // var Give = ncmb.DataStore('give');
+      // var give = Give
+      //   .fetchById(objectID)
+      //   .then(give => {
+      //     console.log(give.give_user_id);
+      //     return give.give_user_id;
+      //   })
+      //   .catch(e => {
+      //     console.log('データなし');
+      //     return null;
+      //   });
+      var Give = ncmb.DataStore("give");
+      Give.fetchAll().then(users => {
+        users.forEach(user => {
+          console.log(user);
+          //ここで登録されている学籍番号かチェック
+          if (user.objectId === objectID) {
+            console.log("出品者：" + user.give_user_id);
+            return user.give_user_id;
+          }
+        })
+      }).catch(err => {
+        console.log("データ取得エラー")
+        return "";
+      });
+
+
+    }
+
+
+    //take_user_idのセット(譲渡)
+    function takeUserUpdate(objectId, take_user_id) {
+      console.log("オブジェクトID：" + objectId + "　落札者ID：" + take_user_id);
+      var give = ncmb.DataStore("give");
+
+      give.equalTo("objectId", objectId)
+        .fetch()
+        .then(function(results) {
+          results.set('deal_status', "取引成立")
+            .set('take_user_id', take_user_id);
+          results.update();
+        });
+
     }
   </script>
 </head>
@@ -272,7 +340,7 @@
   <div id="detail">
     <br>
     <div>
-      <img src="" id="detail_image"/>
+      <img src="" id="detail_image" />
     </div>
     <br>
     <div class="container_detail_name" id="name_box">
@@ -340,7 +408,7 @@
         <div class="modal_box">
           <a id="m_item_name">商品名</a>
           <br>
-          <img src="" id="modal_image"/>
+          <img src="" id="modal_image" />
           <br>
           <table class="modal_table">
             <tr>

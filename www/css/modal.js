@@ -200,6 +200,11 @@
       var item_name = document.getElementById("item_name").value;
       var item_status = document.getElementById("item_status").value;
       var location = document.getElementById("location").value;
+
+      //give_user_idの取得
+      var give_user_id = getCurrentUserId();
+
+
       // 
       var Give = ncmb.DataStore("give");
       // クラスインスタンスの生成
@@ -210,6 +215,7 @@
         .set("delivery_end_date", delivery_end_date)
         .set("delivery_start_date", delivery_start_date)
         .set("delivery_time", delivery_time)
+        .set("give_user_id", give_user_id)
         .set("item_image", item_image)
         .set("item_info", item_info)
         .set("item_name", item_name)
@@ -336,3 +342,18 @@
           close.click();
         });
       }
+
+      //カレントユーザーのID取得
+      function getCurrentUserId() {
+      // カレントユーザー情報の取得
+      var currentUser = ncmb.User.getCurrentUser();
+      console.log("currentUser:" + currentUser);
+      if (currentUser != null) {
+        console.log("ログイン中のユーザー: " + currentUser.get("userName"));
+        return currentUser.get("objectId");
+      } else {
+        console.log("未ログインまたは取得に失敗");
+        return null;
+      }
+
+    }
