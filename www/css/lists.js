@@ -12,6 +12,7 @@ var imgs = []; // 商品の画像
 var cnt = 0;
 var cntSwitch = 1;
 var reloadSwitch = 0;
+var image_id;
 
 // 処理を一時停止する
 const wait = (sec) => { // タイマ
@@ -25,8 +26,8 @@ const wait = (sec) => { // タイマ
 function setImage(i) {
   reader.onload = function (e) {
     var dataUrl = reader.result;
-    var image_id;
-    image_id = "image" + (i + 1);
+    image_id = "image" + (i+1);
+    console.log(image_id);
     document.getElementById(image_id).src = dataUrl;
   }
 }
@@ -51,7 +52,7 @@ async function setImg() {
     for (var j = imgs.length; 0 <= j; j--) {
       downloadImage(imgs[j]);
       setImage(j);
-      await wait(1);
+      await wait(1.5);
     }
     // 検索
   } else if (reloadSwitch == 2) {
@@ -59,7 +60,7 @@ async function setImg() {
       var s = suji[j];
       downloadImage(imgs[s]);
       setImage(j - 2);
-      await wait(1);
+      await wait(1.5);
     }
     // 一覧画面(もっと読み込む)
   } else {
@@ -68,8 +69,10 @@ async function setImg() {
         break;
       }
       downloadImage(imgs[j]);
+      console.log(j);
+      await wait(0.1);
       setImage(j);
-      await wait(1);
+      await wait(1.5);
     }
   }
 }
@@ -108,6 +111,7 @@ async function pickup() {
       var itemlist_element = document.getElementById('itemlist');
       itemlist_element.insertAdjacentHTML("afterend", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + item_name + '</a> </div> <div class="container_right"> <a href="giveDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
       suji[j] = i;
+
     }
   }
   await wait(1);

@@ -23,6 +23,7 @@
     // 定義
     var g_imgs = [];
     var t_imgs = [];
+    var image_id = "image";
 
     // 処理を一時停止する
     const wait = (sec) => { // タイマ
@@ -38,16 +39,16 @@
         for (var i = 1; i <= 3; i++) {
           downloadImage(g_imgs[i - 1]);
           await wait(1);
-          setImage(i);
-          await wait(1.2);
+          setImage(image_id + i);
+          await wait(1.05);
           console.log("setImg(g)");
         }
       } else if (flg == "t") {
         for (var i = 4; i <= 6; i++) {
           downloadImage(t_imgs[i - 4]);
           await wait(1);
-          setImage(i);
-          await wait(1.2);
+          setImage(image_id + i);
+          await wait(1.05);
           console.log("setImg(t)");
         }
       }
@@ -68,11 +69,11 @@
     }
 
     // 画像を配置する
-    function setImage(i) {
+    function setImage(image_id) {
       reader.onload = function(e) {
         var dataUrl = reader.result;
-        var image_id;
-        image_id = "image" + (i);
+        // var image_id = "image1";
+        // image_id = "image" + (i);
         document.getElementById(image_id).src = dataUrl;
         console.log(image_id);
       }
@@ -167,6 +168,7 @@
 
   <!-- Body Start -->
 
+  <button class="transparent" onclick="location.href='giveList.html'">
   <div class="container" id="index_item_box">
     <div id="justified">
       <div id="left_just">
@@ -175,7 +177,7 @@
       <br>
       <br>
       <div id="right_just">
-        <button class="transparent" onclick="location.href='giveList.html'">すべて見る<i class="fas fa-angle-right"></i></a></button>
+        すべて見る<i class="fas fa-angle-right"></i></a>
       </div>
       <div id="left_just_image">
         <img src="" class="index_image" id="image1" />
@@ -189,7 +191,9 @@
       </div>
     </div>
   </div>
+  </button>
 
+  <button class="transparent" onclick="location.href='tradeList.html'">
   <div class="container" id="index_item_box">
     <div id="justified">
       <div id="left_just">
@@ -197,9 +201,11 @@
       </div>
       <br>
       <br>
+      
       <div id="right_just">
-        <button class="transparent" onclick="location.href='tradeList.html'">すべて見る<i class="fas fa-angle-right"></i></a></button>
+        すべて見る<i class="fas fa-angle-right"></i></a>
       </div>
+     
       <div id="left_just_image">
         <img src="" class="index_image" id="image4" />
       </div>
@@ -212,6 +218,7 @@
       </div>
     </div>
   </div>
+  </button>
   <a href="login.html">ログイン画面</a>
   <button onclick="search()">画像表示</button>
   <!-- Body End -->
