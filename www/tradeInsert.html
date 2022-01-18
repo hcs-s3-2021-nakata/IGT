@@ -11,12 +11,13 @@
   <link rel="stylesheet" href="css/modal.css">
   <link rel="stylesheet" href="css/insert.css">
   <link rel="stylesheet" href="css/loading.css">
+  <link rel="stylesheet" href="css/qr.css">
   <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script type="text/javascript" src="css/main.js">
   </script>
   <script type="text/javascript" src="css/modal.js"></script>
-  
+
 </head>
 
 <body id="prodact_lists">
@@ -54,30 +55,21 @@
   <!-- Header End -->
 
   <!-- 投稿ボタン -->
-  <div class="right">
-    <button type="button" class="newDeal-btn" name="item_image" id="d_open" onclick="trade_modal_open()"> 出品する！ </button>
-  </div>
-  <div id="mask" class="hidden"></div><br><br><br>
+
+  <div id="mask" class="hidden"></div><br>
 
   <!-- 商品画像選択 -->
   <div class="flex" id="newDeal_info" name="item_image">
-    <!-- カメラからアップロード -->
-    <button class="btn-flat-border">
-        📷<input type="file" id="item_image" onChange="imgPreView(event)"/>
-        </button>
-
     <!-- アルバムからアップロード -->
     <form>
-      <button class="btn-flat-border">
-            📚<input type="file" id="item_image" accept="image/*" multiple=" multiple" onchange="imgPreView(event)">
-
-            </button>
+      <label id="chooseImg">
+      📚写真を選択<input type="file"id="insertImg" accept="image/*" multiple=" multiple" style="display:none;" onchange="imgPreView(event)">
+      </label>
     </form>
   </div>
   <!-- 👇ここにプレビュー画像を追加する -->
   <div class="flex" id="preview" width="300" height="200">
   </div>
-
 
   <div class="gray"><br>
     <!-- カテゴリー -->
@@ -121,7 +113,7 @@
     <div class="flex" id="newDeal_info" name="item_info">
       <textarea id="item_info" name="item_info" class="width" maxlength="250" rows="8" required></textarea>
     </div><br>
-  </div><br><br><br>
+  </div><br><br>
 
   <div class="gray"><br>
     <!-- 交換希望品情報入力 -->
@@ -167,6 +159,11 @@
                 <option value="100">その他</option>
             </select>
     </div><br>
+  </div>
+  <br>
+  <div class="button-flex">
+    <button type="button" class="btn btn-malformation" name="item_image" id="d_open" onclick="trade_modal_open()">出品する！ 
+    </button>
   </div><br><br><br>
 
 
@@ -191,53 +188,59 @@
     </li>
   </ul>
   <!-- Fotter End -->
-    <!-- モーダルウィンドウ -->
-      <section id="d_modal" class="hidden">
-        <div class="modal_box">
-          <a id="m_item_name">商品名</a>
-          <br>
-          <table class="modal_table">
-            <tr>
-              <th class="modal_table">カテゴリー</th><td id="m_category">値</td>
-            </tr>
-            <tr>
-              <th class="modal_table">商品状態</th><td id="m_item_status">値</td>
-            </tr>
-            <tr>
-              <th class="modal_table">商品説明</th><td id="m_item_info">値</td>
-            </tr>
-            <tr>
-              <th class="modal_table">交換希望品</th><td id="m_swap_item_info">値</td>
-            </tr>
-            <tr>
-              <th class="modal_table">受渡期間</th><td id="m_delivery_date">値</td>
-            </tr>
-            <tr>
-              <th class="modal_table">受渡時間帯</th><td id="m_delivery_time">値</td>
-            </tr>
-            <tr>
-              <th class="modal_table">受渡場所</th><td id="m_location">値</td>
-            </tr>
-          </table>
-        </div>
-        <br>
-        <a>この商品を登録しますか？</a>
-        <div id="d_button">
-          <div id="d_cancel">
-          閉じる
-          </div>
-          <div id="d_ok" onclick="trade_newDeal()">
-          進める
-          </div>
-        </div>
-      </section>
-<!--loading animation-->
-<div class="loader-wrap" id="loader-wrap">
-<div class="bottle-wrap">
-<div class="cap"><i></i><i></i><i></i><i></i></div>
-<div class="bottle">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	width="26.81px" height="106.124px" viewBox="0 0.5 26.81 106.124" enable-background="new 0 0.5 26.81 106.124" xml:space="preserve">
+  <!-- モーダルウィンドウ -->
+  <section id="d_modal" class="hidden">
+    <div class="modal_box">
+      <a id="m_item_name">商品名</a>
+      <br>
+      <table class="modal_table">
+        <tr>
+          <th class="modal_table">カテゴリー</th>
+          <td id="m_category">値</td>
+        </tr>
+        <tr>
+          <th class="modal_table">商品状態</th>
+          <td id="m_item_status">値</td>
+        </tr>
+        <tr>
+          <th class="modal_table">商品説明</th>
+          <td id="m_item_info">値</td>
+        </tr>
+        <tr>
+          <th class="modal_table">交換希望品</th>
+          <td id="m_swap_item_info">値</td>
+        </tr>
+        <tr>
+          <th class="modal_table">受渡期間</th>
+          <td id="m_delivery_date">値</td>
+        </tr>
+        <tr>
+          <th class="modal_table">受渡時間帯</th>
+          <td id="m_delivery_time">値</td>
+        </tr>
+        <tr>
+          <th class="modal_table">受渡場所</th>
+          <td id="m_location">値</td>
+        </tr>
+      </table>
+    </div>
+    <br>
+    <a>この商品を登録しますか？</a>
+    <div id="d_button">
+      <div id="d_cancel">
+        閉じる
+      </div>
+      <div id="d_ok" onclick="trade_newDeal()">
+        進める
+      </div>
+    </div>
+  </section>
+  <!--loading animation-->
+  <div class="loader-wrap" id="loader-wrap">
+    <div class="bottle-wrap">
+      <div class="cap"><i></i><i></i><i></i><i></i></div>
+      <div class="bottle">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="26.81px" height="106.124px" viewBox="0 0.5 26.81 106.124" enable-background="new 0 0.5 26.81 106.124" xml:space="preserve">
 	<defs>
 	<pattern id="water_fill" width=".25" height="1.1" patternContentUnits="objectBoundingBox">
 	<path fill="#8b1b34" d="M0.25,1H0c0,0,0-0.659,0-0.916c0.083-0.303,0.158,0.334,0.25,0C0.25,0.327,0.25,1,0.25,1z"/>
@@ -255,10 +258,9 @@
 	c0,0-7.405,1.311-7.405,16.03s0,40.72,0,45.47s5.515,5.515,5.515,5.515h6.39h6.39c0,0,5.515-0.765,5.515-5.515s0-30.75,0-45.47
 	S17.905,38.109,17.905,38.109z"/>
 </svg>
-</div>
-<div class="bottle">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	width="26.81px" height="106.124px" viewBox="0 0.5 26.81 106.124" enable-background="new 0 0.5 26.81 106.124" xml:space="preserve">
+      </div>
+      <div class="bottle">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="26.81px" height="106.124px" viewBox="0 0.5 26.81 106.124" enable-background="new 0 0.5 26.81 106.124" xml:space="preserve">
 	<defs>
 	<pattern id="water_fill" width=".25" height="1.1" patternContentUnits="objectBoundingBox">
 	<path fill="#b33e5c" d="M0.25,1H0c0,0,0-0.659,0-0.916c0.083-0.303,0.158,0.334,0.25,0C0.25,0.327,0.25,1,0.25,1z"/>
@@ -276,10 +278,9 @@
 	c0,0-7.405,1.311-7.405,16.03s0,40.72,0,45.47s5.515,5.515,5.515,5.515h6.39h6.39c0,0,5.515-0.765,5.515-5.515s0-30.75,0-45.47
 	S17.905,38.109,17.905,38.109z"/>
 </svg>
-</div>
-<div class="bottle">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	width="26.81px" height="106.124px" viewBox="0 0.5 26.81 106.124" enable-background="new 0 0.5 26.81 106.124" xml:space="preserve">
+      </div>
+      <div class="bottle">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="26.81px" height="106.124px" viewBox="0 0.5 26.81 106.124" enable-background="new 0 0.5 26.81 106.124" xml:space="preserve">
 	<defs>
 	<pattern id="water_fill" width=".25" height="1.1" patternContentUnits="objectBoundingBox">
 	<path fill="#b33e5c" d="M0.25,1H0c0,0,0-0.659,0-0.916c0.083-0.303,0.158,0.334,0.25,0C0.25,0.327,0.25,1,0.25,1z"/>
@@ -297,10 +298,9 @@
 	c0,0-7.405,1.311-7.405,16.03s0,40.72,0,45.47s5.515,5.515,5.515,5.515h6.39h6.39c0,0,5.515-0.765,5.515-5.515s0-30.75,0-45.47
 	S17.905,38.109,17.905,38.109z"/>
 </svg>
-</div>
-<div class="bottle">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	width="26.81px" height="106.124px" viewBox="0 0.5 26.81 106.124" enable-background="new 0 0.5 26.81 106.124" xml:space="preserve">
+      </div>
+      <div class="bottle">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="26.81px" height="106.124px" viewBox="0 0.5 26.81 106.124" enable-background="new 0 0.5 26.81 106.124" xml:space="preserve">
 	<defs>
 	<pattern id="water_fill" width=".25" height="1.1" patternContentUnits="objectBoundingBox">
 	<path fill="#b33e5c" d="M0.25,1H0c0,0,0-0.659,0-0.916c0.083-0.303,0.158,0.334,0.25,0C0.25,0.327,0.25,1,0.25,1z"/>
@@ -318,11 +318,11 @@
 	c0,0-7.405,1.311-7.405,16.03s0,40.72,0,45.47s5.515,5.515,5.515,5.515h6.39h6.39c0,0,5.515-0.765,5.515-5.515s0-30.75,0-45.47
 	S17.905,38.109,17.905,38.109z"/>
 </svg>
-</div>
-</div>
-<div class="bar"></div>
-<div class="text">Registering</div>
-</div>
+      </div>
+    </div>
+    <div class="bar"></div>
+    <div class="text">Registering</div>
+  </div>
 </body>
 
 </html>
