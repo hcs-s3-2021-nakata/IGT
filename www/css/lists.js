@@ -50,6 +50,7 @@ async function setImg() {
   // 一覧画面(リロード)
   if (reloadSwitch == 1) {
     for (var j = imgs.length; 0 <= j; j--) {
+      console.log("reload");
       downloadImage(imgs[j]);
       setImage(j);
       await wait(1.5);
