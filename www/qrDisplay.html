@@ -37,6 +37,29 @@
       disableSuccessBeep: false // iOS and Android
     }
 
+    function qrDisplayLoad() {
+      // カレントユーザー情報の取得
+      var currentUser = ncmb.User.getCurrentUser();
+      console.log("ログイン中のユーザー: " + currentUser.get("userName"));
+
+      //ユーザーテーブルから値を取得
+      var User = ncmb.User;
+      var item = User
+        .fetchById(currentUser.get("objectId")) //オブジェクトIDを指定
+        .then(item => {
+          console.log('データあり' + item.user_account_name);
+
+          //QRコードを表示させる
+          if (item.userClass !== null) {
+            document.getElementById('userClass').innerHTML =
+             "<img src='"+ item.qr + "'>";
+          }
+        })
+        .catch(e => {
+          console.log('取得データなし');
+        });
+    }
+
     function onSuccess(result) {
       console.log("スキャン結果: " + result.text + "\n" +
         "バーコードの種類: " + result.format + "\n" +
@@ -156,12 +179,12 @@
   </script>
 </head>
 
-<body id="prodact_lists">
+<body id="prodact_lists" onload="javascript:qrDisplayLoad()">
   <!-- Header Start -->
   <header class="site-header">
     <div class="wrapper site-header__wrapper">
       <nav class="nav">
-        <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">QRコードスキャン</span>
+        <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">あなたのQRコード</span>
         <label for="menu-btn-check" class="menu-btn"><span></span></label>
         <div class="menu-content">
           <ul>
@@ -190,16 +213,14 @@
   </header>
   <!-- Header End -->
   <!-- Body Start -->
-  <br>
-  <div class="qr">
-    <!-- <p>QRコードを相手に見せよう！</p> -->
-    <!-- 折り畳み展開ポインタ -->
-    <!-- <details id="qr_detail">
-      <summary>タップして展開</summary>
-      <div id="img-qr"></div>
-    </details>
-    <br> -->
-    <button onclick="scan()" class="btn btn-malformation">QRコードを<br>読み取る！</button>
+  <div class="center">
+    <br>
+    <p>QRコードを相手に見せよう！</p>
+    <br>
+    <div id="img-qr"></div>
+    <br>
+    <div class="button-flex">
+    </div>
   </div>
   <!-- Body End -->
   <!-- Footer Start -->
@@ -209,13 +230,13 @@
         <i class="far fa-list-alt"></i></a>
     </li>
     <li>
-      <a href="deal.html"><i class="fas fa-random"></i></a>
+      <a class="icon-blue" href="deal.html"><i class="fas fa-random"></i></a>
     </li>
     <li>
       <a href="insert.html"><i class="fas fa-plus"></i></a>
     </li>
     <li>
-      <a class="icon-blue" href="#"><i class="fas fa-qrcode"></i></a>
+      <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
     </li>
     <li>
       <a href="voice.html">

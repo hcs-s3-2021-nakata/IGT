@@ -24,11 +24,53 @@
       var give = localStorage.getItem("give_userID"); 
       var flag = localStorage.getItem("flag");
       var take = localStorage.getItem("take_userID"); 
-      var qrtext = "objectId:" + objectid + ",flag:" +  flag + ",giveId:" + give + ",takeId:" + take; 
+      var qrtext = "objectId:" + objectid + ",flag:" +  flag + ",giveId:" + give + ",takeId:" + take
+
+         .fetchById(objectid)
+          .then(item => {
+            item.set("qr", qr).update();
+
+          }).then(function() {
+            alert("ログイン画面に戻ります");
+            logout_button();
+          })
+          .catch(e => {
+            console.log('変更失敗');
+          });
+
+
+
       var utf8qrtext = unescape(encodeURIComponent(qrtext)); 
       $("#img-qr").html("");
       $("#img-qr").qrcode({text:utf8qrtext});
     });
+
+  //  function qrUpdate() {
+
+  //       var updateFlag = false;
+  //       //値を取得(生成されたQRコード)
+  //       var qr = document.getElementById("mailAddressInput").value;
+
+  //       // カレントユーザー情報の取得
+  //       var currentUser = ncmb.User.getCurrentUser();
+
+  //       //譲渡テーブルから値を取得
+  //       var Give = ncmb.DataStore("give");
+  //       var item = Give
+
+          // .fetchById(objectid)
+          // .then(item => {
+          //   item.set("qr", qr).update();
+
+          // }).then(function() {
+          //   alert("ログイン画面に戻ります");
+          //   logout_button();
+          // })
+          // .catch(e => {
+          //   console.log('変更失敗');
+          // });
+    // }
+
   </script>
   <script>
     // APIキーの設定とSDK初期化
