@@ -78,9 +78,14 @@ async function setImg() {
 }
 
 // 商品のリストを追加で読み込む
-function addload() {
+function giveaddload() {
   count();
   give_lists();
+}
+// 商品のリストを追加で読み込む
+function tradeaddload() {
+  count();
+  trade_lists();
 }
 
 function count() {
@@ -231,13 +236,26 @@ async function trade_search() {
 
 
 // 取引一覧
+// 個別の定義が必要な変数等
+var g_cnt = 0;
+var g_cntSwitch = 1;
+var t_cnt = 0;
+var t_cntSwitch = 1;
+
+// 一覧のロード
+async function deallists_load(){
+  deal_give_lists();
+  await wait(5);
+  deal_trade_lists();
+}
+
 // 商品のリストを展開する
 async function deal_give_lists() {
   var Give = ncmb.DataStore("give");
   Give.equalTo("deal_status", "成立待ち")
     .fetchAll()
     .then(function (results) {
-      for (var i = results.length - cntSwitch - (cnt * 3); i > results.length - 4 * (cnt + 1); i--) {
+      for (var i = results.length - cntSwitch - (cnt * 3); i > results.length - 4 * (g_cnt + 1); i--) {
         var object = results[i];
         var image_id = "image" + (i + 1);
         var objectId = object.objectId;
@@ -280,6 +298,7 @@ async function deal_give_search() {
       console.log(err);
     });
   // 関数を呼ぶ
+  cnt = g_cnt;
   await wait(1);
   pickup();
 }
@@ -303,7 +322,8 @@ async function deal_trade_lists() {
     .catch(function (err) {
       console.log(err);
     });
-  await wait(2);
+  cnt = t_cnt;
+  await wait(1);
   setImg();
 }
 
@@ -335,4 +355,28 @@ async function deal_trade_search() {
   // 関数を呼ぶ
   await wait(1);
   pickup();
+}
+
+// 一覧を追加で読み込み
+
+
+// 商品のリストを追加で読み込む
+function g_addload() {
+  g_count();
+  deal_give_lists();
+}
+// 商品のリストを追加で読み込む
+function t_addload() {
+  t_count();
+  deal_trade_lists();
+}
+
+function g_count() {
+  g_cnt = g_cnt + 1;
+  g_cntSwitch = 0;
+}
+
+function t_count() {
+  t_cnt = t_cnt + 1;
+  t_cntSwitch = 0;
 }
