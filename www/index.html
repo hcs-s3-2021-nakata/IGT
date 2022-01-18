@@ -40,7 +40,7 @@
           downloadImage(g_imgs[i - 1]);
           await wait(1);
           setImage(image_id + i);
-          await wait(1.05);
+          await wait(0.5);
           console.log("setImg(g)");
         }
       } else if (flg == "t") {
@@ -58,10 +58,11 @@
     function downloadImage(fileName) {
       // ダウンロード（データ形式をblobを指定）
       ncmb.File.download(fileName, "blob")
-        .then(function(blob) {
+        .then(async function(blob) {
           // ファイルリーダーにデータを渡す
+          await wait(1);
           reader.readAsDataURL(blob);
-          console.log("downloaded");
+          console.log(fileName + " downloaded");
         })
         .catch(function(err) {
           console.error(err);
@@ -70,15 +71,16 @@
 
     // 画像を配置する
     function setImage(image_id) {
+      console.log("通過");
       reader.onload = function(e) {
+        console.log("function");
         var dataUrl = reader.result;
         // var image_id = "image1";
         // image_id = "image" + (i);
         document.getElementById(image_id).src = dataUrl;
-        console.log(image_id);
+        console.log("log " + image_id);
       }
     }
-
 
     // 画像の検索を統括する
     async function search() {
