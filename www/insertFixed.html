@@ -70,6 +70,11 @@
       }
     }
   </script>
+  <script>
+    function index() {
+      document.location.href = 'index.html';
+    }
+  </script>
 </head>
 
 <body id="prodact_lists">
@@ -94,9 +99,9 @@
   </header>
   <!-- Header End -->
   <br>
-    <p id="insert-fix">取引の登録完了！</p>
+    <p id="insert-fix">取引を登録したよ！</p>
     <div class="button-flex">
-    <button class="btn-border" onclick="detail()">詳細画面を見る</button>
+    <button class="btn-border" onclick="detail()">詳しく見てみる</button>
     <br>
     </div>
     <div id="plate">
@@ -124,7 +129,7 @@
 <br>
 <br>
 <div class="button-flex">
-<a href="index.html"><button class="btn-border">一覧に戻る</button></a>
+<button class="btn-border" onclick="index()">一覧に戻る</button>
 </div>
   <!-- Footer Start -->
   <ul class="bottom-menu">

@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="css/modal.css">
   <link rel="stylesheet" href="css/insert.css">
   <link rel="stylesheet" href="css/loading.css">
+  <link rel="stylesheet" href="css/qr.css">
   <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script type="text/javascript" src="css/main.js">
@@ -55,13 +56,15 @@
 
   <!-- 投稿ボタン -->
 
-  <div id="mask" class="hidden"></div><br><br><br>
+  <div id="mask" class="hidden"></div><br>
 
   <!-- 商品画像選択 -->
   <div class="flex" id="newDeal_info" name="item_image">
     <!-- アルバムからアップロード -->
     <form>
-      📚<input type="file" id="insertImg" accept="image/*" multiple=" multiple" onchange="imgPreView(event)">
+      <label id="chooseImg">
+      📚写真を選択<input type="file"id="insertImg" accept="image/*" multiple=" multiple" style="display:none;" onchange="imgPreView(event)">
+      </label>
     </form>
   </div>
   <!-- 👇ここにプレビュー画像を追加する -->
@@ -110,7 +113,7 @@
     <div class="flex" id="newDeal_info" name="item_info">
       <textarea id="item_info" name="item_info" class="width" maxlength="250" rows="8" required></textarea>
     </div><br>
-  </div><br><br><br>
+  </div><br><br>
 
   <div class="gray"><br>
     <!-- 交換希望品情報入力 -->
@@ -157,9 +160,11 @@
             </select>
     </div><br>
   </div>
-  <div class="flex">
-    <button type="button" class="newDeal-btn" name="item_image" id="d_open" onclick="trade_modal_open()"><span>出品する!</span><div class="liquid"></button>
-  </div>
+  <br>
+  <div class="button-flex">
+    <button type="button" class="btn btn-malformation" name="item_image" id="d_open" onclick="trade_modal_open()">出品する！ 
+    </button>
+  </div><br><br><br>
 
 
   <!-- Footer Start -->

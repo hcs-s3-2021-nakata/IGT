@@ -37,7 +37,7 @@ var reader = new FileReader();
       var objectId = object.objectId;
       //ボイスをリストに格納
       var voicelist_element = document.getElementById('voicelist'); 
-      voicelist_element.insertAdjacentHTML("beforebegin",'<li class="next-voice-list">' +object.voice_name+'<br><button id="favorite-button" onclick="'+object.script+'"class="btn btn-tag btn-tag--favorite"><i>再生する！！</i></button><button id="favorite-button" onclick="button()" class="btn btn-tag btn-tag--favorite"><i class="fas fa-star">お気に入り</i></button></li>');
+      voicelist_element.insertAdjacentHTML("beforebegin",'<li class="next-voice-list">' +object.voice_name+'<br><button id="favorite-button" onclick="'+object.script+'"class="btn btn-tag btn-tag--favorite"><i>再生する！！</i></button></li>');
     }
 
     document.getElementById('teacher_name').innerHTML = object.teacher_name;

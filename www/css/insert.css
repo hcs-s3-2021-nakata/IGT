@@ -1,3 +1,5 @@
+/*ボタンベース*/
+
 /*画像アップロードボタン*/
 .btn-flat-border {
   display: inline-block;
@@ -10,20 +12,6 @@
   width: 100px;
 }
 
-/* 投稿ボタン */
-/* .newDeal-btn{
-  top: 74px;
-  right: 1%;
-  border: none;
-  font-weight: 700;
-  font-size: 15px;
-  height: 40px;
-  width: 100%;
-  background-color: white;
-  color:#3a78ff;
-  text-align: center;
-} */
-
 #newDeal_info{
   padding:0px 0px;
   width: 100%;
@@ -33,7 +21,7 @@
   background: #67c5ff;
   color: white;
 }
-div#insertImg {
+label#chooseImg {
   color: white;  
   background-color: red;
   padding: 6px;
@@ -67,53 +55,23 @@ button span {
  z-index: 1;
 }
 
-button .liquid {
- position: absolute;
- top: -80px;
- left: 0;
- width: 200px;
- height: 200px;
- background: #832742;
- box-shadow: inset 0 0 50px rgba(0, 0, 0, .5);
- transition: .5s;
+button {
+ position: relative;
+ padding: 19px 36px;
+ display: block;
+ text-decoration: none;
+ text-transform: uppercase;
+ overflow: hidden;
+ border-radius: 40px;
+ border: none;
 }
 
-button .liquid::after,
-button .liquid::before {
- content: '';
- width: 200%;
- height: 200%;
- position: absolute;
- top: 0;
- left: 50%;
- transform: translate(-50%, -75%);
- background: #fff;
-}
-
-button .liquid::before {
- border-radius: 45%;
- background: rgba(60, 60, 60, .7);
- animation: animate 5s linear infinite;
-}
-
-button .liquid::after {
- border-radius: 40%;
- background: rgba(20, 20, 20, .5);
- animation: animate 10s linear infinite;
-}
-
-button:hover .liquid {
- top: -120px;
-}
-
-@keyframes animate {
- 0% {
-  transform: translate(-50%, -75%) rotate(0deg);
- }
-
- 100% {
-  transform: translate(-50%, -75%) rotate(360deg);
- }
+button span {
+ position: relative;
+ color: #fff;
+ font-family: Arial;
+ letter-spacing: 8px;
+ z-index: 1;
 }
 
 /*新規登録画面_画像アップロード*/
@@ -162,59 +120,44 @@ button:hover .liquid {
 #insert-fix{
   font-family: 'Noto Sans JP', sans-serif;
   padding: 0em 2em;
+  font-size: 20px;
 }
 .button-flex{
   display:flex;
   justify-content:center;
 }
 button.btn-border {
-  font-weight: bold;
-  font-size: 20px;
-  width: 200px;
-  height: 50px;
-  color: #000;
-  border: 2px solid #000;
   border-radius: 0;
-  background: #fff;
-  -webkit-transform-style: preserve-3d;
-
-  transform-style: preserve-3d;
 }
 
-button.btn-border:before {
+button.btn-border:before,
+button.btn-border:after {
   position: absolute;
-  top: 0;
-  left: 0;
 
-  width: 15px;
-  height: 100%;
+  width: 200%;
+  height: 2px;
 
   content: '';
   -webkit-transition: all .3s;
   transition: all .3s;
-  -webkit-transform: translateX(0) translateY(0);
-  transform: translateX(0) translateY(0);
 
-  border-radius: 0 50% 50% 0;
   background: #832742;
 }
 
-button.btn-border:hover:before {
-  font-family: 'Font Awesome 5 Free';
-  font-weight: bold;
-  line-height: 40px;
-
-  width: 40px;
-  height: 40px;
-
-  content: '\f061';
-  -webkit-transform: translateX(450%) translateY(.15rem);
-  transform: translateX(450%) translateY(.15rem);
-
-  color: #fff;
-  border-radius: 50%;
+button.btn-border:before {
+  top: 0;
+  left: 0;
 }
 
+button.btn-border:after {
+  right: 0;
+  bottom: 0;
+}
+
+button.btn-border:hover:before,
+button.btn-border:hover:after {
+  width: 0;
+}
 /*遊び心*/
 @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
 
