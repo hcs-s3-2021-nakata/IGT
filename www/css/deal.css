@@ -91,3 +91,15 @@ button.stop{
   border: none;
 }
 
+/* こっから下取引一覧画面の追加分 */
+
+button.deallist_btn{
+  width: 100%;
+}
+
+#deallist_box{
+  font-size: 20px; 
+  height: 50px;
+  width: 100%;
+  background-color: white;
+}

@@ -515,6 +515,10 @@ a.acount{
   color: rgba(196, 195, 194, 0.959);
 }
 
+.acountErrMsg {
+  color:red;
+}
+
 /* アカウント詳細・通知 */
 .ef {
 	position: relative;
