@@ -56,23 +56,22 @@ function downloadImage(fileName) {
 async function setImg(flg) {
   if (flg == 0) {
     // 一覧画面(リロード)
-    for (var j = g_imgs.length - cntSwitch - (cnt * 3); j > g_imgs.length - 4 * (cnt + 1); j--) {
+    for (var j = g_imgs.length - g_cntSwitch - (cnt * 4); j > g_imgs.length - 4 * (cnt + 1); j--) {
       if (j <= -1) {
         break;
       }
+      console.log("ダウンロードする画像の位置 "+j);
       downloadImage(g_imgs[j]);
-      console.log(j);
       await wait(0.1);
       setImage(j, flg);
       await wait(1.5);
     }
   } else if (flg == 1) {
-    for (var j = t_imgs.length - cntSwitch - (cnt * 3); j > t_imgs.length - 4 * (cnt + 1); j--) {
+    for (var j = t_imgs.length - t_cntSwitch - (cnt * 4); j > t_imgs.length - 4 * (cnt + 1); j--) {
       if (j <= -1) {
         break;
       }
       downloadImage(t_imgs[j]);
-      console.log(j);
       await wait(0.1);
       setImage(j, flg);
       await wait(1.5);
@@ -126,7 +125,7 @@ async function deal_give_lists() {
   Give.equalTo("deal_status", "成立待ち")
     .fetchAll()
     .then(function (results) {
-      for (var i = results.length - g_cntSwitch - (g_cnt * 3); i > results.length - 4 * (g_cnt + 1); i--) {
+      for (var i = results.length - g_cntSwitch - (g_cnt * 4); i > results.length - 4 * (g_cnt + 1); i--) {
         var object = results[i];
         var image_id = "g_image" + (i + 1);
         var objectId = object.objectId;
@@ -183,7 +182,7 @@ async function deal_trade_lists() {
   Trade.equalTo("deal_status", "成立待ち")// テスト用。正式には”取引成立”
     .fetchAll()
     .then(function (results) {
-      for (var i = results.length - t_cntSwitch - (t_cnt * 3); i > results.length - 4 * (t_cnt + 1); i--) {
+      for (var i = results.length - t_cntSwitch - (t_cnt * 4); i > results.length - 4 * (t_cnt + 1); i--) {
         var object = results[i];
         var image_id = "t_image" + (i + 1);
         var objectId = object.objectId;
@@ -235,16 +234,16 @@ async function deal_trade_search() {
 }
 
 // 一覧を追加で読み込み
-
-
 // 商品のリストを追加で読み込む
 function g_addload() {
   g_count();
+  console.log("add(g)");
   deal_give_lists();
 }
 // 商品のリストを追加で読み込む
 function t_addload() {
   t_count();
+  console.log("add(t)");
   deal_trade_lists();
 }
 
