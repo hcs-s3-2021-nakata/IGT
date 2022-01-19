@@ -81,6 +81,8 @@
 
           // モーダルの書き換え
           document.getElementById('m_item_name').innerHTML = object.item_name;
+          document.getElementById('m_category').innerHTML = category;
+          document.getElementById('m_item_status').innerHTML = item_status;
           document.getElementById('m_delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
           document.getElementById('m_delivery_time').innerHTML = delivery_time;
           document.getElementById('m_location').innerHTML = location;
@@ -233,7 +235,7 @@
       return location;
     }
 
-    // 詳細画面のモーダル表示用スクリプト（仮）
+    // 詳細画面のモーダル表示用スクリプト（取引中止処理がまだ終わってない）
     function modal_open() {
       const open = document.getElementById('d_open');
       const ok = document.getElementById('d_ok');
@@ -331,6 +333,7 @@
         });
     }
   </script>
+
   <script>
     /*バーコードスキャン(仮)*/
     let options = {
@@ -425,7 +428,11 @@
       <td id="location">-</td>
     </tr>
     <tr>
-      <th>受け渡し日時</th>
+      <th>受け渡し期間</th>
+      <td id="delivery_date">-</td>
+    </tr>
+    <tr>
+      <th>受け渡し時間</th>
       <td id="delivery_time">-</td>
     </tr>
   </table>
@@ -473,29 +480,30 @@
   <section id="d_modal" class="hidden">
     <div class="modal_box">
       <a id="m_item_name">商品名</a>
-      <br>
-      <a>この辺に画像（でかい）</a>
-      <br>
       <table class="modal_table">
         <tr>
           <th class="modal_table">出品者</th>
-          <td id="m_give_userID">S3A2情報太郎</td>
-        </tr>
-        <tr>
-          <th class="modal_table">商品状態</th>
-          <td>値</td>
+          <td id="m_userName">S3A2情報太郎</td>
         </tr>
         <tr>
           <th class="modal_table">カテゴリー</th>
-          <td>値</td>
+          <td id="m_category">値</td>
+        </tr>
+        <tr>
+          <th class="modal_table">商品状態</th>
+          <td id="m_item_status">値</td>
         </tr>
         <tr>
           <th class="modal_table">受渡場所</th>
-          <td>値</td>
+          <td id="m_location">値</td>
         </tr>
         <tr>
-          <th class="modal_table">受渡日時</th>
-          <td>値</td>
+          <th class="modal_table">受渡期間</th>
+          <td id="m_delivery_date">値</td>
+        </tr>
+        <tr>
+          <th class="modal_table">受渡時間帯</th>
+          <td id="m_delivery_time">値</td>
         </tr>
       </table>
     </div>
@@ -503,10 +511,10 @@
     <a>この取引を中止しますか？</a>
     <div id="d_button">
       <div id="d_cancel">
-        閉じる
+        考え直す
       </div>
       <div id="d_ok">
-        進める
+        中止する
       </div>
     </div>
   </section>
