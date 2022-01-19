@@ -217,17 +217,28 @@
       ok.addEventListener('click', () => {
         var objectID = location.search.replace('?', '');
         /*takeuserIDのセットとgiveuserIdのゲット*/
-        var take_user_id = getCurrentUserId();
-        console.log("ゲットした落札者ID:" + take_user_id);
-        takeUserUpdate(objectID, take_user_id);
-        var give_user_id = getGiveUserId(objectID);
+        //var take_user_id = getCurrentUserId();
 
-        console.log(objectID);
-        localStorage.setItem("flag", "give");
-        localStorage.setItem("objectID", objectID);
-        localStorage.setItem("give_userID", give_user_id);
-        localStorage.setItem("take_userID", take_user_id);
-        document.location.href = 'qrGenerater.html?' + objectID;
+        getCurrentUserId().then(function(takeUserId) {
+          console.log("getCurrentUserId処理成功");
+          var take_user_id = takeUserId;
+          console.log("ゲットした落札者ID:" + take_user_id);
+          takeUserUpdate(objectID, take_user_id).then(function() {
+            console.log("takeUserUpdate処理成功");
+            getGiveUserId(objectID).then(function(user_id) {
+              console.log("getGiveUserId処理成功");
+              var give_user_id = user_id;
+              console.log(objectID);
+              localStorage.setItem("flag", "give");
+              localStorage.setItem("objectID", objectID);
+              localStorage.setItem("give_userID", give_user_id);
+              localStorage.setItem("take_userID", take_user_id);
+              document.location.href = 'qrGenerater.html?' + objectID;
+            })
+          })
+        }).catch(function(err) {
+          console.log("処理失敗:" + err);
+        });
       });
 
       close.addEventListener('click', () => {
@@ -242,64 +253,81 @@
 
     //カレントユーザーのID取得
     function getCurrentUserId() {
-      // カレントユーザー情報の取得
-      var currentUser = ncmb.User.getCurrentUser();
-      console.log("currentUser:" + currentUser);
-      if (currentUser != null) {
-        console.log("ユーザー: " + currentUser.get("userName"));
-        return currentUser.get("objectId");
-      } else {
-        console.log("未ログインまたは取得に失敗");
-        return null;
-      }
-    }
-
-    //give_user_idの取得(譲渡)
-    function getGiveUserId(objectID) {
-      // var Give = ncmb.DataStore('give');
-      // var give = Give
-      //   .fetchById(objectID)
-      //   .then(give => {
-      //     console.log(give.give_user_id);
-      //     return give.give_user_id;
-      //   })
-      //   .catch(e => {
-      //     console.log('データなし');
-      //     return null;
-      //   });
-      var Give = ncmb.DataStore("give");
-      Give.fetchAll().then(users => {
-        users.forEach(user => {
-          console.log(user);
-          //ここで登録されている学籍番号かチェック
-          if (user.objectId === objectID) {
-            console.log("出品者：" + user.give_user_id);
-            return user.give_user_id;
+      return new Promise(function(resolve, reject) {
+          // カレントユーザー情報の取得
+          var currentUser = ncmb.User.getCurrentUser();
+          var objectId = null;
+          console.log("currentUser:" + currentUser);
+          if (currentUser != null) {
+            console.log("ユーザー: " + currentUser.get("userName"));
+            objectId = currentUser.get("objectId");
+            console.log("return:" + objectId);
+            resolve(
+              objectId
+            );
+            // return currentUser.get("objectId");
+          } else {
+            console.log("未ログインまたは取得に失敗");
+            reject({});
           }
         })
-      }).catch(err => {
-        console.log("データ取得エラー")
-        return "";
-      });
+      }
 
-
-    }
-
-
-    //take_user_idのセット(譲渡)
-    function takeUserUpdate(objectId, take_user_id) {
-      console.log("オブジェクトID：" + objectId + "　落札者ID：" + take_user_id);
-      var give = ncmb.DataStore("give");
-
-      give.equalTo("objectId", objectId)
-        .fetch()
-        .then(function(results) {
-          results.set('deal_status', "取引成立")
-            .set('take_user_id', take_user_id);
-          results.update();
+      //give_user_idの取得(譲渡)
+      function getGiveUserId(objectID) {
+        return new Promise(function(resolve, reject) {
+          // var Give = ncmb.DataStore('give');
+          // var give = Give
+          //   .fetchById(objectID)
+          //   .then(give => {
+          //     console.log(give.give_user_id);
+          //     return give.give_user_id;
+          //   })
+          //   .catch(e => {
+          //     console.log('データなし');
+          //     return null;
+          //   });
+          var Give = ncmb.DataStore("give");
+          Give.fetchAll().then(users => {
+            users.forEach(user => {
+              console.log(user);
+              //ここで登録されている学籍番号かチェック
+              if (user.objectId === objectID) {
+                console.log("出品者：" + user.give_user_id);
+                var user_id = user.give_user_id;
+                resolve({
+                  user_id
+                });
+              }
+            })
+          }).catch(err => {
+            console.log("データ取得エラー");
+            reject({});
+          });
         });
+      }
 
-    }
+
+      //take_user_idのセット(譲渡)
+      function takeUserUpdate(objectId, take_user_id) {
+        return new Promise(function(resolve, reject) {
+          console.log("オブジェクトID：" + objectId + "　落札者ID：" + take_user_id);
+          var Give = ncmb.DataStore("give");
+
+          Give.fetchById(objectId)
+            .then(results => {
+              console.log("ごめんね" + results.item_name);
+              results.set('deal_status', "取引成立")
+              .set('take_user_id', take_user_id)
+              .update();
+              resolve({});
+            }).catch(err => {
+              // エラー処理
+              console.log("おかしいよ！：" + err);
+              reject({});
+            });
+        });
+      }
   </script>
 </head>
 
