@@ -14,16 +14,256 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script type="text/javascript" src="css/logout.js"></script>
   <script>
-    // 詳細画面のモーダル表示用スクリプト（仮）
+    // APIキーの設定とSDK初期化
+    // API key.
+    var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+    var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+    // SDK initialization.
+    var ncmb = new NCMB(applicationKey, clientKey);
+    var reader = new FileReader();
+
+    const wait = (sec) => { // タイマ
+      return new Promise((resolve, reject) => {
+        setTimeout(resolve, sec * 1000);
+        //setTimeout(() => {reject(new Error("エラー！"))}, sec*1000);
+      });
+    };
+
+    // 画像を読み込む
+    function setImage() {
+      reader.onload = function(e) {
+        var dataUrl = reader.result;
+        document.getElementById("detail_image").src = dataUrl;
+        document.getElementById("modal_image").src = dataUrl;
+      }
+    }
+
+    // 画像を読み込む
+    function downloadImage(fileName) {
+      // ダウンロード（データ形式をblobを指定）
+      ncmb.File.download(fileName, "blob")
+        .then(function(blob) {
+          // ファイルリーダーにデータを渡す
+          reader.readAsDataURL(blob);
+        })
+        .catch(function(err) {
+          console.error(err);
+        })
+    }
+
+    // 取得した情報で画面を上書き
+    function detailLoad() {
+      var objectID = location.search.replace('?', '');
+      var Give = ncmb.DataStore("give");
+      Give.equalTo("objectId", objectID)
+        .fetchAll()
+        .then(function(results) {
+          var object = results[0];
+          // 値の書き換え
+          var deal_type = changeDealtype();
+          changeUserName(object.give_user_id);
+          var category = changeCategory(object.category);
+          var item_status = changeItemStatus(object.item_status);
+          var delivery_time = changeDtime(object.delivery_time);
+          var location = changeLocation(object.location);
+
+          downloadImage(object.item_image);
+          setImage(object.item_image);
+
+          document.getElementById('dealflg').innerHTML = deal_type;
+          document.getElementById('item_name').innerHTML = object.item_name;
+          document.getElementById('item_info').innerHTML = object.item_info.replace(/\n/g, '<br>');
+          document.getElementById('category').innerHTML = category;
+          document.getElementById('item_status').innerHTML = item_status;
+          document.getElementById('delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
+          document.getElementById('delivery_time').innerHTML = delivery_time;
+          document.getElementById('location').innerHTML = location;
+
+          // モーダルの書き換え
+          document.getElementById('m_item_name').innerHTML = object.item_name;
+          document.getElementById('m_category').innerHTML = category;
+          document.getElementById('m_item_status').innerHTML = item_status;
+          document.getElementById('m_delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
+          document.getElementById('m_delivery_time').innerHTML = delivery_time;
+          document.getElementById('m_location').innerHTML = location;
+
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+    }
+
+    // 取引種別を書き換える
+    function changeDealtype(){
+      var deal_type = localStorage.getItem("dealflg");
+      if(deal_type == "give"){
+        deal_type = "譲渡品";
+      }else{
+        deal_type = "交換品";
+      }
+      return deal_type;
+    }
+
+    // 出品者名を書き換える
+    function changeUserName(userName) {
+      var name = "name";
+      var User = ncmb.User;
+      var item = User
+        .fetchById(userName) //オブジェクトIDを指定
+        .then(item => {
+          name = item.user_class + item.user_number + item.user_account_name;
+          console.log(name);
+          document.getElementById('userName').innerHTML = name;
+          document.getElementById('m_userName').innerHTML = name;
+        })
+    }
+
+    // カテゴリーを書き換える
+    function changeCategory(category) {
+      switch (category) {
+        case '1':
+          category = "おもちゃ・ゲーム";
+          break;
+        case '2':
+          category = "本・テキスト";
+          break;
+        case '3':
+          category = "音楽・ＤＶＤ";
+          break;
+        case '4':
+          category = "服・コスメ";
+          break;
+        case '5':
+          category = "キッチン";
+          break;
+        case '6':
+          category = "スポーツ";
+          break;
+        case '7':
+          category = "PC・スマホ用品";
+          break;
+        case '100':
+          category = "その他";
+          break;
+        default:
+          break;
+      }
+      return category;
+    }
+
+    // 商品状態を書き換える
+    function changeItemStatus(item_status) {
+      switch (item_status) {
+        case '1':
+          item_status = "新品";
+          break;
+        case '2':
+          item_status = "ほぼ新品";
+          break;
+        case '3':
+          item_status = "多少の傷あり";
+          break;
+        case '4':
+          item_status = "傷・汚れあり";
+          break;
+        case '5':
+          item_status = "状態が悪い";
+          break;
+        default:
+          break;
+      }
+      return item_status;
+    }
+
+    // 受け渡し時間帯を書き換える
+    function changeDtime(delivery_time) {
+      switch (delivery_time) {
+        case '1':
+          delivery_time = "１コマ目終了後";
+          break;
+        case '2':
+          delivery_time = "昼休み";
+          break;
+        case '3':
+          delivery_time = "３コマ目終了後";
+          break;
+        case '4':
+          delivery_time = "４コマ目終了後";
+          break;
+        default:
+          break;
+      }
+      return delivery_time;
+    }
+
+    // 受け渡し場所を書き換える
+    function changeLocation(location) {
+      switch (location) {
+        case '1':
+          location = "本校舎3Fホール";
+          break;
+        case '2':
+          location = "本校舎4Fホール";
+          break;
+        case '3':
+          location = "本校舎5F";
+          break;
+        case '4':
+          location = "本校舎6Fホール";
+          break;
+        case '5':
+          location = "本校舎7F";
+          break;
+        case '6':
+          location = "本校舎8F";
+          break;
+        case '7':
+          location = "2号館入口";
+          break;
+        case '8':
+          location = "3号館入口";
+          break;
+        case '9':
+          location = "3号館ホール";
+          break;
+        case '100':
+          location = "その他";
+          break;
+        default:
+          break;
+      }
+      return location;
+    }
+
+    // 詳細画面のモーダル表示用スクリプト（取引中止処理がまだ終わってない）
     function modal_open() {
       const open = document.getElementById('d_open');
+      const ok = document.getElementById('d_ok');
       const close = document.getElementById('d_cancel');
       const modal = document.getElementById('d_modal');
       const mask = document.getElementById('mask');
 
+
       open.addEventListener('click', () => {
+        // 表示
         modal.classList.remove('hidden');
         mask.classList.remove('hidden');
+      });
+
+      ok.addEventListener('click', () => {
+        var objectID = location.search.replace('?', '');
+        /*takeuserIDのセットとgiveuserIdのゲット*/
+        var take_user_id = getCurrentUserId();
+        console.log("ゲットした落札者ID:" + take_user_id);
+        takeUserUpdate(objectID, take_user_id);
+        var give_user_id = getGiveUserId(objectID);
+
+        console.log(objectID);
+        localStorage.setItem("flag", "give");
+        localStorage.setItem("objectID", objectID);
+        localStorage.setItem("give_userID", give_user_id);
+        localStorage.setItem("take_userID", take_user_id);
+        document.location.href = 'qrGenerater.html?' + objectID;
       });
 
       close.addEventListener('click', () => {
@@ -35,7 +275,65 @@
         close.click();
       });
     }
+
+    //カレントユーザーのID取得
+    function getCurrentUserId() {
+      // カレントユーザー情報の取得
+      var currentUser = ncmb.User.getCurrentUser();
+      console.log("currentUser:" + currentUser);
+      if (currentUser != null) {
+        console.log("ユーザー: " + currentUser.get("userName"));
+        return currentUser.get("objectId");
+      } else {
+        console.log("未ログインまたは取得に失敗");
+        return null;
+      }
+    }
+
+    //give_user_idの取得(譲渡)
+    function getGiveUserId(objectID) {
+      // var Give = ncmb.DataStore('give');
+      // var give = Give
+      //   .fetchById(objectID)
+      //   .then(give => {
+      //     console.log(give.give_user_id);
+      //     return give.give_user_id;
+      //   })
+      //   .catch(e => {
+      //     console.log('データなし');
+      //     return null;
+      //   });
+      var Give = ncmb.DataStore("give");
+      Give.fetchAll().then(users => {
+        users.forEach(user => {
+          console.log(user);
+          //ここで登録されている学籍番号かチェック
+          if (user.objectId === objectID) {
+            console.log("出品者：" + user.give_user_id);
+            return user.give_user_id;
+          }
+        })
+      }).catch(err => {
+        console.log("データ取得エラー")
+        return "";
+      });
+    }
+
+    //take_user_idのセット(譲渡)
+    function takeUserUpdate(objectId, take_user_id) {
+      console.log("オブジェクトID：" + objectId + "　落札者ID：" + take_user_id);
+      var give = ncmb.DataStore("give");
+
+      give.equalTo("objectId", objectId)
+        .fetch()
+        .then(function(results) {
+          results.set('deal_status', "取引成立")
+            .set('take_user_id', take_user_id);
+          results.update();
+        });
+    }
   </script>
+
   <script>
     /*バーコードスキャン(仮)*/
     let options = {
@@ -72,7 +370,7 @@
   </script>
 </head>
 
-<body id="prodact_lists">
+<body id="prodact_lists" onload="detailLoad()">
   <!-- Header Start -->
   <header class="site-header">
     <div class="wrapper site-header__wrapper">
@@ -106,31 +404,36 @@
   <!-- Header End -->
 
   <!-- Body Start -->
-  <h3>　交換品　　　タックスくん</h3>
+  <h3 id="dealflg">取引種別</h3>
+  <h3 id="item_name">商品名</h3>
   <div id="img-deal">
-    <img class="deal-detail" src="img/gondo.png">
+    <img class="deal-detail" src="" id="detail_image">
   </div><br>
 
   <table class="deal-detail_table">
     <tr>
       <th>出品者</th>
-      <td>値</td>
-    </tr>
-    <tr>
-      <th>商品の状態</th>
-      <td>値</td>
+      <td id="userName">-</td>
     </tr>
     <tr>
       <th>カテゴリー</th>
-      <td>値</td>
+      <td id="category">-</td>
+    </tr>
+    <tr>
+      <th>商品の状態</th>
+      <td id="item_status">-</td>
     </tr>
     <tr>
       <th>受け渡し場所</th>
-      <td>値</td>
+      <td id="location">-</td>
     </tr>
     <tr>
-      <th>受け渡し日時</th>
-      <td>値</td>
+      <th>受け渡し期間</th>
+      <td id="delivery_date">-</td>
+    </tr>
+    <tr>
+      <th>受け渡し時間</th>
+      <td id="delivery_time">-</td>
     </tr>
   </table>
 
@@ -138,7 +441,7 @@
   <div class="deal-detail">
     <label>商品説明</label>
     <div class="deal-detail_info">
-      みなさんおなじみのタックスくんですとってもかわいくて癒されます😊長万部のゆるキャラ「まんべくん」か、苫小牧のご当地キャラクター「とまチョップ」と交換してほしいです！
+      <a id="item_info">商品説明</a>
     </div>
   </div>
 
@@ -176,30 +479,31 @@
   <!-- モーダルウィンドウ -->
   <section id="d_modal" class="hidden">
     <div class="modal_box">
-      <a>タックスくん</a>
-      <br>
-      <a>この辺に画像（でかい）</a>
-      <br>
+      <a id="m_item_name">商品名</a>
       <table class="modal_table">
         <tr>
           <th class="modal_table">出品者</th>
-          <td>値</td>
-        </tr>
-        <tr>
-          <th class="modal_table">商品状態</th>
-          <td>値</td>
+          <td id="m_userName">S3A2情報太郎</td>
         </tr>
         <tr>
           <th class="modal_table">カテゴリー</th>
-          <td>値</td>
+          <td id="m_category">値</td>
+        </tr>
+        <tr>
+          <th class="modal_table">商品状態</th>
+          <td id="m_item_status">値</td>
         </tr>
         <tr>
           <th class="modal_table">受渡場所</th>
-          <td>値</td>
+          <td id="m_location">値</td>
         </tr>
         <tr>
-          <th class="modal_table">受渡日時</th>
-          <td>値</td>
+          <th class="modal_table">受渡期間</th>
+          <td id="m_delivery_date">値</td>
+        </tr>
+        <tr>
+          <th class="modal_table">受渡時間帯</th>
+          <td id="m_delivery_time">値</td>
         </tr>
       </table>
     </div>
@@ -207,10 +511,10 @@
     <a>この取引を中止しますか？</a>
     <div id="d_button">
       <div id="d_cancel">
-        閉じる
+        考え直す
       </div>
       <div id="d_ok">
-        進める
+        中止する
       </div>
     </div>
   </section>
