@@ -21,6 +21,9 @@
     // SDK initialization.
     var ncmb = new NCMB(applicationKey, clientKey);
     var reader = new FileReader();
+    // 定義
+    var give_user_id = "";
+    var take_user_id = "";
 
     const wait = (sec) => { // タイマ
       return new Promise((resolve, reject) => {
@@ -94,11 +97,11 @@
     }
 
     // 取引種別を書き換える
-    function changeDealtype(){
+    function changeDealtype() {
       var deal_type = localStorage.getItem("dealflg");
-      if(deal_type == "give"){
+      if (deal_type == "give") {
         deal_type = "譲渡品";
-      }else{
+      } else {
         deal_type = "交換品";
       }
       return deal_type;
@@ -234,8 +237,10 @@
       }
       return location;
     }
+</script>
 
-    // 詳細画面のモーダル表示用スクリプト（取引中止処理がまだ終わってない）
+<script>
+    // 詳細画面のモーダル表示用スクリプト
     function modal_open() {
       const open = document.getElementById('d_open');
       const ok = document.getElementById('d_ok');
@@ -251,19 +256,7 @@
       });
 
       ok.addEventListener('click', () => {
-        var objectID = location.search.replace('?', '');
-        /*takeuserIDのセットとgiveuserIdのゲット*/
-        var take_user_id = getCurrentUserId();
-        console.log("ゲットした落札者ID:" + take_user_id);
-        takeUserUpdate(objectID, take_user_id);
-        var give_user_id = getGiveUserId(objectID);
-
-        console.log(objectID);
-        localStorage.setItem("flag", "give");
-        localStorage.setItem("objectID", objectID);
-        localStorage.setItem("give_userID", give_user_id);
-        localStorage.setItem("take_userID", take_user_id);
-        document.location.href = 'qrGenerater.html?' + objectID;
+        currentIdCompare();
       });
 
       close.addEventListener('click', () => {
@@ -276,6 +269,32 @@
       });
     }
 
+    // OKの処理の中身
+    async function currentIdCompare() {
+      var objectID = location.search.replace('?', '');
+      getDealersId(objectID);
+      /*currentUserIdの取得*/
+      var current_user_id = getCurrentUserId();
+      console.log("ゲットした自分のID:" + current_user_id);
+      await wait(1);
+
+
+      if (current_user_id == give_user_id) {
+        console.log(current_user_id + " " + give_user_id);
+        console.log("俺は出品者だぜ");
+      } else if (current_user_id == take_user_id) {
+        console.log(current_user_id + " " + take_user_id);
+        console.log("私は落札者よ");
+        takeUserUpdate(objectID);
+        await wait(1);
+        document.location.href = 'deal.html';
+      } else {
+        console.log(current_user_id + " " + give_user_id + " " + take_user_id);
+        console.log("じゃあお前は誰なんだよ");
+      }
+    }
+
+
     //カレントユーザーのID取得
     function getCurrentUserId() {
       // カレントユーザー情報の取得
@@ -283,54 +302,89 @@
       console.log("currentUser:" + currentUser);
       if (currentUser != null) {
         console.log("ユーザー: " + currentUser.get("userName"));
-        return currentUser.get("objectId");
+        current_user_id = currentUser.get("objectId");
+        return current_user_id;
       } else {
         console.log("未ログインまたは取得に失敗");
         return null;
       }
     }
 
-    //give_user_idの取得(譲渡)
-    function getGiveUserId(objectID) {
-      // var Give = ncmb.DataStore('give');
-      // var give = Give
-      //   .fetchById(objectID)
-      //   .then(give => {
-      //     console.log(give.give_user_id);
-      //     return give.give_user_id;
-      //   })
-      //   .catch(e => {
-      //     console.log('データなし');
-      //     return null;
-      //   });
-      var Give = ncmb.DataStore("give");
-      Give.fetchAll().then(users => {
-        users.forEach(user => {
-          console.log(user);
-          //ここで登録されている学籍番号かチェック
-          if (user.objectId === objectID) {
-            console.log("出品者：" + user.give_user_id);
-            return user.give_user_id;
-          }
-        })
-      }).catch(err => {
-        console.log("データ取得エラー")
-        return "";
-      });
+    //出品者、落札者のユーザIDを取得しグローバル変数に保存
+    function getDealersId(objectId) {
+      var dealflg = localStorage.getItem("dealflg");
+      if (dealflg == "give") {
+        var Give = ncmb.DataStore("give");
+        Give.equalTo("objectId", objectId)
+          .fetchAll()
+          .then(function(results) {
+            var object = results[0];
+
+            give_user_id = object.give_user_id;
+            take_user_id = object.take_user_id;
+          })
+      } else if (dealflg == "trade") {
+        var Trade = ncmb.DataStore("trade");
+        Trade.equalTo("objectId", objectId)
+          .fetchAll()
+          .then(function(results) {
+            var object = results[0];
+
+            give_user_id = object.give_user_id;
+            take_user_id = object.take_user_id;
+          })
+      } else {
+        alert("ERROR");
+      }
+
     }
 
     //take_user_idのセット(譲渡)
-    function takeUserUpdate(objectId, take_user_id) {
-      console.log("オブジェクトID：" + objectId + "　落札者ID：" + take_user_id);
+    function takeUserUpdate(objectId) {
       var give = ncmb.DataStore("give");
 
       give.equalTo("objectId", objectId)
         .fetch()
         .then(function(results) {
-          results.set('deal_status', "取引成立")
-            .set('take_user_id', take_user_id);
+          results.set('deal_status', "成立待ち")
+            .set('take_user_id', null);
           results.update();
         });
+    }
+  </script>
+
+  <script>
+    // 取引中止時の選択肢（モーダル）
+    function cancelmodal_open() {
+      const open = document.getElementById('d_ok');
+      const dealdelete = document.getElementById('d_delete');
+      const change = document.getElementById('d_change');
+      const close = document.getElementById('d_close');
+      const modal = document.getElementById('cancel_modal');
+      const mask2 = document.getElementById('mask2');
+
+      open.addEventListener('click', () => {
+        // 表示
+        modal.classList.remove('hidden');
+        
+      });
+
+      dealdelete.addEventListener('click', () => {
+        console.log("delete");
+      });
+
+      change.addEventListener('click', () => {
+        console.log("change");
+      });
+
+      close.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        mask2.classList.add('hidden');
+      });
+
+      mask2.addEventListener('click', () => {
+        close.click();
+      });
     }
   </script>
 
@@ -452,6 +506,7 @@
     <button type="button" class="stop" id="d_open" onclick="modal_open()"><img id="deal-detail_button" src="img/stop.png"><br><b>取引中止</b></button>
   </div>
   <div id="mask" class="hidden"></div>
+  <div id="mask2" class="hidden"></div>
   <!-- Body End -->
 
   <!-- Footer Start -->
@@ -476,7 +531,7 @@
   </ul>
   <!-- Fotter End -->
 
-  <!-- モーダルウィンドウ -->
+  <!-- モーダルウィンドウ(取引中止①) -->
   <section id="d_modal" class="hidden">
     <div class="modal_box">
       <a id="m_item_name">商品名</a>
@@ -513,12 +568,27 @@
       <div id="d_cancel">
         考え直す
       </div>
-      <div id="d_ok">
+      <div id="d_ok" onclick="cancelmodal_open()">
         中止する
       </div>
     </div>
   </section>
 
+  <!-- モーダルウィンドウ(取引中止②) -->
+  <section id="cancel_modal" class="hidden">
+    <br>
+    <a>この取引を中止しますか？</a>
+    <div id="d_button">
+      <div id="d_change">
+        取引相手を変える
+      </div>
+      <div id="d_delete">
+        取引を削除する
+      </div>
+    </div>
+    <br>
+    <div id="d_close">とじる</div>
+  </section>
 </body>
 
 </html>
