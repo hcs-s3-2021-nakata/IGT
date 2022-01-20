@@ -237,9 +237,9 @@
       }
       return location;
     }
-</script>
+  </script>
 
-<script>
+  <script>
     // 詳細画面のモーダル表示用スクリプト
     function modal_open() {
       const open = document.getElementById('d_open');
@@ -285,7 +285,7 @@
       } else if (current_user_id == take_user_id) {
         console.log(current_user_id + " " + take_user_id);
         console.log("私は落札者よ");
-        takeUserUpdate(objectID);
+        takeUserUpdate();
         await wait(1);
         document.location.href = 'deal.html';
       } else {
@@ -339,16 +339,34 @@
 
     }
 
-    //take_user_idのセット(譲渡)
-    function takeUserUpdate(objectId) {
-      var give = ncmb.DataStore("give");
+    //take_user_idと取引状態を書き換える（中止）
+    function takeUserUpdate() {
+      var objectId = location.search.replace('?', '');
+      console.log("cha "+objectId);
+      var Give = ncmb.DataStore("give");
 
-      give.equalTo("objectId", objectId)
+      Give.equalTo("objectId", objectId)
         .fetch()
         .then(function(results) {
           results.set('deal_status', "成立待ち")
             .set('take_user_id', null);
           results.update();
+        });
+    }
+
+    //取引を削除
+    async function dealDelete() {
+      var objectId = location.search.replace('?', '');
+      console.log("del "+objectId);
+      await wait(0.5);
+      var Give = ncmb.DataStore("give");
+      Give.equalTo("objectId" == objectId)
+        .delete()
+        .then(function(result) {
+          console.log(result); // true
+        })
+        .catch(function(err) {
+          console.log(err);
         });
     }
   </script>
@@ -358,7 +376,6 @@
     /*
       抱えているタスク
       取引中止の処理系（upload）
-      モーダルの手直し
     */
     function cancelmodal_open() {
       const open = document.getElementById('d_ok');
@@ -371,15 +388,15 @@
       open.addEventListener('click', () => {
         // 表示
         modal.classList.remove('hidden');
-        
+        mask2.classList.remove('hidden');
       });
 
       dealdelete.addEventListener('click', () => {
-        console.log("delete");
+        del();
       });
 
       change.addEventListener('click', () => {
-        console.log("change");
+        cha();
       });
 
       close.addEventListener('click', () => {
@@ -390,6 +407,22 @@
       mask2.addEventListener('click', () => {
         close.click();
       });
+    }
+
+    // dealdeleteの中身
+    async function del() {
+      dealDelete();
+      await wait(1.5);
+      console.log("del");
+      document.location.href = 'deal.html';
+    }
+
+    // dealdeleteの中身
+    async function cha() {
+      takeUserUpdate();
+      await wait(1);
+      console.log("cha");
+      document.location.href = 'deal.html';
     }
   </script>
 
