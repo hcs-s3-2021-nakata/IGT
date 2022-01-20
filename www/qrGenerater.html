@@ -28,50 +28,27 @@
 
       var utf8qrtext = unescape(encodeURIComponent(qrtext)); 
       $("#img-qr").html("");
-      $("#img-qr").qrcode({text:utf8qrtext})
+      $("#img-qr").qrcode({text:utf8qrtext});
 
-//  .then(
-//       console.log('登録処理');
-//           fetchById(objectid)
-//           .then(item => {
-//             item.set("qr", qrtext).update();
+      console.log(objectid);
+      qrUpdate(objectid,qrtext);
+      })
 
-//           }).then(function() {
-//             console.log('登録成功');
-//           }))
-//           .catch(e => {
-//             console.log('登録失敗２');
-//             });
+   function qrUpdate(objectid,qrtext) {
 
-    })
-   
-
-
-  //  function qrUpdate() {
-
-  //       var updateFlag = false;
-  //       //値を取得(生成されたQRコード)
-  //       var qr = document.getElementById("mailAddressInput").value;
-
-  //       // カレントユーザー情報の取得
-  //       var currentUser = ncmb.User.getCurrentUser();
-
-  //       //譲渡テーブルから値を取得
-  //       var Give = ncmb.DataStore("give");
-  //       var item = Give
-
-          // .fetchById(objectid)
-          // .then(item => {
-          //   item.set("qr", qr).update();
-
-          // }).then(function() {
-          //   alert("ログイン画面に戻ります");
-          //   logout_button();
-          // })
-          // .catch(e => {
-          //   console.log('変更失敗');
-          // });
-    // }
+     var Give = ncmb.DataStore("give");
+     var item = Give
+      // データを更新する
+     .fetchById(objectid)
+          .then(item => {
+            item.set("qr", qrtext).update();
+          }).then(function() {
+            console.log('登録成功');
+          })
+          .catch(e => {
+            console.log('登録失敗');
+            });
+    }
 
   </script>
   <script>
