@@ -52,6 +52,8 @@
             .fetchAll()
             .then(function(results){
               var object = results[0];
+              getUserInfo(object.trade_user_id).then(function(trade_user_names){
+                console.log("テスト成功" + trade_user_names);
               // 値の書き換え
               var category = changeCategory(object.category);
               var item_status = changeItemStatus(object.item_status);
@@ -73,15 +75,41 @@
               
               // モーダル
               document.getElementById('m_item_name').innerHTML = object.item_name;
-              // この辺に出品者の書き換えをあとで入れる
+              document.getElementById('m_trade_userID').innerHTML = trade_user_names;
               document.getElementById('m_delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
               document.getElementById('m_delivery_time').innerHTML = delivery_time;
               document.getElementById('m_location').innerHTML = location;
               
             })
+            })
             .catch(function(err){
                 console.log(err);
             });
+    }
+
+    //user_id(objectId)からuserテーブルから所属クラスを取得
+    function getUserInfo(objectID) {
+      return new Promise(function(resolve, reject) {
+        let lowNumber = 0;
+        ncmb.User.fetchAll()
+          .then(users => {
+            users.forEach(user => {
+              //objectIDが一致するユーザを検索
+              if (user.objectId === objectID) {
+                console.log("譲渡者：" + user.user_account_name);
+                var userInfo = user.user_class + user.user_number + user.user_account_name;
+                resolve(
+                  userInfo
+                );
+              }
+            })
+          }).catch(err => {
+            console.log("getUserInfoエラー:" + err);
+            reject();
+          });
+
+
+      });
     }
 
     // カテゴリーを書き換える
@@ -91,21 +119,24 @@
               category = "おもちゃ・ゲーム";
               break;
             case '2':
-              category = "本・テキスト";
+              category = "アニメ";
               break;
             case '3':
-              category = "音楽・ＤＶＤ";
+              category = "本・テキスト";
               break;
             case '4':
-              category = "服・コスメ";
+              category = "音楽・ＤＶＤ";
               break;
             case '5':
-              category = "キッチン";
+              category = "服・コスメ";
               break;
             case '6':
-              category = "スポーツ";
+              category = "キッチン";
               break;
             case '7':
+              category = "スポーツ";
+              break;
+            case '8':
               category = "PC・スマホ用品";
               break;
             case '100':
@@ -217,11 +248,28 @@
 
       ok.addEventListener('click', () => {
         var objectID = location.search.replace('?', '');
-        localStorage.setItem("flag", "trade");
-        localStorage.setItem("objectID", objectID);
-        localStorage.setItem("give_userID", "仮");
-        localStorage.setItem("take_userID", "仮");
-        document.location.href = 'qrGenerater.html?'+objectID;
+        getCurrentUserId().then(function(takeUserId){
+            console.log("getCurrentUserId処理成功");
+          var take_user_id = takeUserId;
+          console.log("ゲットした落札者ID:" + take_user_id);
+          takeUserUpdate(objectID, take_user_id).then(function(){
+              console.log("takeUserUpdate処理成功");
+              getTradeUserId(objectID).then(function(user_id){
+                  console.log("getTradeUserId処理成功");
+                  var trade_user_id = user_id;
+                  console.log(objectID);
+
+                  localStorage.setItem("flag", "trade");
+                localStorage.setItem("objectID", objectID);
+                localStorage.setItem("give_userID", "仮");
+                localStorage.setItem("take_userID", "仮");
+                document.location.href = 'qrGenerater.html?'+objectID;
+
+              })
+          })
+        }).catch(function(err){
+            console.log("処理失敗:" + err);
+        });
       });
 
       close.addEventListener('click', () => {
@@ -231,6 +279,72 @@
 
       mask.addEventListener('click', () => {
         close.click();
+      });
+    }
+
+    //カレントユーザーのID取得
+    function getCurrentUserId() {
+      return new Promise(function(resolve, reject) {
+        // カレントユーザー情報の取得
+        var currentUser = ncmb.User.getCurrentUser();
+        var objectId = null;
+        console.log("currentUser:" + currentUser);
+        if (currentUser != null) {
+          console.log("ユーザー: " + currentUser.get("userName"));
+          objectId = currentUser.get("objectId");
+          console.log("return:" + objectId);
+          resolve(
+            objectId
+          );
+          // return currentUser.get("objectId");
+        } else {
+          console.log("未ログインまたは取得に失敗");
+          reject({});
+        }
+      })
+    }
+
+    //trade_user_idの取得(交換)
+    function getTradeUserId(objectID) {
+      return new Promise(function(resolve, reject) {
+        var Trade = ncmb.DataStore("trade");
+        Trade.fetchAll().then(users => {
+          users.forEach(user => {
+            //ここで登録されている学籍番号かチェック
+            if (user.objectId === objectID) {
+              console.log("出品者：" + user.trade_user_id);
+              var user_id = user.trade_user_id;
+              resolve({
+                user_id
+              });
+            }
+          })
+        }).catch(err => {
+          console.log("データ取得エラー");
+          reject({});
+        });
+      });
+    }
+
+
+    //take_user_idのセット(交換)
+    function takeUserUpdate(objectId, take_user_id) {
+      return new Promise(function(resolve, reject) {
+        console.log("オブジェクトID：" + objectId + "　落札者ID：" + take_user_id);
+        var Trade = ncmb.DataStore("trade");
+
+        Trade.fetchById(objectId)
+          .then(results => {
+            console.log("ごめんね" + results.item_name);
+            results.set('deal_status', "取引成立")
+              .set('take_user_id', take_user_id)
+              .update();
+            resolve({});
+          }).catch(err => {
+            // エラー処理
+            console.log("おかしいよ！：" + err);
+            reject({});
+          });
       });
     }
   </script>
@@ -352,7 +466,7 @@
           <table class="modal_table">
             <tr>
               <th class="modal_table">出品者</th>
-              <td id="m_give_userID">値</td>
+              <td id="m_trade_userID">値</td>
             </tr>
             <tr>
               <th class="modal_table">受け渡し期間</th>

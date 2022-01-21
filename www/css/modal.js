@@ -70,21 +70,24 @@
               category = "おもちゃ・ゲーム";
               break;
             case '2':
-              category = "本・テキスト";
+              category = "アニメ";
               break;
             case '3':
-              category = "音楽・ＤＶＤ";
+              category = "本・テキスト";
               break;
             case '4':
-              category = "服・コスメ";
+              category = "音楽・ＤＶＤ";
               break;
             case '5':
-              category = "キッチン";
+              category = "服・コスメ";
               break;
             case '6':
-              category = "スポーツ";
+              category = "キッチン";
               break;
             case '7':
+              category = "スポーツ";
+              break;
+            case '8':
               category = "PC・スマホ用品";
               break;
             case '100':
@@ -282,6 +285,10 @@
       var item_name = document.getElementById("item_name").value;
       var item_status = document.getElementById("item_status").value;
       var location = document.getElementById("location").value;
+
+      //trade_user_idの取得
+      var trade_user_id = getCurrentUserId();
+
       // 
       var Trade = ncmb.DataStore("trade");
       // クラスインスタンスの生成
@@ -295,6 +302,7 @@
         .set("item_image", item_image)
         .set("item_info", item_info)
         .set("swap_item_info", swap_item_info)
+        .set("trade_user_id", trade_user_id)
         .set("item_name", item_name)
         .set("item_status", item_status)
         .set("location", location)
