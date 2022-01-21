@@ -122,7 +122,7 @@ async function deallists_load() {
 // 商品のリストを展開する
 async function deal_give_lists() {
   var Give = ncmb.DataStore("give");
-  Give.equalTo("deal_status", "成立待ち")
+  Give.equalTo("deal_status", "取引成立")
     .fetchAll()
     .then(function (results) {
       for (var i = results.length - g_cntSwitch - (g_cnt * 4); i > results.length - 4 * (g_cnt + 1); i--) {
@@ -179,7 +179,7 @@ async function deal_give_search() {
 // 商品のリストを展開する
 async function deal_trade_lists() {
   var Trade = ncmb.DataStore("trade");
-  Trade.equalTo("deal_status", "成立待ち")// テスト用。正式には”取引成立”
+  Trade.equalTo("deal_status", "取引成立")// テスト用。正式には”取引成立”
     .fetchAll()
     .then(function (results) {
       for (var i = results.length - t_cntSwitch - (t_cnt * 4); i > results.length - 4 * (t_cnt + 1); i--) {

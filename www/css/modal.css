@@ -91,3 +91,60 @@ th.modal_table {
 }
 /* モーダル終了 */
 
+/* dealdetailのモーダル */
+
+#cancel_modal{
+	background:#fff;
+  height: 200px;
+	width:300px;
+	padding:20px;
+	border-radius:4px;
+	position:fixed;
+	top:200px;
+	left:0;
+	right:0;
+	margin:0 auto;
+	transition:transform 0.4s;
+	z-index:80;
+  text-align: center;
+  /* overflow-y: auto; */
+  overflow-y: scroll;
+}
+
+#cancel_modal.hidden{
+	transform:translate(0,-900px);
+}
+
+#d_change{
+	width:100px;
+  color: #2496fc;
+	border:2px solid #0085FC;
+	border-radius:4px;
+	text-align: center;
+	padding:12px 0;
+	margin:16px auto 0;
+}
+
+#d_delete{
+	width:100px;
+  color: #ff3a3a;
+	border:2px solid #FF0000;
+	border-radius:4px;
+	text-align: center;
+	padding:12px 0;
+	margin:16px auto 0;
+}
+
+#mask2{
+	background:rgba(0,0,0,0.4);
+	position:fixed;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	z-index:75;
+}
+
+#mask2.hidden{
+	display:none;
+}
