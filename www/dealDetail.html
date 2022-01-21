@@ -54,8 +54,21 @@
                 })
         }
 
-        // 取得した情報で画面を上書き
+        // detailLoad
         function detailLoad() {
+            var dealflg = localStorage.getItem("dealflg");
+
+            if (dealflg == "give") {
+                giveDetailLoad();
+            } else if (dealflg == "trade") {
+                tradeDetailLoad();
+            } else {
+                alert("ERROR");
+            }
+        }
+
+        // 取得した情報で画面を上書き
+        function giveDetailLoad() {
             var objectID = location.search.replace('?', '');
             var Give = ncmb.DataStore("give");
             Give.equalTo("objectId", objectID)
@@ -89,7 +102,47 @@
                     document.getElementById('m_delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
                     document.getElementById('m_delivery_time').innerHTML = delivery_time;
                     document.getElementById('m_location').innerHTML = location;
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
+        }
 
+        // 取得した情報で画面を上書き
+        function tradeDetailLoad() {
+            var objectID = location.search.replace('?', '');
+            var Trade = ncmb.DataStore("trade");
+            Trade.equalTo("objectId", objectID)
+                .fetchAll()
+                .then(function(results) {
+                    var object = results[0];
+                    // 値の書き換え
+                    var deal_type = changeDealtype();
+                    changeUserName(object.give_user_id);
+                    var category = changeCategory(object.category);
+                    var item_status = changeItemStatus(object.item_status);
+                    var delivery_time = changeDtime(object.delivery_time);
+                    var location = changeLocation(object.location);
+
+                    downloadImage(object.item_image);
+                    setImage(object.item_image);
+
+                    document.getElementById('dealflg').innerHTML = deal_type;
+                    document.getElementById('item_name').innerHTML = object.item_name;
+                    document.getElementById('item_info').innerHTML = object.item_info.replace(/\n/g, '<br>');
+                    document.getElementById('category').innerHTML = category;
+                    document.getElementById('item_status').innerHTML = item_status;
+                    document.getElementById('delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
+                    document.getElementById('delivery_time').innerHTML = delivery_time;
+                    document.getElementById('location').innerHTML = location;
+
+                    // モーダルの書き換え
+                    document.getElementById('m_item_name').innerHTML = object.item_name;
+                    document.getElementById('m_category').innerHTML = category;
+                    document.getElementById('m_item_status').innerHTML = item_status;
+                    document.getElementById('m_delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
+                    document.getElementById('m_delivery_time').innerHTML = delivery_time;
+                    document.getElementById('m_location').innerHTML = location;
                 })
                 .catch(function(err) {
                     console.log(err);
@@ -343,32 +396,64 @@
         function takeUserUpdate() {
             var objectId = location.search.replace('?', '');
             console.log("cha " + objectId);
-            var Give = ncmb.DataStore("give");
 
-            Give.equalTo("objectId", objectId)
-                .fetch()
-                .then(function(results) {
-                    results.set('deal_status', "成立待ち")
-                        .set('take_user_id', null);
-                    results.update();
-                });
+            var dealflg = localStorage.getItem("dealflg");
+            if (dealflg == "give") {
+                var Give = ncmb.DataStore("give");
+                Give.equalTo("objectId", objectId)
+                    .fetch()
+                    .then(function(results) {
+                        results.set('deal_status', "成立待ち")
+                            .set('take_user_id', null);
+                        results.update();
+                    });
+            } else if (dealflg == "trade") {
+                var Trade = ncmb.DataStore("trade");
+                Trade.equalTo("objectId", objectId)
+                    .fetch()
+                    .then(function(results) {
+                        results.set('deal_status', "成立待ち")
+                            .set('take_user_id', null);
+                        results.update();
+                    });
+            } else {
+                alert("ERROR");
+            }
+
         }
 
         //取引を削除
         async function dealDelete() {
             var objectId = location.search.replace('?', '');
             console.log(objectId);
-            // await wait(0.5);
-            var Give = ncmb.DataStore("give");
-            Give.equalTo("objectId", objectId)
-                .fetch()
-                .then(function(result) {
-                    console.log(result); // true
-                    result.delete();
-                })
-                .catch(function(err) {
-                    console.log(err);
-                });
+
+            var dealflg = localStorage.getItem("dealflg");
+            if (dealflg == "give") {
+                var Give = ncmb.DataStore("give");
+                Give.equalTo("objectId", objectId)
+                    .fetch()
+                    .then(function(result) {
+                        console.log(result); // true
+                        result.delete();
+                    })
+                    .catch(function(err) {
+                        console.log(err);
+                    });
+            } else if (dealflg == "trade") {
+                var Trade = ncmb.DataStore("trade");
+                Trade.equalTo("objectId", objectId)
+                    .fetch()
+                    .then(function(result) {
+                        console.log(result); // true
+                        result.delete();
+                    })
+                    .catch(function(err) {
+                        console.log(err);
+                    });
+            } else {
+                alert("ERROR");
+            }
+
         }
     </script>
 
