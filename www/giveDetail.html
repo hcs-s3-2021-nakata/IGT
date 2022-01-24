@@ -257,7 +257,7 @@
           takeUserUpdate(objectID, take_user_id).then(function() {
             console.log("takeUserUpdate処理成功");
             getGiveUserId(objectID).then(function(user_id) {
-              console.log("getGiveUserId処理成功");
+              console.log("getGiveUserId処理成功 :" + user_id);
               var give_user_id = user_id;
               console.log(objectID);
               localStorage.setItem("flag", "give");
@@ -307,17 +307,6 @@
     //give_user_idの取得(譲渡)
     function getGiveUserId(objectID) {
       return new Promise(function(resolve, reject) {
-        // var Give = ncmb.DataStore('give');
-        // var give = Give
-        //   .fetchById(objectID)
-        //   .then(give => {
-        //     console.log(give.give_user_id);
-        //     return give.give_user_id;
-        //   })
-        //   .catch(e => {
-        //     console.log('データなし');
-        //     return null;
-        //   });
         var Give = ncmb.DataStore("give");
         Give.fetchAll().then(users => {
           users.forEach(user => {
@@ -326,9 +315,9 @@
             if (user.objectId === objectID) {
               console.log("出品者：" + user.give_user_id);
               var user_id = user.give_user_id;
-              resolve({
+              resolve(
                 user_id
-              });
+              );
             }
           })
         }).catch(err => {

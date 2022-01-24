@@ -2,228 +2,244 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
-  <link rel="stylesheet" href="components/loader.css">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/qr.css">
-  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script type="text/javascript" src="css/logout.js"></script>
-  <script src="components/loader.js"></script>
-  <script src="qrcode.min.js"></script>
-  <script src="JsBarcode.all.min.js"></script>
-  <script src="css/jquery-3.6.0.min.js"></script>
-  <script src="css/jquery.qrcode.min.js"></script>
-  <script>
-    // API key.
-    var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
-    var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
-    // SDK initialization.
-    var ncmb = new NCMB(applicationKey, clientKey);
-    /*バーコードスキャン*/
-    let options = {
-      preferFrontCamera: false,
-      showFlipCameraButton: true,
-      showTorchButton: true,
-      torchOn: true, // Android only
-      saveHistory: false, // Android only
-      prompt: "スキャンエリアの中にバーコードを入れてください", // Android
-      resultDisplayDuration: 500, // Android only
-      formats: "QR_CODE,EAN_13,CODE_39",
-      orientation: "unset", // Android only (portrait|landscape)
-      disableAnimations: true, // iOS
-      disableSuccessBeep: false // iOS and Android
-    }
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/qr.css">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="text/javascript" src="css/logout.js"></script>
+    <script src="components/loader.js"></script>
+    <script src="qrcode.min.js"></script>
+    <script src="JsBarcode.all.min.js"></script>
+    <script src="css/jquery-3.6.0.min.js"></script>
+    <script src="css/jquery.qrcode.min.js"></script>
+    <script>
+        // API key.
+        var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+        var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+        // SDK initialization.
+        var ncmb = new NCMB(applicationKey, clientKey);
+        /*バーコードスキャン*/
+        let options = {
+            preferFrontCamera: false,
+            showFlipCameraButton: true,
+            showTorchButton: true,
+            torchOn: true, // Android only
+            saveHistory: false, // Android only
+            prompt: "スキャンエリアの中にバーコードを入れてください", // Android
+            resultDisplayDuration: 500, // Android only
+            formats: "QR_CODE,EAN_13,CODE_39",
+            orientation: "unset", // Android only (portrait|landscape)
+            disableAnimations: true, // iOS
+            disableSuccessBeep: false // iOS and Android
+        }
 
-    function onSuccess(result) {
-      console.log("スキャン結果: " + result.text + "\n" +
-        "バーコードの種類: " + result.format + "\n" +
-        "スキャンが中断されたかどうか: " + result.cancelled);
-      takeUserConfirm(result.text);
-    }
+        function onSuccess(result) {
+            console.log("スキャン結果: " + result.text + "\n" +
+                "バーコードの種類: " + result.format + "\n" +
+                "スキャンが中断されたかどうか: " + result.cancelled);
+            takeUserConfirm(result.text);
+        }
 
-    function onError(error) {
-      alert("スキャン失敗: " + error);
-    }
+        function onError(error) {
+            alert("スキャン失敗: " + error);
+        }
 
-    function scan() {
-      cordova.plugins.barcodeScanner.scan(
-        onSuccess,
-        onError,
-        options
-      );
-    }
+        function scan() {
+            cordova.plugins.barcodeScanner.scan(
+                onSuccess,
+                onError,
+                options
+            );
+        }
 
-    /* 以下読み取り後の認証 */
-    function takeUserConfirm(text) {
-      //譲渡か交換か(flag)
-      //objectIdが一致している取引の
-      //giveid or tradeIdがcurrentUserと一致している
-      // splitにて、名前・電話番号・所在をそれぞれ抽出
+        /* 以下読み取り後の認証 */
+        function takeUserConfirm(text) {
+            //譲渡か交換か(flag)
+            //objectIdが一致している取引の
+            //giveid or tradeIdがcurrentUserと一致している
+            // splitにて、名前・電話番号・所在をそれぞれ抽出
 
-      var result = text.split(',');
-      //必要な情報だけを切り取る
-      var primaryId = result[0].substr(9);
-      var dealStyle = result[1].substr(5);
-      var dealFlag = true; //譲渡：true、交換：false
-      if (dealStyle === "give") {
-        dealFlag = true;
-        
-      } else {
-        dealFlag = false;
-      }
-      var giveUserId = result[2].substr(7);
-      var takeUserId = result[3].substr(7);
-
-      /* お試し直入れ */
-      //giveUserId = "jIIsM5MWYX9buZwS";
-
-      /* ユーザ認証 */
-      var resultFlag = pairConfirmation(giveUserId);
+            var result = text.split(',');
+            //必要な情報だけを切り取る
+            var primaryId = result[0].substr(9);
+            var dealStyle = result[1].substr(5);
+            var dealFlag = true; //譲渡：true、交換：false
+            var userId;
+            if (dealStyle === "give") {
+                dealFlag = true;
+                userId = result[2].substr(7);
+                var takeUserId = result[3].substr(7);
 
 
-      /* 結果 */
-      console.log("主キー：" + primaryId);
-      console.log("取引形態：" + dealStyle);
-      console.log("出品者：" + giveUserId);
-      console.log("落札者：" + takeUserId);
-      console.log("ユーザ認証結果：" + resultFlag);
+            } else {
+                dealFlag = false;
+                userId = result[2].substr(8);
+                var takeUserId = result[3].substr(7);
+            }
 
-      if (resultFlag) {
-        /* 認証成功でDBの状態を変更 */
-        console.log("認証完了です。");
-        giveUpdate(primaryId);
-      } else {
-        /* 認証失敗で再読み込みと取引内容の促しを追加 */
-        alert("認証失敗です。もう一度読み込むか、取引内容を再確認してね");
+            /* お試し直入れ */
+            //giveUserId = "jIIsM5MWYX9buZwS";
 
-      }
+            /* ユーザ認証 */
+            var resultFlag = pairConfirmation(userId);
 
 
-    }
+            /* 結果 */
+            console.log("主キー：" + primaryId);
+            console.log("取引形態：" + dealStyle);
+            console.log("出品者：" + userId);
+            console.log("落札者：" + takeUserId);
+            console.log("ユーザ認証結果：" + resultFlag);
 
-    /* 譲渡：DBを更新する */
-    function giveUpdate(objectId) {
-      console.log("-----更新開始-----");
-      var give = ncmb.DataStore("give");
-      var object = new give;
-      object
-        .set('objectId', objectId)
-        .set('deal_status', '取引完了')
-        .update()
-        .then(function(data) {
-          // 更新完了
-          alert("取引完了です。");
-        })
-        .catch(function(err) {
-          // エラー
-          console.log("ERROR:" + err);
-        });
-    }
+            if (resultFlag) {
+                /* 認証成功でDBの状態を変更 */
+                console.log("認証完了です。");
+                giveUpdate(primaryId);
+            } else {
+                /* 認証失敗で再読み込みと取引内容の促しを追加 */
+                alert("認証失敗です。もう一度読み込むか、取引内容を再確認してね");
+
+            }
 
 
-    /*ログインユーザと出品者が同じか確認するファンクション*/
-    function pairConfirmation(userId) {
-      console.log("-----相互確認-----");
-      var currentUser = ncmb.User.getCurrentUser();
-      if (currentUser.objectId === userId) {
-        console.log("-----確認完了-----");
-        return true;
-      } else {
-        console.log("-----確認失敗-----");
-        return false;
-      }
-    }
+        }
 
-    function confarm() {
-      // カレントユーザー情報の取得
-      alert("確認")
-      var currentUser = ncmb.User.getCurrentUser();
-      console.log("currentUser:" + currentUser);
-      if (currentUser != null) {
-        console.log("ログイン中のユーザー: " + currentUser.get("userName"));
-      } else {
-        console.log("未ログインまたは取得に失敗");
-      }
-      // カレントユーザーかどうかの確認
-      console.log(user.isCurrentUser()); /* true or false */
+        /* 譲渡：DBを更新する */
+        function giveUpdate(objectId) {
+            console.log("-----更新開始-----");
+            var Give = ncmb.DataStore("give");
+            Give.fetchById(objectId)
+                .then(results => {
+                    results.set('deal_status', "取引完了")
+                        .update();
+                }).catch(err => {
+                    // エラー処理
+                    console.log("giveUpdate：" + err);
+                });
+        }
 
-    }
-  </script>
-  <script type="text/JavaScript">
-    $(function(){ var qrtext = "ここにQRコード化したいテキストを入力"; var utf8qrtext = unescape(encodeURIComponent(qrtext)); $("#img-qr").html(""); $("#img-qr").qrcode({text:utf8qrtext}); });
-  </script>
+        /* 交換：DBを更新する */
+        function tradeUpdate(objectId) {
+            console.log("-----更新開始-----");
+            var Trade = ncmb.DataStore("trade");
+            Trade.fetchById(objectId)
+                .then(results => {
+                    results.set('deal_status', "取引完了")
+                        .update();
+                }).catch(err => {
+                    // エラー処理
+                    console.log("tradeUpdate：" + err);
+                });
+        }
+
+
+
+        /*ログインユーザと出品者が同じか確認するファンクション*/
+        function pairConfirmation(userId) {
+            console.log("-----相互確認-----");
+            var currentUser = ncmb.User.getCurrentUser();
+            if (currentUser.objectId === userId) {
+                console.log("-----確認完了-----");
+                return true;
+            } else {
+                console.log("-----確認失敗-----");
+                console.log("ログインユーザ：" + currentUser.objectId);
+                console.log("出品者:" + userId);
+                return false;
+            }
+        }
+
+        function confarm() {
+            // カレントユーザー情報の取得
+            alert("確認")
+            var currentUser = ncmb.User.getCurrentUser();
+            console.log("currentUser:" + currentUser);
+            if (currentUser != null) {
+                console.log("ログイン中のユーザー: " + currentUser.get("userName"));
+            } else {
+                console.log("未ログインまたは取得に失敗");
+            }
+            // カレントユーザーかどうかの確認
+            console.log(user.isCurrentUser()); /* true or false */
+
+        }
+    </script>
+    <script type="text/JavaScript">
+        $(function(){ var qrtext = "ここにQRコード化したいテキストを入力"; var utf8qrtext = unescape(encodeURIComponent(qrtext)); $("#img-qr").html(""); $("#img-qr").qrcode({text:utf8qrtext}); });
+    </script>
 </head>
 
 <body id="prodact_lists">
-  <!-- Header Start -->
-  <header class="site-header">
-    <div class="wrapper site-header__wrapper">
-      <nav class="nav">
-        <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">QRコードスキャン</span>
-        <label for="menu-btn-check" class="menu-btn"><span></span></label>
-        <div class="menu-content">
-          <ul>
-            <li>
-              <a href="acount.html">アカウント詳細</a>
-            </li>
-            <li>
-              <a href="message.html">通知</a>
-            </li>
-            <li>
-              <a href="dealHistory.html">取引履歴</a>
-            </li>
-            <li>
-              <a href="myGiveItem.html">出品した譲渡品</a>
-            </li>
-            <li>
-              <a href="myTradeItem.html">出品した交換品</a>
-            </li>
-            <li>
-              <a onclick="logout_button()">ログアウト</a>
-            </li>
-          </ul>
+    <!-- Header Start -->
+    <header class="site-header">
+        <div class="wrapper site-header__wrapper">
+            <nav class="nav">
+                <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">QRコードスキャン</span>
+                <label for="menu-btn-check" class="menu-btn"><span></span></label>
+                <div class="menu-content">
+                    <ul>
+                        <li>
+                            <a href="acount.html">アカウント詳細</a>
+                        </li>
+                        <li>
+                            <a href="message.html">通知</a>
+                        </li>
+                        <li>
+                            <a href="dealHistory.html">取引履歴</a>
+                        </li>
+                        <li>
+                            <a href="myGiveItem.html">出品した譲渡品</a>
+                        </li>
+                        <li>
+                            <a href="myTradeItem.html">出品した交換品</a>
+                        </li>
+                        <li>
+                            <a onclick="logout_button()">ログアウト</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </div>
-      </nav>
-    </div>
-  </header>
-  <!-- Header End -->
-  <!-- Body Start -->
-  <br>
-  <div class="qr">
-    <!-- <p>QRコードを相手に見せよう！</p> -->
-    <!-- 折り畳み展開ポインタ -->
-    <!-- <details id="qr_detail">
+    </header>
+    <!-- Header End -->
+    <!-- Body Start -->
+    <br>
+    <div class="qr">
+        <!-- <p>QRコードを相手に見せよう！</p> -->
+        <!-- 折り畳み展開ポインタ -->
+        <!-- <details id="qr_detail">
       <summary>タップして展開</summary>
       <div id="img-qr"></div>
     </details>
     <br> -->
-    <button onclick="scan()" class="btn btn-malformation">QRコードを<br>読み取る！</button>
-  </div>
-  <!-- Body End -->
-  <!-- Footer Start -->
-  <ul class="bottom-menu">
-    <li>
-      <a href="index.html">
-        <i class="far fa-list-alt"></i></a>
-    </li>
-    <li>
-      <a href="deal.html"><i class="fas fa-random"></i></a>
-    </li>
-    <li>
-      <a href="insert.html"><i class="fas fa-plus"></i></a>
-    </li>
-    <li>
-      <a class="icon-blue" href="#"><i class="fas fa-qrcode"></i></a>
-    </li>
-    <li>
-      <a href="voice.html">
-        <i class="fas fa-bullhorn"></i></a>
-    </li>
-  </ul>
-  <!-- Fotter End -->
+        <button onclick="scan()" class="btn btn-malformation">QRコードを<br>読み取る！</button>
+    </div>
+    <!-- Body End -->
+    <!-- Footer Start -->
+    <ul class="bottom-menu">
+        <li>
+            <a href="index.html">
+                <i class="far fa-list-alt"></i></a>
+        </li>
+        <li>
+            <a href="deal.html"><i class="fas fa-random"></i></a>
+        </li>
+        <li>
+            <a href="insert.html"><i class="fas fa-plus"></i></a>
+        </li>
+        <li>
+            <a class="icon-blue" href="#"><i class="fas fa-qrcode"></i></a>
+        </li>
+        <li>
+            <a href="voice.html">
+                <i class="fas fa-bullhorn"></i></a>
+        </li>
+    </ul>
+    <!-- Fotter End -->
 </body>
 
 </html>
