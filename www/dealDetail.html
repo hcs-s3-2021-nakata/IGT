@@ -70,12 +70,10 @@
         // 取得した情報で画面を上書き
         function giveDetailLoad() {
             var objectID = location.search.replace('?', '');
-            console.log("とってきたもの"+objectID);
             var Give = ncmb.DataStore("give");
             Give.equalTo("objectId", objectID)
                 .fetchAll()
                 .then(function(results) {
-                    console.log("とってきたもの２"+objectID);
                     var object = results[0];
                     // 値の書き換え
                     var deal_type = changeDealtype();
@@ -96,11 +94,8 @@
                     document.getElementById('delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
                     document.getElementById('delivery_time').innerHTML = delivery_time;
                     document.getElementById('location').innerHTML = location;
-                    // document.location.href = 'qrGenerater.html?' + objectID;
-                    // モーダルの書き換え
-                    console.log("とってきたもの３"+objectID);
-                    // document.getElementById('qrDisp').innerHTML = "<a href='qrDisplay.html?' "+ objectID + "><button type='button' class='showing'><img id='deal-detail_button' src='img/qr.png'><br><b>表示する</b></button></a>";
 
+                    // モーダルの書き換え
                     document.getElementById('qrDisp').innerHTML = "<a onclick='getObjectID()'><button type='button' class='showing'><img id='deal-detail_button' src='img/qr.png'><br><b>表示する</b></button></a>";
 
                     document.getElementById('m_item_name').innerHTML = object.item_name;
@@ -151,6 +146,8 @@
                     document.getElementById('location').innerHTML = location;
 
                     // モーダルの書き換え
+                    document.getElementById('qrDisp').innerHTML = "<a onclick='getObjectID()'><button type='button' class='showing'><img id='deal-detail_button' src='img/qr.png'><br><b>表示する</b></button></a>";
+                    
                     document.getElementById('m_item_name').innerHTML = object.item_name;
                     document.getElementById('m_category').innerHTML = category;
                     document.getElementById('m_item_status').innerHTML = item_status;
@@ -637,8 +634,6 @@
 
     <div id="deal-detail_button" class="flex">
         <div id="qrDisp"></div>
-        <!-- <a href="qrDisplay.html"><button type="button" class="showing"><img id="deal-detail_button" src="img/qr.png"><br><b>表示する</b></button></a> -->
-
         <button type="button" class="showing" onclick="scan()"><img id="deal-detail_button" src="img/camera.png"><br><b>スキャン</b></button>
         <button type="button" class="stop" id="d_open" onclick="modal_open()"><img id="deal-detail_button" src="img/stop.png"><br><b>取引中止</b></button>
     </div>
