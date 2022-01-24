@@ -2,386 +2,499 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
-  <script src="components/loader.js"></script>
-  <link rel="stylesheet" href="components/loader.css">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/modal.css">
-  <link rel="stylesheet" href="css/deal.css">
-  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script type="text/javascript" src="css/logout.js"></script>
-  <script>
-    // APIキーの設定とSDK初期化
-    // API key.
-    var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
-    var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
-    // SDK initialization.
-    var ncmb = new NCMB(applicationKey, clientKey);
-    var reader = new FileReader();
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/deal.css">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="text/javascript" src="css/logout.js"></script>
+    <script>
+        // APIキーの設定とSDK初期化
+        // API key.
+        var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+        var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+        // SDK initialization.
+        var ncmb = new NCMB(applicationKey, clientKey);
+        var reader = new FileReader();
 
-    // 画像を読み込む
-    function setImage(){
-      reader.onload = function(e) {
-        var dataUrl = reader.result;
-        document.getElementById("detail_image").src = dataUrl;
-        document.getElementById("modal_image").src = dataUrl;
-      }
-    }
+        // 画像を読み込む
+        function setImage() {
+            reader.onload = function(e) {
+                var dataUrl = reader.result;
+                document.getElementById("detail_image").src = dataUrl;
+                document.getElementById("modal_image").src = dataUrl;
+            }
+        }
 
-    // 画像を読み込む
-    function downloadImage(fileName){  
-      // ダウンロード（データ形式をblobを指定）
-      ncmb.File.download(fileName, "blob")
-           .then(function(blob) {
-           // ファイルリーダーにデータを渡す
-           reader.readAsDataURL(blob);
-           })
-           .catch(function(err) {
-              console.error(err);
-           })
-    }
+        // 画像を読み込む
+        function downloadImage(fileName) {
+            // ダウンロード（データ形式をblobを指定）
+            ncmb.File.download(fileName, "blob")
+                .then(function(blob) {
+                    // ファイルリーダーにデータを渡す
+                    reader.readAsDataURL(blob);
+                })
+                .catch(function(err) {
+                    console.error(err);
+                })
+        }
 
-    // 取得した情報で画面を上書き
-    function detailLoad(){
-      var objectID = location.search.replace('?', '');
-      var Trade = ncmb.DataStore("trade");
-      Trade.equalTo("objectId", objectID)
-            .fetchAll()
-            .then(function(results){
-              var object = results[0];
-              // 値の書き換え
-              var category = changeCategory(object.category);
-              var item_status = changeItemStatus(object.item_status);
-              var delivery_time = changeDtime(object.delivery_time);
-              var location = changeLocation(object.location);
+        // 取得した情報で画面を上書き
+        function detailLoad() {
+            console.log("detailLoad run");
+            var objectID = location.search.replace('?', '');
+            var Trade = ncmb.DataStore("trade");
+            Trade.equalTo("objectId", objectID)
+                .fetchAll()
+                .then(function(results) {
+                    console.log("objectId match = " + objectID);
+                    var object = results[0];
+                    console.log("function boot = " + object.trade_user_id);
+                    getUserInfo(object.trade_user_id).then(function(trade_user_names) {
+                        console.log("テスト成功" + trade_user_names);
+                        // 値の書き換え
+                        var category = changeCategory(object.category);
+                        var item_status = changeItemStatus(object.item_status);
+                        var delivery_time = changeDtime(object.delivery_time);
+                        var location = changeLocation(object.location);
 
-              downloadImage(object.item_image);
-              setImage(object.item_image);
+                        downloadImage(object.item_image);
+                        setImage(object.item_image);
 
-              // 詳細画面
-              document.getElementById('item_name').innerHTML = object.item_name;
-              document.getElementById('item_info').innerHTML = object.item_info.replace(/\n/g, '<br>');
-              document.getElementById('swap_item_info').innerHTML = object.swap_item_info.replace(/\n/g, '<br>');
-              document.getElementById('category').innerHTML = category;
-              document.getElementById('item_status').innerHTML = item_status;
-              document.getElementById('delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
-              document.getElementById('delivery_time').innerHTML = delivery_time;
-              document.getElementById('location').innerHTML = location;
-              
-              // モーダル
-              document.getElementById('m_item_name').innerHTML = object.item_name;
-              // この辺に出品者の書き換えをあとで入れる
-              document.getElementById('m_delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
-              document.getElementById('m_delivery_time').innerHTML = delivery_time;
-              document.getElementById('m_location').innerHTML = location;
-              
-            })
-            .catch(function(err){
-                console.log(err);
+                        // 詳細画面
+                        document.getElementById('item_name').innerHTML = object.item_name;
+                        document.getElementById('item_info').innerHTML = object.item_info.replace(/\n/g, '<br>');
+                        document.getElementById('swap_item_info').innerHTML = object.swap_item_info.replace(/\n/g, '<br>');
+                        document.getElementById('category').innerHTML = category;
+                        document.getElementById('item_status').innerHTML = item_status;
+                        document.getElementById('delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
+                        document.getElementById('delivery_time').innerHTML = delivery_time;
+                        document.getElementById('location').innerHTML = location;
+
+                        // モーダル
+                        document.getElementById('m_item_name').innerHTML = object.item_name;
+                        document.getElementById('m_trade_userID').innerHTML = trade_user_names;
+                        document.getElementById('m_delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
+                        document.getElementById('m_delivery_time').innerHTML = delivery_time;
+                        document.getElementById('m_location').innerHTML = location;
+
+                    })
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
+        }
+
+        //user_id(objectId)からuserテーブルから所属クラスを取得
+        function getUserInfo(objectID) {
+            return new Promise(function(resolve, reject) {
+                let lowNumber = 0;
+                ncmb.User.fetchAll()
+                    .then(users => {
+                        users.forEach(user => {
+                            //objectIDが一致するユーザを検索
+                            if (user.objectId === objectID) {
+                                console.log("譲渡者：" + user.user_account_name);
+                                var userInfo = user.user_class + user.user_number + user.user_account_name;
+                                resolve(
+                                    userInfo
+                                );
+                            }
+                        })
+                    }).catch(err => {
+                        console.log("getUserInfoエラー:" + err);
+                        reject();
+                    });
+
+
             });
-    }
+        }
 
-    // カテゴリーを書き換える
-    function changeCategory(category){
-      switch (category){
-            case '1':
-              category = "おもちゃ・ゲーム";
-              break;
-            case '2':
-              category = "アニメ";
-              break;
-            case '3':
-              category = "本・テキスト";
-              break;
-            case '4':
-              category = "音楽・ＤＶＤ";
-              break;
-            case '4':
-              category = "服・コスメ";
-              break;
-            case '6':
-              category = "キッチン";
-              break;
-            case '7':
-              category = "スポーツ";
-              break;
-            case '8':
-              category = "PC・スマホ用品";
-              break;
-            case '100':
-              category = "その他";
-              break;
-            default:
-              break;
-          }
-      return category;
-    }
+        // カテゴリーを書き換える
+        function changeCategory(category) {
+            switch (category) {
+                case '1':
+                    category = "おもちゃ・ゲーム";
+                    break;
+                case '2':
+                    category = "アニメ";
+                    break;
+                case '3':
+                    category = "本・テキスト";
+                    break;
+                case '4':
+                    category = "音楽・ＤＶＤ";
+                    break;
+                case '5':
+                    category = "服・コスメ";
+                    break;
+                case '6':
+                    category = "キッチン";
+                    break;
+                case '7':
+                    category = "スポーツ";
+                    break;
+                case '8':
+                    category = "PC・スマホ用品";
+                    break;
+                case '100':
+                    category = "その他";
+                    break;
+                default:
+                    break;
+            }
+            return category;
+        }
 
-    // 商品状態を書き換える
-    function changeItemStatus(item_status){
-      switch (item_status){
-            case '1':
-              item_status = "新品";
-              break;
-            case '2':
-              item_status = "ほぼ新品";
-              break;
-            case '3':
-              item_status = "多少の傷あり";
-              break;
-            case '4':
-              item_status = "傷・汚れあり";
-              break;
-            case '5':
-              item_status = "状態が悪い";
-              break;
-            default:
-              break;
-          }
-      return item_status;
-    }
+        // 商品状態を書き換える
+        function changeItemStatus(item_status) {
+            switch (item_status) {
+                case '1':
+                    item_status = "新品";
+                    break;
+                case '2':
+                    item_status = "ほぼ新品";
+                    break;
+                case '3':
+                    item_status = "多少の傷あり";
+                    break;
+                case '4':
+                    item_status = "傷・汚れあり";
+                    break;
+                case '5':
+                    item_status = "状態が悪い";
+                    break;
+                default:
+                    break;
+            }
+            return item_status;
+        }
 
-    // 受け渡し時間帯を書き換える
-    function changeDtime(delivery_time){
-      switch (delivery_time){
-            case '1':
-              delivery_time = "１コマ目終了後";
-              break;
-            case '2':
-              delivery_time = "昼休み";
-              break;
-            case '3':
-              delivery_time = "３コマ目終了後";
-              break;
-            case '4':
-              delivery_time = "４コマ目終了後";
-              break;
-            default:
-              break;
-          }
-      return delivery_time;
-    }
+        // 受け渡し時間帯を書き換える
+        function changeDtime(delivery_time) {
+            switch (delivery_time) {
+                case '1':
+                    delivery_time = "１コマ目終了後";
+                    break;
+                case '2':
+                    delivery_time = "昼休み";
+                    break;
+                case '3':
+                    delivery_time = "３コマ目終了後";
+                    break;
+                case '4':
+                    delivery_time = "４コマ目終了後";
+                    break;
+                default:
+                    break;
+            }
+            return delivery_time;
+        }
 
-    // 受け渡し場所を書き換える
-    function changeLocation(location){
-      switch (location){
-            case '1':
-              location = "本校舎3Fホール";
-              break;
-            case '2':
-              location = "本校舎4Fホール";
-              break;
-            case '3':
-              location = "本校舎5F";
-              break;
-            case '4':
-              location = "本校舎6Fホール";
-              break;
-            case '5':
-              location = "本校舎7F";
-              break;
-            case '6':
-              location = "本校舎8F";
-              break;
-            case '7':
-              location = "2号館入口";
-              break;
-            case '8':
-              location = "3号館入口";
-              break;
-            case '9':
-              location = "3号館ホール";
-              break;
-            case '100':
-              location = "その他";
-              break;
-            default:
-              break;
-          }
-      return location;
-    }
+        // 受け渡し場所を書き換える
+        function changeLocation(location) {
+            switch (location) {
+                case '1':
+                    location = "本校舎3Fホール";
+                    break;
+                case '2':
+                    location = "本校舎4Fホール";
+                    break;
+                case '3':
+                    location = "本校舎5F";
+                    break;
+                case '4':
+                    location = "本校舎6Fホール";
+                    break;
+                case '5':
+                    location = "本校舎7F";
+                    break;
+                case '6':
+                    location = "本校舎8F";
+                    break;
+                case '7':
+                    location = "2号館入口";
+                    break;
+                case '8':
+                    location = "3号館入口";
+                    break;
+                case '9':
+                    location = "3号館ホール";
+                    break;
+                case '100':
+                    location = "その他";
+                    break;
+                default:
+                    break;
+            }
+            return location;
+        }
 
-    // 詳細画面のモーダル表示用スクリプト（仮）
-    function modal_open() {
-      const open = document.getElementById('d_open');
-      const ok = document.getElementById('d_ok');
-      const close = document.getElementById('d_cancel');
-      const modal = document.getElementById('d_modal');
-      const mask = document.getElementById('mask');
+        // 詳細画面のモーダル表示用スクリプト（仮）
+        function modal_open() {
+            const open = document.getElementById('d_open');
+            const ok = document.getElementById('d_ok');
+            const close = document.getElementById('d_cancel');
+            const modal = document.getElementById('d_modal');
+            const mask = document.getElementById('mask');
 
-      open.addEventListener('click', () => {
-        // 表示
-        modal.classList.remove('hidden');
-        mask.classList.remove('hidden');
-      });
+            open.addEventListener('click', () => {
+                // 表示
+                modal.classList.remove('hidden');
+                mask.classList.remove('hidden');
+            });
+            ok.addEventListener('click', () => {
+                var objectID = location.search.replace('?', '');
+                getCurrentUserId().then(function(takeUserId) {
+                    console.log("getCurrentUserId処理成功");
+                    var take_user_id = takeUserId;
+                    console.log("ゲットした落札者ID:" + take_user_id);
+                    takeUserUpdate(objectID, take_user_id).then(function() {
+                        console.log("takeUserUpdate処理成功");
+                        getTradeUserId(objectID).then(function(user_id) {
+                            console.log("getTradeUserId処理成功");
+                            var trade_user_id = user_id;
+                            console.log(objectID);
 
-      ok.addEventListener('click', () => {
-        var objectID = location.search.replace('?', '');
-        localStorage.setItem("flag", "trade");
-        localStorage.setItem("objectID", objectID);
-        localStorage.setItem("give_userID", "仮");
-        localStorage.setItem("take_userID", "仮");
-        document.location.href = 'qrGenerater.html?'+objectID;
-      });
+                            localStorage.setItem("flag", "trade");
+                            localStorage.setItem("objectID", objectID);
+                            localStorage.setItem("trade_userID", trade_user_id);
+                            localStorage.setItem("take_userID", take_user_id);
+                            document.location.href = 'qrGenerater.html?' + objectID;
 
-      close.addEventListener('click', () => {
-        modal.classList.add('hidden');
-        mask.classList.add('hidden');
-      });
+                        })
+                    })
+                }).catch(function(err) {
+                    console.log("処理失敗:" + err);
+                });
+            });
 
-      mask.addEventListener('click', () => {
-        close.click();
-      });
-    }
-  </script>
-  </script>
+            close.addEventListener('click', () => {
+                modal.classList.add('hidden');
+                mask.classList.add('hidden');
+            });
+
+            mask.addEventListener('click', () => {
+                close.click();
+            });
+        }
+
+        //カレントユーザーのID取得
+        function getCurrentUserId() {
+            return new Promise(function(resolve, reject) {
+                // カレントユーザー情報の取得
+                var currentUser = ncmb.User.getCurrentUser();
+                var objectId = null;
+                console.log("currentUser:" + currentUser);
+                if (currentUser != null) {
+                    console.log("ユーザー: " + currentUser.get("userName"));
+                    objectId = currentUser.get("objectId");
+                    console.log("return:" + objectId);
+                    resolve(
+                        objectId
+                    );
+                    // return currentUser.get("objectId");
+                } else {
+                    console.log("未ログインまたは取得に失敗");
+                    reject({});
+                }
+            })
+        }
+
+        //trade_user_idの取得(交換)
+        function getTradeUserId(objectID) {
+            return new Promise(function(resolve, reject) {
+                var Trade = ncmb.DataStore("trade");
+                Trade.fetchAll().then(users => {
+                    users.forEach(user => {
+                        //ここで登録されている学籍番号かチェック
+                        if (user.objectId === objectID) {
+                            console.log("出品者：" + user.trade_user_id);
+                            var user_id = user.trade_user_id;
+                            resolve({
+                                user_id
+                            });
+                        }
+                    })
+                }).catch(err => {
+                    console.log("データ取得エラー");
+                    reject({});
+                });
+            });
+        }
+
+
+        //take_user_idのセット(交換)
+        function takeUserUpdate(objectId, take_user_id) {
+            return new Promise(function(resolve, reject) {
+                console.log("オブジェクトID：" + objectId + "　落札者ID：" + take_user_id);
+                var Trade = ncmb.DataStore("trade");
+
+                Trade.fetchById(objectId)
+                    .then(results => {
+                        console.log("ごめんね" + results.item_name);
+                        results.set('deal_status', "取引成立")
+                            .set('take_user_id', take_user_id)
+                            .update();
+                        resolve({});
+                    }).catch(err => {
+                        // エラー処理
+                        console.log("おかしいよ！：" + err);
+                        reject({});
+                    });
+            });
+        }
+    </script>
+    </script>
 </head>
 
 <body id="prodact_lists" onload="detailLoad()">
-  <!-- Header Start -->
-  <header class="site-header">
-    <div class="wrapper site-header__wrapper">
-      <nav class="nav">
-        <div class="detail_head">
-          <div class="back_button">
-            <a href="javascript:history.back()">
-              <i class="fas fa-angle-left back_size"></i>
-            </a>
-          </div>
-          <div class="page_title">
-            <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">交換品詳細</span>
-            <label for="menu-btn-check" class="menu-btn"><span></span></label>
-            <div style="text-align: left" class="menu-content">
-              <ul>
-                <li><a href="acount.html">アカウント詳細</a></li>
-                <li><a href="message.html">通知</a></li>
-                <li><a href="dealHistory.html">取引履歴</a></li>
-                <li><a href="myGiveItem.html">出品した譲渡品</a></li>
-                <li><a href="myTradeItem.html">出品した交換品</a></li>
-                <li><a onclick="logout_button()">ログアウト</a></li>
-              </ul>
-            </div>
-          </div>
+    <!-- Header Start -->
+    <header class="site-header">
+        <div class="wrapper site-header__wrapper">
+            <nav class="nav">
+                <div class="detail_head">
+                    <div class="back_button">
+                        <a href="javascript:history.back()">
+                            <i class="fas fa-angle-left back_size"></i>
+                        </a>
+                    </div>
+                    <div class="page_title">
+                        <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">交換品詳細</span>
+                        <label for="menu-btn-check" class="menu-btn"><span></span></label>
+                        <div style="text-align: left" class="menu-content">
+                            <ul>
+                                <li><a href="acount.html">アカウント詳細</a></li>
+                                <li><a href="message.html">通知</a></li>
+                                <li><a href="dealHistory.html">取引履歴</a></li>
+                                <li><a href="myGiveItem.html">出品した譲渡品</a></li>
+                                <li><a href="myTradeItem.html">出品した交換品</a></li>
+                                <li><a onclick="logout_button()">ログアウト</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="header_right">
+                </div>
         </div>
-        <div class="header_right">
+        </nav>
         </div>
-    </div>
-    </nav>
-    </div>
-  </header>
-  <!-- Header End -->
+    </header>
+    <!-- Header End -->
 
-  <!-- Body Start -->
-  <div id="detail">
-    <br>
-    <div>
-      <img src="" id="detail_image"/>
-    </div>
-    <br>
-    <div class="container_detail_name" id="name_box">
-      <a id="item_name">商品名</a>
-    </div>
-    <br>
-    <a>交換品の説明</a>
-    <div class="container_detail_info" id="info_box">
-      <a id="item_info">商品説明</a>
-    </div>
-    <br>
-    <a>交換希望品について</a>
-    <div class="container_detail_info" id="info_box">
-      <a id="swap_item_info">交換希望品</a>
-    </div>
-    <br>
-    <a>交換品の情報</a>
-    <table class="deal-detail_table">
-      <tr>
-        <th>カテゴリ</th>
-        <td id="category">値</td>
-      </tr>
-      <tr>
-        <th>商品の状態</th>
-        <td id="item_status">値</td>
-      </tr>
-      <tr>
-        <th>受渡期間</th>
-        <td id="delivery_date">値</td>
-      </tr>
-      <tr>
-        <th>受渡時間帯</th>
-        <td id="delivery_time">値</td>
-      </tr>
-      <tr>
-        <th>受渡場所</th>
-        <td id="location">値</td>
-      </tr>
-    </table>
-    <br>
-    <button type="button" class="plz" id="d_open" onclick="modal_open()"> 欲しい！ </button>
-    <div id="mask" class="hidden"></div>
-    <div><br><br><br><br><br>
-      <!-- Body End -->
-
-      <!-- Footer Start -->
-      <ul class="bottom-menu">
-        <li>
-          <a class="icon-blue" href="index.html">
-            <i class="far fa-list-alt"></i></a>
-        </li>
-        <li>
-          <a href="deal.html"><i class="fas fa-random"></i></a>
-        </li>
-        <li>
-          <a href="insert.html"><i class="fas fa-plus"></i></a>
-        </li>
-        <li>
-          <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
-        </li>
-        <li>
-          <a href="voice.html">
-            <i class="fas fa-bullhorn"></i></a>
-        </li>
-      </ul>
-      <!-- Fotter End -->
-      <!-- モーダルウィンドウ -->
-      <section id="d_modal" class="hidden">
-        <div class="modal_box">
-          <a id="m_item_name">商品名</a>
-          <br>
-          <img src="" id="modal_image"/>
-          <br>
-          <table class="modal_table">
-            <tr>
-              <th class="modal_table">出品者</th>
-              <td id="m_give_userID">値</td>
-            </tr>
-            <tr>
-              <th class="modal_table">受け渡し期間</th>
-              <td id="m_delivery_date">値</td>
-            </tr>
-            <tr>
-              <th class="modal_table">受け渡し時間帯</th>
-              <td id="m_delivery_time">値</td>
-            </tr>
-            <tr>
-              <th class="modal_table">受け渡し場所</th>
-              <td id="m_location">値</td>
-            </tr>
-          </table>
+    <!-- Body Start -->
+    <div id="detail">
+        <br>
+        <div>
+            <img src="" id="detail_image" />
         </div>
         <br>
-        <a>この取引を開始しますか？</a>
-        <div id="d_button">
-          <div id="d_cancel">
-            閉じる
-          </div>
-          <div id="d_ok">
-            進める
-          </div>
+        <div class="container_detail_name" id="name_box">
+            <a id="item_name">商品名</a>
         </div>
-      </section>
+        <br>
+        <a>交換品の説明</a>
+        <div class="container_detail_info" id="info_box">
+            <a id="item_info">商品説明</a>
+        </div>
+        <br>
+        <a>交換希望品について</a>
+        <div class="container_detail_info" id="info_box">
+            <a id="swap_item_info">交換希望品</a>
+        </div>
+        <br>
+        <a>交換品の情報</a>
+        <table class="deal-detail_table">
+            <tr>
+                <th>カテゴリ</th>
+                <td id="category">値</td>
+            </tr>
+            <tr>
+                <th>商品の状態</th>
+                <td id="item_status">値</td>
+            </tr>
+            <tr>
+                <th>受渡期間</th>
+                <td id="delivery_date">値</td>
+            </tr>
+            <tr>
+                <th>受渡時間帯</th>
+                <td id="delivery_time">値</td>
+            </tr>
+            <tr>
+                <th>受渡場所</th>
+                <td id="location">値</td>
+            </tr>
+        </table>
+        <br>
+        <button type="button" class="plz" id="d_open" onclick="modal_open()"> 欲しい！ </button>
+        <div id="mask" class="hidden"></div>
+        <div><br><br><br><br><br>
+            <!-- Body End -->
+
+            <!-- Footer Start -->
+            <ul class="bottom-menu">
+                <li>
+                    <a class="icon-blue" href="index.html">
+                        <i class="far fa-list-alt"></i></a>
+                </li>
+                <li>
+                    <a href="deal.html"><i class="fas fa-random"></i></a>
+                </li>
+                <li>
+                    <a href="insert.html"><i class="fas fa-plus"></i></a>
+                </li>
+                <li>
+                    <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
+                </li>
+                <li>
+                    <a href="voice.html">
+                        <i class="fas fa-bullhorn"></i></a>
+                </li>
+            </ul>
+            <!-- Fotter End -->
+            <!-- モーダルウィンドウ -->
+            <section id="d_modal" class="hidden">
+                <div class="modal_box">
+                    <a id="m_item_name">商品名</a>
+                    <br>
+                    <img src="" id="modal_image" />
+                    <br>
+                    <table class="modal_table">
+                        <tr>
+                            <th class="modal_table">出品者</th>
+                            <td id="m_trade_userID">値</td>
+                        </tr>
+                        <tr>
+                            <th class="modal_table">受け渡し期間</th>
+                            <td id="m_delivery_date">値</td>
+                        </tr>
+                        <tr>
+                            <th class="modal_table">受け渡し時間帯</th>
+                            <td id="m_delivery_time">値</td>
+                        </tr>
+                        <tr>
+                            <th class="modal_table">受け渡し場所</th>
+                            <td id="m_location">値</td>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+                <a>この取引を開始しますか？</a>
+                <div id="d_button">
+                    <div id="d_cancel">
+                        閉じる
+                    </div>
+                    <div id="d_ok">
+                        進める
+                    </div>
+                </div>
+            </section>
 </body>
 
 </html>
