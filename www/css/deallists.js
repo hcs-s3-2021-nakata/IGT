@@ -199,7 +199,7 @@ async function deal_give_search() {
 async function deal_trade_lists() {
     var Trade = ncmb.DataStore("trade");
     var myId = getCurrentUserId();
-    var subquery1 = Trade.equalTo("give_user_id", myId);
+    var subquery1 = Trade.equalTo("trade_user_id", myId);
     var subquery2 = Trade.equalTo("take_user_id", myId);
     Trade.equalTo("deal_status", "取引成立")
         .or([subquery1, subquery2])
@@ -367,7 +367,7 @@ async function history_give_search() {
 async function history_trade_lists() {
     var Trade = ncmb.DataStore("trade");
     var myId = getCurrentUserId();
-    var subquery1 = Trade.equalTo("give_user_id", myId);
+    var subquery1 = Trade.equalTo("trade_user_id", myId);
     var subquery2 = Trade.equalTo("take_user_id", myId);
     Trade.equalTo("deal_status", "取引成立")// 正式には取引完了。
         .or([subquery1, subquery2])
