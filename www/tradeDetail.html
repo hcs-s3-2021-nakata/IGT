@@ -46,12 +46,15 @@
 
         // 取得した情報で画面を上書き
         function detailLoad() {
+            console.log("detailLoad run");
             var objectID = location.search.replace('?', '');
             var Trade = ncmb.DataStore("trade");
             Trade.equalTo("objectId", objectID)
                 .fetchAll()
                 .then(function(results) {
+                    console.log("objectId match = " + objectID);
                     var object = results[0];
+                    console.log("function boot = " + object.trade_user_id);
                     getUserInfo(object.trade_user_id).then(function(trade_user_names) {
                         console.log("テスト成功" + trade_user_names);
                         // 値の書き換え

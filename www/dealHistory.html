@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -7,84 +8,90 @@
     <script src="components/loader.js"></script>
     <link rel="stylesheet" href="components/loader.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/deal.css">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script type="text/javascript" src="css/logout.js"></script>
+    <script type="text/javascript" src="css/deallists.js"></script>
     <script>
-      
     </script>
 </head>
-<body id="prodact_lists">
-	<!-- Header Start -->
+
+<body id="prodact_lists" onload="deallists_load()">
+    <!-- <body id="prodact_lists"> -->
+    <!-- Header Start -->
     <header class="site-header">
-      <div class="wrapper site-header__wrapper">
-        <nav class="nav">
-          <div class="detail_head">
-            <div class="back_button">
-              <a href="javascript:history.back()">
-                <i class="fas fa-angle-left back_size"></i>
-              </a>
-            </div>
-            <div class="page_title">
-              <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">取引履歴</span>
-              <label for="menu-btn-check" class="menu-btn"><span></span></label>
-              <div style="text-align: left" class="menu-content">
-        <ul>
-            <li><a href="acount.html">アカウント詳細</a></li>
-                  <li><a href="message.html">通知</a></li>
-                  <li><a href="dealHistory.html">取引履歴</a></li>
-                  <li><a href="myGiveItem.html">出品した譲渡品</a></li>
-                  <li><a href="myTradeItem.html">出品した交換品</a></li>
-                  <li><a onclick="logout_button()">ログアウト</a></li>
-          </ul>
+        <div class="wrapper site-header__wrapper">
+            <nav class="nav">
+                <div class="detail_head">
+                    <div class="back_button">
+
+                    </div>
+                    <div class="page_title">
+                        <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">取引履歴</span>
+                        <label for="menu-btn-check" class="menu-btn"><span></span></label>
+                        <div style="text-align: left" class="menu-content">
+                            <ul>
+                                <li><a href="acount.html">アカウント詳細</a></li>
+                                <li><a href="message.html">通知</a></li>
+                                <li><a href="dealHistory.html">取引履歴</a></li>
+                                <li><a href="myGiveItem.html">出品した譲渡品</a></li>
+                                <li><a href="myTradeItem.html">出品した交換品</a></li>
+                                <li><a onclick="logout_button()">ログアウト</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="header_right">
+                    </div>
+                </div>
+            </nav>
         </div>
-            </div>
-            <div class="header_right">
-            </div>
-          </div>
-        </nav>
-      </div>
     </header>
     <!-- Header End -->
 
     <!-- Body Start -->
-    <div class="container" id="item_box">
-      <div class="container_parent">
-        <div class="container_left">    
-          <a>画像</a>
-        </div>
-        <div class="container_center">    
-          <a id="item_name">ラブラビットのぬいぐるみ</a>
-        </div>
-        <div class="container_right">
-          <a href="giveDetail.html">
-            <i class="fas fa-angle-right size"></i>
-          </a>
-        </div>
-      </div>
+    <br>
+    <div>
+        <a>完了済の取引が表示されます</a>
     </div>
+    <br>
+    <details class="deallist_btn">
+        <summary>譲渡履歴</summary>
+        <div id="itemlist_give"></div>
+        <button onclick="g_addload()">もっと読み込む</button>
+    </details>
+    <br>
+    <details class="deallist_btn">
+        <summary>交換履歴</summary>
+        <div id="itemlist_trade"></div>
+        <button onclick="t_addload()">もっと読み込む</button>
+    </details>
+    <br>
+    <br>
+    <br>
     <!-- Body End -->
 
     <!-- Footer Start -->
     <ul class="bottom-menu">
-    <li>
-        <a href="index.html">
-	<i class="far fa-list-alt"></i></a>
-    </li>
-    <li>
-        <a href="deal.html"><i class="fas fa-random"></i></a>
-    </li>
-    <li>
- 	<a href="insert.html"><i class="fas fa-plus"></i></a>
-    </li>
-    <li>
-        <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
-    </li>
-    <li>
-        <a href="voice.html">
-	<i class="fas fa-bullhorn"></i></a>
-    </li>
-</ul>
+        <li>
+            <a href="index.html">
+                <i class="far fa-list-alt"></i></a>
+        </li>
+        <li>
+            <a class="icon-blue" href="#"><i class="fas fa-random"></i></a>
+        </li>
+        <li>
+            <a href="insert.html"><i class="fas fa-plus"></i></a>
+        </li>
+        <li>
+            <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
+        </li>
+        <li>
+            <a href="voice.html">
+                <i class="fas fa-bullhorn"></i></a>
+        </li>
+    </ul>
     <!-- Fotter End -->
+</body>
+
 </html>
