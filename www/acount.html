@@ -53,7 +53,7 @@
           if (item.mailAddress !== null) {
             document.getElementById('mailAddress').innerHTML = "<span class='acountErrMsg' id='mailErr'></span><input id='mailAddressInput' class='acount' type='text' placeholder='wine_window@gmail.com' value=" + item.mailAddress + ">";
           }else{
-            document.getElementById('mailAddress').innerHTML = "<span class='acountErrMsg' id='mailErr'></span><input id='mailAddressInput' class='acount' type='text' placeholder='wine_window@gmail.com' value=' '>";
+            document.getElementById('mailAddress').innerHTML = "<span class='acountErrMsg' id='mailErr'></span><input id='mailAddressInput' class='acount' type='text' placeholder='wine_window@gmail.com' value=''>";
           }
         })
         .catch(e => {
