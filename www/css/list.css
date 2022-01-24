@@ -1,0 +1,30 @@
+.search_container{
+  box-sizing: border-box;
+  position: relative;
+  border: 1px solid #c0a2c7;
+  background-color: #c0a2c7;
+  padding: 3px 10px;
+  border-radius: 20px;
+  height: 2.3em;
+  width: 230px;
+}
+.search_container input[type="text"]{
+  border: none;
+  border-radius: 5px;
+  height: 2.0em;
+}
+.search_container input[type="text"]:focus {
+  outline: 0;
+}
+.search_container input[type="button"]{
+  cursor: pointer;
+  font-family: FontAwesome;
+  border: none;
+  border-radius: 20%;
+  background: #832742;
+  color: #fff;
+  outline : none;
+  width: 2.0em;
+  height: 2.0em;
+}
+
