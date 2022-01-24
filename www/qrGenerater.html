@@ -113,8 +113,9 @@
             .catch(function(err){
                 console.log(err);
             });
+        localStorage.setItem("dealflg","give");
         await wait(0.5);
-        document.location.href = 'giveDetail.html?'+ object_id;
+        document.location.href = 'dealDetail.html?'+ object_id;
       }
       
       if (flag == "trade") {
@@ -130,7 +131,8 @@
                 console.log(err);
             });
         await wait(0.5);
-        document.location.href = 'tradeDetail.html?'+ object_id;
+        localStorage.setItem("dealflg","trade");
+        document.location.href = 'dealDetail.html?'+ object_id;
       }
     }
   </script>
