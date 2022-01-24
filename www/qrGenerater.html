@@ -20,7 +20,7 @@
   <script type="text/JavaScript">
     // QRコードを生成するjquery...? 
     $(function(){
-      if(flag == 'give'){
+      if(localStorage.getItem("flag") == 'give'){
           console.log("giveのQR生成");
         var objectid = localStorage.getItem("objectID");
         var give = localStorage.getItem("give_userID"); 
@@ -28,7 +28,7 @@
         var take = localStorage.getItem("take_userID"); 
         var qrtext = "objectId:" + objectid + ",flag:" +  flag + ",giveId:" + give + ",takeId:" + take;
       }else{
-          console.log("tradeのQR生成");
+          console.log("tradeのQR生成" + localStorage.getItem("flag"));
         var objectid = localStorage.getItem("objectID");
         var trade = localStorage.getItem("trade_userID"); 
         var flag = localStorage.getItem("flag");
