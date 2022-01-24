@@ -1,0 +1,666 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/deal.css">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="text/javascript" src="css/logout.js"></script>
+    <script>
+        // APIキーの設定とSDK初期化
+        // API key.
+        var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+        var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+        // SDK initialization.
+        var ncmb = new NCMB(applicationKey, clientKey);
+        var reader = new FileReader();
+        // 定義
+        var give_user_id = "";
+        var take_user_id = "";
+
+        const wait = (sec) => { // タイマ
+            return new Promise((resolve, reject) => {
+                setTimeout(resolve, sec * 1000);
+                //setTimeout(() => {reject(new Error("エラー！"))}, sec*1000);
+            });
+        };
+
+        // 画像を読み込む
+        function setImage() {
+            reader.onload = function(e) {
+                var dataUrl = reader.result;
+                document.getElementById("detail_image").src = dataUrl;
+                document.getElementById("modal_image").src = dataUrl;
+            }
+        }
+
+        // 画像を読み込む
+        function downloadImage(fileName) {
+            // ダウンロード（データ形式をblobを指定）
+            ncmb.File.download(fileName, "blob")
+                .then(function(blob) {
+                    // ファイルリーダーにデータを渡す
+                    reader.readAsDataURL(blob);
+                })
+                .catch(function(err) {
+                    console.error(err);
+                })
+        }
+
+        // detailLoad
+        function detailLoad() {
+            var dealflg = localStorage.getItem("dealflg");
+
+            if (dealflg == "give") {
+                giveDetailLoad();
+            } else if (dealflg == "trade") {
+                tradeDetailLoad();
+            } else {
+                alert("ERROR");
+            }
+        }
+
+        // 取得した情報で画面を上書き
+        function giveDetailLoad() {
+            var objectID = location.search.replace('?', '');
+            console.log("とってきたもの"+objectID);
+            var Give = ncmb.DataStore("give");
+            Give.equalTo("objectId", objectID)
+                .fetchAll()
+                .then(function(results) {
+                    console.log("とってきたもの２"+objectID);
+                    var object = results[0];
+                    // 値の書き換え
+                    var deal_type = changeDealtype();
+                    changeUserName(object.give_user_id);
+                    var category = changeCategory(object.category);
+                    var item_status = changeItemStatus(object.item_status);
+                    var delivery_time = changeDtime(object.delivery_time);
+                    var location = changeLocation(object.location);
+
+                    downloadImage(object.item_image);
+                    setImage(object.item_image);
+
+                    document.getElementById('dealflg').innerHTML = deal_type;
+                    document.getElementById('item_name').innerHTML = object.item_name;
+                    document.getElementById('item_info').innerHTML = object.item_info.replace(/\n/g, '<br>');
+                    document.getElementById('category').innerHTML = category;
+                    document.getElementById('item_status').innerHTML = item_status;
+                    document.getElementById('delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
+                    document.getElementById('delivery_time').innerHTML = delivery_time;
+                    document.getElementById('location').innerHTML = location;
+                    // document.location.href = 'qrGenerater.html?' + objectID;
+                    // モーダルの書き換え
+                    console.log("とってきたもの３"+objectID);
+                    // document.getElementById('qrDisp').innerHTML = "<a href='qrDisplay.html?' "+ objectID + "><button type='button' class='showing'><img id='deal-detail_button' src='img/qr.png'><br><b>表示する</b></button></a>";
+
+                    document.getElementById('qrDisp').innerHTML = "<a onclick='getObjectID()'><button type='button' class='showing'><img id='deal-detail_button' src='img/qr.png'><br><b>表示する</b></button></a>";
+
+                    document.getElementById('m_item_name').innerHTML = object.item_name;
+                    document.getElementById('m_category').innerHTML = category;
+                    document.getElementById('m_item_status').innerHTML = item_status;
+                    document.getElementById('m_delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
+                    document.getElementById('m_delivery_time').innerHTML = delivery_time;
+                    document.getElementById('m_location').innerHTML = location;
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
+        }
+
+        // QRコード表示画面にObjectIdを受け渡す
+        function getObjectID(){
+            var objectID = location.search.replace('?', '');
+            console.log("とってきたやつ"+objectID);
+            document.location.href = 'qrGenerater.html?' + objectID;
+        }
+
+        // 取得した情報で画面を上書き
+        function tradeDetailLoad() {
+            var objectID = location.search.replace('?', '');
+            var Trade = ncmb.DataStore("trade");
+            Trade.equalTo("objectId", objectID)
+                .fetchAll()
+                .then(function(results) {
+                    var object = results[0];
+                    // 値の書き換え
+                    var deal_type = changeDealtype();
+                    changeUserName(object.give_user_id);
+                    var category = changeCategory(object.category);
+                    var item_status = changeItemStatus(object.item_status);
+                    var delivery_time = changeDtime(object.delivery_time);
+                    var location = changeLocation(object.location);
+
+                    downloadImage(object.item_image);
+                    setImage(object.item_image);
+
+                    document.getElementById('dealflg').innerHTML = deal_type;
+                    document.getElementById('item_name').innerHTML = object.item_name;
+                    document.getElementById('item_info').innerHTML = object.item_info.replace(/\n/g, '<br>');
+                    document.getElementById('category').innerHTML = category;
+                    document.getElementById('item_status').innerHTML = item_status;
+                    document.getElementById('delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
+                    document.getElementById('delivery_time').innerHTML = delivery_time;
+                    document.getElementById('location').innerHTML = location;
+
+                    // モーダルの書き換え
+                    document.getElementById('m_item_name').innerHTML = object.item_name;
+                    document.getElementById('m_category').innerHTML = category;
+                    document.getElementById('m_item_status').innerHTML = item_status;
+                    document.getElementById('m_delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
+                    document.getElementById('m_delivery_time').innerHTML = delivery_time;
+                    document.getElementById('m_location').innerHTML = location;
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
+        }
+
+        // 取引種別を書き換える
+        function changeDealtype() {
+            var deal_type = localStorage.getItem("dealflg");
+            if (deal_type == "give") {
+                deal_type = "譲渡品";
+            } else {
+                deal_type = "交換品";
+            }
+            return deal_type;
+        }
+
+        // 出品者名を書き換える
+        function changeUserName(userName) {
+            var name = "name";
+            var User = ncmb.User;
+            var item = User
+                .fetchById(userName) //オブジェクトIDを指定
+                .then(item => {
+                    name = item.user_class + item.user_number + item.user_account_name;
+                    console.log(name);
+                    document.getElementById('userName').innerHTML = name;
+                    document.getElementById('m_userName').innerHTML = name;
+                })
+        }
+
+        // カテゴリーを書き換える
+        function changeCategory(category) {
+            switch (category) {
+                case '1':
+                    category = "おもちゃ・ゲーム";
+                    break;
+                case '2':
+                    category = "本・テキスト";
+                    break;
+                case '3':
+                    category = "音楽・ＤＶＤ";
+                    break;
+                case '4':
+                    category = "服・コスメ";
+                    break;
+                case '5':
+                    category = "キッチン";
+                    break;
+                case '6':
+                    category = "スポーツ";
+                    break;
+                case '7':
+                    category = "PC・スマホ用品";
+                    break;
+                case '100':
+                    category = "その他";
+                    break;
+                default:
+                    break;
+            }
+            return category;
+        }
+
+        // 商品状態を書き換える
+        function changeItemStatus(item_status) {
+            switch (item_status) {
+                case '1':
+                    item_status = "新品";
+                    break;
+                case '2':
+                    item_status = "ほぼ新品";
+                    break;
+                case '3':
+                    item_status = "多少の傷あり";
+                    break;
+                case '4':
+                    item_status = "傷・汚れあり";
+                    break;
+                case '5':
+                    item_status = "状態が悪い";
+                    break;
+                default:
+                    break;
+            }
+            return item_status;
+        }
+
+        // 受け渡し時間帯を書き換える
+        function changeDtime(delivery_time) {
+            switch (delivery_time) {
+                case '1':
+                    delivery_time = "１コマ目終了後";
+                    break;
+                case '2':
+                    delivery_time = "昼休み";
+                    break;
+                case '3':
+                    delivery_time = "３コマ目終了後";
+                    break;
+                case '4':
+                    delivery_time = "４コマ目終了後";
+                    break;
+                default:
+                    break;
+            }
+            return delivery_time;
+        }
+
+        // 受け渡し場所を書き換える
+        function changeLocation(location) {
+            switch (location) {
+                case '1':
+                    location = "本校舎3Fホール";
+                    break;
+                case '2':
+                    location = "本校舎4Fホール";
+                    break;
+                case '3':
+                    location = "本校舎5F";
+                    break;
+                case '4':
+                    location = "本校舎6Fホール";
+                    break;
+                case '5':
+                    location = "本校舎7F";
+                    break;
+                case '6':
+                    location = "本校舎8F";
+                    break;
+                case '7':
+                    location = "2号館入口";
+                    break;
+                case '8':
+                    location = "3号館入口";
+                    break;
+                case '9':
+                    location = "3号館ホール";
+                    break;
+                case '100':
+                    location = "その他";
+                    break;
+                default:
+                    break;
+            }
+            return location;
+        }
+    </script>
+
+    <script>
+        // 詳細画面のモーダル表示用スクリプト
+        function modal_open() {
+            const open = document.getElementById('d_open');
+            const ok = document.getElementById('d_ok');
+            const close = document.getElementById('d_cancel');
+            const modal = document.getElementById('d_modal');
+            const mask = document.getElementById('mask');
+
+
+            open.addEventListener('click', () => {
+                // 表示
+                modal.classList.remove('hidden');
+                mask.classList.remove('hidden');
+            });
+
+            ok.addEventListener('click', () => {
+                currentIdCompare();
+            });
+
+            close.addEventListener('click', () => {
+                modal.classList.add('hidden');
+                mask.classList.add('hidden');
+            });
+
+            mask.addEventListener('click', () => {
+                close.click();
+            });
+        }
+
+        // OKの処理の中身
+        async function currentIdCompare() {
+            var objectID = location.search.replace('?', '');
+            getDealersId(objectID);
+            /*currentUserIdの取得*/
+            var current_user_id = getCurrentUserId();
+            console.log("ゲットした自分のID:" + current_user_id);
+            await wait(1);
+
+
+            if (current_user_id == give_user_id) {
+                console.log(current_user_id + " " + give_user_id);
+                console.log("俺は出品者だぜ");
+            } else if (current_user_id == take_user_id) {
+                console.log(current_user_id + " " + take_user_id);
+                console.log("私は落札者よ");
+                takeUserUpdate();
+                await wait(1);
+                document.location.href = 'deal.html';
+            } else {
+                console.log(current_user_id + " " + give_user_id + " " + take_user_id);
+                console.log("じゃあお前は誰なんだよ");
+            }
+        }
+
+
+        //カレントユーザーのID取得
+        function getCurrentUserId() {
+            // カレントユーザー情報の取得
+            var currentUser = ncmb.User.getCurrentUser();
+            console.log("currentUser:" + currentUser);
+            if (currentUser != null) {
+                console.log("ユーザー: " + currentUser.get("userName"));
+                current_user_id = currentUser.get("objectId");
+                return current_user_id;
+            } else {
+                console.log("未ログインまたは取得に失敗");
+                return null;
+            }
+        }
+
+        //出品者、落札者のユーザIDを取得しグローバル変数に保存
+        function getDealersId(objectId) {
+            var dealflg = localStorage.getItem("dealflg");
+            if (dealflg == "give") {
+                var Give = ncmb.DataStore("give");
+                Give.equalTo("objectId", objectId)
+                    .fetchAll()
+                    .then(function(results) {
+                        var object = results[0];
+
+                        give_user_id = object.give_user_id;
+                        take_user_id = object.take_user_id;
+                    })
+            } else if (dealflg == "trade") {
+                var Trade = ncmb.DataStore("trade");
+                Trade.equalTo("objectId", objectId)
+                    .fetchAll()
+                    .then(function(results) {
+                        var object = results[0];
+
+                        give_user_id = object.give_user_id;
+                        take_user_id = object.take_user_id;
+                    })
+            } else {
+                alert("ERROR");
+            }
+
+        }
+
+        //take_user_idと取引状態を書き換える（中止）
+        function takeUserUpdate() {
+            var objectId = location.search.replace('?', '');
+            console.log("cha " + objectId);
+
+            var dealflg = localStorage.getItem("dealflg");
+            if (dealflg == "give") {
+                var Give = ncmb.DataStore("give");
+                Give.equalTo("objectId", objectId)
+                    .fetch()
+                    .then(function(results) {
+                        results.set('deal_status', "成立待ち")
+                            .set('take_user_id', null);
+                        results.update();
+                    });
+            } else if (dealflg == "trade") {
+                var Trade = ncmb.DataStore("trade");
+                Trade.equalTo("objectId", objectId)
+                    .fetch()
+                    .then(function(results) {
+                        results.set('deal_status', "成立待ち")
+                            .set('take_user_id', null);
+                        results.update();
+                    });
+            } else {
+                alert("ERROR");
+            }
+
+        }
+
+        //取引を削除
+        async function dealDelete() {
+            var objectId = location.search.replace('?', '');
+            console.log(objectId);
+
+            var dealflg = localStorage.getItem("dealflg");
+            if (dealflg == "give") {
+                var Give = ncmb.DataStore("give");
+                Give.equalTo("objectId", objectId)
+                    .fetch()
+                    .then(function(result) {
+                        console.log(result); // true
+                        result.delete();
+                    })
+                    .catch(function(err) {
+                        console.log(err);
+                    });
+            } else if (dealflg == "trade") {
+                var Trade = ncmb.DataStore("trade");
+                Trade.equalTo("objectId", objectId)
+                    .fetch()
+                    .then(function(result) {
+                        console.log(result); // true
+                        result.delete();
+                    })
+                    .catch(function(err) {
+                        console.log(err);
+                    });
+            } else {
+                alert("ERROR");
+            }
+
+        }
+    </script>
+
+    <script>
+        // 取引中止時の選択肢（モーダル）
+        /*
+          抱えているタスク
+          取引中止の処理系（upload）
+        */
+        function cancelmodal_open() {
+            const open = document.getElementById('d_ok');
+            const dealdelete = document.getElementById('d_delete');
+            const change = document.getElementById('d_change');
+            const close = document.getElementById('d_close');
+            const modal = document.getElementById('cancel_modal');
+            const mask2 = document.getElementById('mask2');
+
+            open.addEventListener('click', () => {
+                // 表示
+                modal.classList.remove('hidden');
+                mask2.classList.remove('hidden');
+            });
+
+            dealdelete.addEventListener('click', () => {
+                del();
+            });
+
+            change.addEventListener('click', () => {
+                cha();
+            });
+
+            close.addEventListener('click', () => {
+                modal.classList.add('hidden');
+                mask2.classList.add('hidden');
+            });
+
+            mask2.addEventListener('click', () => {
+                close.click();
+            });
+        }
+
+        // dealdeleteの中身
+        async function del() {
+            dealDelete();
+            await wait(1);
+            document.location.href = 'deal.html';
+        }
+
+        // changeの中身
+        async function cha() {
+            takeUserUpdate();
+            await wait(1);
+            document.location.href = 'deal.html';
+        }
+    </script>
+
+    <script>
+        /*バーコードスキャン(仮)*/
+        let options = {
+            preferFrontCamera: false,
+            showFlipCameraButton: true,
+            showTorchButton: true,
+            torchOn: true, // Android only
+            saveHistory: false, // Android only
+            prompt: "スキャンエリアの中にバーコードを入れてください", // Android
+            resultDisplayDuration: 500, // Android only
+            formats: "QR_CODE,EAN_13,CODE_39",
+            orientation: "unset", // Android only (portrait|landscape)
+            disableAnimations: true, // iOS
+            disableSuccessBeep: false // iOS and Android
+        }
+
+        function onSuccess(result) {
+            alert("結果: " + result.text + "\n" +
+                "バーコードの種類: " + result.format + "\n" +
+                "スキャンが中断されたかどうか: " + result.cancelled);
+        }
+
+        function onError(error) {
+            alert("スキャン失敗: " + error);
+        }
+
+        function scan() {
+            cordova.plugins.barcodeScanner.scan(
+                onSuccess,
+                onError,
+                options
+            );
+        }
+    </script>
+</head>
+
+<body id="prodact_lists" onload="detailLoad()">
+    <!-- Header Start -->
+    <header class="site-header">
+        <div class="wrapper site-header__wrapper">
+            <nav class="nav">
+                <div class="detail_head">
+                    <div class="back_button">
+                        <a href="javascript:history.back()">
+                            <i class="fas fa-angle-left back_size"></i>
+                        </a>
+                    </div>
+                    <div class="page_title">
+                        <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">取引詳細</span>
+                        <label for="menu-btn-check" class="menu-btn"><span></span></label>
+                        <div style="text-align: left" class="menu-content">
+                            <ul>
+                                <li><a href="acount.html">アカウント詳細</a></li>
+                                <li><a href="message.html">通知</a></li>
+                                <li><a href="dealHistory.html">取引履歴</a></li>
+                                <li><a href="myGiveItem.html">出品した譲渡品</a></li>
+                                <li><a href="myTradeItem.html">出品した交換品</a></li>
+                                <li><a onclick="logout_button()">ログアウト</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="header_right">
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- Header End -->
+
+    <!-- Body Start -->
+    <h3 id="dealflg">取引種別</h3>
+    <h3 id="item_name">商品名</h3>
+    <div id="img-deal">
+        <img class="deal-detail" src="" id="detail_image">
+    </div><br>
+
+    <table class="deal-detail_table">
+        <tr>
+            <th>出品者</th>
+            <td id="userName">-</td>
+        </tr>
+        <tr>
+            <th>カテゴリー</th>
+            <td id="category">-</td>
+        </tr>
+        <tr>
+            <th>商品の状態</th>
+            <td id="item_status">-</td>
+        </tr>
+        <tr>
+            <th>受け渡し場所</th>
+            <td id="location">-</td>
+        </tr>
+        <tr>
+            <th>受け渡し期間</th>
+            <td id="delivery_date">-</td>
+        </tr>
+        <tr>
+            <th>受け渡し時間</th>
+            <td id="delivery_time">-</td>
+        </tr>
+    </table>
+
+    <br>
+    <div class="deal-detail">
+        <label>商品説明</label>
+        <div class="deal-detail_info">
+            <a id="item_info">商品説明</a>
+        </div>
+    </div>
+<br><br><br>
+    
+    <!-- Body End -->
+
+    <!-- Footer Start -->
+    <ul class="bottom-menu">
+        <li>
+            <a href="index.html">
+                <i class="far fa-list-alt"></i></a>
+        </li>
+        <li>
+            <a class="icon-blue" href="deal.html"><i class="fas fa-random"></i></a>
+        </li>
+        <li>
+            <a href="insert.html"><i class="fas fa-plus"></i></a>
+        </li>
+        <li>
+            <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
+        </li>
+        <li>
+            <a href="voice.html">
+                <i class="fas fa-bullhorn"></i></a>
+        </li>
+    </ul>
+    <!-- Fotter End -->
+
+    
+</body>
+
+</html>

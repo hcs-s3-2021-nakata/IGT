@@ -308,7 +308,7 @@ async function history_give_lists() {
     var myId = getCurrentUserId();
     var subquery1 = Give.equalTo("give_user_id", myId);
     var subquery2 = Give.equalTo("take_user_id", myId);
-    Give.equalTo("deal_status", "取引成立")// 正式には取引完了。
+    Give.equalTo("deal_status", "取引完了")// 正式には取引完了。
         .or([subquery1, subquery2])
         .fetchAll()
         .then(function (results) {
@@ -318,7 +318,7 @@ async function history_give_lists() {
                 var objectId = object.objectId;
                 // 商品の箱を追加していく
                 var itemlist_element = document.getElementById('itemlist_give');
-                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a  onclick="g_link()" href="dealDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a  onclick="g_link()" href="historyDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
                 g_imgs[i] = object.item_image;
             }
         })
@@ -369,7 +369,7 @@ async function history_trade_lists() {
     var myId = getCurrentUserId();
     var subquery1 = Trade.equalTo("trade_user_id", myId);
     var subquery2 = Trade.equalTo("take_user_id", myId);
-    Trade.equalTo("deal_status", "取引成立")// 正式には取引完了。
+    Trade.equalTo("deal_status", "取引完了")// 正式には取引完了。
         .or([subquery1, subquery2])
         .fetchAll()
         .then(function (results) {
@@ -379,7 +379,7 @@ async function history_trade_lists() {
                 var objectId = object.objectId;
                 // 商品の箱を追加していく
                 var itemlist_element = document.getElementById('itemlist_trade');
-                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a  onclick="t_link()" href="dealDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a  onclick="t_link()" href="historyDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
                 t_imgs[i] = object.item_image;
             }
         })
