@@ -308,7 +308,7 @@ async function history_give_lists() {
     var myId = getCurrentUserId();
     var subquery1 = Give.equalTo("give_user_id", myId);
     var subquery2 = Give.equalTo("take_user_id", myId);
-    Give.equalTo("deal_status", "")
+    Give.equalTo("deal_status", "取引成立")// 正式には取引完了。
         .or([subquery1, subquery2])
         .fetchAll()
         .then(function (results) {
@@ -369,7 +369,7 @@ async function history_trade_lists() {
     var myId = getCurrentUserId();
     var subquery1 = Trade.equalTo("give_user_id", myId);
     var subquery2 = Trade.equalTo("take_user_id", myId);
-    Trade.equalTo("deal_status", "取引成立")
+    Trade.equalTo("deal_status", "取引成立")// 正式には取引完了。
         .or([subquery1, subquery2])
         .fetchAll()
         .then(function (results) {
