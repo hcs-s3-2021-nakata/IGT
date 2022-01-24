@@ -92,9 +92,53 @@ button.stop{
 }
 
 /* こっから下取引一覧画面の追加分 */
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP');
+summary {
+    font-family: 'Noto Sans JP', sans-serif;
+	list-style: none;
+	position: relative;
+	margin-bottom: 10px;
+	padding: 20px 70px 20px 30px;
+	cursor: pointer;
+    color: #ffffff;
+    font-weight: bold;
+	background-color: #832742;
+}
 
-button.deallist_btn{
-  width: 100%;
+summary::-webkit-details-marker {
+	display: none;
+}
+
+summary:hover,
+details[open] summary {
+	background-color: #c0a2c7;
+}
+
+summary::after {
+	content: '+';
+	position: absolute;
+	top: 50%;
+	right: 30px;
+	transform: translateY(-50%);
+	transition: transform 0.5s;
+	font-size: 30px;
+}
+
+details[open] summary::after {
+	transform: translateY(-50%) rotate(45deg);
+}
+
+.answer{
+	padding: 5px 10px;
+}
+
+details[open] .answer {
+	animation: fadein 1s ease;
+}
+
+@keyframes fadein {
+	0% { opacity: 0; }
+	100% { opacity: 1; }
 }
 
 #deallist_box{

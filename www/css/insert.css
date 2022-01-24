@@ -1,4 +1,5 @@
-/*ボタンベース*/
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP');
+
 
 /*画像アップロードボタン*/
 .btn-flat-border {
@@ -22,10 +23,12 @@
   color: white;
 }
 label#chooseImg {
-  color: white;  
-  background-color: red;
-  padding: 6px;
-  border-radius: 12px;
+  font-family: 'Noto Sans JP', sans-serif;
+  color:#efefef;/*マウスオーバー時の色*/
+  background-color:#c0a2c7;
+  padding: 20px;
+  width: 200px;
+  border-radius: 24px;
 }
 
 
@@ -113,8 +116,6 @@ button span {
   background-color:#fcfcfc;
   padding: 0px 0px 10px;
 }
-
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP');
 
 /*詳細画面見るボタン*/
 #insert-fix{

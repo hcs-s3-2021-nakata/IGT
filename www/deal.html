@@ -13,12 +13,9 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script type="text/javascript" src="css/logout.js"></script>
   <script type="text/javascript" src="css/deallists.js"></script>
-  <script>
-  </script>
 </head>
 
 <body id="prodact_lists" onload="deallists_load()">
-  <!-- <body id="prodact_lists"> -->
   <!-- Header Start -->
   <header class="site-header">
     <div class="wrapper site-header__wrapper">
@@ -50,17 +47,23 @@
   <!-- Header End -->
 
   <!-- Body Start -->
-
-  <details class="deallist_btn">
+  <br>
+  <details>
     <summary>譲渡取引の一覧</summary>
-    <div id="itemlist_give"></div>
-    <button onclick="g_addload()">もっと読み込む</button>
+    <div class="answer">
+        <div id="itemlist_give"></div>
+        <br>
+        <button class="more btn--radius" onclick="g_addload()">もっと読み込む</button>
+    </div>
 </details>
   <br>
-  <details class="deallist_btn">
+  <details>
     <summary>交換取引の一覧</summary>
-    <div id="itemlist_trade"></div>
-    <button onclick="t_addload()">もっと読み込む</button>
+    <div class="answer">
+        <div id="itemlist_trade"></div>
+        <br>
+        <button class="more btn--radius" onclick="t_addload()">もっと読み込む</button>
+    </div>
 </details>
   <br>
   <br>
