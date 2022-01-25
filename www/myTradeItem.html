@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -8,84 +9,106 @@
     <link rel="stylesheet" href="components/loader.css">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-      <script type="text/javascript" src="css/logout.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="text/javascript" src="css/logout.js"></script>
+    <script type="text/javascript" src="css/deallists.js"></script>
     <script>
-      
+        // ページの読み込み
+        function myTradelists_load() {
+            deal_trade_lists();
+        }
+
+        // 商品のリストを展開する
+        async function deal_trade_lists() {
+            var Trade = ncmb.DataStore("trade");
+            var myId = getCurrentUserId();
+            // Trade.equalTo("deal_status", "取引成立");
+            Trade.equalTo("trade_user_id", myId)
+                .fetchAll()
+                .then(function(results) {
+                    for (var i = results.length - t_cntSwitch - (t_cnt * 4); i > results.length - 4 * (t_cnt + 1); i--) {
+                        var object = results[i];
+                        var image_id = "t_image" + (i + 1);
+                        var objectId = object.objectId;
+                        // 商品の箱を追加していく
+                        var itemlist_element = document.getElementById('itemlist_trade');
+                        itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a  onclick="t_link()" href="dealDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+                        t_imgs[i] = object.item_image;
+                    }
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
+            cnt = t_cnt;
+            var flg = 1;
+            console.log("setImg(t)");
+            await wait(1);
+            setImg(flg);
+        }
     </script>
 </head>
-<body id="prodact_lists">
-	<!-- Header Start -->
+
+<body id="prodact_lists" onload="myTradelists_load()">
+    <!-- Header Start -->
     <header class="site-header">
-      <div class="wrapper site-header__wrapper">
-        <nav class="nav">
-          <div class="detail_head">
-            <div class="back_button">
-              <a href="javascript:history.back()">
-                <i class="fas fa-angle-left back_size"></i>
-              </a>
-            </div>
-            <div class="page_title">
-              <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">出品した交換品</span>
-              <label for="menu-btn-check" class="menu-btn"><span></span></label>
-              <div style="text-align: left" class="menu-content">
-        <ul>
-            <li><a href="acount.html">アカウント詳細</a></li>
-                  <li><a href="message.html">通知</a></li>
-                  <li><a href="dealHistory.html">取引履歴</a></li>
-                  <li><a href="myGiveItem.html">出品した譲渡品</a></li>
-                  <li><a href="myTradeItem.html">出品した交換品</a></li>
-                  <li><a onclick="logout_button()">ログアウト</a></li>
-          </ul>
+        <div class="wrapper site-header__wrapper">
+            <nav class="nav">
+                <div class="detail_head">
+                    <div class="back_button">
+                        <a href="javascript:history.back()">
+                            <i class="fas fa-angle-left back_size"></i>
+                        </a>
+                    </div>
+                    <div class="page_title">
+                        <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">出品した交換品</span>
+                        <label for="menu-btn-check" class="menu-btn"><span></span></label>
+                        <div style="text-align: left" class="menu-content">
+                            <ul>
+                                <li><a href="acount.html">アカウント詳細</a></li>
+                                <li><a href="message.html">通知</a></li>
+                                <li><a href="dealHistory.html">取引履歴</a></li>
+                                <li><a href="myGiveItem.html">出品した譲渡品</a></li>
+                                <li><a href="myTradeItem.html">出品した交換品</a></li>
+                                <li><a onclick="logout_button()">ログアウト</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="header_right">
+                    </div>
+                </div>
+            </nav>
         </div>
-              </div>
-            </div>
-            <div class="header_right">
-            </div>
-          </div>
-        </nav>
-      </div>
     </header>
     <!-- Header End -->
 
     <!-- Body Start -->
-    <div class="container" id="item_box">
-      <div class="container_parent">
-        <div class="container_left">    
-          <a>画像</a>
-        </div>
-        <div class="container_center">    
-          <a id="item_name">レオナのコードマスコット</a>
-        </div>
-        <div class="container_right">
-          <a href="tradeDetail.html">
-            <i class="fas fa-angle-right size"></i>
-          </a>
-        </div>
-      </div>
-    </div>
+    <div id="itemlist_trade"></div>
+    <button onclick="g_addload()">もっと読み込む</button>
+    <br>
+    <br>
+    <br>
     <!-- Body End -->
-    
+
     <!-- Footer Start -->
     <ul class="bottom-menu">
-    <li>
-        <a href="index.html">
-	<i class="far fa-list-alt"></i></a>
-    </li>
-    <li>
-        <a href="deal.html"><i class="fas fa-random"></i></a>
-    </li>
-    <li>
- 	<a href="insert.html"><i class="fas fa-plus"></i></a>
-    </li>
-    <li>
-        <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
-    </li>
-    <li>
-        <a href="voice.html">
-	<i class="fas fa-bullhorn"></i></a>
-    </li>
-</ul>
+        <li>
+            <a href="index.html">
+                <i class="far fa-list-alt"></i></a>
+        </li>
+        <li>
+            <a href="deal.html"><i class="fas fa-random"></i></a>
+        </li>
+        <li>
+            <a href="insert.html"><i class="fas fa-plus"></i></a>
+        </li>
+        <li>
+            <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
+        </li>
+        <li>
+            <a href="voice.html">
+                <i class="fas fa-bullhorn"></i></a>
+        </li>
+    </ul>
     <!-- Fotter End -->
+
 </html>

@@ -18,15 +18,12 @@
             deal_give_lists();
         }
 
-
         // 商品のリストを展開する
         async function deal_give_lists() {
             var Give = ncmb.DataStore("give");
             var myId = getCurrentUserId();
-            var subquery1 = Give.equalTo("give_user_id", myId);
-            var subquery2 = Give.equalTo("take_user_id", myId);
-            Give.equalTo("deal_status", "取引成立")
-                .or([subquery1, subquery2])
+            // Give.equalTo("deal_status", "取引成立");
+            Give.equalTo("give_user_id", myId)
                 .fetchAll()
                 .then(function(results) {
                     for (var i = results.length - g_cntSwitch - (g_cnt * 4); i > results.length - 4 * (g_cnt + 1); i--) {
