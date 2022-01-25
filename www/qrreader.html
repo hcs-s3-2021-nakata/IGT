@@ -98,7 +98,13 @@
             if (resultFlag) {
                 /* 認証成功でDBの状態を変更 */
                 console.log("認証完了です。");
-                giveUpdate(primaryId);
+                if(dealFlag){
+                    giveUpdate(primaryId);
+                }else{
+                    tradeUpdate(primaryId);
+                }
+                alert("取引相手の認証が完了しました");
+                 document.location.href = 'dealPerfect.html';
             } else {
                 /* 認証失敗で再読み込みと取引内容の促しを追加 */
                 alert("認証失敗です。もう一度読み込むか、取引内容を再確認してね");
@@ -116,8 +122,10 @@
                 .then(results => {
                     results.set('deal_status', "取引完了")
                         .update();
+                        console.log("-----更新終了-----");
                 }).catch(err => {
                     // エラー処理
+                    console.log("-----更新失敗-----");
                     console.log("giveUpdate：" + err);
                 });
         }
@@ -130,8 +138,10 @@
                 .then(results => {
                     results.set('deal_status', "取引完了")
                         .update();
+                        console.log("-----更新終了-----");
                 }).catch(err => {
                     // エラー処理
+                    console.log("-----更新失敗-----");
                     console.log("tradeUpdate：" + err);
                 });
         }

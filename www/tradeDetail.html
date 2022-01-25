@@ -316,9 +316,9 @@
                         if (user.objectId === objectID) {
                             console.log("出品者：" + user.trade_user_id);
                             var user_id = user.trade_user_id;
-                            resolve({
+                            resolve(
                                 user_id
-                            });
+                            );
                         }
                     })
                 }).catch(err => {

@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/insert.css">
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script type="text/javascript" src="https://leaverou.github.io/prefixfree/prefixfree.min.js"></script>
+  <script type="text/javascript" src="css/logout.js"></script>
+  <script>
+    // APIキーの設定とSDK初期化
+  // API key.
+  var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+  var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+  // SDK initialization.
+  var ncmb = new NCMB(applicationKey, clientKey);
+  var reader = new FileReader();
+
+ // 処理を一時停止する
+    const wait = (sec) => { // タイマ
+      return new Promise((resolve, reject) => {
+        setTimeout(resolve, sec*1000);
+        //setTimeout(() => {reject(new Error("エラー！"))}, sec*1000);
+      });
+    };
+
+    var flag;
+    // 画面遷移の管理
+    async function detail() {
+      flag = localStorage.getItem("flag");
+      if (flag == "give") {
+        var item_image = localStorage.getItem("item_image");
+      var Give = ncmb.DataStore("give");
+      var objectId;
+      Give.equalTo("item_image", item_image)
+            .fetchAll()
+            .then(function(results){
+              var object = results[0];
+              objectId = object.objectId;
+              return objectId;
+            })
+            .catch(function(err){
+                console.log(err);
+            });
+        await wait(0.5);
+        document.location.href = 'giveDetail.html?'+ objectId;
+      }
+      
+      if (flag == "trade") {
+        var item_image = localStorage.getItem("item_image");
+      var Trade = ncmb.DataStore("trade");
+      var objectId;
+      Trade.equalTo("item_image", item_image)
+            .fetchAll()
+            .then(function(results){
+              var object = results[0];
+              objectId = object.objectId;
+            })
+            .catch(function(err){
+                console.log(err);
+            });
+        await wait(0.5);
+        document.location.href = 'tradeDetail.html?'+ objectId;
+      }
+    }
+  </script>
+  <script>
+    function index() {
+      document.location.href = 'index.html';
+    }
+  </script>
+</head>
+
+<body id="prodact_lists">
+  <!-- Header Start -->
+  <header class="site-header">
+    <div class="wrapper site-header__wrapper">
+      <nav class="nav">
+        <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">取引完了</span>
+        <label for="menu-btn-check" class="menu-btn"><span></span></label>
+        <div class="menu-content">
+          <ul>
+            <li><a href="acount.html">アカウント詳細</a></li>
+            <li><a href="message.html">通知</a></li>
+            <li><a href="dealHistory.html">取引履歴</a></li>
+            <li><a href="myGiveItem.html">出品した譲渡品</a></li>
+            <li><a href="myTradeItem.html">出品した交換品</a></li>
+            <li><a onclick="logout_button()">ログアウト</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <!-- Header End -->
+  <br>
+  <div class="button-flex">
+    <p id="insert-fix">取引が完了したよ！</p>
+    <br>
+    <div class="button-flex">
+    <br>
+    </div>
+    <div id="plate">
+    
+    <div id="bottle">
+        <div class="cork"></div>
+        <div class="neck"></div>
+        <div class="body">
+            <div class="label"></div>
+            <div class="label-shadow"></div>
+        </div>
+    </div>
+    
+    <div id="cork">
+    </div>
+    
+    <div id="glass">
+        <div class="bowl">
+            <div class="wine"></div>
+        </div>
+        <div class="stem"></div>
+        <div class="foot"></div>
+    </div>
+    </div>
+<br>
+<br>
+<div class="button-flex">
+<button class="btn-border" onclick="index()">一覧に戻る</button>
+</div>
+  <!-- Footer Start -->
+  <ul class="bottom-menu">
+    <li>
+      <a href="index.html">
+        <i class="far fa-list-alt"></i></a>
+    </li>
+    <li>
+      <a href="deal.html"><i class="fas fa-random"></i></a>
+    </li>
+    <li>
+      <a class="icon-blue" href="insert.html"><i class="fas fa-plus"></i></a>
+    </li>
+    <li>
+      <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
+    </li>
+    <li>
+      <a href="voice.html">
+        <i class="fas fa-bullhorn"></i></a>
+    </li>
+  </ul>
+  <!-- Fotter End -->
+
+</html>
