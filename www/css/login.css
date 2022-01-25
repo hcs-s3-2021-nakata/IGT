@@ -72,7 +72,7 @@ a.bt-samp37:before{
   left: 0;
   height:35px;
   width:120px;
-  background : #8B1B34;
+  background : #832742;
   opacity: 0.5;
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
@@ -125,7 +125,7 @@ ul{
 .list-tab{
   display: flex;
   margin: 0 -2px;
-  border-bottom: 3px solid #8B1B34;
+  border-bottom: 3px solid #832742;
 }
 .list-tab > li{
   display: block;
@@ -140,16 +140,16 @@ ul{
 }
 
 .list-tab .active{
-  background: #8B1B34;
+  background: #832742;
 }
 
 .tab-content{
   display: none;
   padding: 1em;
 
-  border-bottom: 1px solid #8B1B34;
-  border-left: 1px solid #8B1B34;
-  border-right: 1px solid #8B1B34;
+  border-bottom: 1px solid #832742;
+  border-left: 1px solid #832742;
+  border-right: 1px solid #832742;
 }
 .tab-content.active{
   display: block;

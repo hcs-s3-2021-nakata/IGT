@@ -6,7 +6,7 @@
   padding: 3px 10px;
   border-radius: 20px;
   height: 2.3em;
-  width: 230px;
+  width: 220px;
 }
 .search_container input[type="text"]{
   border: none;
@@ -20,11 +20,10 @@
   cursor: pointer;
   font-family: FontAwesome;
   border: none;
-  border-radius: 20%;
   background: #832742;
   color: #fff;
   outline : none;
-  width: 2.0em;
+  border-radius: 5px;
   height: 2.0em;
 }
 
