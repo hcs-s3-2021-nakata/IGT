@@ -98,6 +98,7 @@ summary {
 	list-style: none;
 	position: relative;
 	margin-bottom: 10px;
+    border-radius: 5px;
 	padding: 20px 70px 20px 30px;
 	cursor: pointer;
     color: #ffffff;
