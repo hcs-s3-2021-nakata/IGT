@@ -76,6 +76,16 @@
                         document.getElementById('delivery_time').innerHTML = delivery_time;
                         document.getElementById('location').innerHTML = location;
 
+                        // 権限制御
+                        var current_user_id = getCurrent();
+                        var trade_user_id = object.trade_user_id;
+                        console.log("俺 "+current_user_id + " 出品者 " + trade_user_id);
+                        if (current_user_id == trade_user_id) {
+                            console.log("出品者");
+                            // 欲しいボタンを不可視化する処理
+                            document.getElementById('d_open').style.display = 'none';
+                        }
+
                         // モーダル
                         document.getElementById('m_item_name').innerHTML = object.item_name;
                         document.getElementById('m_trade_userID').innerHTML = trade_user_names;
@@ -282,6 +292,21 @@
             mask.addEventListener('click', () => {
                 close.click();
             });
+        }
+
+        // ボタンの活性非活性を制御する用のやつ
+        function getCurrent() {
+            // カレントユーザー情報の取得
+            var currentUser = ncmb.User.getCurrentUser();
+            console.log("currentUser:" + currentUser);
+            if (currentUser != null) {
+                console.log("ユーザー: " + currentUser.get("userName"));
+                current_user_id = currentUser.get("objectId");
+                return current_user_id;
+            } else {
+                console.log("未ログインまたは取得に失敗");
+                return null;
+            }
         }
 
         //カレントユーザーのID取得
