@@ -22,6 +22,15 @@
         var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
         // SDK initialization.
         var ncmb = new NCMB(applicationKey, clientKey);
+
+// 処理を一時停止する
+const wait = (sec) => { // タイマ
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, sec * 1000);
+    //setTimeout(() => {reject(new Error("エラー！"))}, sec*1000);
+  });
+};
+
         /*バーコードスキャン*/
         let options = {
             preferFrontCamera: false,
@@ -84,99 +93,141 @@
             /* お試し直入れ */
             //giveUserId = "jIIsM5MWYX9buZwS";
 
-            /* ユーザ認証 */
-            var resultFlag = pairConfirmation(userId);
+            /* 以下プロミス化処理 */
+            pairConfirmation(userId).then(function(resultFlag) {
+                /* 結果 */
+                console.log("主キー：" + primaryId);
+                console.log("取引形態：" + dealStyle);
+                console.log("出品者：" + userId);
+                console.log("落札者：" + takeUserId);
+                console.log("ユーザ認証結果：" + resultFlag);
 
+                if (resultFlag) {
+                    /* 認証成功でDBの状態を変更 */
+                    console.log("認証完了です。");
+                    if (dealFlag) {
+                        giveUpdate(primaryId).then(async function() {
+                            alert("取引相手の認証が完了しました");
+                            await wait(2);
+                            document.location.href = 'dealFixed.html';
+                        })
+                    } else {
+                        tradeUpdate(primaryId).then(async function() {
+                            alert("取引相手の認証が完了しました");
+                            await wait(2);
+                            document.location.href = 'dealFixed.html';
+                        })
+                    }
 
-            /* 結果 */
-            console.log("主キー：" + primaryId);
-            console.log("取引形態：" + dealStyle);
-            console.log("出品者：" + userId);
-            console.log("落札者：" + takeUserId);
-            console.log("ユーザ認証結果：" + resultFlag);
+                } else {
+                    /* 認証失敗で再読み込みと取引内容の促しを追加 */
+                    alert("認証失敗です。もう一度読み込むか、取引内容を再確認してね");
 
-            if (resultFlag) {
-                /* 認証成功でDBの状態を変更 */
-                console.log("認証完了です。");
-                if(dealFlag){
-                    giveUpdate(primaryId);
-                }else{
-                    tradeUpdate(primaryId);
                 }
-                alert("取引相手の認証が完了しました");
-                 document.location.href = 'dealFixed.html';
-            } else {
-                /* 認証失敗で再読み込みと取引内容の促しを追加 */
-                alert("認証失敗です。もう一度読み込むか、取引内容を再確認してね");
 
-            }
+            }).catch(function(err) {
+                console.log("処理失敗：" + err);
+                /* 認証失敗で再読み込みと取引内容の促しを追加 */
+                    alert("認証失敗です。もう一度読み込むか、取引内容を再確認してね");
+
+            })
+
+
+            // /* ユーザ認証 */
+            // var resultFlag = pairConfirmation(userId);
+
+
+            // /* 結果 */
+            // console.log("主キー：" + primaryId);
+            // console.log("取引形態：" + dealStyle);
+            // console.log("出品者：" + userId);
+            // console.log("落札者：" + takeUserId);
+            // console.log("ユーザ認証結果：" + resultFlag);
+
+
 
 
         }
 
+
         /* 譲渡：DBを更新する */
         function giveUpdate(objectId) {
-            console.log("-----更新開始-----");
-            var Give = ncmb.DataStore("give");
-            Give.fetchById(objectId)
-                .then(results => {
-                    results.set('deal_status', "取引完了")
-                        .update();
+            return new Promise(function(resolve, reject) {
+                console.log("-----更新開始-----");
+                var Give = ncmb.DataStore("give");
+                Give.fetchById(objectId)
+                    .then(results => {
+                        results.set('deal_status', "取引完了")
+                            .update();
                         console.log("-----更新終了-----");
-                }).catch(err => {
-                    // エラー処理
-                    console.log("-----更新失敗-----");
-                    console.log("giveUpdate：" + err);
-                });
+                        resolve();
+                    }).catch(err => {
+                        // エラー処理
+                        console.log("-----更新失敗-----");
+                        console.log("giveUpdate：" + err);
+                        reject();
+                    });
+            });
         }
 
         /* 交換：DBを更新する */
         function tradeUpdate(objectId) {
-            console.log("-----更新開始-----");
-            var Trade = ncmb.DataStore("trade");
-            Trade.fetchById(objectId)
-                .then(results => {
-                    results.set('deal_status', "取引完了")
-                        .update();
+            return new Promise(function(resolve, reject) {
+                console.log("-----更新開始-----");
+                var Trade = ncmb.DataStore("trade");
+                Trade.fetchById(objectId)
+                    .then(results => {
+                        console.log("更新対象：" + results.item_name);
+                        results.set('deal_status', "取引完了")
+                            .update();
                         console.log("-----更新終了-----");
-                }).catch(err => {
-                    // エラー処理
-                    console.log("-----更新失敗-----");
-                    console.log("tradeUpdate：" + err);
-                });
+                        resolve({});
+                    }).catch(err => {
+                        // エラー処理
+                        console.log("-----更新失敗-----");
+                        console.log("tradeUpdate：" + err);
+                        reject({});
+                    });
+            });
         }
 
 
 
         /*ログインユーザと出品者が同じか確認するファンクション*/
         function pairConfirmation(userId) {
-            console.log("-----相互確認-----");
-            var currentUser = ncmb.User.getCurrentUser();
-            if (currentUser.objectId === userId) {
-                console.log("-----確認完了-----");
-                return true;
-            } else {
-                console.log("-----確認失敗-----");
-                console.log("ログインユーザ：" + currentUser.objectId);
-                console.log("出品者:" + userId);
-                return false;
-            }
+            return new Promise(function(resolve, reject) {
+                console.log("-----相互確認-----");
+                var currentUser = ncmb.User.getCurrentUser();
+                if (currentUser.objectId === userId) {
+                    console.log("-----確認完了-----");
+                    //return true;
+                    resolve(true);
+                } else {
+                    console.log("-----確認失敗-----");
+                    console.log("ログインユーザ：" + currentUser.objectId);
+                    console.log("出品者:" + userId);
+                    //return false;
+                    reject(false);
+                }
+            });
         }
 
         function confarm() {
-            // カレントユーザー情報の取得
-            alert("確認")
-            var currentUser = ncmb.User.getCurrentUser();
-            console.log("currentUser:" + currentUser);
-            if (currentUser != null) {
-                console.log("ログイン中のユーザー: " + currentUser.get("userName"));
-            } else {
-                console.log("未ログインまたは取得に失敗");
-            }
-            // カレントユーザーかどうかの確認
-            console.log(user.isCurrentUser()); /* true or false */
+            return new Promise(function(resolve, reject) {
+                    // カレントユーザー情報の取得
+                    alert("確認")
+                    var currentUser = ncmb.User.getCurrentUser();
+                    console.log("currentUser:" + currentUser);
+                    if (currentUser != null) {
+                        console.log("ログイン中のユーザー: " + currentUser.get("userName"));
+                        resolve();
+                    } else {
+                        console.log("未ログインまたは取得に失敗");
+                        reject();
+                    }
+                }
 
-        }
+            )}
     </script>
     <script type="text/JavaScript">
         $(function(){ var qrtext = "ここにQRコード化したいテキストを入力"; var utf8qrtext = unescape(encodeURIComponent(qrtext)); $("#img-qr").html(""); $("#img-qr").qrcode({text:utf8qrtext}); });
