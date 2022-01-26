@@ -32,7 +32,16 @@
                         var objectId = object.objectId;
                         // 商品の箱を追加していく
                         var itemlist_element = document.getElementById('itemlist_give');
-                        itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="' + image_id + '" width="200" height="200"/><br><a class="myGiveTrade">' + object.deal_status +'<img class="myGiveTrade" src="img/grape.png"></a></div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a  onclick="g_link()" href="dealDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+                        if(object.deal_status === "成立待ち"){
+                        //成立待ち（ぶどう）
+                            itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="' + image_id + '" width="200" height="200"/><br><a class="myGiveTrade">' + object.deal_status +'<img class="myGiveTrade" src="img/grape.png"></a></div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a  onclick="g_link()" href="dealDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+                        }else if(object.deal_status === "取引成立"){
+                        //取引成立（ボトル）
+                            itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="' + image_id + '" width="200" height="200"/><br><a class="myGiveTrade">' + object.deal_status +'<img class="myGiveTrade" src="img/botle.png"></a></div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a  onclick="g_link()" href="dealDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+                        }else{
+                        //取引完了（グラス）
+                            itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="' + image_id + '" width="200" height="200"/><br><a class="myGiveTrade">' + object.deal_status +'<img class="myGiveTrade" src="img/glass.png"></a></div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a  onclick="g_link()" href="dealDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+                        }
                         g_imgs[i] = object.item_image;
                     }
                 })
