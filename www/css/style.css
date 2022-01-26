@@ -631,3 +631,20 @@ button.more:hover {
 button.btn--radius {
   border-radius: 100vh;
 }
+
+/*出品した譲渡品・交換品*/
+a.myGiveTrade{
+    font: 15px/24px sans-serif;
+	width: 100%;
+	transition: 0.3s;
+	letter-spacing: 1px;
+	color: #832742;
+	border: none;
+}
+
+img.myGiveTrade{
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+  padding: 0rem 0rem 0.5rem 0rem;
+}
