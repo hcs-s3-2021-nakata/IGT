@@ -1,0 +1,22 @@
+/* 通知 style.cssからコピペしたやつ */
+div.message{
+font-family: 'Amatic SC', cursive;
+}
+
+ul.message{
+  list-style-type: none;
+  padding: 0.5rem 1.3rem 0.5rem 1rem;
+}
+
+li.message{
+  vertical-align: middle;
+  padding: 0rem 0rem;
+}
+
+img.message{
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+}
+
+/*  */
