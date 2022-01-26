@@ -103,6 +103,12 @@
                         console.log("出品者");
                     } else if(current_user_id == take_user_id) {
                         console.log("落札者");
+                        // ローカルストレージに必要な情報を格納
+                        localStorage.setItem("flag", "give");
+                        localStorage.setItem("objectID", objectID);
+                        localStorage.setItem("give_userID", give_user_id);
+                        localStorage.setItem("take_userID", take_user_id);
+                        // QR表示ボタンを有効化する
                         document.getElementById('qrDisp').innerHTML = "<a onclick='getObjectID()'><button type='button' class='showing'><img id='deal-detail_button' src='img/qr.png'><br><b>表示する</b></button></a>";
                         // スキャンボタンを不可視化する処理
                         document.getElementById('hidden').style.display = 'none';
@@ -166,6 +172,12 @@
                         console.log("出品者");
                     } else if(current_user_id == take_user_id) {
                         console.log("落札者");
+                        // ローカルストレージに必要な情報を格納
+                        localStorage.setItem("flag", "trade");
+                        localStorage.setItem("objectID", objectID);
+                        localStorage.setItem("trade_userID", trade_user_id);
+                        localStorage.setItem("take_userID", take_user_id);
+                        // QR表示ボタンを有効化する
                         document.getElementById('qrDisp').innerHTML = "<a onclick='getObjectID()'><button type='button' class='showing'><img id='deal-detail_button' src='img/qr.png'><br><b>表示する</b></button></a>";
                         // スキャンボタンを不可視化する処理
                         document.getElementById('hidden').style.display = 'none';
