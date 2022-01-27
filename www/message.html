@@ -19,7 +19,7 @@
       
     </script>
 </head>
-<body id="prodact_lists">
+<body id="prodact_lists" onload="messages()">
 	<!-- Header Start -->
     <header class="site-header">
       <div class="wrapper site-header__wrapper">
@@ -52,46 +52,13 @@
 
     <!-- Body Start -->
 
-    <button onclick="messages()">テスト</button>
-    <form class="message" method="post">
+    <!-- <form class="message"> -->
       <div class="message" style="text-align: left">
         <ul class="message" id="messagelist">
-          <li class="message">
-            <div class="ef_img">
-            <img class="message" src="img/message.png">今日 12:03 
-            <span id="readState">未読</span>
-            <br>
-           <div class="ef_div">
-           <a><span>「レオナのコードマスコット」の取引..</span></a>
-           <button onclick="kidoku()">既読にする</button>
-            </div>
-          </li>
-          <li class="message">
-            <div class="ef_img">
-            <img class="message" src="img/message.png">2021/12/13 17:42
-            <br>
-           <div class="ef_div">
-           <a><span>「レオナのコードマスコット」に「交..</span></a>
-            </div>
-          </li>
-          <li class="message">
-            <div class="ef_img">
-            <img class="message" src="img/message.png">2021/11/30 17:30
-            <br>
-            <div class="ef_div">
-            <a><span>「ラブラビットのぬいぐるみ」の取引..</span></a>
-            </div>
-          </li>
-          <li class="message">
-            <a><img class="message" src="img/message.png">2021/11/30 9:01
-            <br>
-            <div class="ef_div">
-            <a><span>「ラブラビットのぬいぐるみ」の取引..</span></a>
-            </div>
-          </li>
+            <!-- ここに通知が入る -->
         </ul>
       </div>
-    </form>
+    <!-- </form> -->
     <!-- Body End -->
 
     <!-- Footer Start -->
