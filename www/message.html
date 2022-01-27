@@ -51,15 +51,19 @@
     <!-- Header End -->
 
     <!-- Body Start -->
+
+    <button onclick="messages()">テスト</button>
     <form class="message" method="post">
       <div class="message" style="text-align: left">
-        <ul class="message">
+        <ul class="message" id="messagelist">
           <li class="message">
             <div class="ef_img">
-            <img class="message" src="img/message.png">今日 12:03
+            <img class="message" src="img/message.png">今日 12:03 
+            <span id="readState">未読</span>
             <br>
            <div class="ef_div">
            <a><span>「レオナのコードマスコット」の取引..</span></a>
+           <button onclick="kidoku()">既読にする</button>
             </div>
           </li>
           <li class="message">
