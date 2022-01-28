@@ -183,6 +183,8 @@
                         document.getElementById('qrDisp').innerHTML = "<a onclick='getObjectID()'><button type='button' class='showing'><img id='deal-detail_button' src='img/qr.png'><br><b>表示する</b></button></a>";
                         // スキャンボタンを不可視化する処理
                         document.getElementById('hidden').style.display = 'none';
+                        // 取引日時指定を有効化
+                        document.getElementById('deliveryDay').innerHTML = '<a>受け渡し日の指定</a><br><input type="date" id="set_delivery_day" name="delivery_day"><button onclick="setDeliveryDay()">決定</button>';
                     } else {
                         console.log("不正");
                     }
@@ -446,6 +448,37 @@
 
         }
 
+        // 取引日を保存する
+        function setDeliveryDay(){
+            var objectId = location.search.replace('?', '');
+            var day = document.getElementById("set_delivery_day").value;
+            console.log(day);
+            var dealflg = localStorage.getItem("dealflg");
+            if (dealflg == "give") {
+                var Give = ncmb.DataStore("give");
+                Give.equalTo("objectId", objectId)
+                    .fetch()
+                    .then(function(results) {
+                        results.set('delivery_day', day);
+                        results.update();
+                        alert("受け渡し日の設定が完了しました");
+                        document.getElementById("delivery_day").innerHTML = day;
+                    });
+            } else if (dealflg == "trade") {
+                var Trade = ncmb.DataStore("trade");
+                Trade.equalTo("objectId", objectId)
+                    .fetch()
+                    .then(function(results) {
+                        results.set('delivery_day', day);
+                        results.update();
+                        alert("受け渡し日の設定が完了しました");
+                        document.getElementById("delivery_day").innerHTML = day;
+                    });
+            } else {
+                alert("ERROR");
+            }
+        }
+
         //take_user_idと取引状態を書き換える（中止）
         function takeUserUpdate() {
             var objectId = location.search.replace('?', '');
@@ -663,6 +696,10 @@
             <td id="delivery_date">-</td>
         </tr>
         <tr>
+            <th>受け渡し日</th>
+            <td id="delivery_day">-</td>
+        </tr>
+        <tr>
             <th>受け渡し時間</th>
             <td id="delivery_time">-</td>
         </tr>
@@ -674,6 +711,10 @@
         <div class="deal-detail_info">
             <a id="item_info">商品説明</a>
         </div>
+    </div>
+
+    <br>
+    <div class="deal-detail" id="deliveryDay">
     </div>
 
     <div id="deal-detail_button" class="flex">
