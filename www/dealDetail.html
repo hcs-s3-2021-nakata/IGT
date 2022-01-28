@@ -11,9 +11,10 @@
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/deal.css">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
     <script type="text/javascript" src="css/logout.js"></script>
     <script>
         // APIキーの設定とSDK初期化
@@ -26,6 +27,8 @@
         // 定義
         var give_user_id = "";
         var take_user_id = "";
+        var start_day = "";
+        var end_day = "";
 
         const wait = (sec) => { // タイマ
             return new Promise((resolve, reject) => {
@@ -94,6 +97,7 @@
                     document.getElementById('category').innerHTML = category;
                     document.getElementById('item_status').innerHTML = item_status;
                     document.getElementById('delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
+                    document.getElementById("delivery_day").innerHTML = object.delivery_day;
                     document.getElementById('delivery_time').innerHTML = delivery_time;
                     document.getElementById('location').innerHTML = location;
 
@@ -101,10 +105,13 @@
                     var current_user_id = getCurrentUserId();
                     var give_user_id = object.give_user_id;
                     var take_user_id = object.take_user_id;
-                    if(current_user_id == give_user_id) {
+                    if (current_user_id == give_user_id) {
                         console.log("出品者");
-                    } else if(current_user_id == take_user_id) {
+                    } else if (current_user_id == take_user_id) {
                         console.log("落札者");
+                        // グローバル変数に必要な情報を格納
+                        start_day = object.delivery_start_date;
+                        end_day = object.delivery_end_date;
                         // ローカルストレージに必要な情報を格納
                         localStorage.setItem("flag", "give");
                         localStorage.setItem("objectID", objectID);
@@ -114,6 +121,8 @@
                         document.getElementById('qrDisp').innerHTML = "<a onclick='getObjectID()'><button type='button' class='showing'><img id='deal-detail_button' src='img/qr.png'><br><b>表示する</b></button></a>";
                         // スキャンボタンを不可視化する処理
                         document.getElementById('hidden').style.display = 'none';
+                        // 取引日時指定を有効化
+                        document.getElementById('deliveryDay').innerHTML = '<a>受け渡し日の指定</a><br><input type="date" id="set_delivery_day" name="delivery_day"><button onclick="setDeliveryDay()">決定</button>';
                     } else {
                         console.log("不正");
                     }
@@ -132,9 +141,9 @@
         }
 
         // QRコード表示画面にObjectIdを受け渡す
-        function getObjectID(){
+        function getObjectID() {
             var objectID = location.search.replace('?', '');
-            console.log("とってきたやつ"+objectID);
+            console.log("とってきたやつ" + objectID);
             document.location.href = 'qrGenerater.html?' + objectID;
         }
 
@@ -163,6 +172,7 @@
                     document.getElementById('category').innerHTML = category;
                     document.getElementById('item_status').innerHTML = item_status;
                     document.getElementById('delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
+                    document.getElementById("delivery_day").innerHTML = object.delivery_day;
                     document.getElementById('delivery_time').innerHTML = delivery_time;
                     document.getElementById('location').innerHTML = location;
 
@@ -170,10 +180,13 @@
                     var current_user_id = getCurrentUserId();
                     var trade_user_id = object.trade_user_id;
                     var take_user_id = object.take_user_id;
-                    if(current_user_id == trade_user_id) {
+                    if (current_user_id == trade_user_id) {
                         console.log("出品者");
-                    } else if(current_user_id == take_user_id) {
+                    } else if (current_user_id == take_user_id) {
                         console.log("落札者");
+                        // グローバル変数に必要な情報を格納
+                        start_day = object.delivery_start_date;
+                        end_day = object.delivery_end_date;
                         // ローカルストレージに必要な情報を格納
                         localStorage.setItem("flag", "trade");
                         localStorage.setItem("objectID", objectID);
@@ -183,10 +196,12 @@
                         document.getElementById('qrDisp').innerHTML = "<a onclick='getObjectID()'><button type='button' class='showing'><img id='deal-detail_button' src='img/qr.png'><br><b>表示する</b></button></a>";
                         // スキャンボタンを不可視化する処理
                         document.getElementById('hidden').style.display = 'none';
+                        // 取引日時指定を有効化
+                        document.getElementById('deliveryDay').innerHTML = '<a>受け渡し日の指定</a><br><input type="date" id="set_delivery_day" name="delivery_day"><button onclick="setDeliveryDay()">決定</button>';
                     } else {
                         console.log("不正");
                     }
-                    
+
                     // モーダルの書き換え
                     document.getElementById('m_item_name').innerHTML = object.item_name;
                     document.getElementById('m_category').innerHTML = category;
@@ -388,10 +403,13 @@
 
             if (current_user_id == give_user_id) {
                 console.log(current_user_id + " " + give_user_id);
-                console.log("俺は出品者だぜ");
+                console.log("譲渡品");
+            } else if (current_user_id == trade_user_id) {
+                console.log(current_user_id + " " + trade_user_id);
+                console.log("交換品");
             } else if (current_user_id == take_user_id) {
                 console.log(current_user_id + " " + take_user_id);
-                console.log("私は落札者よ");
+                console.log("落札者");
                 takeUserUpdate();
                 await wait(1);
                 document.location.href = 'deal.html';
@@ -437,13 +455,51 @@
                     .then(function(results) {
                         var object = results[0];
 
-                        give_user_id = object.give_user_id;
+                        trade_user_id = object.trade_user_id;
                         take_user_id = object.take_user_id;
                     })
             } else {
                 alert("ERROR");
             }
 
+        }
+
+        // 取引日を保存する
+        function setDeliveryDay() {
+            var objectId = location.search.replace('?', '');
+            var day = document.getElementById("set_delivery_day").value;
+            var dealflg = localStorage.getItem("dealflg");
+            if (dealflg == "give" && start_day <= day && end_day >= day) {
+                // 正常（譲渡）
+                var Give = ncmb.DataStore("give");
+                Give.equalTo("objectId", objectId)
+                    .fetch()
+                    .then(function(results) {
+                        results.set('delivery_day', day);
+                        results.update();
+                        alert("受け渡し日の設定が完了しました");
+                        document.getElementById("delivery_day").innerHTML = day;
+                    });
+            } else if (dealflg == "give" && start_day > day || end_day < day) {
+                // 異常（譲渡）
+                alert("ERROR\n受け渡し期間を超過しています");
+            } else if (dealflg == "trade" && start_day <= day && end_day >= day) {
+                // 正常（交換）
+                var Trade = ncmb.DataStore("trade");
+                Trade.equalTo("objectId", objectId)
+                    .fetch()
+                    .then(function(results) {
+                        results.set('delivery_day', day);
+                        results.update();
+                        alert("受け渡し日の設定が完了しました");
+                        document.getElementById("delivery_day").innerHTML = day;
+                    });
+            } else if (dealflg == "trade" && start_day > day || end_day < day) {
+                // 異常（交換）
+                alert("ERROR\n受け渡し期間を超過しています");
+            } else {
+                alert("ERROR");
+            }
         }
 
         //take_user_idと取引状態を書き換える（中止）
@@ -458,6 +514,7 @@
                     .fetch()
                     .then(function(results) {
                         results.set('deal_status', "成立待ち")
+                            .set('delivery_day', null)
                             .set('take_user_id', null);
                         results.update();
                     });
@@ -467,6 +524,7 @@
                     .fetch()
                     .then(function(results) {
                         results.set('deal_status', "成立待ち")
+                            .set('delivery_day', null)
                             .set('take_user_id', null);
                         results.update();
                     });
@@ -560,7 +618,8 @@
         }
     </script>
 
-    <script> // バーコード
+    <script>
+        // バーコード
         /*バーコードスキャン(仮)*/
         let options = {
             preferFrontCamera: false,
@@ -595,7 +654,7 @@
         }
 
         // ボタンの活性非活性の切り替え
-        function buttonSwitching(){
+        function buttonSwitching() {
 
         }
     </script>
@@ -663,6 +722,10 @@
             <td id="delivery_date">-</td>
         </tr>
         <tr>
+            <th>受け渡し日</th>
+            <td id="delivery_day">-</td>
+        </tr>
+        <tr>
             <th>受け渡し時間</th>
             <td id="delivery_time">-</td>
         </tr>
@@ -674,6 +737,10 @@
         <div class="deal-detail_info">
             <a id="item_info">商品説明</a>
         </div>
+    </div>
+
+    <br>
+    <div class="deal-detail" id="deliveryDay">
     </div>
 
     <div id="deal-detail_button" class="flex">
