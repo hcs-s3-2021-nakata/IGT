@@ -11,9 +11,10 @@
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/deal.css">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
     <script type="text/javascript" src="css/logout.js"></script>
     <script>
         // APIキーの設定とSDK初期化
@@ -104,9 +105,9 @@
                     var current_user_id = getCurrentUserId();
                     var give_user_id = object.give_user_id;
                     var take_user_id = object.take_user_id;
-                    if(current_user_id == give_user_id) {
+                    if (current_user_id == give_user_id) {
                         console.log("出品者");
-                    } else if(current_user_id == take_user_id) {
+                    } else if (current_user_id == take_user_id) {
                         console.log("落札者");
                         // グローバル変数に必要な情報を格納
                         start_day = object.delivery_start_date;
@@ -140,9 +141,9 @@
         }
 
         // QRコード表示画面にObjectIdを受け渡す
-        function getObjectID(){
+        function getObjectID() {
             var objectID = location.search.replace('?', '');
-            console.log("とってきたやつ"+objectID);
+            console.log("とってきたやつ" + objectID);
             document.location.href = 'qrGenerater.html?' + objectID;
         }
 
@@ -179,9 +180,9 @@
                     var current_user_id = getCurrentUserId();
                     var trade_user_id = object.trade_user_id;
                     var take_user_id = object.take_user_id;
-                    if(current_user_id == trade_user_id) {
+                    if (current_user_id == trade_user_id) {
                         console.log("出品者");
-                    } else if(current_user_id == take_user_id) {
+                    } else if (current_user_id == take_user_id) {
                         console.log("落札者");
                         // グローバル変数に必要な情報を格納
                         start_day = object.delivery_start_date;
@@ -200,7 +201,7 @@
                     } else {
                         console.log("不正");
                     }
-                    
+
                     // モーダルの書き換え
                     document.getElementById('m_item_name').innerHTML = object.item_name;
                     document.getElementById('m_category').innerHTML = category;
@@ -402,10 +403,13 @@
 
             if (current_user_id == give_user_id) {
                 console.log(current_user_id + " " + give_user_id);
-                console.log("俺は出品者だぜ");
+                console.log("譲渡品");
+            } else if (current_user_id == trade_user_id) {
+                console.log(current_user_id + " " + trade_user_id);
+                console.log("交換品");
             } else if (current_user_id == take_user_id) {
                 console.log(current_user_id + " " + take_user_id);
-                console.log("私は落札者よ");
+                console.log("落札者");
                 takeUserUpdate();
                 await wait(1);
                 document.location.href = 'deal.html';
@@ -451,7 +455,7 @@
                     .then(function(results) {
                         var object = results[0];
 
-                        give_user_id = object.give_user_id;
+                        trade_user_id = object.trade_user_id;
                         take_user_id = object.take_user_id;
                     })
             } else {
@@ -461,7 +465,7 @@
         }
 
         // 取引日を保存する
-        function setDeliveryDay(){
+        function setDeliveryDay() {
             var objectId = location.search.replace('?', '');
             var day = document.getElementById("set_delivery_day").value;
             var dealflg = localStorage.getItem("dealflg");
@@ -476,7 +480,7 @@
                         alert("受け渡し日の設定が完了しました");
                         document.getElementById("delivery_day").innerHTML = day;
                     });
-            } else if (dealflg == "give" && start_day > day || end_day < day){
+            } else if (dealflg == "give" && start_day > day || end_day < day) {
                 // 異常（譲渡）
                 alert("ERROR\n受け渡し期間を超過しています");
             } else if (dealflg == "trade" && start_day <= day && end_day >= day) {
@@ -490,7 +494,7 @@
                         alert("受け渡し日の設定が完了しました");
                         document.getElementById("delivery_day").innerHTML = day;
                     });
-            } else if (dealflg == "trade" && start_day > day || end_day < day){
+            } else if (dealflg == "trade" && start_day > day || end_day < day) {
                 // 異常（交換）
                 alert("ERROR\n受け渡し期間を超過しています");
             } else {
@@ -510,6 +514,7 @@
                     .fetch()
                     .then(function(results) {
                         results.set('deal_status', "成立待ち")
+                            .set('delivery_day', null)
                             .set('take_user_id', null);
                         results.update();
                     });
@@ -519,6 +524,7 @@
                     .fetch()
                     .then(function(results) {
                         results.set('deal_status', "成立待ち")
+                            .set('delivery_day', null)
                             .set('take_user_id', null);
                         results.update();
                     });
@@ -612,7 +618,8 @@
         }
     </script>
 
-    <script> // バーコード
+    <script>
+        // バーコード
         /*バーコードスキャン(仮)*/
         let options = {
             preferFrontCamera: false,
@@ -647,7 +654,7 @@
         }
 
         // ボタンの活性非活性の切り替え
-        function buttonSwitching(){
+        function buttonSwitching() {
 
         }
     </script>
