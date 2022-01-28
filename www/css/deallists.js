@@ -150,7 +150,7 @@ async function deal_give_lists() {
                 var objectId = object.objectId;
                 // 商品の箱を追加していく
                 var itemlist_element = document.getElementById('itemlist_give');
-                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a  onclick="g_link()" href="dealDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a  onclick="g_link()" href="dealDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
                 g_imgs[i] = object.item_image;
             }
         })
@@ -211,7 +211,7 @@ async function deal_trade_lists() {
                 var objectId = object.objectId;
                 // 商品の箱を追加していく
                 var itemlist_element = document.getElementById('itemlist_trade');
-                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a  onclick="t_link()" href="dealDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a  onclick="t_link()" href="dealDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
                 t_imgs[i] = object.item_image;
             }
         })
@@ -318,7 +318,7 @@ async function history_give_lists() {
                 var objectId = object.objectId;
                 // 商品の箱を追加していく
                 var itemlist_element = document.getElementById('itemlist_give');
-                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a  onclick="g_link()" href="historyDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a  onclick="g_link()" href="historyDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
                 g_imgs[i] = object.item_image;
             }
         })
@@ -379,7 +379,7 @@ async function history_trade_lists() {
                 var objectId = object.objectId;
                 // 商品の箱を追加していく
                 var itemlist_element = document.getElementById('itemlist_trade');
-                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a  onclick="t_link()" href="historyDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a  onclick="t_link()" href="historyDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
                 t_imgs[i] = object.item_image;
             }
         })

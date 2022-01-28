@@ -115,7 +115,7 @@ async function pickup() {
       image_id = "image" + (j);
       j = j + 1;
       var itemlist_element = document.getElementById('itemlist');
-      itemlist_element.insertAdjacentHTML("afterend", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + item_name + '</a> </div> <div class="container_right"> <a href="giveDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+      itemlist_element.insertAdjacentHTML("afterend", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + item_name + '</a> </div> <div class="container_right"> <a href="giveDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
       suji[j] = i;
 
     }
@@ -139,7 +139,7 @@ async function give_lists() {
         var objectId = object.objectId;
         // 商品の箱を追加していく
         var itemlist_element = document.getElementById('itemlist');
-        itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a href="giveDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+        itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a href="giveDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
         imgs[i] = object.item_image;
       }
     })
@@ -194,7 +194,7 @@ async function trade_lists() {
         var objectId = object.objectId;
         // 商品の箱を追加していく
         var itemlist_element = document.getElementById('itemlist');
-        itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a href="tradeDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+        itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a href="tradeDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
         imgs[i] = object.item_image;
       }
     })
