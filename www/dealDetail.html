@@ -122,7 +122,7 @@
                         // スキャンボタンを不可視化する処理
                         document.getElementById('hidden').style.display = 'none';
                         // 取引日時指定を有効化
-                        document.getElementById('deliveryDay').innerHTML = '<a>受け渡し日の指定</a><br><input type="date" id="set_delivery_day" name="delivery_day"><button onclick="setDeliveryDay()">決定</button>';
+                        document.getElementById('deliveryDay').innerHTML = '<div class="deal-detail"><label>受け渡し日の指定</label><div class="deal_container"><input type="date" id="set_delivery_day" name="delivery_day"><span>　</span><input type="button" onclick="setDeliveryDay()" value="決定"></div></div>';
                     } else {
                         console.log("不正");
                     }
@@ -197,7 +197,7 @@
                         // スキャンボタンを不可視化する処理
                         document.getElementById('hidden').style.display = 'none';
                         // 取引日時指定を有効化
-                        document.getElementById('deliveryDay').innerHTML = '<a>受け渡し日の指定</a><br><input type="date" id="set_delivery_day" name="delivery_day"><button onclick="setDeliveryDay()">決定</button>';
+                        document.getElementById('deliveryDay').innerHTML = '<div class="deal-detail"><label>受け渡し日の指定</label><div class="deal_container"><input type="date" id="set_delivery_day" name="delivery_day"><input type="button" onclick="setDeliveryDay()" value="決定"></div></div>';
                     } else {
                         console.log("不正");
                     }

@@ -149,3 +149,35 @@ details[open] .answer {
   width: 100%;
   background-color: white;
 }
+
+/*受け渡し日の指定*/
+.deal_container{
+  box-sizing: border-box;
+  position: relative;
+  border: 1px solid #c0a2c7;
+  background-color: #c0a2c7;
+  padding: 3px 10px;
+  border-radius: 20px;
+  height: 2.4em;
+  width: 230px;
+}
+.deal_container input[type="date"]{
+  border: none;
+  border-radius: 5px;
+  height: 2.0em;
+  padding: 0.1em 0 0.1em 0;
+}
+.deal_container input[type="date"]:focus {
+  outline: 0;
+}
+.deal_container input[type="button"]{
+  cursor: pointer;
+  font-family: FontAwesome;
+  border: none;
+  background: #832742;
+  color: #fff;
+  outline : none;
+  border-radius: 5px;
+  height: 2.0em;
+  padding: 0.1em 0.3em 0.1em 0.3em;
+}
