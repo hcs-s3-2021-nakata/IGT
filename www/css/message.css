@@ -5,12 +5,13 @@ font-family: 'Amatic SC', cursive;
 
 ul.message{
   list-style-type: none;
-  padding: 0.5rem 1.3rem 0.5rem 1rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
 }
 
 li.message{
   vertical-align: middle;
   padding: 0rem 0rem;
+  list-style-type: none;
 }
 
 img.message{
@@ -20,4 +21,21 @@ img.message{
 }
 
 /* 通知の内容について */
+div.messageText {
+    padding: 5px 5px;
+}
 
+div.kidoku {
+    padding: 0.4em 0.3em 0.4em 0.1em;
+} 
+
+button.kidoku {
+    padding: 0.1em 0.4em 0.1em 0.4em;
+    font-size: 20px;
+    font-family: 'Yusei Magic', sans-serif;
+    color: #0a125d;
+    background: #fdfdfd;
+    border: 1px solid #0a125d;
+    border-radius: 20px;
+    margin: 0 0 0 auto;
+}

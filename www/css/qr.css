@@ -77,7 +77,7 @@ summany {
 #bottle .cork {
   position: relative;
   margin: 0 auto;
-  background-color: #8E1B1C;
+  background-color: #832742;
   width: 30px;
   height: 60px;
   border-radius: 3px 3px 0 0;
@@ -90,9 +90,9 @@ summany {
   left: -3px;
   display: block;
   content: " ";
-  background-color: #8E1B10;
-  border-top: solid 1.5px #9A2A1F;
-  border-bottom: solid 1.5px #9A2A1F;
+  background-color: #832742;
+  border-top: solid 1.5px #832742;
+  border-bottom: solid 1.5px #832742;
 
   width: 36px;
   height: 15px;
@@ -120,7 +120,7 @@ summany {
 #bottle .label {
   position: relative;
   background-color: #F2EAB9;
-  height: 45px;
+  height: 51px;
   border: solid 3px #CFC89B;
   z-index: 25;
   animation: spinning-label 3s linear infinite;
@@ -135,32 +135,32 @@ summany {
 }
 
 @keyframes wine-filling {
-  4%  {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 26%, rgba(127, 25, 25, 0.9) 5%)}
-  8%  {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 25%, rgba(127, 25, 25, 0.9) 5%)}
-  12% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 24%, rgba(127, 25, 25, 0.9) 5%)}
-  16% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 23%, rgba(127, 25, 25, 0.9) 5%)}
-  20% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 22%, rgba(127, 25, 25, 0.9) 5%)}
-  24% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 21%, rgba(127, 25, 25, 0.9) 5%)}
-  28% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 20%, rgba(127, 25, 25, 0.9) 5%)}
-  32% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 19%, rgba(127, 25, 25, 0.9) 5%)}
-  36% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 18%, rgba(127, 25, 25, 0.9) 5%)}
-  40% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 17%, rgba(127, 25, 25, 0.9) 5%)}
-  44% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 16%, rgba(127, 25, 25, 0.9) 5%)}
-  48% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 15%, rgba(127, 25, 25, 0.9) 5%)}
-  52% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 14%, rgba(127, 25, 25, 0.9) 5%)}
-  56% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 13%, rgba(127, 25, 25, 0.9) 5%)}
-  60% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 12%, rgba(127, 25, 25, 0.9) 5%)}
-  64% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 11%, rgba(127, 25, 25, 0.9) 5%)}
-  68% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 10%, rgba(127, 25, 25, 0.9) 5%)}
-  72% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 9%,  rgba(127, 25, 25, 0.9) 5%)}
-  76% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 8%,  rgba(127, 25, 25, 0.9) 5%)}
-  80% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 7%,  rgba(127, 25, 25, 0.9) 5%)}
-  84% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 6%,  rgba(127, 25, 25, 0.9) 5%)}
-  88% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 5%,  rgba(127, 25, 25, 0.9) 5%)}
-  92% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 4%,  rgba(127, 25, 25, 0.9) 5%)}
-  96%{background-image: linear-gradient(to bottom,    rgba(41, 105, 70, 0.7) 3%,  rgba(127, 25, 25, 0.9) 5%)}
-  98%{background-image: linear-gradient(to bottom,    rgba(41, 105, 70, 0.7) 2%,  rgba(127, 25, 25, 0.9) 5%)}
-  100%{background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 1%,  rgba(127, 25, 25, 0.9) 5%)}
+  4%  {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 26%, rgba(131, 39, 66, 0.9) 5%)}
+  8%  {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 25%, rgba(131, 39, 66, 0.9) 5%)}
+  12% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 24%, rgba(131, 39, 66, 0.9) 5%)}
+  16% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 23%, rgba(131, 39, 66, 0.9) 5%)}
+  20% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 22%, rgba(131, 39, 66, 0.9) 5%)}
+  24% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 21%, rgba(131, 39, 66, 0.9) 5%)}
+  28% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 20%, rgba(131, 39, 66, 0.9) 5%)}
+  32% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 19%, rgba(131, 39, 66, 0.9) 5%)}
+  36% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 18%, rgba(131, 39, 66, 0.9) 5%)}
+  40% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 17%, rgba(131, 39, 66, 0.9) 5%)}
+  44% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 16%, rgba(131, 39, 66, 0.9) 5%)}
+  48% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 15%, rgba(131, 39, 66, 0.9) 5%)}
+  52% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 14%, rgba(131, 39, 66, 0.9) 5%)}
+  56% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 13%, rgba(131, 39, 66, 0.9) 5%)}
+  60% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 12%, rgba(131, 39, 66, 0.9) 5%)}
+  64% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 11%, rgba(131, 39, 66, 0.9) 5%)}
+  68% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 10%, rgba(131, 39, 66, 0.9) 5%)}
+  72% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 9%,  rgba(131, 39, 66, 0.9) 5%)}
+  76% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 8%,  rgba(131, 39, 66, 0.9) 5%)}
+  80% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 7%,  rgba(131, 39, 66, 0.9) 5%)}
+  84% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 6%,  rgba(131, 39, 66, 0.9) 5%)}
+  88% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 5%,  rgba(131, 39, 66, 0.9) 5%)}
+  92% {background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 4%,  rgba(131, 39, 66, 0.9) 5%)}
+  96%{background-image: linear-gradient(to bottom,    rgba(41, 105, 70, 0.7) 3%,  rgba(131, 39, 66, 0.9) 5%)}
+  98%{background-image: linear-gradient(to bottom,    rgba(41, 105, 70, 0.7) 2%,  rgba(131, 39, 66, 0.9) 5%)}
+  100%{background-image: linear-gradient(to bottom,   rgba(41, 105, 70, 0.7) 1%,  rgba(131, 39, 66, 0.9) 5%)}
 }
 
 @keyframes spinning-label {
