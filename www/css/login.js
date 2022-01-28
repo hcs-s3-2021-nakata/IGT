@@ -16,6 +16,7 @@ function createNewUserCheck() {
   var createN = document.getElementById("cN").value;
   var createP = document.getElementById("cP").value;
   var createSN = document.getElementById("cSN").value;
+  var createTOS = document.getElementById("wineTOS").checked;
   //エラーメッセージ
   var returnFlag = false;
   var checkFlag = true;
@@ -47,6 +48,14 @@ function createNewUserCheck() {
     } else {
       document.getElementById('errMessageName').innerHTML = "";
       returnFlag = false;
+    }
+    if(createTOS){
+        document.getElementById('errMessageTOS').innerHTML = "";
+        returnFlag = false;
+    } else {
+        document.getElementById('errMessageTOS').innerHTML = "利用規約に同意してください。";
+        returnFlag = true;
+
     }
     if (!returnFlag) {
       //チェックが無ければユーザ新規登録
@@ -175,3 +184,17 @@ function searchStudentNumber(searchNumber) {
       });
   });
 }
+
+
+//スクロールをしなければチェックボックスチェックできないやつ
+jQuery(function(){
+	jQuery('input[type=checkbox]').prop('disabled', true);
+	jQuery(window).bind("scroll", function() {
+		document_ht = jQuery(document).height(); //コンテンツの高さを取得
+		scroll_position = jQuery(window).height() + jQuery(window).scrollTop();
+
+		if ((document_ht - scroll_position) / scroll_position <= 0.03) {
+			jQuery('input[type=checkbox]').prop('disabled', false);
+        	}
+	});
+});

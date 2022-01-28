@@ -163,3 +163,221 @@ ul{
 .rePass{
   font-size: 10px;
 }
+
+/*以下、利用規約*/
+/* ボタン（デザインはお好みで） */
+.my_modal_btn{
+    display: block;
+    width: 93%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+    background-color: #935263;
+    color: #ffffff;
+}
+
+/* チェックボックスを非表示 */
+#my_modal1{
+    display: none;
+}
+/* モーダル */
+.my_modal_body1{    
+    display: none;
+    position: fixed;
+    z-index: 100000;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    -webkit-transform: translateY(-50%) translateX(-50%);
+    background-color: #FFF;
+    overflow-y: auto;
+    /* スマホ用スクロール */
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+    /* お好みで */
+    width: 90%;
+    max-height: 80%;
+    max-width: 600px;
+}
+
+/* モーダル内ヘッダー */
+.my_modal_header{
+    padding: 15px 10px;
+    background-color: #23282D;
+    color: #FFF;
+    font-weight: bold;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    text-align: center;
+}
+
+/* クローズアイコン */
+.my_modal_close{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    cursor: pointer;
+}
+.my_modal_close_icon{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    cursor: pointer;
+}
+.my_modal_close_icon span::before,
+.my_modal_close_icon span::after{
+    display: block;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 84%;
+    height: 16%;
+    margin: -8% 0 0 -42%;
+    background: #FFF;
+}
+.my_modal_close_icon span::before{
+    transform: rotate(-45deg);
+}
+.my_modal_close_icon span::after{
+    transform: rotate(45deg);
+}
+
+/* コンテンツ表示 */
+.my_modal_content{
+    padding: 5px 10px;
+    font-size: 13px;
+
+}
+
+/* 背景を暗くする */
+.my_modal_overlay{
+    display: none;
+    position: fixed;
+    z-index: 90000;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    background-color: #111;
+    opacity: 0.3;
+    cursor: pointer;
+}
+
+/* チェック時オーバーレイとコンテンツを表示 */
+#my_modal1:checked ~ .my_modal_body1, #my_modal1:checked ~ .my_modal_overlay{
+    display: block;
+}
+
+/* 利用規約本文の装飾 */
+.Inner {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+}
+
+p{
+  margin: 0;
+  padding: 0;
+}
+li{
+  list-style: none;
+}
+
+.Inner-Headline {
+  font-weight: bold;
+  font-size: 32px;
+}
+@media screen and (max-width: 480px) {
+  .Inner-Headline {
+    font-size: 24px;
+  }
+}
+.Inner-Text {
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+  font-size: 15px;
+}
+.Inner-Text.first {
+  margin-top: 36px;
+}
+.Inner-Box {
+  margin-top: 16px;
+}
+.Inner-Box-Headline {
+  font-weight: bold;
+  font-size: 28px;
+}
+@media screen and (max-width: 480px) {
+  .Inner-Box-Headline {
+    font-size: 20px;
+  }
+}
+.Inner-Box-List {
+  margin: 20px 0 0 40px;
+}
+.Inner-Box-List-Item {
+  margin-top: 10px;
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+  list-style-type: decimal;
+}
+.Inner-Box-List-Item-Ol {
+  margin: 20px 0 0 40px;
+}
+.Inner-Box-List-Item-Ol-Item {
+  margin-top: 10px;
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+  list-style-type: decimal;
+}
+.Inner-Box-List-Item-Link {
+  text-decoration: underline;
+  display: inline-block;
+  color: red;
+}
+.Inner-Box-Contact {
+  margin-top: 36px;
+}
+.Inner-Box-Contact-Text {
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+  font-size: 15px;
+}
+.Inner-Box-Contact-Text:nth-child(2) {
+  margin-top: 16px;
+}
+.Inner-Box-Item {
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+  font-size: 15px;
+}
+@media screen and (max-width: 480px) {
+  .Inner-Box-Item {
+    letter-spacing: inherit;
+    font-size: 14px;
+  }
+}
+#tos1{
+    margin-left: 1rem;
+    text-indent: -1rem;
+}
+#tos2{
+    margin-left: 3rem;
+    text-indent: -2rem;
+}
+#TOScheck{
+    text-align: center;
+    font-size: 20px;
+}
