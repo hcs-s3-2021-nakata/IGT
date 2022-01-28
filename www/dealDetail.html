@@ -26,6 +26,8 @@
         // 定義
         var give_user_id = "";
         var take_user_id = "";
+        var start_day = "";
+        var end_day = "";
 
         const wait = (sec) => { // タイマ
             return new Promise((resolve, reject) => {
@@ -94,6 +96,7 @@
                     document.getElementById('category').innerHTML = category;
                     document.getElementById('item_status').innerHTML = item_status;
                     document.getElementById('delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
+                    document.getElementById("delivery_day").innerHTML = object.delivery_day;
                     document.getElementById('delivery_time').innerHTML = delivery_time;
                     document.getElementById('location').innerHTML = location;
 
@@ -105,6 +108,9 @@
                         console.log("出品者");
                     } else if(current_user_id == take_user_id) {
                         console.log("落札者");
+                        // グローバル変数に必要な情報を格納
+                        start_day = object.delivery_start_date;
+                        end_day = object.delivery_end_date;
                         // ローカルストレージに必要な情報を格納
                         localStorage.setItem("flag", "give");
                         localStorage.setItem("objectID", objectID);
@@ -114,6 +120,8 @@
                         document.getElementById('qrDisp').innerHTML = "<a onclick='getObjectID()'><button type='button' class='showing'><img id='deal-detail_button' src='img/qr.png'><br><b>表示する</b></button></a>";
                         // スキャンボタンを不可視化する処理
                         document.getElementById('hidden').style.display = 'none';
+                        // 取引日時指定を有効化
+                        document.getElementById('deliveryDay').innerHTML = '<a>受け渡し日の指定</a><br><input type="date" id="set_delivery_day" name="delivery_day"><button onclick="setDeliveryDay()">決定</button>';
                     } else {
                         console.log("不正");
                     }
@@ -163,6 +171,7 @@
                     document.getElementById('category').innerHTML = category;
                     document.getElementById('item_status').innerHTML = item_status;
                     document.getElementById('delivery_date').innerHTML = object.delivery_start_date + "<br><span class='wave'>～</span><br>" + object.delivery_end_date;
+                    document.getElementById("delivery_day").innerHTML = object.delivery_day;
                     document.getElementById('delivery_time').innerHTML = delivery_time;
                     document.getElementById('location').innerHTML = location;
 
@@ -174,6 +183,9 @@
                         console.log("出品者");
                     } else if(current_user_id == take_user_id) {
                         console.log("落札者");
+                        // グローバル変数に必要な情報を格納
+                        start_day = object.delivery_start_date;
+                        end_day = object.delivery_end_date;
                         // ローカルストレージに必要な情報を格納
                         localStorage.setItem("flag", "trade");
                         localStorage.setItem("objectID", objectID);
@@ -452,9 +464,9 @@
         function setDeliveryDay(){
             var objectId = location.search.replace('?', '');
             var day = document.getElementById("set_delivery_day").value;
-            console.log(day);
             var dealflg = localStorage.getItem("dealflg");
-            if (dealflg == "give") {
+            if (dealflg == "give" && start_day <= day && end_day >= day) {
+                // 正常（譲渡）
                 var Give = ncmb.DataStore("give");
                 Give.equalTo("objectId", objectId)
                     .fetch()
@@ -464,7 +476,11 @@
                         alert("受け渡し日の設定が完了しました");
                         document.getElementById("delivery_day").innerHTML = day;
                     });
-            } else if (dealflg == "trade") {
+            } else if (dealflg == "give" && start_day > day || end_day < day){
+                // 異常（譲渡）
+                alert("ERROR\n受け渡し期間を超過しています");
+            } else if (dealflg == "trade" && start_day <= day && end_day >= day) {
+                // 正常（交換）
                 var Trade = ncmb.DataStore("trade");
                 Trade.equalTo("objectId", objectId)
                     .fetch()
@@ -474,6 +490,9 @@
                         alert("受け渡し日の設定が完了しました");
                         document.getElementById("delivery_day").innerHTML = day;
                     });
+            } else if (dealflg == "trade" && start_day > day || end_day < day){
+                // 異常（交換）
+                alert("ERROR\n受け渡し期間を超過しています");
             } else {
                 alert("ERROR");
             }
