@@ -122,7 +122,7 @@ summany {
   background-color: #F2EAB9;
   height: 45px;
   border: solid 3px #CFC89B;
-  z-index: 37.5;
+  z-index: 25;
   animation: spinning-label 3s linear infinite;
 }
 #bottle .label-shadow {
@@ -130,7 +130,7 @@ summany {
   height: 51px;
   background-color: rgba(0, 0, 0, 0.3);
   top: 45px;
-  z-index: 30;
+  z-index: 20;
   animation: spinning-shadow 3s linear infinite;
 }
 
