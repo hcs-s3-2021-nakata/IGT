@@ -2,245 +2,280 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
-  <script src="components/loader.js"></script>
-  <link rel="stylesheet" href="components/loader.css">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/acount.css">
-  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
-  <script type="text/javascript" src="css/logout.js"></script>
-  <script>
-    // APIキーの設定とSDK初期化
-    // API key.
-    var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
-    var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
-    // SDK initialization.
-    var ncmb = new NCMB(applicationKey, clientKey);
-    var reader = new FileReader();
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/acount.css">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="css/logout.js"></script>
+    <script>
+        // APIキーの設定とSDK初期化
+        // API key.
+        var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+        var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+        // SDK initialization.
+        var ncmb = new NCMB(applicationKey, clientKey);
+        var reader = new FileReader();
 
-    function accountLoad() {
-      // カレントユーザー情報の取得
-      var currentUser = ncmb.User.getCurrentUser();
-      console.log("ログイン中のユーザー: " + currentUser.get("userName"));
+        function accountLoad() {
+            // カレントユーザー情報の取得
+            var currentUser = ncmb.User.getCurrentUser();
+            console.log("ログイン中のユーザー: " + currentUser.get("userName"));
 
-      //ユーザーテーブルから値を取得
-      var User = ncmb.User;
-      var item = User
-        .fetchById(currentUser.get("objectId")) //オブジェクトIDを指定
-        .then(item => {
-          console.log('データあり' + item.user_account_name);
+            //ユーザーテーブルから値を取得
+            var User = ncmb.User;
+            var item = User
+                .fetchById(currentUser.get("objectId")) //オブジェクトIDを指定
+                .then(item => {
+                    console.log('データあり' + item.user_account_name);
 
-          //学籍番号を表示させる
-          document.getElementById('userName').innerHTML = item.userName;
+                    //学籍番号を表示させる
+                    document.getElementById('userName').innerHTML = item.userName;
 
-          //クラスを表示させる
-          if (item.userClass !== null) {
-            document.getElementById('userClass').innerHTML = "<span class='acountErrMsg' id='classErr'></span><input id='userClassInput' class='acount' type='text' placeholder='S3A3' value=" + item.user_class + ">";
-          }
+                    //クラスを表示させる
+                    if (item.userClass !== null) {
+                        document.getElementById('userClass').innerHTML = "<span class='acountErrMsg' id='classErr'></span><input id='userClassInput' class='acount' type='text' placeholder='S3A3' value=" + item.user_class + ">";
+                    }
 
-          //番号を表示させる
-          if (item.userNumber !== null) {
-            document.getElementById('userNumber').innerHTML = "<span class='acountErrMsg' id='numberErr'></span><input id='userNumberInput' class='acount' type='text' placeholder='00' value=" + item.user_number + ">";
-          }
+                    //番号を表示させる
+                    if (item.userNumber !== null) {
+                        document.getElementById('userNumber').innerHTML = "<span class='acountErrMsg' id='numberErr'></span><input id='userNumberInput' class='acount' type='text' placeholder='00' value=" + item.user_number + ">";
+                    }
 
-          //名前を表示させる
-          document.getElementById('userAccountName').innerHTML = "<span class='acountErrMsg' id='nameErr'></span><input id='userAccountNameInput' class='acount' type='text' placeholder='ワイン一郎' value=" + item.user_account_name + ">";
+                    //名前を表示させる
+                    document.getElementById('userAccountName').innerHTML = "<span class='acountErrMsg' id='nameErr'></span><input id='userAccountNameInput' class='acount' type='text' placeholder='ワイン一郎' value=" + item.user_account_name + ">";
 
-          //メールアドレスを表示させる
-          if (item.mailAddress !== null) {
-            document.getElementById('mailAddress').innerHTML = "<span class='acountErrMsg' id='mailErr'></span><input id='mailAddressInput' class='acount' type='text' placeholder='wine_window@gmail.com' value=" + item.mailAddress + ">";
-          }else{
-            document.getElementById('mailAddress').innerHTML = "<span class='acountErrMsg' id='mailErr'></span><input id='mailAddressInput' class='acount' type='text' placeholder='wine_window@gmail.com' value=''>";
-          }
-        })
-        .catch(e => {
-          console.log('取得データなし');
-        });
-    }
-
-    ////ボタン押下で最初の処理（エラーチェック）////
-    function accountErrCheck() {
-
-      //テキストボックスの入力値を取得
-      var userClass = document.getElementById("userClassInput").value;
-      var userNumber = document.getElementById("userNumberInput").value;
-      var userAccountName = document.getElementById("userAccountNameInput").value;
-      var mailAddress = document.getElementById("mailAddressInput").value;
-      var returnFlag = false;
-
-      //クラスが半角英数字か
-      const numEngHf = /[^0-9A-Z]/;
-      if (userClass.match(numEngHf)) {
-        if (userClass != "") {
-          //エラー判定のときの処理
-          document.getElementById('classErr').innerHTML = "半角英数字で入力してください";
-          returnFlag = true;
+                    //メールアドレスを表示させる
+                    if (item.mailAddress !== null) {
+                        document.getElementById('mailAddress').innerHTML = "<span class='acountErrMsg' id='mailErr'></span><input id='mailAddressInput' class='acount' type='text' placeholder='wine_window@gmail.com' value=" + item.mailAddress + ">";
+                    } else {
+                        document.getElementById('mailAddress').innerHTML = "<span class='acountErrMsg' id='mailErr'></span><input id='mailAddressInput' class='acount' type='text' placeholder='wine_window@gmail.com' value=''>";
+                    }
+                })
+                .catch(e => {
+                    console.log('取得データなし');
+                });
         }
-      }
 
-      //番号が半角数字か
-      const numHf = /[^0-9]/;
-      if (userNumber.match(numHf)) {
-        if (userNumber != "") {
-          //エラー判定のときの処理
-          document.getElementById('numberErr').innerHTML = "半角数字で入力してください";
-          returnFlag = true;
+        ////ボタン押下で最初の処理（エラーチェック）////
+        function accountErrCheck() {
+
+            //テキストボックスの入力値を取得
+            var userClass = document.getElementById("userClassInput").value;
+            var userNumber = document.getElementById("userNumberInput").value;
+            var userAccountName = document.getElementById("userAccountNameInput").value;
+            var mailAddress = document.getElementById("mailAddressInput").value;
+            var returnFlag = false;
+
+            //クラスが半角英数字か
+            const numEngHf = /[^0-9A-Z]/;
+            if (userClass.match(numEngHf)) {
+                if (userClass != "") {
+                    //エラー判定のときの処理
+                    document.getElementById('classErr').innerHTML = "半角英数字で入力してください";
+                    returnFlag = true;
+                }
+            }
+
+            //番号が半角数字か
+            const numHf = /[^0-9]/;
+            if (userNumber.match(numHf)) {
+                if (userNumber != "") {
+                    //エラー判定のときの処理
+                    document.getElementById('numberErr').innerHTML = "半角数字で入力してください";
+                    returnFlag = true;
+                }
+            }
+
+            //名前がnullか
+            if (userAccountName === "") {
+                document.getElementById('nameErr').innerHTML = "名前は必須入力です";
+                returnFlag = true;
+            }
+
+            //問題なしで変更処理を実行
+            if (!returnFlag) {
+                accountUpdate();
+            }
         }
-      }
 
-      //名前がnullか
-      if (userAccountName === "") {
-        document.getElementById('nameErr').innerHTML = "名前は必須入力です";
-        returnFlag = true;
-      }
+        ////エラーチェックの後で動くやつ（更新処理）////
+        function accountUpdate() {
+            //変更しますかアラート
+            changeFlag = confirm("アカウント情報を変更すると一度ログアウトします。よろしいですか？");
 
-      //問題なしで変更処理を実行
-      if (!returnFlag) {
-        accountUpdate();
-      }
-    }
+            if (changeFlag) {
+                // 「はい」
 
-    ////エラーチェックの後で動くやつ（更新処理）////
-    function accountUpdate() {
-      //変更しますかアラート
-      changeFlag = confirm("アカウント情報を変更すると一度ログアウトします。よろしいですか？");
+                var updateFlag = false;
+                //テキストボックスの入力値を取得
+                var userClass = document.getElementById("userClassInput").value;
+                var userNumber = document.getElementById("userNumberInput").value;
+                var userAccountName = document.getElementById("userAccountNameInput").value;
+                var mailAddress = document.getElementById("mailAddressInput").value;
 
-      if (changeFlag) {
-        // 「はい」
+                // カレントユーザー情報の取得
+                var currentUser = ncmb.User.getCurrentUser();
 
-        var updateFlag = false;
-        //テキストボックスの入力値を取得
-        var userClass = document.getElementById("userClassInput").value;
-        var userNumber = document.getElementById("userNumberInput").value;
-        var userAccountName = document.getElementById("userAccountNameInput").value;
-        var mailAddress = document.getElementById("mailAddressInput").value;
+                //ユーザーテーブルから値を取得
+                var User = ncmb.User;
+                var item = User
 
-        // カレントユーザー情報の取得
-        var currentUser = ncmb.User.getCurrentUser();
+                    .fetchById(currentUser.get("objectId"))
+                    .then(item => {
+                        item.set("user_class", userClass)
+                            .set("user_number", userNumber)
+                            .set("user_account_name", userAccountName)
+                            .set("mailAddress", mailAddress).update();
+                        console.log('変更できた');
 
-        //ユーザーテーブルから値を取得
-        var User = ncmb.User;
-        var item = User
+                    }).then(function() {
+                        alert("ログイン画面に戻ります");
+                        logout_button();
+                    })
+                    .catch(e => {
+                        console.log('変更失敗');
+                    });
 
-          .fetchById(currentUser.get("objectId"))
-          .then(item => {
-            item.set("user_class", userClass)
-              .set("user_number", userNumber)
-              .set("user_account_name", userAccountName)
-              .set("mailAddress", mailAddress).update();
-            console.log('変更できた');
+                // 「いいえ」
+            } else {;
+            }
+        }
 
-          }).then(function() {
-            alert("ログイン画面に戻ります");
-            logout_button();
-          })
-          .catch(e => {
-            console.log('変更失敗');
-          });
+        //アカウント退会機能
+        function unsubscribe() {
+            // カレントユーザー情報の取得
+                var currentUser = ncmb.User.getCurrentUser();
 
-        // 「いいえ」
-      } else {;
-      }
-    }
-  </script>
+                //ユーザーテーブルから値を取得
+                var User = ncmb.User;
+                var item = User
+
+                    .fetchById(currentUser.get("objectId"))
+                    .then(item => {
+                        item.set("effectiveness", 1)
+                            .update();
+                    }).then(function() {
+                        logout_button();
+                    })
+                    .catch(e => {
+                        console.log('変更失敗');
+                    });
+        }
+
+        //退会確認ダイアログ
+        function unsubscribeConform(){
+            var result = window.confirm('本当に退会しますか？');
+            if(result){
+                unsubscribe();
+            }
+
+        }
+           
+    </script>
 </head>
 
 <body id="prodact_lists" onload="javascript:accountLoad()">
-  <!-- Header Start -->
-  <header class="site-header">
-    <div class="wrapper site-header__wrapper">
-      <nav class="nav">
-        <div class="detail_head">
-          <div class="back_button">
+    <!-- Header Start -->
+    <header class="site-header">
+        <div class="wrapper site-header__wrapper">
+            <nav class="nav">
+                <div class="detail_head">
+                    <div class="back_button">
 
-          </div>
-          <div class="page_title">
-            <input class="hidden" type="checkbox" id="menu-btn-check"><span class="acountCenter">アカウント詳細</span>
-            <label for="menu-btn-check" class="acountMenu-btn"><span></span></label>
-            <div style="text-align: left" class="menu-content">
-              <ul>
-                <li><a href="acount.html">アカウント詳細</a></li>
-                <li><a href="message.html">通知</a></li>
-                <li><a href="dealHistory.html">取引履歴</a></li>
-                <li><a href="myGiveItem.html">出品した譲渡品</a></li>
-                <li><a href="myTradeItem.html">出品した交換品</a></li>
-                <li><a onclick="logout_button()">ログアウト</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="header_right">
-          </div>
+                    </div>
+                    <div class="page_title">
+                        <input class="hidden" type="checkbox" id="menu-btn-check"><span class="acountCenter">アカウント詳細</span>
+                        <label for="menu-btn-check" class="acountMenu-btn"><span></span></label>
+                        <div style="text-align: left" class="menu-content">
+                            <ul>
+                                <li><a href="acount.html">アカウント詳細</a></li>
+                                <li><a href="message.html">通知</a></li>
+                                <li><a href="dealHistory.html">取引履歴</a></li>
+                                <li><a href="myGiveItem.html">出品した譲渡品</a></li>
+                                <li><a href="myTradeItem.html">出品した交換品</a></li>
+                                <li><a onclick="logout_button()">ログアウト</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="header_right">
+                    </div>
+                </div>
+            </nav>
         </div>
-      </nav>
-    </div>
-  </header>
-  <!-- Header End -->
+    </header>
+    <!-- Header End -->
 
-  <!-- Body Start -->
-  <div class="acount" style="text-align: left">
-    <ul class="acount">
-      <li class="acount">
-        <a><img class="acount" src="img/botle.png">StudentNumber *</a>
-        <br>
-        <label class="ef_first">
+    <!-- Body Start -->
+    <div class="acount" style="text-align: left">
+        <ul class="acount">
+            <li class="acount">
+                <a><img class="acount" src="img/botle.png">StudentNumber *</a>
+                <br>
+                <label class="ef_first">
             <a id="userName" class="acount" type="text"></a>
           </label>
-      </li>
-      <li class="acount">
-        <a><img class="acount" src="img/glass.png">Class</a>
-        <label id="userClass" class="ef">
+            </li>
+            <li class="acount">
+                <a><img class="acount" src="img/glass.png">Class</a>
+                <label id="userClass" class="ef">
             </label>
-      </li>
-      <li class="acount">
-        <a><img class="acount" src="img/glass.png">Number</a>
-        <label id="userNumber" class="ef">
+            </li>
+            <li class="acount">
+                <a><img class="acount" src="img/glass.png">Number</a>
+                <label id="userNumber" class="ef">
             </label>
-      </li>
-      <li class="acount">
-        <a><img class="acount" src="img/glass.png">Name *</a>
-        <label id="userAccountName" class="ef">
+            </li>
+            <li class="acount">
+                <a><img class="acount" src="img/glass.png">Name *</a>
+                <label id="userAccountName" class="ef">
             </label>
-      </li>
-      <li class="acount">
-        <a><img class="acount" src="img/glass.png">MailAddress</a>
-        <label id="mailAddress" class="ef">
+            </li>
+            <li class="acount">
+                <a><img class="acount" src="img/glass.png">MailAddress</a>
+                <label id="mailAddress" class="ef">
             </label>
-      </li>
-    </ul>
-  </div>
-  <div class="acount-send">
-    <button class="acount" type="submit" onclick="accountErrCheck()"><b>変更する！</b></button>
-  </div>
-  <!-- Body End -->
+            </li>
+        </ul>
+    </div>
+    <div class="acount-send">
+        <button class="acount" type="submit" onclick="accountErrCheck()"><b>変更する！</b></button>
+    </div>
+    <br>
+    <div class="acount-send">
+        <button class="acount" type="submit" onclick="unsubscribeConform()"><b>退会する！</b></button>
+    </div>
+    <!-- Body End -->
 
-  <!-- Footer Start -->
-  <ul class="bottom-menu">
-    <li>
-      <a href="index.html">
-        <i class="far fa-list-alt"></i></a>
-    </li>
-    <li>
-      <a href="deal.html"><i class="fas fa-random"></i></a>
-    </li>
-    <li>
-      <a href="insert.html"><i class="fas fa-plus"></i></a>
-    </li>
-    <li>
-      <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
-    </li>
-    <li>
-      <a href="voice.html">
-        <i class="fas fa-bullhorn"></i></a>
-    </li>
-  </ul>
-  <!-- Fotter End -->
+    <!-- Footer Start -->
+    <ul class="bottom-menu">
+        <li>
+            <a href="index.html">
+                <i class="far fa-list-alt"></i></a>
+        </li>
+        <li>
+            <a href="deal.html"><i class="fas fa-random"></i></a>
+        </li>
+        <li>
+            <a href="insert.html"><i class="fas fa-plus"></i></a>
+        </li>
+        <li>
+            <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
+        </li>
+        <li>
+            <a href="voice.html">
+                <i class="fas fa-bullhorn"></i></a>
+        </li>
+    </ul>
+    <!-- Fotter End -->
 </body>
 
 </html>
