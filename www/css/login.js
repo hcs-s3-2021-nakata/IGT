@@ -80,6 +80,7 @@ function createNewUser() {
   user.set("user_account_name", createN)
     .set("userName", createSN)
     .set("password", createP)
+    .set("effectiveness", 0)
     .set("acl", (new ncmb.Acl()).setPublicWriteAccess(true).setPublicReadAccess(true))
     .signUpByAccount()
     .then(function (newUser) {
@@ -165,7 +166,7 @@ function searchStudentNumber(searchNumber) {
     ncmb.User.fetchAll()
       .then(users => {
         users.forEach(user => {
-          console.log("学生名：" + user.user_account_name);
+          //console.log("学生名：" + user.user_account_name);
           //ここで登録されている学籍番号かチェック
           if (user.userName === searchNumber) {
             console.log(user.user_account_name);
