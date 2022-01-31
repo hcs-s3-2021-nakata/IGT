@@ -38,7 +38,7 @@ function messages() {
                 await wait(0.1);
                 // 通知を表示する
                 var messagelist_element = document.getElementById('messagelist');
-                messagelist_element.insertAdjacentHTML("beforebegin", ' <li class="message"><div class="ef_img"><img class="message" src="img/message.png">' + new_createDate + ' ' + '<span id="readState">' + readState + '</span><br><div class="ef_div"><span>' + message + '</span><br><div class="kidoku"><button class="kidoku" value="'+objectId+'" onclick="kidoku(this.value)">既読にする</button><sapn>　</span><button class="kidoku" value="'+objectId+'" onclick="del(this.value)">通知を削除する</button></div></div></li> ');
+                messagelist_element.insertAdjacentHTML("beforebegin", ' <li class="message"><div class="ms_img"><img class="message" src="img/message.png">' + new_createDate + ' ' + '<span class="state" id="readState">' + readState + '</span><br><div class="ms_div"><span>' + message + '</span><br><div class="kidoku"><button class="kidoku" value="'+objectId+'" onclick="kidoku(this.value)">既読にする</button><sapn>　</span><button class="kidoku" value="'+objectId+'" onclick="del(this.value)">通知を削除する</button></div></div></li> ');
             }
         })
         .catch(function (err) {

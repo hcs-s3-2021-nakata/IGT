@@ -39,3 +39,27 @@ button.kidoku {
     border-radius: 20px;
     margin: 0 0 0 auto;
 }
+
+.ms input[type='text']:focus {
+	border-bottom: 2px solid #832742da;
+	outline: none;
+}
+div.ms_img{
+  position: relative;
+  padding: 0.05em 0.5em 0.05em 0.5em;
+}
+div.ms_div{
+  position: relative;
+	margin: 8px 5px;
+  font: 15px/24px sans-serif;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0.05em 0.5em 0.05em 0.5em;
+	transition: 0.s;
+	letter-spacing: 5px;
+	color: #1e2c3f;
+    font-weight: bold;
+	border: none;
+	border-bottom: 1.75px solid #0a1b3a;
+	background: transparent;
+}
