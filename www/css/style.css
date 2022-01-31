@@ -601,6 +601,20 @@ button.acount{
 }
 
 /* 通知のcssはmessage.cssに移植しました */
+/*通知メッセージ*/
+.font_message {
+    font-family: 'Yusei Magic', sans-serif;
+    font-size: 20px;
+    color: #1e2c3f;
+}
+.button_message {
+    width: 30%;
+    padding-left: 1em 2em 1em 2em;
+    background: #ffffff;
+    border-radius: 5px;
+    border: 2px solid #1e2c3f;
+    font-size: 15px;
+}
 
 /*もっと読み込む*/
 .more,

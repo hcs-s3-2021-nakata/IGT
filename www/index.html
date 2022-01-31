@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=Yusei+Magic&display=swap" rel="stylesheet">
     <script type="text/javascript" src="css/logout.js"></script>
     <script>
         // APIキーの設定とSDK初期化
@@ -169,7 +169,7 @@
                         await wait(0.1);
                         // 通知を表示する
                         var message_counter = document.getElementById('message_counter');
-                        message_counter.innerHTML = '<button class="transparent" onclick="location.href=\'message.html\'"><div class="container" id="message_box"><span>新しい通知が'+message_count+'件あります　詳しく見る<i class="fas fa-angle-right"></i></span></div></button>';
+                        message_counter.innerHTML = '<br><div class="justified"><div class="font_message"><span>新しい通知が'+message_count+'件あります　<button class="button_message"onclick="location.href=\'message.html\'">詳しく見る</div></button></span></div><span>';
                     }
                 })
                 .catch(function(err) {
@@ -230,7 +230,7 @@
   <div class="container" id="index_item_box">
     <div id="justified">
       <div id="left_just">
-        <a>譲渡品から探す</a>
+        <span>譲渡品から探す</span>
       </div>
       <br>
       <br>
@@ -255,7 +255,7 @@
   <div class="container" id="index_item_box">
     <div id="justified">
       <div id="left_just">
-        <a>交換品から探す</a>
+        <span>交換品から探す</span>
       </div>
       <br>
       <br>
