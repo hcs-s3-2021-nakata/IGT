@@ -37,6 +37,20 @@
 }
 .voiceMenu-btn span:after {
     top: 8px;
+}/*ハンバーガーリンク押下した時の線の移動*/
+#menu-btn-check:checked ~ .voiceMenu-btn span {
+    background-color: rgba(255, 255, 255, 0);/*メニューオープン時は真ん中の線を透明にする*/
+}
+#menu-btn-check:checked ~ .voiceMenu-btn span::before {
+    bottom: 0;
+    transform: rotate(45deg);
+}
+#menu-btn-check:checked ~ .voiceMenu-btn span::after {
+    top: 0;
+    transform: rotate(-45deg);
+}
+#menu-btn-check {
+    display: none;
 }
 
 /* ボイス一覧トップ */

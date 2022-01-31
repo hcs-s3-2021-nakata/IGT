@@ -93,6 +93,11 @@ button.stop{
 }
 
 /* こっから下取引一覧画面の追加分 */
+.deal_comment {
+    font-family: 'Yusei Magic', sans-serif;
+    font-size: 20px;
+}
+
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP');
 summary {
     font-family: 'Noto Sans JP', sans-serif;

@@ -30,7 +30,7 @@ var reader = new FileReader();
 
 
 // 取得した情報で画面を上書き
- function iinoVoice(){
+ function takahashiVoice(){
   var Voice = ncmb.DataStore("voice");
   Voice.equalTo("teacher_name", "高橋先生")
    .fetchAll()
@@ -52,7 +52,7 @@ var reader = new FileReader();
   </script>
 </head>
 
-<body id="prodact_lists" onload="iinoVoice()">
+<body id="prodact_lists" onload="takahashiVoice()">
   <!-- Header Start -->
   <header class="site-header">
     <div class="wrapper site-header__wrapper">

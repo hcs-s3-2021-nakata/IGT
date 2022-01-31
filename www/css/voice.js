@@ -131,3 +131,37 @@ function oka_free() {
   audio = new Audio("voice/mr.hirose/oka_free.m4a");
   audio.play();
 }
+
+/*高橋先生ボイス*/
+function iine() {
+    audio = new Audio("voice/mr.takahashi/iine.m4a");
+    audio.play();
+}
+function finish() {
+    audio = new Audio("voice/mr.takahashi/finish.m4a");
+    audio.play();
+}
+function hoge() {
+    audio = new Audio("voice/mr.takahashi/hoge.m4a");
+    audio.play();
+}
+function tomcat() {
+    audio = new Audio("voice/mr.takahashi/tomcat.m4a");
+    audio.play();
+}
+function motoi() {
+    audio = new Audio("voice/mr.takahashi/motoi.m4a");
+    audio.play();
+}
+function taka_com() {
+    audio = new Audio("voice/mr.takahashi/taka_com.m4a");
+    audio.play();
+}
+function taka_grad() {
+    audio = new Audio("voice/mr.takahashi/taka_grad.m4a");
+    audio.play();
+}
+function taka_free() {
+    audio = new Audio("voice/mr.takahashi/taka_free.m4a");
+    audio.play();
+}
