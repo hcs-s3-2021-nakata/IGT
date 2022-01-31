@@ -305,6 +305,13 @@ button.btn {
   background-color: white;
 }
 
+#message_box{
+    margin-top: 10px;
+    height: 30px;
+    background-color: white;
+    text-align: center;
+}
+
 .container_parent{
   display: flex;
   padding: 25px 0px;
