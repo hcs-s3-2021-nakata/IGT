@@ -50,38 +50,64 @@
             var loginPassword = document.getElementById("loginPass").value;
 
             var loginFlag = false;
-            if (loginStudentNumber === "") {
-                document.getElementById('errMessageLogNum').innerHTML = "学籍番号が未入力です";
-                loginFlag = true;
-            } else {
-                document.getElementById('errMessageLogNum').innerHTML = "";
-            }
-            if (loginPassword === "") {
-                document.getElementById('errMessageLogPass').innerHTML = "パスワードが未入力です";
-                loginFlag = true;
-            } else {
-                document.getElementById('errMessageLogPass').innerHTML = "";
-            }
-            if (loginFlag) {
-                return;
-            }
 
-
-            ncmb.User.login(loginStudentNumber, loginPassword)
-                .then(function(user) {
-                    //ログイン成功時の処理(例)
-                    //console.log("ログイン成功：" + JSON.stringify(user));
-                    console.log("ログイン成功：" + ncmb.User.getCurrentUser().user_account_name);
-                    document.location.href = 'index.html';
-                })
-                .catch(function(error) {
-                    //ログイン失敗時の処理
-                    console.log("ログイン失敗：" + JSON.stringify(error));
-                    document.getElementById('errMessageLogPass').innerHTML = "学籍番号かパスワードが間違っています";
-                });
+            checkEffectiveness(loginStudentNumber).then(function(effectiveness) {
+                if (loginStudentNumber === "") {
+                    document.getElementById('errMessageLogNum').innerHTML = "学籍番号が未入力です";
+                    loginFlag = true;
+                } else if(effectiveness != 0) {
+                    document.getElementById('errMessageLogNum').innerHTML = "このアカウントは現在使用できません";
+                    loginFlag = true;
+                } else {
+                    document.getElementById('errMessageLogNum').innerHTML = "";
+                }
+                if (loginPassword === "") {
+                    document.getElementById('errMessageLogPass').innerHTML = "パスワードが未入力です";
+                    loginFlag = true;
+                } else {
+                    document.getElementById('errMessageLogPass').innerHTML = "";
+                }
+                if (loginFlag) {
+                    return;
+                }
 
 
 
+
+                ncmb.User.login(loginStudentNumber, loginPassword)
+                    .then(function(user) {
+                        //ログイン成功時の処理(例)
+                        //console.log("ログイン成功：" + JSON.stringify(user));
+                        console.log("ログイン成功：" + ncmb.User.getCurrentUser().user_account_name);
+                        document.location.href = 'index.html';
+                    })
+                    .catch(function(error) {
+                        //ログイン失敗時の処理
+                        console.log("ログイン失敗：" + JSON.stringify(error));
+                        document.getElementById('errMessageLogPass').innerHTML = "学籍番号かパスワードが間違っています";
+                    });
+            });
+        }
+
+        //アカウント有効性の確認
+        function checkEffectiveness(studentNumber) {
+            return new Promise(function(resolve, reject) {
+                ncmb.User.fetchAll()
+                    .then(users => {
+                        users.forEach(user => {
+                            //ここで登録されている学籍番号かチェック
+                            if (user.userName === studentNumber) {
+                                var effectiveness = user.effectiveness;
+                                resolve(effectiveness);
+                            }
+                        })
+                    }).catch(err => {
+                        console.log("変数データ取得エラー" + err);
+                    });
+            }).catch(err => {
+                console.log("checkEffectivenessエラー:" + err);
+                reject();
+            });
         }
 
         //学籍番号検索機能
@@ -91,7 +117,6 @@
             ncmb.User.fetchAll()
                 .then(users => {
                     users.forEach(user => {
-                        console.log(user);
                         //ここで登録されている学籍番号かチェック
                         if (user.userName === loginStudentNumber) {
                             console.log("あった！");
@@ -182,7 +207,7 @@
         <!--お試しタブエンド-->
 
         <!--利用規約-->
-        
+
         <!-- チェックボックスラベル -->
         <input type="checkbox" id="my_modal1">
         <!-- 非表示チェックボックス -->
@@ -202,24 +227,24 @@
                 <div class="Inner-Box">
                     <h3 class="Inner-Box-Headline">第1条（適用）</h3>
                     <p id="tos1">
-                            1.　本規約は、ユーザーと当方との間の本サービスの利用に関わる一切の関係に適用されるものとします。
+                        1.　本規約は、ユーザーと当方との間の本サービスの利用に関わる一切の関係に適用されるものとします。
                     </p>
                     <p id="tos1">
-                            2.　当方は本サービスに関し、本規約のほか、ご利用にあたってのルール等、各種の定め（以下、「個別規定」といいます。）をすることがあります。これら個別規定はその名称のいかんに関わらず、本規約の一部を構成するものとします。
+                        2.　当方は本サービスに関し、本規約のほか、ご利用にあたってのルール等、各種の定め（以下、「個別規定」といいます。）をすることがあります。これら個別規定はその名称のいかんに関わらず、本規約の一部を構成するものとします。
                     </p>
                     <p id="tos1">
-                            3.　本規約の規定が前条の個別規定の規定と矛盾する場合には、個別規定において特段の定めなき限り、個別規定の規定が優先されるものとします。
+                        3.　本規約の規定が前条の個別規定の規定と矛盾する場合には、個別規定において特段の定めなき限り、個別規定の規定が優先されるものとします。
                     </p>
-                        
+
                 </div>
 
                 <div class="Inner-Box">
                     <h3 class="Inner-Box-Headline">第2条（利用登録）</h3>
                     <p id="tos1">
-                    1.　本サービスにおいては、登録希望者が本規約に同意の上、当方の定める方法によって利用登録を申請し、当方がこの承認を登録希望者に通知することによって、利用登録が完了するものとします。
+                        1.　本サービスにおいては、登録希望者が本規約に同意の上、当方の定める方法によって利用登録を申請し、当方がこの承認を登録希望者に通知することによって、利用登録が完了するものとします。
                     </p>
                     <p id="tos1">
-                     2.　当方は、利用登録の申請者に以下の事由があると判断した場合、利用登録の申請を承認しないことがあり、その理由については一切の開示義務を負わないものとします。
+                        2.　当方は、利用登録の申請者に以下の事由があると判断した場合、利用登録の申請を承認しないことがあり、その理由については一切の開示義務を負わないものとします。
                         <p id="tos2">　1.　利用登録の申請に際して虚偽の事項を届け出た場合</p>
                         <p id="tos2">　2.　本規約に違反したことがある者からの申請である場合</p>
                         <p id="tos2">　3.　北海道情報専門学校に在学中の学生でない場合</p>
@@ -231,7 +256,7 @@
                     <h3 class="Inner-Box-Headline">第3条（ユーザーIDおよびパスワードの管理）</h3>
                     <p id="tos1">
                         1.　ユーザーは、自己の責任において、本サービスのユーザーIDおよびパスワード適切に管理するものとします。
-                    </p> 
+                    </p>
                     <p id="tos1">
                         2.　ユーザーは、いかなる場合にも、ユーザーIDおよびパスワードを第三者に譲渡または貸与し、もしくは第三者と共用することはできません。当方は、ユーザーIDとパスワードの組み合わせが登録情報と一致してログインされた場合には、そのユーザーIDを登録しているユーザー自身による利用とみなします。
                     </p>
@@ -243,13 +268,13 @@
                 <div class="Inner-Box">
                     <h3 class="Inner-Box-Headline">第4条（利用料金および支払方法）</h3>
                     <p id="tos1">
-                    1.　本サービスに利用料金が発生した場合、ユーザは以下の項目に従う。 
-                    <p id="tos2">
-                        　1.　ユーザーは、本サービスの有料部分の対価として、当方が別途定め、本アプリに表示する利用料金を、当方が指定する方法により支払うものとします。
-                    </p>
-                    <p id="tos2">
-                        　2.　ユーザーが利用料金の支払を遅滞した場合には、ユーザーは年14．6％の割合による遅延損害金を支払うものとします。
-                    </p>
+                        1.　本サービスに利用料金が発生した場合、ユーザは以下の項目に従う。
+                        <p id="tos2">
+                            1.　ユーザーは、本サービスの有料部分の対価として、当方が別途定め、本アプリに表示する利用料金を、当方が指定する方法により支払うものとします。
+                        </p>
+                        <p id="tos2">
+                            2.　ユーザーが利用料金の支払を遅滞した場合には、ユーザーは年14．6％の割合による遅延損害金を支払うものとします。
+                        </p>
                     </p>
                 </div>
 
@@ -260,10 +285,10 @@
                         1.　法令または公序良俗に違反する行為
                     </p>
                     <p id="tos1">
-                        2.　犯罪行為に関連する行為 
+                        2.　犯罪行為に関連する行為
                     </p>
                     <p id="tos1">
-                        3.　当方、本サービスの他のユーザー、または第三者のサーバーまたはネットワークの機能を破壊したり、妨害したりする行為 
+                        3.　当方、本サービスの他のユーザー、または第三者のサーバーまたはネットワークの機能を破壊したり、妨害したりする行為
                     </p>
                     <p id="tos1">
                         4.　当方のサービスの運営を妨害するおそれのある行為
@@ -286,40 +311,40 @@
                     <p id="tos1">
                         10.　以下の表現を含み、または含むと当方が判断する内容を本サービス上に投稿し、または送信する行為
                         <p id="tos2">
-                            　1.　過度に暴力的な表現
+                            1.　過度に暴力的な表現
                         </p>
                         <p id="tos2">
-                            　2.　露骨な性的表現
+                            2.　露骨な性的表現
                         </p>
                         <p id="tos2">
-                            　3.　人種、国籍、信条、性別、社会的身分、門地等による差別につながる表現
+                            3.　人種、国籍、信条、性別、社会的身分、門地等による差別につながる表現
                         </p>
                         <p id="tos2">
-                            　4.　自殺、自傷行為、薬物乱用を誘引または助長する表現
+                            4.　自殺、自傷行為、薬物乱用を誘引または助長する表現
                         </p>
                         <p id="tos2">
-                            　5.　その他反社会的な内容を含み他人に不快感を与える表現
+                            5.　その他反社会的な内容を含み他人に不快感を与える表現
                         </p>
                     </p>
                     <p id="tos1">
                         11.　以下を目的とし、または目的とすると当方が判断する行為
                         <p id="tos2">
-                            　1.　営業、宣伝、広告、勧誘、その他営利を目的とする行為（当方の認めたものを除きます。）
+                            1.　営業、宣伝、広告、勧誘、その他営利を目的とする行為（当方の認めたものを除きます。）
                         </p>
                         <p id="tos2">
-                            　2.　性行為やわいせつな行為を目的とする行為
+                            2.　性行為やわいせつな行為を目的とする行為
                         </p>
                         <p id="tos2">
-                            　3.　面識のない異性との出会いや交際を目的とする行為
+                            3.　面識のない異性との出会いや交際を目的とする行為
                         </p>
                         <p id="tos2">
-                            　4.　他のユーザーに対する嫌がらせや誹謗中傷を目的とする行為
+                            4.　他のユーザーに対する嫌がらせや誹謗中傷を目的とする行為
                         </p>
                         <p id="tos2">
-                            　5.　当方、本サービスの他のユーザー、または第三者に不利益、損害または不快感を与えることを目的とする行為
+                            5.　当方、本サービスの他のユーザー、または第三者に不利益、損害または不快感を与えることを目的とする行為
                         </p>
                         <p id="tos2">
-                            　6.　その他本サービスが予定している利用目的と異なる目的で本サービスを利用する行為
+                            6.　その他本サービスが予定している利用目的と異なる目的で本サービスを利用する行為
                         </p>
                     </p>
                     <p id="tos1">
@@ -335,16 +360,16 @@
                     <p id="tos1">
                         1.　当方は、以下のいずれかの事由があると判断した場合、ユーザーに事前に通知することなく本サービスの全部または一部の提供を停止または中断することができるものとします。
                         <p id="tos2">
-                            　1.　本サービスにかかるコンピュータシステムの保守点検または更新を行う場合
+                            1.　本サービスにかかるコンピュータシステムの保守点検または更新を行う場合
                         </p>
                         <p id="tos2">
-                            　2.　地震、落雷、火災、停電または天災などの不可抗力により、本サービスの提供が困難となった場合
+                            2.　地震、落雷、火災、停電または天災などの不可抗力により、本サービスの提供が困難となった場合
                         </p>
                         <p id="tos2">
-                            　3.　コンピュータまたは通信回線等が事故により停止した場合
+                            3.　コンピュータまたは通信回線等が事故により停止した場合
                         </p>
                         <p id="tos2">
-                            　4.　その他、当方が本サービスの提供が困難と判断した場合
+                            4.　その他、当方が本サービスの提供が困難と判断した場合
                         </p>
                     </p>
                     <p id="tos1">
@@ -371,25 +396,25 @@
                     <p id="tos1">
                         1.　当方は、ユーザーが以下のいずれかに該当する場合には、事前の通知なく、投稿データを削除し、ユーザーに対して本サービスの全部もしくは一部の利用を制限し、またはユーザーとしての登録を抹消することができるものとします。
                         <p id="tos2">
-                            　1.　本規約のいずれかの条項に違反した場合
+                            1.　本規約のいずれかの条項に違反した場合
                         </p>
                         <p id="tos2">
-                            　2.　登録事項に虚偽の事実があることが判明した場合
+                            2.　登録事項に虚偽の事実があることが判明した場合
                         </p>
                         <p id="tos2">
-                            　3.　料金等の支払債務の不履行があった場合
+                            3.　料金等の支払債務の不履行があった場合
                         </p>
                         <p id="tos2">
-                            　4.　当方からの連絡に対し、一定期間返答がない場合
+                            4.　当方からの連絡に対し、一定期間返答がない場合
                         </p>
                         <p id="tos2">
-                            　5.　本サービスについて、最終の利用から一定期間利用がない場合
+                            5.　本サービスについて、最終の利用から一定期間利用がない場合
                         </p>
                         <p id="tos2">
-                            　6.　北海道情報専門学校を卒業もしくは退学した場合
+                            6.　北海道情報専門学校を卒業もしくは退学した場合
                         </p>
                         <p id="tos2">
-                            　7.　その他、当方が本サービスの利用を適当でないと判断した場合
+                            7.　その他、当方が本サービスの利用を適当でないと判断した場合
                         </p>
                     </p>
                     <p id="tos1">
@@ -431,10 +456,10 @@
                     <p id="tos1">
                         1.　当方は以下の場合には、ユーザーの個別の同意を要せず、本規約を変更することができるものとします。
                         <p id="tos2">
-                            　1.　本規約の変更がユーザーの一般の利益に適合するとき。
+                            1.　本規約の変更がユーザーの一般の利益に適合するとき。
                         </p>
                         <p id="tos2">
-                            　2.　本規約の変更が本サービス利用契約の目的に反せず、かつ、変更の必要性、変更後の内容の相当性その他の変更に係る事情に照らして合理的なものであるとき。
+                            2.　本規約の変更が本サービス利用契約の目的に反せず、かつ、変更の必要性、変更後の内容の相当性その他の変更に係る事情に照らして合理的なものであるとき。
                         </p>
                     </p>
                     <p id="tos1">
@@ -471,7 +496,7 @@
                 <p style="text-align:right">以上</p>
                 <br><br>
                 <p id="TOScheck">
-                <input type="checkbox" id="wineTOS" ><label for="wineTOS">同意する</label>
+                    <input type="checkbox" id="wineTOS"><label for="wineTOS">同意する</label>
                 </p>
 
             </div>
