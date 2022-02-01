@@ -162,30 +162,25 @@ details[open] .answer {
   border: 1px solid #c0a2c7;
   background-color: #c0a2c7;
   padding: 3px 10px;
-  border-radius: 30px;
-  height: 3em;
+  border-radius: 20px;
+  height: 2.3em;
   width: 240px;
 }
-.deal_container input[type="date"]{
+.deal_container input[type="text"]{
   border: none;
   border-radius: 5px;
-  height: 30px;
-  width: 120px;
-  padding: 1em 2em 1em 2em;
+  height: 2.0em;
 }
-.deal_container input[type="date"]:focus {
+.deal_container input[type="text"]:focus {
   outline: 0;
 }
 .deal_container input[type="button"]{
   cursor: pointer;
-  font-size: 14px;
   font-family: FontAwesome;
   border: none;
   background: #832742;
   color: #fff;
   outline : none;
-  border-radius: 1px;
-  height: 39px;
-  width: 60px;
-  padding: .5em 1em .5em 1em;;
+  border-radius: 5px;
+  height: 2.0em;
 }
