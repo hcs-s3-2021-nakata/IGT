@@ -36,9 +36,16 @@ function messages() {
                 // 日付の書き換えを行う
                 var new_createDate = dateRewrite(createDate);
                 await wait(0.1);
-                // 通知を表示する
-                var messagelist_element = document.getElementById('messagelist');
-                messagelist_element.insertAdjacentHTML("beforebegin", ' <li class="message"><div class="ms_img"><img class="message" src="img/message.png">' + new_createDate + ' ' + '<span class="state" id="readState">' + readState + '</span><br><div class="ms_div"><span>' + message + '</span><br><div class="kidoku"><button class="kidoku" value="'+objectId+'" onclick="kidoku(this.value)">既読にする</button><sapn>　</span><button class="kidoku" value="'+objectId+'" onclick="del(this.value)">通知を削除する</button></div></div></li> ');
+                // 条件分岐
+                if (read_flag == 0) {
+                    // 通知を表示する(未読)
+                    var messagelist_element = document.getElementById('messagelist');
+                    messagelist_element.insertAdjacentHTML("beforebegin", ' <li class="message"><div class="ms_img"><img class="message" src="img/midoku.png">' + new_createDate + ' ' + '<span class="state" id="readState">' + readState + '</span><br><div class="ms_div"><span>' + message + '</span><br><div class="kidoku"><button class="kidoku" value="'+objectId+'" onclick="kidoku(this.value)">既読にする</button><sapn>　</span><button class="kidoku" value="'+objectId+'" onclick="del(this.value)">通知を削除する</button></div></div></li> ');
+                } else {
+                    // 通知を表示する(既読)
+                    var messagelist_element = document.getElementById('messagelist');
+                    messagelist_element.insertAdjacentHTML("beforebegin", ' <li class="message"><div class="ms_img"><img class="message" src="img/message.png">' + new_createDate + ' ' + '<span class="state" id="readState">' + readState + '</span><br><div class="ms_div"><span>' + message + '</span><br><div class="kidoku"><button class="kidoku" value="'+objectId+'" onclick="kidoku(this.value)">既読にする</button><sapn>　</span><button class="kidoku" value="'+objectId+'" onclick="del(this.value)">通知を削除する</button></div></div></li> ');
+                }
             }
         })
         .catch(function (err) {

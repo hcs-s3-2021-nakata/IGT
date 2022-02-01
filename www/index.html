@@ -159,22 +159,21 @@
             console.log("function boot " + current_user_id);
             var Message = ncmb.DataStore("message");
             Message.equalTo("receive_user_id", current_user_id)
-            .equalTo("read_flag", "0")
+                .equalTo("read_flag", 0)
                 .fetchAll()
                 .then(async function(results) {
-                    for (var i = results.length; i > 0; i--) {
-                        console.log("get results");
-                        // 必要な変数の定義
-                        var message_count = results.length;
-                        await wait(0.1);
+                    console.log("get results "+results);
+                    if (results.length > 0){
                         // 通知を表示する
+                        var message_count = results.length;
                         var message_counter = document.getElementById('message_counter');
-                        message_counter.innerHTML = '<br><div class="justified"><div class="font_message"><span>新しい通知が'+message_count+'件あります　<button class="button_message"onclick="location.href=\'message.html\'">詳しく見る</div></button></span></div><span>';
+                        message_counter.innerHTML = '<br><div class="justified"><div class="font_message"><span>新しい通知が' + message_count + '件あります　<button class="button_message"onclick="location.href=\'message.html\'">詳しく見る</div></button></span></div><span>';
                     }
                 })
                 .catch(function(err) {
                     console.log(err);
                 });
+
         }
 
         //カレントユーザーのID取得
