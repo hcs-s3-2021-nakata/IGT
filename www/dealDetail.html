@@ -26,9 +26,11 @@
         var reader = new FileReader();
         // 定義
         var give_user_id = "";
+        var trade_user_id = "";
         var take_user_id = "";
         var start_day = "";
         var end_day = "";
+        var itemName = "";
 
         const wait = (sec) => { // タイマ
             return new Promise((resolve, reject) => {
@@ -82,6 +84,7 @@
                     var object = results[0];
                     // 値の書き換え
                     var deal_type = changeDealtype();
+                    itemName = object.item_name;
                     changeUserName(object.give_user_id);
                     changeTakeUserName(object.take_user_id);
                     var category = changeCategory(object.category);
@@ -412,8 +415,9 @@
             });
         }
 
-        // OKの処理の中身
+        // OKの処理の中身 現在通知を作成中
         async function currentIdCompare() {
+            var dealflg = localStorage.getItem("dealflg");
             var objectID = location.search.replace('?', '');
             getDealersId(objectID);
             /*currentUserIdの取得*/
@@ -433,7 +437,15 @@
                 console.log("落札者");
                 takeUserUpdate();
                 await wait(1);
-                document.location.href = 'deal.html';
+                // ローカルストレージに必要な情報を格納
+                localStorage.setItem("state", "変更");
+                localStorage.setItem("type", dealflg);
+                localStorage.setItem("itemName", itemName);
+                localStorage.setItem("give_userId", give_user_id);
+                localStorage.setItem("trade_userId", trade_user_id);
+                localStorage.setItem("take_userId", take_user_id);
+                // 画面遷移
+                document.location.href = 'dealCanceled.html'; // 取引中止の完了画面に飛ぶ
             } else {
                 console.log(current_user_id + " " + give_user_id + " " + take_user_id);
                 console.log("じゃあお前は誰なんだよ");
@@ -626,18 +638,36 @@
 
         // dealdeleteの中身
         async function del() {
+            var dealflg = localStorage.getItem("dealflg");
             dealDelete();
             await wait(1);
-            document.location.href = 'deal.html';
+            // ローカルストレージに必要な情報を格納
+                localStorage.setItem("state", "変更");
+                localStorage.setItem("type", dealflg);
+                localStorage.setItem("itemName", itemName);
+                localStorage.setItem("give_userId", give_user_id);
+                localStorage.setItem("trade_userId", trade_user_id);
+                localStorage.setItem("take_userId", take_user_id);
+            document.location.href = 'dealCanceled.html';
         }
 
         // changeの中身
         async function cha() {
+            var dealflg = localStorage.getItem("dealflg");
             takeUserUpdate();
             await wait(1);
-            document.location.href = 'deal.html';
+            // ローカルストレージに必要な情報を格納
+                localStorage.setItem("state", "変更");
+                localStorage.setItem("type", dealflg);
+                localStorage.setItem("itemName", itemName);
+                localStorage.setItem("give_userId", give_user_id);
+                localStorage.setItem("trade_userId", trade_user_id);
+                localStorage.setItem("take_userId", take_user_id);
+            document.location.href = 'dealCanceled.html';
         }
     </script>
+
+
 
     <script>
         // バーコード
