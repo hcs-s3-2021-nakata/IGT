@@ -88,7 +88,8 @@
         // 画像の検索を統括する
         async function search() {
             console.log("message");
-            await messages();
+            messages();
+            await wait(1);
             console.log("give");
             await give_search();
             console.log("trade");

@@ -1,0 +1,214 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/insert.css">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://leaverou.github.io/prefixfree/prefixfree.min.js"></script>
+    <script type="text/javascript" src="css/logout.js"></script>
+    <script>
+        // APIキーの設定とSDK初期化
+        // API key.
+        var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+        var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+        // SDK initialization.
+        var ncmb = new NCMB(applicationKey, clientKey);
+        var reader = new FileReader();
+        // localStorageの中身を変数に格納
+        var state = localStorage.getItem("state");
+        var type = localStorage.getItem("type");
+        var itemName = localStorage.getItem("itemName");
+        var give_user_id = localStorage.getItem("give_userId");
+        var trade_user_id = localStorage.getItem("trade_userId");
+        var take_user_id = localStorage.getItem("take_userId");
+
+        // 処理を一時停止する
+        const wait = (sec) => { // タイマ
+            return new Promise((resolve, reject) => {
+                setTimeout(resolve, sec * 1000);
+                //setTimeout(() => {reject(new Error("エラー！"))}, sec*1000);
+            });
+        };
+
+
+
+
+        // 通知の対応
+        async function messageSetter() {
+            console.log("messageSetter boot");
+            var dealflg = localStorage.getItem("dealflg");
+            if (type == "give") {
+                messageSetGive();
+            } else if (type == "trade") {
+                messageSetTrade();
+            } else {
+                alert("ERROR");
+            }
+            await wait(0.5);
+            messageSetTake();
+        }
+
+        // 通知のメッセージをセットする(give)
+        function messageSetGive() {
+
+            //Messageに情報の格納
+            var Message = ncmb.DataStore("message");
+            // クラスインスタンスの生成
+            var date = new Date();
+            var message = new Message();
+            console.log("setGive boot");
+
+            // データを設定して保存する
+            message.set("deal_type", type)
+                .set("message", "「" + itemName + "」の取引がキャンセルされました")
+                .set("read_flag", 0)
+                .set("receive_user_id", give_user_id)
+                .save()
+                .then(function() {
+                    console.log("出品者側の通知格納処理完了");
+                    // resolve({});
+                }).catch(function(err) {
+                    console.log("通知おかしいよ！：" + err);
+                    // reject({});
+                })
+        }
+
+        // 通知のメッセージをセットする(trade)
+        function messageSetTrade() {
+
+            //Messageに情報の格納
+            var Message = ncmb.DataStore("message");
+            // クラスインスタンスの生成
+            var date = new Date();
+            var message = new Message();
+
+            // データを設定して保存する
+            message.set("deal_type", type)
+                .set("message", "「" + itemName + "」の取引がキャンセルされました")
+                .set("read_flag", 0)
+                .set("receive_user_id", trade_user_id)
+                .save()
+                .then(function() {
+                    console.log("出品者側の通知格納処理完了");
+                    // resolve({});
+                }).catch(function(err) {
+                    console.log("通知おかしいよ！：" + err);
+                    // reject({});
+                })
+        }
+
+        function messageSetTake() {
+
+            //Messageに情報の格納
+            console.log(itemName);
+            var Message = ncmb.DataStore("message");
+            // クラスインスタンスの生成
+            var date = new Date();
+            var message = new Message();
+            console.log("setTake boot");
+
+            // データを設定して保存する
+            message.set("deal_type", type)
+                .set("message", "「" + itemName + "」の取引がキャンセルされました")
+                .set("read_flag", 0)
+                .set("receive_user_id", take_user_id)
+                .save()
+                .then(function() {
+                    console.log("落札者側の通知格納処理完了");
+                    // resolve({});
+                }).catch(function(err) {
+                    console.log("通知おかしいよ！：" + err);
+                    // reject({});
+                })
+        }
+    </script>
+
+</head>
+
+<body id="prodact_lists" onload="messageSetter()">
+    <!-- Header Start -->
+    <header class="site-header">
+        <div class="wrapper site-header__wrapper">
+            <nav class="nav">
+                <input class="hidden" type="checkbox" id="menu-btn-check"><span class="center">登録完了</span>
+                <label for="menu-btn-check" class="menu-btn"><span></span></label>
+                <div class="menu-content">
+                    <ul>
+                        <li><a href="acount.html">アカウント詳細</a></li>
+                        <li><a href="message.html">通知</a></li>
+                        <li><a href="dealHistory.html">取引履歴</a></li>
+                        <li><a href="myGiveItem.html">出品した譲渡品</a></li>
+                        <li><a href="myTradeItem.html">出品した交換品</a></li>
+                        <li><a onclick="logout_button()">ログアウト</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- Header End -->
+    <br>
+    <p id="insert-fix">取引中止処理が完了しました</p>
+    <div class="button-flex">
+        <button class="btn-border" onclick="location.href='deal.html'">取引一覧画面へ戻る</button>
+        <br>
+    </div>
+    <div id="plate">
+
+        <div id="bottle">
+            <div class="cork"></div>
+            <div class="neck"></div>
+            <div class="body">
+                <div class="label"></div>
+                <div class="label-shadow"></div>
+            </div>
+        </div>
+
+        <div id="cork">
+        </div>
+
+        <div id="glass">
+            <div class="bowl">
+                <div class="wine"></div>
+            </div>
+            <div class="stem"></div>
+            <div class="foot"></div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="button-flex">
+        <button class="btn-border" onclick="index()">一覧に戻る</button>
+    </div>
+    <!-- Footer Start -->
+    <ul class="bottom-menu">
+        <li>
+            <a href="index.html">
+                <i class="far fa-list-alt"></i></a>
+        </li>
+        <li>
+            <a href="deal.html"><i class="fas fa-random"></i></a>
+        </li>
+        <li>
+            <a class="icon-blue" href="insert.html"><i class="fas fa-plus"></i></a>
+        </li>
+        <li>
+            <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
+        </li>
+        <li>
+            <a href="voice.html">
+                <i class="fas fa-bullhorn"></i></a>
+        </li>
+    </ul>
+    <!-- Fotter End -->
+
+</html>
