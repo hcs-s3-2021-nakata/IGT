@@ -163,16 +163,15 @@ details[open] .answer {
   background-color: #c0a2c7;
   padding: 3px 10px;
   border-radius: 20px;
-  height: 2.4em;
-  width: 230px;
+  height: 2.3em;
+  width: 240px;
 }
-.deal_container input[type="date"]{
+.deal_container input[type="text"]{
   border: none;
   border-radius: 5px;
   height: 2.0em;
-  padding: 0.1em 0 0.1em 0;
 }
-.deal_container input[type="date"]:focus {
+.deal_container input[type="text"]:focus {
   outline: 0;
 }
 .deal_container input[type="button"]{
@@ -184,5 +183,4 @@ details[open] .answer {
   outline : none;
   border-radius: 5px;
   height: 2.0em;
-  padding: 0.1em 0.3em 0.1em 0.3em;
 }

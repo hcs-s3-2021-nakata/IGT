@@ -1,6 +1,60 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP');
 
 
+/*ヘッダーの文字中央寄せ*/
+.insertCenter {
+  display: block;
+  text-align: center;
+  font-weight: bolder;
+  font-size: 23px;
+  font-family: 'Hachi Maru Pop', cursive;
+}
+/*ハンバーガーリンク*/
+.insertMenu-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    height: 65px;
+    width: 65px;
+    justify-content: center;
+    align-items: center;
+    z-index: 90;
+    background-color: #e6dfb3;
+}
+.insertMenu-btn span,
+.insertMenu-btn span:before,
+.insertMenu-btn span:after {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 25px;
+    border-radius: 3px;
+    background-color: #000000;
+    position: absolute;
+}
+.insertMenu-btn span:before {
+    bottom: 8px;
+}
+.insertMenu-btn span:after {
+    top: 8px;
+}
+/*ハンバーガーリンク押下した時の線の移動*/
+#menu-btn-check:checked ~ .insertMenu-btn span {
+    background-color: rgba(255, 255, 255, 0);/*メニューオープン時は真ん中の線を透明にする*/
+}
+#menu-btn-check:checked ~ .insertMenu-btn span::before {
+    bottom: 0;
+    transform: rotate(45deg);
+}
+#menu-btn-check:checked ~ .insertMenu-btn span::after {
+    top: 0;
+    transform: rotate(-45deg);
+}
+#menu-btn-check {
+    display: none;
+}
+
 /*画像アップロードボタン*/
 .btn-flat-border {
   display: inline-block;
@@ -106,6 +160,7 @@ button span {
 
 .leftmrg30px{
   margin-left: 30px;
+  font-weight: bold;
 }
 
 /*input要素を右寄せにする*/

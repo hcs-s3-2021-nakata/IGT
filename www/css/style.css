@@ -586,18 +586,28 @@ div.ef_div{
 	background: transparent;
 }
 
-div.acount-send{
+div.acountSend{
     text-align:center;
 }
 
 button.acount{
   width: 170px;
   height: 50px;
-  background-color: floralwhite;
-  color: #1CA5B8;
+  background-color: #1CA5B8;
+  color: floralwhite;
   font-size: 20px;
-  border: none;
-  border-color: #1CA5B8;
+  border: 2px solid #1CA5B8;
+  border-radius: 5px;
+}
+
+button.acountWithdrawal{
+  width: 170px;
+  height: 50px;
+  background-color: #F30100;
+  color: floralwhite;
+  font-size: 20px;
+  border: 2px solid #F30100;
+  border-radius: 5px;
 }
 
 /* 通知のcssはmessage.cssに移植しました */

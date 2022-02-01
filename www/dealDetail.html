@@ -83,6 +83,7 @@
                     // 値の書き換え
                     var deal_type = changeDealtype();
                     changeUserName(object.give_user_id);
+                    changeTakeUserName(object.take_user_id);
                     var category = changeCategory(object.category);
                     var item_status = changeItemStatus(object.item_status);
                     var delivery_day = object.delivery_day;
@@ -161,6 +162,7 @@
                     // 値の書き換え
                     var deal_type = changeDealtype();
                     changeUserName(object.trade_user_id);
+                    changeTakeUserName(object.take_user_id);
                     var category = changeCategory(object.category);
                     var item_status = changeItemStatus(object.item_status);
                     var delivery_day = object.delivery_day;
@@ -243,6 +245,19 @@
                     console.log(name);
                     document.getElementById('userName').innerHTML = name;
                     document.getElementById('m_userName').innerHTML = name;
+                })
+        }
+
+        function changeTakeUserName(userName) {
+            var name = "name";
+            var User = ncmb.User;
+            var item = User
+                .fetchById(userName) //オブジェクトIDを指定
+                .then(item => {
+                    name = item.user_class + item.user_number + item.user_account_name;
+                    console.log(name);
+                    document.getElementById('takeUserName').innerHTML = name;
+                    // document.getElementById('m_userName').innerHTML = name;
                 })
         }
 
@@ -703,13 +718,17 @@
     <h3 id="dealflg">取引種別</h3>
     <h3 id="item_name">商品名</h3>
     <div id="img-deal">
-        <img class="deal-detail" src="" id="detail_image">
+        <img class="deal-detail" src="img/loading.png" id="detail_image">
     </div><br>
 
     <table class="deal-detail_table">
         <tr>
             <th>出品者</th>
             <td id="userName">-</td>
+        </tr>
+        <tr>
+            <th>落札者</th>
+            <td id="takeUserName">-</td>
         </tr>
         <tr>
             <th>カテゴリー</th>
