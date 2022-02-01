@@ -64,6 +64,7 @@
                         var item_status = changeItemStatus(object.item_status);
                         var delivery_time = changeDtime(object.delivery_time);
                         var location = changeLocation(object.location);
+                        
 
                         downloadImage(object.item_image);
                         setImage(object.item_image);
@@ -271,20 +272,18 @@
                     console.log("getCurrentUserId処理成功");
                     var take_user_id = takeUserId;
                     console.log("ゲットした落札者ID:" + take_user_id);
-                    takeUserUpdate(objectID, take_user_id).then(function() {
+                    takeUserUpdate(objectID, take_user_id).then(function(item_name) {
                         console.log("takeUserUpdate処理成功");
                         getGiveUserId(objectID).then(function(user_id) {
                             console.log("getGiveUserId処理成功 :" + user_id);
                             var give_user_id = user_id;
-                            messageSetBefore(objectID).then(function() {
-                                console.log("messageSetBefore処理成功");
                                 console.log(objectID);
                                 localStorage.setItem("flag", "give");
                                 localStorage.setItem("objectID", objectID);
                                 localStorage.setItem("give_userID", give_user_id);
-                                localStorage.setItem("take_userID", take_user_id)
+                                localStorage.setItem("take_userID", take_user_id);
+                                localStorage.setItem("item_name", item_name);
                                 document.location.href = 'qrGenerater.html?' + objectID;
-                            })
                         })
                     })
                 }).catch(function(err) {
@@ -371,63 +370,18 @@
                 Give.fetchById(objectId)
                     .then(results => {
                         console.log("ごめんね" + results.item_name);
+                        var item_name = results.item_name;
                         results.set('deal_status', "取引成立")
                             .set('take_user_id', take_user_id)
                             .update();
-                        resolve({});
+                        resolve(
+                            item_name
+                        );
                     }).catch(err => {
                         // エラー処理
                         console.log("おかしいよ！：" + err);
                         reject({});
                     });
-            });
-        }
-
-        //Giveから情報の取得
-        function messageSetBefore(objectID) {
-            return new Promise(function(resolve, reject) {
-                console.log("IDは" + objectID);
-
-                var Give = ncmb.DataStore("give");
-                var item = Give
-                .fetchById(objectID)
-                .then(item => {
-                    var userId = item.give_user_id;
-                    var itemName = item.item_name;
-                        console.log("大丈夫だった");
-                        messageSet(userId,itemName).then(function() {
-                            console.log("完全におわり");
-                        })
-                        resolve({});
-                 }).catch(function(err) {
-                        console.log("エラーでた：" + err);
-                        reject({});
-                 })
-            });
-        }
-
-        //「取引成立」通知を格納
-        function messageSet(userId,itemName) {
-            return new Promise(function(resolve, reject) {
-                //Messageに情報の格納
-                var Message = ncmb.DataStore("message");
-                // クラスインスタンスの生成
-                var date = new Date();
-                var message = new Message();
-                console.log(userId+itemName);
-                // データを設定して保存する
-                message.set("deal_type", "give")
-                    .set("message","「" + itemName +"」の取引が成立しました")
-                    .set("read_flag", 0)
-                    .set("receive_user_id", userId)
-                    .save()
-                    .then(function() {
-                        console.log("通知格納処理完了");
-                        resolve({});
-                    }).catch(function(err) {
-                        console.log("通知おかしいよ！：" + err);
-                        reject({});
-                    })
             });
         }
     </script>

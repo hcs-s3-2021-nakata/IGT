@@ -267,7 +267,7 @@
                     console.log("getCurrentUserId処理成功");
                     var take_user_id = takeUserId;
                     console.log("ゲットした落札者ID:" + take_user_id);
-                    takeUserUpdate(objectID, take_user_id).then(function() {
+                    takeUserUpdate(objectID, take_user_id).then(function(item_name) {
                         console.log("takeUserUpdate処理成功");
                         getTradeUserId(objectID).then(function(user_id) {
                             console.log("getTradeUserId処理成功");
@@ -278,6 +278,7 @@
                             localStorage.setItem("objectID", objectID);
                             localStorage.setItem("trade_userID", trade_user_id);
                             localStorage.setItem("take_userID", take_user_id);
+                            localStorage.setItem("item_name", item_name);
                             document.location.href = 'qrGenerater.html?' + objectID;
 
                         })
@@ -366,10 +367,13 @@
                 Trade.fetchById(objectId)
                     .then(results => {
                         console.log("ごめんね" + results.item_name);
+                        var item_name = results.item_name;
                         results.set('deal_status', "取引成立")
                             .set('take_user_id', take_user_id)
                             .update();
-                        resolve({});
+                        resolve(
+                            item_name
+                        );
                     }).catch(err => {
                         // エラー処理
                         console.log("おかしいよ！：" + err);
