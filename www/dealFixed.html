@@ -24,6 +24,10 @@
         // SDK initialization.
         var ncmb = new NCMB(applicationKey, clientKey);
         var reader = new FileReader();
+        // 必要な値
+        var type = localStorage.getItem("type");
+        var itemName = localStorage.getItem("itemName");
+        var take_user_id = localStorage.getItem("take_userId");
 
         // 処理を一時停止する
         const wait = (sec) => { // タイマ
@@ -36,10 +40,7 @@
         // 通知の対応
         async function messageSetter() {
             // localStorageの中身を変数に格納
-            var type = localStorage.getItem("type");
-            var itemName = localStorage.getItem("itemName");
-            var take_user_id = localStorage.getItem("take_userId");
-            console.log("messageSetter boot");
+            console.log("messageSetter（取引完了） boot");
             messageSetTake();
         }
 

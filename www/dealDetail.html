@@ -111,7 +111,7 @@
                     // 権限制御
                     var current_user_id = getCurrentUserId();
                     var give_user_id = object.give_user_id;
-                    var take_user_id = object.take_user_id;
+                    take_user_id = object.take_user_id;
                     if (current_user_id == give_user_id) {
                         console.log("出品者");
                     } else if (current_user_id == take_user_id) {
@@ -189,7 +189,7 @@
                     // 権限制御
                     var current_user_id = getCurrentUserId();
                     var trade_user_id = object.trade_user_id;
-                    var take_user_id = object.take_user_id;
+                    take_user_id = object.take_user_id;
                     if (current_user_id == trade_user_id) {
                         console.log("出品者");
                     } else if (current_user_id == take_user_id) {
@@ -715,12 +715,14 @@
             document.location.href = 'dealCanceled.html';
         }
 
+        // スキャナ画面へ遷移する
         function scannerBoot() {
             var dealflg = localStorage.getItem("dealflg");
             // ローカルストレージに必要な情報を格納
             localStorage.setItem("type", dealflg);
             localStorage.setItem("itemName", itemName);
             localStorage.setItem("take_userId", take_user_id);
+            // 画面遷移
             document.location.href = 'qrreader.html';
         }
     </script>
