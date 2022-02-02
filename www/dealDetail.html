@@ -150,7 +150,6 @@
         // QRコード表示画面にObjectIdを受け渡す
         function getObjectID() {
             var objectID = location.search.replace('?', '');
-            console.log("とってきたやつ" + objectID);
             document.location.href = 'qrDisplay.html?' + objectID;
         }
 
@@ -513,10 +512,10 @@
                         results.set('delivery_day', day);
                         results.update();
                         alert("受け渡し日の設定が完了しました");
-                        console.log(results.item_name+"だよ！！");
                         document.getElementById("delivery_day").innerHTML = day;
-                        messageSetGive(results.item_name,results.give_user_id);
-                        console.log("通知処理はいっとー");
+                        var itemName = results.item_name;
+                        var give = results.give_user_id;
+                        messageSetGive(itemName,give);
                     });
             } else if (dealflg == "give" && start_day > day || end_day < day) {
                 // 異常（譲渡）
@@ -542,7 +541,7 @@
         }
 
         //譲渡品出品者に日付決定の通知
-        function messageSetGive(itemName,trade){
+        function messageSetGive(itemName,give){
         //Messageに情報の格納
         var Message = ncmb.DataStore("message");
         // クラスインスタンスの生成
@@ -556,7 +555,7 @@
                 .set("receive_user_id", give)
                 .save()
                 .then(function() {
-                    console.log("出品者側の通知格納処理完了");
+                    console.log("出品者側の日時通知完了");
                 }).catch(function(err) {
                     console.log("通知おかしいよ！：" + err);
                     })
@@ -577,7 +576,7 @@
                 .set("receive_user_id", trade)
                 .save()
                 .then(function() {
-                    console.log("出品者側の通知格納処理完了");
+                    console.log("出品者側の日時通知完了");
                 }).catch(function(err) {
                     console.log("通知おかしいよ！：" + err);
                     })
