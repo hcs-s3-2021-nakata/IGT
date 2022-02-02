@@ -429,9 +429,11 @@
             if (current_user_id == give_user_id) {
                 console.log(current_user_id + " " + give_user_id);
                 console.log("譲渡品");
+                cancelmodal_open();
             } else if (current_user_id == trade_user_id) {
                 console.log(current_user_id + " " + trade_user_id);
                 console.log("交換品");
+                cancelmodal_open();
             } else if (current_user_id == take_user_id) {
                 console.log(current_user_id + " " + take_user_id);
                 console.log("落札者");
@@ -594,7 +596,8 @@
                     .then(function(results) {
                         results.set('deal_status', "成立待ち")
                             .set('delivery_day', null)
-                            .set('take_user_id', null);
+                            .set('take_user_id', null)
+                            .set('qr', null);
                         results.update();
                     });
             } else if (dealflg == "trade") {
@@ -604,7 +607,8 @@
                     .then(function(results) {
                         results.set('deal_status', "成立待ち")
                             .set('delivery_day', null)
-                            .set('take_user_id', null);
+                            .set('take_user_id', null)
+                            .set('qr', null);
                         results.update();
                     });
             } else {
@@ -688,7 +692,7 @@
             dealDelete();
             await wait(1);
             // ローカルストレージに必要な情報を格納
-                localStorage.setItem("state", "変更");
+                localStorage.setItem("state", "削除");
                 localStorage.setItem("type", dealflg);
                 localStorage.setItem("itemName", itemName);
                 localStorage.setItem("give_userId", give_user_id);
@@ -912,7 +916,7 @@
             <div id="d_cancel">
                 考え直す
             </div>
-            <div id="d_ok" onclick="cancelmodal_open()">
+            <div id="d_ok">
                 中止する
             </div>
         </div>
