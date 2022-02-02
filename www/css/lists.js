@@ -102,12 +102,38 @@ function reload() {
 }
 
 
+function getStringFromDate(date) {
+ 
+ var year_str = date.getFullYear();
+ //月だけ+1すること
+ var month_str = 1 + date.getMonth();
+ var day_str = date.getDate();
+ 
+ month_str = ('0' + month_str).slice(-2);
+ day_str = ('0' + day_str).slice(-2);
+ 
+ format_str = 'YYYY-MM-DD';
+ format_str = format_str.replace(/YYYY/g, year_str);
+ format_str = format_str.replace(/MM/g, month_str);
+ format_str = format_str.replace(/DD/g, day_str);
+
+ return format_str;
+};
+
 // 譲渡一覧側
 
 // 商品のリストを展開する
 async function give_lists() {
+    //今日の日付を文字列に直す
+    var today = new Date();
+    var y = today.getFullYear();
+    var m = ("00" + (today.getMonth()+1)).slice(-2);
+    var d = ("00" + today.getDate()).slice(-2);
+    var todayStr = y + "-" + m + "-" + d;
+
   var Give = ncmb.DataStore("give");
   Give.equalTo("deal_status", "成立待ち")
+    .greaterThanOrEqualTo("delivery_end_date", todayStr)// 最終受け渡し可能日 >= 今日の日付
     .fetchAll()
     .then(function (results) {
       for (var i = results.length - cntSwitch - (cnt * 6); i > results.length - 6 * (cnt + 1); i--) {
@@ -187,8 +213,16 @@ async function g_pickup() {
 
 // 商品のリストを展開する
 async function trade_lists() {
+    //今日の日付を文字列に直す
+    var today = new Date();
+    var y = today.getFullYear();
+    var m = ("00" + (today.getMonth()+1)).slice(-2);
+    var d = ("00" + today.getDate()).slice(-2);
+    var todayStr = y + "-" + m + "-" + d;
+
   var Trade = ncmb.DataStore("trade");
   Trade.equalTo("deal_status", "成立待ち")
+    .greaterThanOrEqualTo("delivery_end_date", todayStr)// 最終受け渡し可能日 >= 今日の日付
     .fetchAll()
     .then(function (results) {
       for (var i = results.length - cntSwitch - (cnt * 6); i > results.length - 6 * (cnt + 1); i--) {
