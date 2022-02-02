@@ -646,12 +646,12 @@
             dealDelete();
             await wait(1);
             // ローカルストレージに必要な情報を格納
-                localStorage.setItem("state", "削除");
-                localStorage.setItem("type", dealflg);
-                localStorage.setItem("itemName", itemName);
-                localStorage.setItem("give_userId", give_user_id);
-                localStorage.setItem("trade_userId", trade_user_id);
-                localStorage.setItem("take_userId", take_user_id);
+            localStorage.setItem("state", "削除");
+            localStorage.setItem("type", dealflg);
+            localStorage.setItem("itemName", itemName);
+            localStorage.setItem("give_userId", give_user_id);
+            localStorage.setItem("trade_userId", trade_user_id);
+            localStorage.setItem("take_userId", take_user_id);
             document.location.href = 'dealCanceled.html';
         }
 
@@ -661,58 +661,25 @@
             takeUserUpdate();
             await wait(1);
             // ローカルストレージに必要な情報を格納
-                localStorage.setItem("state", "変更");
-                localStorage.setItem("type", dealflg);
-                localStorage.setItem("itemName", itemName);
-                localStorage.setItem("give_userId", give_user_id);
-                localStorage.setItem("trade_userId", trade_user_id);
-                localStorage.setItem("take_userId", take_user_id);
+            localStorage.setItem("state", "変更");
+            localStorage.setItem("type", dealflg);
+            localStorage.setItem("itemName", itemName);
+            localStorage.setItem("give_userId", give_user_id);
+            localStorage.setItem("trade_userId", trade_user_id);
+            localStorage.setItem("take_userId", take_user_id);
             document.location.href = 'dealCanceled.html';
         }
-    </script>
 
-
-
-    <script>
-        // バーコード
-        /*バーコードスキャン(仮)*/
-        let options = {
-            preferFrontCamera: false,
-            showFlipCameraButton: true,
-            showTorchButton: true,
-            torchOn: true, // Android only
-            saveHistory: false, // Android only
-            prompt: "スキャンエリアの中にバーコードを入れてください", // Android
-            resultDisplayDuration: 500, // Android only
-            formats: "QR_CODE,EAN_13,CODE_39",
-            orientation: "unset", // Android only (portrait|landscape)
-            disableAnimations: true, // iOS
-            disableSuccessBeep: false // iOS and Android
-        }
-
-        function onSuccess(result) {
-            alert("結果: " + result.text + "\n" +
-                "バーコードの種類: " + result.format + "\n" +
-                "スキャンが中断されたかどうか: " + result.cancelled);
-        }
-
-        function onError(error) {
-            alert("スキャン失敗: " + error);
-        }
-
-        function scan() {
-            cordova.plugins.barcodeScanner.scan(
-                onSuccess,
-                onError,
-                options
-            );
-        }
-
-        // ボタンの活性非活性の切り替え
-        function buttonSwitching() {
-
+        function scannerBoot() {
+            var dealflg = localStorage.getItem("dealflg");
+            // ローカルストレージに必要な情報を格納
+            localStorage.setItem("type", dealflg);
+            localStorage.setItem("itemName", itemName);
+            localStorage.setItem("take_userId", take_user_id);
+            document.location.href = 'qrreader.html';
         }
     </script>
+
 </head>
 
 <body id="prodact_lists" onload="detailLoad()">
@@ -804,7 +771,7 @@
 
     <div id="deal-detail_button" class="flex">
         <div id="qrDisp"></div>
-        <button type="button" class="showing" id="hidden" onclick="scan()"><img id="deal-detail_button" src="img/camera.png"><br><b>スキャン</b></button>
+        <button type="button" class="showing" id="hidden" onclick="scannerBoot()"><img id="deal-detail_button" src="img/camera.png"><br><b>スキャン</b></button>
         <button type="button" class="stop" id="d_open" onclick="modal_open()"><img id="deal-detail_button" src="img/stop.png"><br><b>取引中止</b></button>
     </div>
     <div id="mask" class="hidden"></div>
