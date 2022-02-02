@@ -101,32 +101,9 @@ function reload() {
   reloadSwitch = 0;
 }
 
-// 検索結果の表示(正規表現)
-async function pickup() {
-  var keyword = document.getElementById("keyword").value;
-  var j = 1;
-  for (var i = 0; i < resultName.length; i++) {
-    var image_id = "image";
-    var item_name = resultName[i];
-    var objectId = resultObject[i];
-    if (item_name.indexOf(keyword) != -1) {
-
-      //nameにkeywordを含む場合の処理
-      image_id = "image" + (j);
-      j = j + 1;
-      var itemlist_element = document.getElementById('itemlist');
-      itemlist_element.insertAdjacentHTML("afterend", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + item_name + '</a> </div> <div class="container_right"> <a href="giveDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
-      suji[j] = i;
-
-    }
-  }
-  await wait(1);
-  reloadSwitch = 2;
-  setImg();
-  reloadSwitch = 0;
-}
 
 // 譲渡一覧側
+
 // 商品のリストを展開する
 async function give_lists() {
   var Give = ncmb.DataStore("give");
@@ -139,7 +116,7 @@ async function give_lists() {
         var objectId = object.objectId;
         // 商品の箱を追加していく
         var itemlist_element = document.getElementById('itemlist');
-        itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a href="giveDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+        itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <button class="lists_btn" onclick="location.href=\'giveDetail.html?' + objectId + '\'"> <div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <i class="fas fa-angle-right size"></i></div></div></button></div>');
         imgs[i] = object.item_image;
       }
     })
@@ -177,8 +154,34 @@ async function give_search() {
     });
   // 関数を呼ぶ
   await wait(1);
-  pickup();
+  g_pickup();
 }
+
+// 検索結果の表示(譲渡)
+async function g_pickup() {
+  var keyword = document.getElementById("keyword").value;
+  var j = 1;
+  for (var i = 0; i < resultName.length; i++) {
+    var image_id = "image";
+    var item_name = resultName[i];
+    var objectId = resultObject[i];
+    if (item_name.indexOf(keyword) != -1) {
+
+      //nameにkeywordを含む場合の処理
+      image_id = "image" + (j);
+      j = j + 1;
+      var itemlist_element = document.getElementById('itemlist');
+      itemlist_element.insertAdjacentHTML("afterend", '<div class="container" id="item_box"> <button class="lists_btn" onclick="location.href=\'giveDetail.html?' + objectId + '\'"> <div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + item_name + '</a> </div> <div class="container_right"><i class="fas fa-angle-right size"></i></div></div></button></div>');
+      suji[j] = i;
+
+    }
+  }
+  await wait(1);
+  reloadSwitch = 2;
+  setImg();
+  reloadSwitch = 0;
+}
+
 
 // 交換品一覧
 
@@ -194,7 +197,7 @@ async function trade_lists() {
         var objectId = object.objectId;
         // 商品の箱を追加していく
         var itemlist_element = document.getElementById('itemlist');
-        itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <a href="tradeDetail.html?' + objectId + '"> <i class="fas fa-angle-right size"></i></a></div></div></div>');
+        itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <button class="lists_btn" onclick="location.href=\'tradeDetail.html?' + objectId + '\'"> <div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <i class="fas fa-angle-right size"></i></div></div></button></div>');
         imgs[i] = object.item_image;
       }
     })
@@ -232,5 +235,30 @@ async function trade_search() {
     });
   // 関数を呼ぶ
   await wait(1);
-  pickup();
+  t_pickup();
+}
+
+// 検索結果の表示(譲渡)
+async function t_pickup() {
+  var keyword = document.getElementById("keyword").value;
+  var j = 1;
+  for (var i = 0; i < resultName.length; i++) {
+    var image_id = "image";
+    var item_name = resultName[i];
+    var objectId = resultObject[i];
+    if (item_name.indexOf(keyword) != -1) {
+
+      //nameにkeywordを含む場合の処理
+      image_id = "image" + (j);
+      j = j + 1;
+      var itemlist_element = document.getElementById('itemlist');
+      itemlist_element.insertAdjacentHTML("afterend", '<div class="container" id="item_box"> <button class="lists_btn" onclick="location.href=\'tradeDetail.html?' + objectId + '\'"> <div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + item_name + '</a> </div> <div class="container_right"> <i class="fas fa-angle-right size"></i></div></div></button></div>');
+      suji[j] = i;
+
+    }
+  }
+  await wait(1);
+  reloadSwitch = 2;
+  setImg();
+  reloadSwitch = 0;
 }
