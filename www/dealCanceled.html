@@ -68,19 +68,36 @@
             var message = new Message();
             console.log("setGive boot");
 
-            // データを設定して保存する
-            message.set("deal_type", type)
-                .set("message", "「" + itemName + "」の取引がキャンセルされました")
-                .set("read_flag", 0)
-                .set("receive_user_id", give_user_id)
-                .save()
-                .then(function() {
-                    console.log("出品者側の通知格納処理完了");
-                    // resolve({});
-                }).catch(function(err) {
-                    console.log("通知おかしいよ！：" + err);
-                    // reject({});
-                })
+            if (state == "削除") {
+                // データを設定して保存する
+                message.set("deal_type", type)
+                    .set("message", "「" + itemName + "」の取引が削除されました")
+                    .set("read_flag", 0)
+                    .set("receive_user_id", give_user_id)
+                    .save()
+                    .then(function() {
+                        console.log("出品者側の通知格納処理完了");
+                        // resolve({});
+                    }).catch(function(err) {
+                        console.log("通知おかしいよ！：" + err);
+                        // reject({});
+                    })
+            } else if (state == "変更") {
+                // データを設定して保存する
+                message.set("deal_type", type)
+                    .set("message", "「" + itemName + "」の取引がキャンセルされました")
+                    .set("read_flag", 0)
+                    .set("receive_user_id", give_user_id)
+                    .save()
+                    .then(function() {
+                        console.log("出品者側の通知格納処理完了");
+                        // resolve({});
+                    }).catch(function(err) {
+                        console.log("通知おかしいよ！：" + err);
+                        // reject({});
+                    })
+            }
+
         }
 
         // 通知のメッセージをセットする(trade)
@@ -92,19 +109,34 @@
             var date = new Date();
             var message = new Message();
 
-            // データを設定して保存する
-            message.set("deal_type", type)
-                .set("message", "「" + itemName + "」の取引がキャンセルされました")
-                .set("read_flag", 0)
-                .set("receive_user_id", trade_user_id)
-                .save()
-                .then(function() {
-                    console.log("出品者側の通知格納処理完了");
-                    // resolve({});
-                }).catch(function(err) {
-                    console.log("通知おかしいよ！：" + err);
-                    // reject({});
-                })
+            if (state == "削除") {
+                message.set("deal_type", type)
+                    .set("message", "「" + itemName + "」の取引が削除されました")
+                    .set("read_flag", 0)
+                    .set("receive_user_id", trade_user_id)
+                    .save()
+                    .then(function() {
+                        console.log("出品者側の通知格納処理完了");
+                        // resolve({});
+                    }).catch(function(err) {
+                        console.log("通知おかしいよ！：" + err);
+                        // reject({});
+                    })
+            } else if (state == "変更") {
+                // データを設定して保存する
+                message.set("deal_type", type)
+                    .set("message", "「" + itemName + "」の取引がキャンセルされました")
+                    .set("read_flag", 0)
+                    .set("receive_user_id", trade_user_id)
+                    .save()
+                    .then(function() {
+                        console.log("出品者側の通知格納処理完了");
+                        // resolve({});
+                    }).catch(function(err) {
+                        console.log("通知おかしいよ！：" + err);
+                        // reject({});
+                    })
+            }
         }
 
         function messageSetTake() {
@@ -117,19 +149,36 @@
             var message = new Message();
             console.log("setTake boot");
 
-            // データを設定して保存する
-            message.set("deal_type", type)
-                .set("message", "「" + itemName + "」の取引がキャンセルされました")
-                .set("read_flag", 0)
-                .set("receive_user_id", take_user_id)
-                .save()
-                .then(function() {
-                    console.log("落札者側の通知格納処理完了");
-                    // resolve({});
-                }).catch(function(err) {
-                    console.log("通知おかしいよ！：" + err);
-                    // reject({});
-                })
+            if (state == "削除") {
+                // データを設定して保存する
+                message.set("deal_type", type)
+                    .set("message", "「" + itemName + "」の取引が削除されました")
+                    .set("read_flag", 0)
+                    .set("receive_user_id", take_user_id)
+                    .save()
+                    .then(function() {
+                        console.log("落札者側の通知格納処理完了");
+                        // resolve({});
+                    }).catch(function(err) {
+                        console.log("通知おかしいよ！：" + err);
+                        // reject({});
+                    })
+            } else if (state == "変更") {
+                // データを設定して保存する
+                message.set("deal_type", type)
+                    .set("message", "「" + itemName + "」の取引がキャンセルされました")
+                    .set("read_flag", 0)
+                    .set("receive_user_id", take_user_id)
+                    .save()
+                    .then(function() {
+                        console.log("落札者側の通知格納処理完了");
+                        // resolve({});
+                    }).catch(function(err) {
+                        console.log("通知おかしいよ！：" + err);
+                        // reject({});
+                    })
+            }
+
         }
     </script>
 
