@@ -148,3 +148,14 @@ th.modal_table {
 #mask2.hidden{
 	display:none;
 }
+
+/* 取引履歴の詳細固有のボタン */
+#c_close{
+    width:100px;
+    color: #2496fc;
+	border:2px solid #0085FC;
+	border-radius:4px;
+	text-align: center;
+	padding:12px 0;
+	margin:16px auto 0;
+}

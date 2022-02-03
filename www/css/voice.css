@@ -228,3 +228,10 @@ button.btn-tag--favorite:hover  {
   opacity: 0.8;
 }
 /*  */
+
+/* 音量注意 */
+.alert{
+    font-weight: bold;
+    font-size: large;
+    color: red;
+}
