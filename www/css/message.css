@@ -63,3 +63,20 @@ div.ms_div{
 	border-bottom: 1.75px solid #0a1b3a;
 	background: transparent;
 }
+
+/* 通知なし */
+div.mn{
+    text-align: center;
+    padding: 3.5em 0em 0em 0em;
+}
+a.mn_tx{
+    font-size: 23px;
+    color: rgb(156, 156, 156);
+}
+
+img#message_none{
+  width: 220px;
+  height: 220px;
+  padding: 5em 0em 0em 0em;
+  vertical-align: middle;
+}
