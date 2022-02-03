@@ -18,46 +18,56 @@ function createNewUserCheck() {
   var createSN = document.getElementById("cSN").value;
   var createTOS = document.getElementById("wineTOS").checked;
   //エラーメッセージ
-  var returnFlag = false;
   var checkFlag = true;
   searchStudentNumber(createSN).then(function (checkFlag) {
+      console.log(createSN.length);
 
-    var returnFlag = false;
+    var returnSnFlag = false;
     if (createSN === "") {
       document.getElementById('errMessageNum').innerHTML = "学籍番号は必須入力です";
-      returnFlag = true;
+      returnSnFlag = true;
+    }else if(createSN.length != 8){
+        document.getElementById('errMessageNum').innerHTML = "学籍番号は8桁で入力してください"
+        returnSnFlag = true;
     } else if (!checkFlag) {
-      console.log("この学籍番号は既に使用されています");
       document.getElementById('errMessageNum').innerHTML = "この学籍番号は既に使用されています";
-      returnFlag = true;
+      returnSnFlag = true;
     } else {
       console.log("入ってる");
       document.getElementById('errMessageNum').innerHTML = "";
-      returnFlag = false;
+      returnSnFlag = false;
     }
+
+    var returnPFlag = false;
     if (createP === "") {
       document.getElementById('errMessagePass').innerHTML = "パスワードは必須入力です";
-      returnFlag = true;
+      returnPFlag = true;
+    } else if(createP.length <= 3){
+        document.getElementById('errMessagePass').innerHTML = "パスワードは4文字以上です";
+        returnPFlag = true;
     } else {
       document.getElementById('errMessagePass').innerHTML = "";
-      returnFlag = false;
+      returnPFlag = false;
     }
+
+    var returnNFlag = false;
     if (createN === "") {
       document.getElementById('errMessageName').innerHTML = "名前は必須入力です";
-      returnFlag = true;
+      returnNFlag = true;
     } else {
       document.getElementById('errMessageName').innerHTML = "";
-      returnFlag = false;
+      returnNFlag = false;
     }
+    var returnTosFlag = false;
     if(createTOS){
         document.getElementById('errMessageTOS').innerHTML = "";
-        returnFlag = false;
+        returnTosFlag = false;
     } else {
         document.getElementById('errMessageTOS').innerHTML = "利用規約に同意してください。";
-        returnFlag = true;
+        returnTosFlag = true;
 
     }
-    if (!returnFlag) {
+    if (!returnSnFlag && !returnPFlag && !returnNFlag && !returnTosFlag) {
       //チェックが無ければユーザ新規登録
        createNewUser();
     }
