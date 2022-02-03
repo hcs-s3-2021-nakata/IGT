@@ -1,0 +1,103 @@
+/* This is a CSS file */
+
+/* 利用規約本文の装飾 */
+.Inner {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+}
+
+p{
+  margin: 0;
+  padding: 0;
+}
+li{
+  list-style: none;
+}
+
+.Inner-Headline {
+  font-weight: bold;
+  font-size: 32px;
+}
+@media screen and (max-width: 480px) {
+  .Inner-Headline {
+    font-size: 24px;
+  }
+}
+.Inner-Text {
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+  font-size: 15px;
+}
+.Inner-Text.first {
+  margin-top: 36px;
+}
+.Inner-Box {
+  margin-top: 16px;
+}
+.Inner-Box-Headline {
+  font-weight: bold;
+  font-size: 28px;
+}
+@media screen and (max-width: 480px) {
+  .Inner-Box-Headline {
+    font-size: 20px;
+  }
+}
+.Inner-Box-List {
+  margin: 20px 0 0 40px;
+}
+.Inner-Box-List-Item {
+  margin-top: 10px;
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+  list-style-type: decimal;
+}
+.Inner-Box-List-Item-Ol {
+  margin: 20px 0 0 40px;
+}
+.Inner-Box-List-Item-Ol-Item {
+  margin-top: 10px;
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+  list-style-type: decimal;
+}
+.Inner-Box-List-Item-Link {
+  text-decoration: underline;
+  display: inline-block;
+  color: red;
+}
+.Inner-Box-Contact {
+  margin-top: 36px;
+}
+.Inner-Box-Contact-Text {
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+  font-size: 15px;
+}
+.Inner-Box-Contact-Text:nth-child(2) {
+  margin-top: 16px;
+}
+.Inner-Box-Item {
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+  font-size: 15px;
+}
+@media screen and (max-width: 480px) {
+  .Inner-Box-Item {
+    letter-spacing: inherit;
+    font-size: 14px;
+  }
+}
+#tos1{
+    margin-left: 1rem;
+    text-indent: -1rem;
+}
+#tos2{
+    margin-left: 3rem;
+    text-indent: -2rem;
+}
+#TOScheck{
+    text-align: center;
+    font-size: 20px;
+}
