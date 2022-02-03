@@ -193,6 +193,11 @@ ul.bottom-menu li {
 #footer{margin-bottom:48px;}
 }
 
+/* フッターに文字を入れる */
+.mini-text{
+    font-size: 5px;
+}
+
 @font-face {
   font-family: 'FontAwesome';
   src: url('../fonts/fontawesome-webfont.eot?v=4.4.0');
