@@ -112,13 +112,16 @@
     <label for="item_name" class="leftmrg30px">商品名</label>
     <div class="flex" id="newDeal_info" name="item_name">
       <input type="text" id="item_name" class="nd_size" name="name" required maxlength="50" size="52">
-    </div><br>
+    </div>
+    <span id="errMessageName" class="errMessage"></span><br><br>
 
     <!-- 商品情報入力 -->
     <label for="item_info" class="leftmrg30px">商品の説明</label>
     <div class="flex" id="newDeal_info" name="item_info">
       <textarea id="item_info" name="item_info" class="width" maxlength="250" rows="8" required></textarea>
-    </div><br>
+    </div>
+    <span id="errMessageInfo" class="errMessage"></span><br><br>
+    <br>
   </div><br><br><br>
 
 
@@ -130,6 +133,7 @@
       <p><span class="margin10px">～</span></p>
       <input type="date" id="delivery_end_date" name="delivery_end_date" class="nd_size_times">
     </div>
+    <span id="errMessageDate" class="errMessage"></span><br><br>
 
     <!-- 受け渡し時間帯 -->
     <label for="delivery_time" class="leftmrg30px">受け渡し時間帯</label>
@@ -162,7 +166,7 @@
   <br>
   <div id="mask" class="hidden"></div>
   <div class="button-flex">
-    <button type="button" class="btn btn-malformation" name="item_image" id="d_open" onclick="give_modal_open()">出品する！ 
+    <button type="button" class="btn btn-malformation" name="item_image" id="d_open" onclick="createNewGiveCheck()">出品する！ 
     </button>
   </div><br><br><br>
 

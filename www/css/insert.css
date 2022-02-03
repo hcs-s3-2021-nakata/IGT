@@ -443,3 +443,10 @@ button.btn-border:hover:after {
             z-index: 20;
         }
     }
+
+/*エラーメッセージ*/
+.errMessage{
+  color: rgba(175, 10, 10, 0.993);
+  font-size: 12px;
+  text-align: center;
+}
