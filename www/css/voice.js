@@ -161,7 +161,11 @@ function taka_grad() {
     audio = new Audio("voice/mr.takahashi/taka_grad.m4a");
     audio.play();
 }
-function taka_free() {
-    audio = new Audio("voice/mr.takahashi/taka_free.m4a");
+function taka_free1() {
+    audio = new Audio("voice/mr.takahashi/taka_free1.m4a");
+    audio.play();
+}
+function taka_free2() {
+    audio = new Audio("voice/mr.takahashi/taka_free2.m4a");
     audio.play();
 }
