@@ -6,18 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
     <script src="components/loader.js"></script>
-    <script src="css/jquery-3.6.0.min.js"></script>
-    <script src="css/jquery.qrcode.min.js"></script>
-    <script type="text/javascript" src="css/login.js"></script>
     <link rel="stylesheet" href="components/loader.css">
-    <link href="https://fonts.googleapis.com/css?family=Oswald:700 rel=" stylesheet ">
-  <link rel="stylesheet " href="css/login.css ">
-  
-
-<link href="https://fonts.googleapis.com/css?family=Montserrat+Subrayada rel="stylesheet">
-
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/acount.css">
+    <link rel="stylesheet" href="css/tos.css">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="css/logout.js"></script>
     <script>
         // APIキーの設定とSDK初期化
         // API key.
@@ -25,204 +24,77 @@
         var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
         // SDK initialization.
         var ncmb = new NCMB(applicationKey, clientKey);
+        var reader = new FileReader();
 
 
 
-
-        //入力値に対してエラーチェック
-        function inputCheck() {
-            //入力値取得
-            var createN = document.getElementById("cN").value;
-            var createP = document.getElementById("cP").value;
-            var createSN = document.getElementById("cSN").value;
-            //
-
-
-
-        }
-
-
-
-        //ログイン機能
-        function wineLogin() {
-
-            var loginStudentNumber = document.getElementById("lSN").value;
-            var loginPassword = document.getElementById("loginPass").value;
-
-            var loginFlag = false;
-
-            checkEffectiveness(loginStudentNumber).then(function(effectiveness) {
-                if (loginStudentNumber === "") {
-                    document.getElementById('errMessageLogNum').innerHTML = "学籍番号が未入力です";
-                    loginFlag = true;
-                } else if(effectiveness != 0) {
-                    document.getElementById('errMessageLogNum').innerHTML = "このアカウントは現在使用できません";
-                    loginFlag = true;
-                } else {
-                    document.getElementById('errMessageLogNum').innerHTML = "";
-                }
-                if (loginPassword === "") {
-                    document.getElementById('errMessageLogPass').innerHTML = "パスワードが未入力です";
-                    loginFlag = true;
-                } else {
-                    document.getElementById('errMessageLogPass').innerHTML = "";
-                }
-                if (loginFlag) {
-                    return;
-                }
-
-
-
-
-                ncmb.User.login(loginStudentNumber, loginPassword)
-                    .then(function(user) {
-                        //ログイン成功時の処理(例)
-                        //console.log("ログイン成功：" + JSON.stringify(user));
-                        console.log("ログイン成功：" + ncmb.User.getCurrentUser().user_account_name);
-                        document.location.href = 'index.html';
-                    })
-                    .catch(function(error) {
-                        //ログイン失敗時の処理
-                        console.log("ログイン失敗：" + JSON.stringify(error));
-                        document.getElementById('errMessageLogPass').innerHTML = "学籍番号かパスワードが間違っています";
-                    });
-            });
-        }
-
-        //アカウント有効性の確認
-        function checkEffectiveness(studentNumber) {
-            return new Promise(function(resolve, reject) {
-                ncmb.User.fetchAll()
-                    .then(users => {
-                        users.forEach(user => {
-                            //ここで登録されている学籍番号かチェック
-                            if (user.userName === studentNumber) {
-                                var effectiveness = user.effectiveness;
-                                resolve(effectiveness);
-                            }
-                        })
-                    }).catch(err => {
-                        console.log("変数データ取得エラー" + err);
-                    });
-            }).catch(err => {
-                console.log("checkEffectivenessエラー:" + err);
-                reject();
-            });
-        }
-
-        //学籍番号検索機能
-        function wineSearch() {
-            var loginStudentNumber = document.getElementById("searchSN").value;
-            let lowNumber = 0;
-            ncmb.User.fetchAll()
-                .then(users => {
-                    users.forEach(user => {
-                        //ここで登録されている学籍番号かチェック
-                        if (user.userName === loginStudentNumber) {
-                            console.log("あった！");
-                            console.log(user.user_account_name);
-                            lowNumber = lowNumber + 1;
-                        }
-                    })
-                    console.log("検索結果：" + lowNumber + "件");
-                }).catch(err => {
-                    console.log("変数データ取得エラー")
-                });
-
-
-        }
-
-        //ログイン中ユーザ確認
-        function confarm() {
+        //アカウント退会機能
+        function unsubscribe() {
             // カレントユーザー情報の取得
-            // alert("確認")
-            var currentUser = ncmb.User.getCurrentUser();
-            if (currentUser != null) {
-                console.log("ログイン中のユーザー: " + currentUser.get("userName"));
-            } else {
-                console.log("未ログインまたは取得に失敗");
+                var currentUser = ncmb.User.getCurrentUser();
+
+                //ユーザーテーブルから値を取得
+                var User = ncmb.User;
+                var item = User
+
+                    .fetchById(currentUser.get("objectId"))
+                    .then(item => {
+                        item.set("effectiveness", 1)
+                            .update();
+                    }).then(function() {
+                        logout_button();
+                    })
+                    .catch(e => {
+                        console.log('変更失敗');
+                    });
+        }
+
+        //退会確認ダイアログ
+        function unsubscribeConform(){
+            var result = window.confirm('本当に退会しますか？');
+            if(result){
+                unsubscribe();
             }
-            // カレントユーザーかどうかの確認
-            console.log(currentUser.isCurrentUser()); /* true or false */
 
         }
+           
     </script>
 </head>
 
-<body id="welcom">
-    <div id="form">
-        <div class="form-title">
-            <p class="form-title">ワインの窓</p>
-            <p class="subTitle" id="subTitle">_Wine Window_</p>
-        </div>
-        <div id="wine">
-            <img src="img/wineWindow3.png" id="wineWindow">
-        </div>
-        <div class="form">
-            <div class="wrap-tab">
-                <ul id="js-tab" class="list-tab">
-                    <li class="active">新規作成</li>
-                    <li>ログイン</li>
-                </ul>
+<body id="prodact_lists" onload="javascript:accountLoad()">
+    <!-- Header Start -->
+    <header class="site-header">
+        <div class="wrapper site-header__wrapper">
+            <nav class="nav">
+                <div class="detail_head">
+                    <div class="back_button">
 
-                <div class="wrap-tab-content">
-                    <!--新規作成-->
-                    <div class="tab-content active">
-                        <input type="text" id="cN" placeholder="name" name="createName" />
-                        <span id="errMessageName" class="errMessage"></span><br>
-                        <input type="password" id="cP" placeholder="password" name="createPass" />
-                        <span id="errMessagePass" class="errMessage"></span><br>
-                        <input type="number" placeholder="studentNumber" id="cSN" idname="createStudentNumber" maxlength="8" minlength="8" required />
-                        <span id="errMessageNum" class="errMessage"></span><br>
-                        <label class="my_modal_btn" for="my_modal1">利用規約を表示</label>
-                        <span id="errMessageTOS" class="errMessage"></span>
-                        <br><br>
-                        <div class="bt-wine">
-                            <a onclick="createNewUserCheck()" class="bt-samp37">CREATE</a>
+                    </div>
+                    <div class="page_title">
+                        <input class="hidden" type="checkbox" id="menu-btn-check"><span class="acountCenter">利用規約</span>
+                        <label for="menu-btn-check" class="acountMenu-btn"><span></span></label>
+                        <div style="text-align: left" class="menu-content">
+                            <ul>
+                                <li><a href="acount.html">アカウント詳細</a></li>
+                                <li><a href="message.html">通知</a></li>
+                                <li><a href="dealHistory.html">取引履歴</a></li>
+                                <li><a href="myGiveItem.html">出品した譲渡品</a></li>
+                                <li><a href="myTradeItem.html">出品した交換品</a></li>
+                                <li><a href="tos.html">利用規約</a></li>
+                                <li><a onclick="logout_button()">ログアウト</a></li>
+                            </ul>
                         </div>
                     </div>
-
-                    <!--ログイン-->
-                    <div class="tab-content">
-                        <!--p class="text"-->
-                        <input type="number" id="lSN" name="student_number" placeholder="StudentNumber" />
-                        <!--/p-->
-                        <span id="errMessageLogNum" class="errMessage"></span><br>
-
-                        <!--p class="pass"-->
-                        <input type="password" id="loginPass" name="pass" placeholder="Password" />
-                        <!--/p-->
-                        <span id="errMessageLogPass" class="errMessage"></span><br><br>
-                        <div class="bt-wine">
-                            <a href="javascript:wineLogin();" class="bt-samp37">SIGN-IN</a>
-                        </div>
-                        <br><br>
-                        <a class="rePass" href="sendMail.html">パスワードを忘れた方はこちら</a>
+                    <div class="header_right">
                     </div>
-
                 </div>
-            </div>
+            </nav>
         </div>
+    </header>
+    <!-- Header End -->
 
-        <!--お試しタブエンド>
-        <a href="tos.html">利用規約画面</a-->
-        <!--利用規約-->
-
-        <!-- チェックボックスラベル -->
-        <input type="checkbox" id="my_modal1">
-        <!-- 非表示チェックボックス -->
-        <label class="my_modal_overlay" for="my_modal1"></label>
-        <!-- オーバーレイ -->
-        <div class="my_modal_body1">
-            <div class="my_modal_header">
-                利用規約
-                <label class="my_modal_close" for="my_modal1"><div class="my_modal_close_icon"><span></span></div></label>
-                <!-- 閉じるボタン -->
-            </div>
-            <div class="my_modal_content">
-                <!-- モーダル内コンテンツ(利用規約) -->
-
-                <p class="Inner-Text first">この利用規約（以下、「本規約」といいます。）は、I.G.T（以下、「当方」といいます。）がこのアプリ上で提供するサービス（以下、「本サービス」といいます。）の利用条件を定めるものです。登録ユーザーの皆さま（以下、「ユーザー」といいます。）には、本規約に従って、本サービスをご利用いただきます。</p>
+    <!-- Body Start -->
+    <p class="Inner-Text first">この利用規約（以下、「本規約」といいます。）は、I.G.T（以下、「当方」といいます。）がこのアプリ上で提供するサービス（以下、「本サービス」といいます。）の利用条件を定めるものです。登録ユーザーの皆さま（以下、「ユーザー」といいます。）には、本規約に従って、本サービスをご利用いただきます。</p>
 
                 <div class="Inner-Box">
                     <h3 class="Inner-Box-Headline">第1条（適用）</h3>
@@ -498,30 +370,29 @@
 
                 <p style="text-align:right">以上</p>
                 <br><br>
-                <p id="TOScheck">
-                    <input type="checkbox" id="wineTOS"><label for="wineTOS">同意する</label>
-                </p>
+    <!-- Body End -->
 
-            </div>
-        </div>
-        <!---->
-        <!--利用規約エンド-->
-
-        <!--input type="text" id="searchSN" />
-    <a href="javascript:wineSearch();">検索</a><br-->
-        <!--a href="javascript:confarm();">ログインアカウント確認</a><br><br>
-
-
-    <!--input type="number" id="wineNum" />
-    <p id="wineNumErr"></p>
-    <input type="password" id="winePass" />
-    <p id="winePassErr"></p>
-    <a href="javascript:try_multh();" class="tryWine">複数の値</a-->
-    </div>
-    </div>
-
-    </div>
-
+    <!-- Footer Start -->
+    <ul class="bottom-menu">
+        <li>
+            <a href="index.html">
+                <i class="far fa-list-alt"></i></a>
+        </li>
+        <li>
+            <a href="deal.html"><i class="fas fa-random"></i></a>
+        </li>
+        <li>
+            <a href="insert.html"><i class="fas fa-plus"></i></a>
+        </li>
+        <li>
+            <a href="qrreader.html"><i class="fas fa-qrcode"></i></a>
+        </li>
+        <li>
+            <a href="voice.html">
+                <i class="fas fa-bullhorn"></i></a>
+        </li>
+    </ul>
+    <!-- Fotter End -->
 </body>
 
 </html>
