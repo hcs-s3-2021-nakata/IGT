@@ -49,23 +49,41 @@
   </script>
   <script type="text/JavaScript">
     $(function(){
-     //譲渡テーブルから値を取得
-      var objectid = location.search.replace('?', '');
-      console.log("わたされてきたもの"+objectid);
-      var Give = ncmb.DataStore("give");
-      var item = Give
-        .fetchById(objectid) //オブジェクトIDを指定
-        .then(item => {
-          console.log('データあり' + item.qr);
+    var objectid = location.search.replace('?', '');
+    var flag = localStorage.getItem("flag");
+        if(flag == "give"){
 
-    //QRコードを表示させる
-      var qrtext = item.qr;
-      var utf8qrtext = unescape(encodeURIComponent(qrtext)); $("#img-qr").html(""); $("#img-qr").qrcode({text:utf8qrtext});
-        })
-        .catch(e => {
-          console.log('取得データなし');
-        });
-      
+        //譲渡テーブルから値を取得
+        var Give = ncmb.DataStore("give");
+        var item = Give
+            .fetchById(objectid) //オブジェクトIDを指定
+            .then(item => {
+            console.log('データあり' + item.qr);
+                //QRコードを表示させる
+                var qrtext = item.qr;
+                var utf8qrtext = unescape(encodeURIComponent(qrtext)); $("#img-qr").html(""); $("#img-qr").qrcode({text:utf8qrtext});
+            })
+            .catch(e => {
+            console.log('取得データなし');
+            });
+
+        }else{
+
+        //交換テーブルから値を取得
+        var Trade = ncmb.DataStore("trade");
+        var item = Trade
+            .fetchById(objectid) //オブジェクトIDを指定
+            .then(item => {
+            console.log('データあり' + item.qr);
+                //QRコードを表示させる
+                var qrtext = item.qr;
+                var utf8qrtext = unescape(encodeURIComponent(qrtext)); $("#img-qr").html(""); $("#img-qr").qrcode({text:utf8qrtext});
+            })
+            .catch(e => {
+            console.log('取得データなし');
+            });
+
+        }
     });
   </script>
 </head>
