@@ -21,45 +21,49 @@ function messages() {
     console.log("function boot " + current_user_id);
     //表示する通知のリスト
     var messagelist_element = "";
+    var msg_flg = 0;
     var Message = ncmb.DataStore("message");
     Message.equalTo("receive_user_id", current_user_id)
         .fetchAll()
         .then(async function (results) {
-            for (var i = results.length; i > 0; i--) {
-                console.log("get results");
-                // 必要な変数の定義
-                var object = results[i - 1];
-                var objectId = object.objectId;
-                var createDate = object.createDate;
-                var message = object.message;
-                var read_flag = object.read_flag;
-                // 既読未読の分類を行う
-                var readState = setReadState(read_flag);
-                // 日付の書き換えを行う
-                var new_createDate = dateRewrite(createDate);
 
-                await wait(0.1);
-                // 条件分岐
-                if (read_flag == 0) {
-                    // 通知を表示する(未読)
-                    messagelist_element = document.getElementById('messagelist');
-                    messagelist_element.insertAdjacentHTML("beforebegin", ' <li class="message"><div class="ms_img"><img class="message" src="img/midoku.png">' + new_createDate + ' ' + '<span class="state" id="readState">' + readState + '</span><br><div class="ms_div"><span>' + message + '</span><br><div class="kidoku"><button class="kidoku" value="'+objectId+'" onclick="kidoku(this.value)">既読にする</button><sapn>　</span><button class="kidoku" value="'+objectId+'" onclick="del(this.value)">通知を削除する</button></div></div></li> ');
-                } else {
-                    // 通知を表示する(既読)
-                    messagelist_element = document.getElementById('messagelist');
-                    messagelist_element.insertAdjacentHTML("beforebegin", ' <li class="message"><div class="ms_img"><img class="message" src="img/message.png">' + new_createDate + ' ' + '<span class="state" id="readState">' + readState + '</span><br><div class="ms_div"><span>' + message + '</span><br><div class="kidoku"><button class="kidoku" value="'+objectId+'" onclick="kidoku(this.value)">既読にする</button><sapn>　</span><button class="kidoku" value="'+objectId+'" onclick="del(this.value)">通知を削除する</button></div></div></li> ');
+            if(results.length > 0){
+
+                for (var i = results.length; i > 0; i--) {
+                    console.log("get results");
+                    // 必要な変数の定義
+                    var object = results[i - 1];
+                    var objectId = object.objectId;
+                    var createDate = object.createDate;
+                    var message = object.message;
+                    var read_flag = object.read_flag;
+                    // 既読未読の分類を行う
+                    var readState = setReadState(read_flag);
+                    // 日付の書き換えを行う
+                    var new_createDate = dateRewrite(createDate);
+                    //通知がある状態
+                    msg_flg = 1;
+                    await wait(0.1);
+                    // 条件分岐
+                    if (read_flag == 0) {
+                        // 通知を表示する(未読)
+                        messagelist_element = document.getElementById('messagelist');
+                        messagelist_element.insertAdjacentHTML("beforebegin", ' <li class="message"><div class="ms_img"><img class="message" src="img/midoku.png">' + new_createDate + ' ' + '<span class="state" id="readState">' + readState + '</span><br><div class="ms_div"><span>' + message + '</span><br><div class="kidoku"><button class="kidoku" value="'+objectId+'" onclick="kidoku(this.value)">既読にする</button><sapn>　</span><button class="kidoku" value="'+objectId+'" onclick="del(this.value)">通知を削除する</button></div></div></li> ');
+                    } else if(results.length > 0) {
+                        // 通知を表示する(既読)
+                        messagelist_element = document.getElementById('messagelist');
+                        messagelist_element.insertAdjacentHTML("beforebegin", ' <li class="message"><div class="ms_img"><img class="message" src="img/message.png">' + new_createDate + ' ' + '<span class="state" id="readState">' + readState + '</span><br><div class="ms_div"><span>' + message + '</span><br><div class="kidoku"><button class="kidoku" value="'+objectId+'" onclick="kidoku(this.value)">既読にする</button><sapn>　</span><button class="kidoku" value="'+objectId+'" onclick="del(this.value)">通知を削除する</button></div></div></li> ');
+                    }
                 }
+                
+            }else{
+                messagelist_element = document.getElementById('messagelist');
+                messagelist_element.insertAdjacentHTML("beforebegin", '<div class="mn"><a class="mn_tx">通知はありません。</a><img id="message_none" src="img/botle_glass.png"></div>');
             }
         })
         .catch(function (err) {
             console.log(err);
         });
-        if(messagelist_element == ""){
-            messagelist_element = document.getElementById('messagelist');
-            messagelist_element.insertAdjacentHTML("beforebegin", '<div class="mn"><a class="mn_tx">通知はありません。</a><img id="message_none" src="img/botle_glass.png"></div>');
-        }
-        console.log("通知リスト"+messagelist_element);
-        
 }
 
 //カレントユーザーのID取得
