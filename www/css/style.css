@@ -285,6 +285,17 @@ button.btn {
   color: #FFF;
 }
 
+/*取引選択ルネッサンス*/
+div.btn-animation-02_renaissance{
+    text-align: center;
+}
+
+img#renaissance{
+  width: 21.5em;
+  height: 220px;
+  position: flex;
+}
+
 /*全体の背景*/
 #prodact_lists{
   background-color:#f2f2f2;
