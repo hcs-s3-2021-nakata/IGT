@@ -448,5 +448,5 @@ button.btn-border:hover:after {
 .errMessage{
   color: rgba(175, 10, 10, 0.993);
   font-size: 12px;
-  text-align: center;
+  margin-left: 50px;
 }
