@@ -64,7 +64,7 @@
                         var item_status = changeItemStatus(object.item_status);
                         var delivery_time = changeDtime(object.delivery_time);
                         var location = changeLocation(object.location);
-                        
+
 
                         downloadImage(object.item_image);
                         setImage(object.item_image);
@@ -277,13 +277,13 @@
                         getGiveUserId(objectID).then(function(user_id) {
                             console.log("getGiveUserId処理成功 :" + user_id);
                             var give_user_id = user_id;
-                                console.log(objectID);
-                                localStorage.setItem("flag", "give");
-                                localStorage.setItem("objectID", objectID);
-                                localStorage.setItem("give_userID", give_user_id);
-                                localStorage.setItem("take_userID", take_user_id);
-                                localStorage.setItem("item_name", item_name);
-                                document.location.href = 'qrGenerater.html?' + objectID;
+                            console.log(objectID);
+                            localStorage.setItem("flag", "give");
+                            localStorage.setItem("objectID", objectID);
+                            localStorage.setItem("give_userID", give_user_id);
+                            localStorage.setItem("take_userID", take_user_id);
+                            localStorage.setItem("item_name", item_name);
+                            document.location.href = 'qrGenerater.html?' + objectID;
                         })
                     })
                 }).catch(function(err) {
@@ -464,30 +464,30 @@
             <!-- Body End -->
 
             <!-- Footer Start -->
-    <ul class="bottom-menu">
-        <li>
-            <a class="icon-blue" href="#">
-                <i class="far fa-list-alt"></i><br><span class="mini-text">商品一覧</span></a>
-        </li>
-        <li>
-            <a href="deal.html"><i class="fas fa-random"></i><br><span class="mini-text">取引一覧</span></a>
-        </li>
-        <li>
+            <ul class="bottom-menu">
+                <li>
+                    <a class="icon-blue" href="index.html">
+                        <i class="far fa-list-alt"></i><br><span class="mini-text">商品一覧</span></a>
+                </li>
+                <li>
+                    <a href="deal.html"><i class="fas fa-random"></i><br><span class="mini-text">取引一覧</span></a>
+                </li>
+                <li>
 
-            <a href="insert.html"><i class="fas fa-plus"></i><br><span class="mini-text">新規登録</span></a>
+                    <a href="insert.html"><i class="fas fa-plus"></i><br><span class="mini-text">新規登録</span></a>
 
-        </li>
-        <li>
-            <a href="qrreader.html"><i class="fas fa-qrcode"></i><br><span class="mini-text">読取</span></a>
-        </li>
-        <li>
-            <a href="voice.html">
-                <i class="fas fa-bullhorn"></i><br><span class="mini-text">ボイス</span></a>
-        </li>
+                </li>
+                <li>
+                    <a href="qrreader.html"><i class="fas fa-qrcode"></i><br><span class="mini-text">読取</span></a>
+                </li>
+                <li>
+                    <a href="voice.html">
+                        <i class="fas fa-bullhorn"></i><br><span class="mini-text">ボイス</span></a>
+                </li>
 
 
-    </ul>
-    <!-- Fotter End -->
+            </ul>
+            <!-- Fotter End -->
 
             <!-- モーダルウィンドウ -->
             <section id="d_modal" class="hidden">
