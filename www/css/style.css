@@ -195,7 +195,7 @@ ul.bottom-menu li {
 
 /* フッターに文字を入れる */
 .mini-text{
-    font-size: 5px;
+    font-size: 0.6em;
 }
 
 @font-face {
