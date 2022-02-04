@@ -67,14 +67,14 @@ summany {
   position:absolute;
   bottom:40px;
 }
-#bottle {
+#qrbottle {
   position: absolute;
   width: 100%;
   bottom: 70px;
   z-index: 10;
   left: -0.5%;
 }
-#bottle .cork {
+#qrbottle .cork {
   position: relative;
   margin: 0 auto;
   background-color: #832742;
@@ -84,7 +84,7 @@ summany {
   border-bottom: solid 4.5px #FBC85F;
   /* left: 305%; */
 }
-#bottle .cork:before {
+#qrbottle .cork:before {
   position: absolute;
   top: 7.5px;
   left: -3px;
@@ -98,14 +98,14 @@ summany {
   height: 15px;
   border-radius: 3px;
 }
-#bottle .neck {
+#qrbottle .neck {
   margin: 0 auto;
   background-image: linear-gradient(to bottom, rgba(41, 105, 70, 0.9) 7%, rgba(41, 105, 70, 0.9) 100%);
   width: 30px;
   height: 20px;
   left: 300%;
 }
-#bottle .body {
+#qrbottle .body {
   position: relative;
   margin: 0 auto;
   padding-top: 45px;
@@ -117,7 +117,7 @@ summany {
   /* left: 280%; */
   animation: wine-filling 6s linear infinite;
 }
-#bottle .label {
+#qrbottle .label {
   position: relative;
   background-color: #F2EAB9;
   height: 51px;
@@ -125,7 +125,7 @@ summany {
   z-index: 25;
   animation: spinning-label 3s linear infinite;
 }
-#bottle .label-shadow {
+#qrbottle .label-shadow {
   position: absolute;
   height: 51px;
   background-color: rgba(0, 0, 0, 0.3);
