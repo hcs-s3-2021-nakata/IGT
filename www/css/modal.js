@@ -357,6 +357,62 @@
         transition();
       }
 
+      //入力チェック
+      function createNewTradeCheck(){
+          console.log("チェックイン");
+          var item_name = document.getElementById("item_name").value;
+          var item_info = document.getElementById("item_info").value;
+          var delivery_start_date = document.getElementById("delivery_start_date").value;
+          var delivery_end_date = document.getElementById("delivery_end_date").value;
+          var swap_info = document.getElementById("swap_item_info").value;
+
+          var returnNameFlag = false;
+          var returnInfoFlag = false;
+          var returnDateFlag = false;
+          var returnSwapFlag = false;
+
+          //商品名チェック
+          if(item_name === ""){
+              document.getElementById('errMessageName').innerHTML = "商品名は必須入力です";
+              returnNameFlag = true;
+          } else {
+              document.getElementById('errMessageName').innerHTML = "";
+              returnNameFlag = false;
+          }
+          //商品説明チェック
+          if(item_info === ""){
+              document.getElementById('errMessageInfo').innerHTML = "商品説明は必須入力です";
+              returnInfoFlag = true;
+          } else {
+              document.getElementById('errMessageInfo').innerHTML = "";
+              returnInfoFlag = false;
+          }
+
+
+          //受け渡し期間チェック
+          if((delivery_start_date === "") || (delivery_end_date === "")){
+              document.getElementById('errMessageDate').innerHTML = "受け渡し期間は必須入力です";
+              returnDateFlag = true;
+          } else {
+              document.getElementById('errMessageDate').innerHTML = "";
+              returnDateFlag = false;
+          }
+
+          //交換希望品チェック
+          if(swap_info === ""){
+              document.getElementById('errMessageSwapInfo').innerHTML = "交換希望品は必須入力です";
+              returnSwapFlag = true;
+          } else {
+              document.getElementById('errMessageSwapInfo').innerHTML = "";
+              returnSwapFlag = false;
+          }
+
+          if(!returnNameFlag && !returnInfoFlag && !returnDateFlag &&!returnSwapFlag){
+              trade_modal_open();
+          }
+
+      }
+
       // モーダル表示用スクリプト
       function trade_modal_open(){
         const open = document.getElementById('d_open');

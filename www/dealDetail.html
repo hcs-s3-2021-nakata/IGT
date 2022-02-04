@@ -163,6 +163,7 @@
                     var object = results[0];
                     // 値の書き換え
                     var deal_type = changeDealtype();
+                    itemName = object.item_name;
                     changeUserName(object.trade_user_id);
                     changeTakeUserName(object.take_user_id);
                     var category = changeCategory(object.category);
@@ -718,6 +719,7 @@
         // スキャナ画面へ遷移する
         function scannerBoot() {
             var dealflg = localStorage.getItem("dealflg");
+            console.log(itemName);
             // ローカルストレージに必要な情報を格納
             localStorage.setItem("type", dealflg);
             localStorage.setItem("itemName", itemName);
