@@ -54,10 +54,10 @@
                     document.getElementById('userAccountName').innerHTML = "<span class='acountErrMsg' id='nameErr'></span><input id='userAccountNameInput' class='acount' type='text' placeholder='ワイン一郎' value=" + item.user_account_name + ">";
 
                     //メールアドレスを表示させる
-                    if (item.mailAddress !== null) {
-                        document.getElementById('mailAddress').innerHTML = "<span class='acountErrMsg' id='mailErr'></span><input id='mailAddressInput' class='acount' type='text' placeholder='wine_window@gmail.com' value=" + item.mailAddress + ">";
+                    if ((item.mailAddress !== null)&&(item.mailAddress !== "") ) {
+                        document.getElementById('userMailAddress').innerHTML = "<span class='acountErrMsg' id='mailErr'></span><input id='userMailAddressInput' class='acount' type='text' placeholder='20xx-winewindow' value=" + item.mailAddress + "><a>@hcs.ac.jp</a>";
                     } else {
-                        document.getElementById('mailAddress').innerHTML = "<span class='acountErrMsg' id='mailErr'></span><input id='mailAddressInput' class='acount' type='text' placeholder='wine_window@gmail.com' value=''>";
+                        document.getElementById('userMailAddress').innerHTML = "<span class='acountErrMsg' id='mailErr'></span><input id='userMailAddressInput' class='acount' type='text' placeholder='20xx-winewindow' value=''><a>@hcs.ac.jp</a>";
                     }
                 })
                 .catch(e => {
@@ -72,7 +72,7 @@
             var userClass = document.getElementById("userClassInput").value;
             var userNumber = document.getElementById("userNumberInput").value;
             var userAccountName = document.getElementById("userAccountNameInput").value;
-            var mailAddress = document.getElementById("mailAddressInput").value;
+            var userMailAddress = document.getElementById("userMailAddressInput").value;
             var returnFlag = false;
 
             //クラスが半角英数字か
@@ -103,41 +103,51 @@
 
             //問題なしで変更処理を実行
             if (!returnFlag) {
-                accountUpdate();
+                accountUpdate(userClass,userNumber,userAccountName,userMailAddress);
             }
         }
 
         ////エラーチェックの後で動くやつ（更新処理）////
-        function accountUpdate() {
+        function accountUpdate(userClass,userNumber,userAccountName,userMailAddress) {
             //変更しますかアラート
             changeFlag = confirm("アカウント情報を変更すると一度ログアウトします。よろしいですか？");
 
             if (changeFlag) {
-                // 「はい」
+                console.log("変更後のアド"+userMailAddress);
 
-                var updateFlag = false;
-                //テキストボックスの入力値を取得
-                var userClass = document.getElementById("userClassInput").value;
-                var userNumber = document.getElementById("userNumberInput").value;
-                var userAccountName = document.getElementById("userAccountNameInput").value;
-                var mailAddress = document.getElementById("mailAddressInput").value;
+            // カレントユーザー情報の取得
+            var currentUser = ncmb.User.getCurrentUser();
 
-                // カレントユーザー情報の取得
-                var currentUser = ncmb.User.getCurrentUser();
+            //ユーザーテーブルから値を取得
+            var User = ncmb.User;
+            var item = User
+                .fetchById(currentUser.get("objectId"))
+                .then(item => {
+                    var address = item.MailAddress;
+                
+                if(userMailAddress == ""){
+                    //入力なし
 
-                //ユーザーテーブルから値を取得
-                var User = ncmb.User;
-                var item = User
-
-                    .fetchById(currentUser.get("objectId"))
-                    .then(item => {
-                        item.set("user_class", userClass)
-                            .set("user_number", userNumber)
-                            .set("user_account_name", userAccountName)
-                            .set("mailAddress", mailAddress).update();
-                        console.log('変更できた');
+                        if(address == ""){
+                            //もともとなし(アプデ不要）
+                            item.set("user_class", userClass)
+                                .set("user_number", userNumber)
+                                .set("user_account_name", userAccountName).update();
+                        }else{
+                            //もともとあり（エラー）
+                            document.getElementById('mailErr').innerHTML = "メールアドレスは削除できません";
+                        }
+                
+                }else{
+                    //入力あり（アプデ必要）
+                    item.set("user_class", userClass)
+                        .set("user_number", userNumber)
+                        .set("user_account_name", userAccountName)
+                        .set("mailAddress", userMailAddress).update();
+                }
 
                     }).then(function() {
+                        console.log('変更できた');
                         alert("ログイン画面に戻ります");
                         logout_button();
                     })
@@ -145,10 +155,9 @@
                         console.log('変更失敗');
                     });
 
-                // 「いいえ」
-            } else {;
             }
         }
+
 
         //アカウント退会機能
         function unsubscribe() {
@@ -242,7 +251,7 @@
             </li>
             <li class="acount">
                 <a><img class="acount" src="img/glass.png">MailAddress</a>
-                <label id="mailAddress" class="ef">
+                <label id="userMailAddress" class="ef">
             </label>
             </li>
         </ul>
