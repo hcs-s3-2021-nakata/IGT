@@ -54,7 +54,7 @@
                     document.getElementById('userAccountName').innerHTML = "<span class='acountErrMsg' id='nameErr'></span><input id='userAccountNameInput' class='acount' type='text' placeholder='ワイン一郎' value=" + item.user_account_name + ">";
 
                     //メールアドレスを表示させる
-                    if ((item.mailAddress !== null)&&(item.mailAddress !== "") ) {
+                    if ((item.mailAddress !== null) && (item.mailAddress !== "")) {
                         document.getElementById('userMailAddress').innerHTML = "<span class='acountErrMsg' id='mailErr'></span><input id='userMailAddressInput' class='acount' type='text' placeholder='20xx-winewindow' value=" + item.mailAddress + "><a>@hcs.ac.jp</a>";
                     } else {
                         document.getElementById('userMailAddress').innerHTML = "<span class='acountErrMsg' id='mailErr'></span><input id='userMailAddressInput' class='acount' type='text' placeholder='20xx-winewindow' value=''><a>@hcs.ac.jp</a>";
@@ -103,48 +103,51 @@
 
             //問題なしで変更処理を実行
             if (!returnFlag) {
-                accountUpdate(userClass,userNumber,userAccountName,userMailAddress);
+                accountUpdate(userClass, userNumber, userAccountName, userMailAddress);
             }
         }
 
         ////エラーチェックの後で動くやつ（更新処理）////
-        function accountUpdate(userClass,userNumber,userAccountName,userMailAddress) {
+        function accountUpdate(userClass, userNumber, userAccountName, userMailAddress) {
             //変更しますかアラート
             changeFlag = confirm("アカウント情報を変更すると一度ログアウトします。よろしいですか？");
 
             if (changeFlag) {
-                console.log("変更後のアド"+userMailAddress);
+                console.log("変更後のアド" + userMailAddress);
 
-            // カレントユーザー情報の取得
-            var currentUser = ncmb.User.getCurrentUser();
+                // カレントユーザー情報の取得
+                var currentUser = ncmb.User.getCurrentUser();
 
-            //ユーザーテーブルから値を取得
-            var User = ncmb.User;
-            var item = User
-                .fetchById(currentUser.get("objectId"))
-                .then(item => {
-                    var address = item.MailAddress;
-                
-                if(userMailAddress == ""){
-                    //入力なし
+                //ユーザーテーブルから値を取得
+                var User = ncmb.User;
+                var item = User
+                    .fetchById(currentUser.get("objectId"))
+                    .then(item => {
+                        var address = item.MailAddress;
 
-                        if(address == ""){
-                            //もともとなし(アプデ不要）
+                        if (userMailAddress === "") {
+                            //入力なし
+
+                            if (address === "") {
+                                //もともとなし(アプデ不要）
+                                item.set("user_class", userClass)
+                                    .set("user_number", userNumber)
+                                    .set("user_account_name", userAccountName).update();
+                            } else {
+                                //もともとあり（エラー）
+                                document.getElementById('mailErr').innerHTML = "メールアドレスは削除できません";
+                            }
+
+                        } else {
+                            //入力あり（アプデ必要）
+                            var userMailAddressUpdate = userMailAddress + "@hcs.ac.jp";
+                            console.log("変更前:" + userMailAddress);
+                            console.log("変更後:" + userMailAddressUpdate);
                             item.set("user_class", userClass)
                                 .set("user_number", userNumber)
-                                .set("user_account_name", userAccountName).update();
-                        }else{
-                            //もともとあり（エラー）
-                            document.getElementById('mailErr').innerHTML = "メールアドレスは削除できません";
+                                .set("user_account_name", userAccountName)
+                                .set("mailAddress", userMailAddressUpdate).update();
                         }
-                
-                }else{
-                    //入力あり（アプデ必要）
-                    item.set("user_class", userClass)
-                        .set("user_number", userNumber)
-                        .set("user_account_name", userAccountName)
-                        .set("mailAddress", userMailAddress).update();
-                }
 
                     }).then(function() {
                         console.log('変更できた');
@@ -159,36 +162,36 @@
         }
 
 
+
         //アカウント退会機能
         function unsubscribe() {
             // カレントユーザー情報の取得
-                var currentUser = ncmb.User.getCurrentUser();
+            var currentUser = ncmb.User.getCurrentUser();
 
-                //ユーザーテーブルから値を取得
-                var User = ncmb.User;
-                var item = User
+            //ユーザーテーブルから値を取得
+            var User = ncmb.User;
+            var item = User
 
-                    .fetchById(currentUser.get("objectId"))
-                    .then(item => {
-                        item.set("effectiveness", 1)
-                            .update();
-                    }).then(function() {
-                        logout_button();
-                    })
-                    .catch(e => {
-                        console.log('変更失敗');
-                    });
+                .fetchById(currentUser.get("objectId"))
+                .then(item => {
+                    item.set("effectiveness", 1)
+                        .update();
+                }).then(function() {
+                    logout_button();
+                })
+                .catch(e => {
+                    console.log('変更失敗');
+                });
         }
 
         //退会確認ダイアログ
-        function unsubscribeConform(){
+        function unsubscribeConform() {
             var result = window.confirm('本当に退会しますか？');
-            if(result){
+            if (result) {
                 unsubscribe();
             }
 
         }
-           
     </script>
 </head>
 
