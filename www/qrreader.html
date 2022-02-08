@@ -76,6 +76,10 @@ const wait = (sec) => { // タイマ
             // splitにて、名前・電話番号・所在をそれぞれ抽出
 
             var result = text.split(',');
+            if (result.length <= 3){
+                console.log("配列" + result.length);
+                alert("取引のQRコードではありません。");
+            }
             //必要な情報だけを切り取る
             var primaryId = result[0].substr(9);
             var dealStyle = result[1].substr(5);
@@ -87,7 +91,7 @@ const wait = (sec) => { // タイマ
                 var takeUserId = result[3].substr(7);
 
 
-            } else {
+            } else if (dealStyle === "trade") {
                 dealFlag = false;
                 userId = result[2].substr(8);
                 var takeUserId = result[3].substr(7);
