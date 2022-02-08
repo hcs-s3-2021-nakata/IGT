@@ -11,9 +11,10 @@
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/deal.css">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
     <script type="text/javascript" src="css/logout.js"></script>
     <script>
         // APIキーの設定とSDK初期化
@@ -72,12 +73,12 @@
         // 取得した情報で画面を上書き
         function giveDetailLoad() {
             var objectID = location.search.replace('?', '');
-            console.log("とってきたもの"+objectID);
+            console.log("とってきたもの" + objectID);
             var Give = ncmb.DataStore("give");
             Give.equalTo("objectId", objectID)
                 .fetchAll()
                 .then(function(results) {
-                    console.log("とってきたもの２"+objectID);
+                    console.log("とってきたもの２" + objectID);
                     var object = results[0];
                     // 値の書き換え
                     var deal_type = changeDealtype();
@@ -101,7 +102,7 @@
                     document.getElementById('location').innerHTML = location;
                     // document.location.href = 'qrGenerater.html?' + objectID;
                     // モーダルの書き換え
-                    console.log("とってきたもの３"+objectID);
+                    console.log("とってきたもの３" + objectID);
                     document.getElementById('dealDelete').innerHTML = "<button type='button' class='stop' id='open' onclick='cancelmodal_open()'><img id='deal-detail_button' src='img/stop.png'><br><b>削除する</b></button>";
 
                     document.getElementById('m_item_name').innerHTML = object.item_name;
@@ -117,9 +118,9 @@
         }
 
         // QRコード表示画面にObjectIdを受け渡す
-        function getObjectID(){
+        function getObjectID() {
             var objectID = location.search.replace('?', '');
-            console.log("とってきたやつ"+objectID);
+            console.log("とってきたやつ" + objectID);
             document.location.href = 'qrGenerater.html?' + objectID;
         }
 
@@ -314,48 +315,8 @@
     </script>
 
     <script>
-
-        //取引を削除
-        async function dealDelete() {
-            var objectId = location.search.replace('?', '');
-            console.log(objectId);
-
-            var dealflg = localStorage.getItem("dealflg");
-            if (dealflg == "give") {
-                var Give = ncmb.DataStore("give");
-                Give.equalTo("objectId", objectId)
-                    .fetch()
-                    .then(function(result) {
-                        console.log(result); // true
-                        result.delete();
-                    })
-                    .catch(function(err) {
-                        console.log(err);
-                    });
-            } else if (dealflg == "trade") {
-                var Trade = ncmb.DataStore("trade");
-                Trade.equalTo("objectId", objectId)
-                    .fetch()
-                    .then(function(result) {
-                        console.log(result); // true
-                        result.delete();
-                    })
-                    .catch(function(err) {
-                        console.log(err);
-                    });
-            } else {
-                alert("ERROR");
-            }
-
-        }
-    </script>
-
-    <script>
+        /* このスクリプトをまとめてgiveDetail、tradeDateilに移す */
         // 取引中止時の選択肢（モーダル）
-        /*
-          抱えているタスク
-          取引中止の処理系（upload）
-        */
         function cancelmodal_open() {
             const open = document.getElementById('open');
             const dealdelete = document.getElementById('d_delete');
@@ -393,6 +354,40 @@
             dealDelete();
             await wait(1);
             document.location.href = 'dealHistory.html';
+        }
+
+        //取引を削除
+        async function dealDelete() {
+            var objectId = location.search.replace('?', '');
+            console.log(objectId);
+
+            var dealflg = localStorage.getItem("dealflg");
+            if (dealflg == "give") {
+                var Give = ncmb.DataStore("give");
+                Give.equalTo("objectId", objectId)
+                    .fetch()
+                    .then(function(result) {
+                        console.log(result); // true
+                        result.delete();
+                    })
+                    .catch(function(err) {
+                        console.log(err);
+                    });
+            } else if (dealflg == "trade") {
+                var Trade = ncmb.DataStore("trade");
+                Trade.equalTo("objectId", objectId)
+                    .fetch()
+                    .then(function(result) {
+                        console.log(result); // true
+                        result.delete();
+                    })
+                    .catch(function(err) {
+                        console.log(err);
+                    });
+            } else {
+                alert("ERROR");
+            }
+
         }
     </script>
 
@@ -511,49 +506,33 @@
             <a id="item_info">商品説明</a>
         </div>
     </div>
-    <div id="mask2" class="hidden"></div>
-    <div  class="flex" id="dealDelete">
-        <!-- ここに削除ボタン -->
-    </div><br><br>
-    
+    <br><br><br>
+
     <!-- Body End -->
 
     <!-- Footer Start -->
-  <ul class="bottom-menu">
-    <li>
-      <a href="index.html">
-        <i class="far fa-list-alt"></i><br><span class="mini-text">商品一覧</span></a>
-    </li>
-    <li>
-      <a class="icon-blue" href="deal.html"><i class="fas fa-random"></i><br><span class="mini-text">取引一覧</span></a>
-    </li>
-    <li>
-      <a href="insert.html"><i class="fas fa-plus"></i><br><span class="mini-text">新規登録</span></a>
-    </li>
-    <li>
-      <a href="qrreader.html"><i class="fas fa-qrcode"></i><br><span class="mini-text">読取</span></a>
-    </li>
-    <li>
-      <a href="voice.html">
-        <i class="fas fa-bullhorn"></i><br><span class="mini-text">ボイス</span></a>
-    </li>
-  </ul>
-  <!-- Fotter End -->
+    <ul class="bottom-menu">
+        <li>
+            <a href="index.html">
+                <i class="far fa-list-alt"></i><br><span class="mini-text">商品一覧</span></a>
+        </li>
+        <li>
+            <a class="icon-blue" href="deal.html"><i class="fas fa-random"></i><br><span class="mini-text">取引一覧</span></a>
+        </li>
+        <li>
+            <a href="insert.html"><i class="fas fa-plus"></i><br><span class="mini-text">新規登録</span></a>
+        </li>
+        <li>
+            <a href="qrreader.html"><i class="fas fa-qrcode"></i><br><span class="mini-text">読取</span></a>
+        </li>
+        <li>
+            <a href="voice.html">
+                <i class="fas fa-bullhorn"></i><br><span class="mini-text">ボイス</span></a>
+        </li>
+    </ul>
+    <!-- Fotter End -->
 
-    <!-- modal start -->
-    <section id="cancel_modal" class="hidden">
-        <br>
-        <a>本当にこの取引を削除しますか？</a>
-        <div id="d_button">
-            <div id="c_close">
-                考え直す
-            </div>
-            <div id="d_delete">
-                削除する
-            </div>
-        </div>
-    </section>
-    <!-- modal end -->
+    
 </body>
 
 </html>

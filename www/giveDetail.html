@@ -25,6 +25,12 @@
         var ncmb = new NCMB(applicationKey, clientKey);
         var reader = new FileReader();
 
+        const wait = (sec) => { // タイマ
+            return new Promise((resolve, reject) => {
+                setTimeout(resolve, sec * 1000);
+                //setTimeout(() => {reject(new Error("エラー！"))}, sec*1000);
+            });
+        };
 
         // 画像を読み込む
         function setImage() {
@@ -85,6 +91,8 @@
                             console.log("出品者");
                             // 欲しいボタンを不可視化する処理
                             document.getElementById('d_open').style.display = 'none';
+                            // 削除ボタンを追加する処理
+                            document.getElementById('dealDelete').innerHTML = "<button type='button' class='stop' id='open' onclick='cancelmodal_open()'><img id='deal-detail_button' src='img/stop.png'><br><b>削除する</b></button>";
                         }
 
                         // モーダルの書き換え
@@ -385,6 +393,65 @@
             });
         }
     </script>
+
+    <script>
+        /* このスクリプトをまとめてgiveDetail、tradeDateilに移す */
+        // 取引中止時の選択肢（モーダル）
+        function cancelmodal_open() {
+            const open = document.getElementById('open');
+            const dealdelete = document.getElementById('d_delete');
+            const cancel = document.getElementById('d_cancel');
+            const close = document.getElementById('c_close');
+            const modal = document.getElementById('cancel_modal');
+            const mask = document.getElementById('mask');
+
+            open.addEventListener('click', () => {
+                // 表示
+                modal.classList.remove('hidden');
+                mask.classList.remove('hidden');
+            });
+
+            dealdelete.addEventListener('click', () => {
+                del();
+            });
+
+            // c.addEventListener('click', () => {
+            //     close.click();
+            // }
+
+            close.addEventListener('click', () => {
+                modal.classList.add('hidden');
+                mask.classList.add('hidden');
+            });
+
+            mask.addEventListener('click', () => {
+                close.click();
+            });
+        }
+
+        // dealdeleteの中身
+        async function del() {
+            dealDelete();
+            await wait(1);
+            document.location.href = 'index.html';
+        }
+
+        //取引を削除
+        async function dealDelete() {
+            var objectId = location.search.replace('?', '');
+            console.log(objectId);
+            var Give = ncmb.DataStore("give");
+            Give.equalTo("objectId", objectId)
+                .fetch()
+                .then(function(result) {
+                    console.log(result); // true
+                    result.delete();
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
+        }
+    </script>
 </head>
 
 <body id="prodact_lists" onload="detailLoad()">
@@ -460,72 +527,89 @@
         <br>
         <button type="button" class="plz" id="d_open" onclick="modal_open()"> 欲しい！ </button>
         <div id="mask" class="hidden"></div>
-        <div><br><br><br><br><br>
-            <!-- Body End -->
+        <div class="flex" id="dealDelete">
+            <!-- ここに削除ボタン -->
+        </div><br><br><br><br><br>
+        <!-- Body End -->
 
-            <!-- Footer Start -->
-            <ul class="bottom-menu">
-                <li>
-                    <a class="icon-blue" href="index.html">
-                        <i class="far fa-list-alt"></i><br><span class="mini-text">商品一覧</span></a>
-                </li>
-                <li>
-                    <a href="deal.html"><i class="fas fa-random"></i><br><span class="mini-text">取引一覧</span></a>
-                </li>
-                <li>
+        <!-- Footer Start -->
+        <ul class="bottom-menu">
+            <li>
+                <a class="icon-blue" href="index.html">
+                    <i class="far fa-list-alt"></i><br><span class="mini-text">商品一覧</span></a>
+            </li>
+            <li>
+                <a href="deal.html"><i class="fas fa-random"></i><br><span class="mini-text">取引一覧</span></a>
+            </li>
+            <li>
 
-                    <a href="insert.html"><i class="fas fa-plus"></i><br><span class="mini-text">新規登録</span></a>
+                <a href="insert.html"><i class="fas fa-plus"></i><br><span class="mini-text">新規登録</span></a>
 
-                </li>
-                <li>
-                    <a href="qrreader.html"><i class="fas fa-qrcode"></i><br><span class="mini-text">読取</span></a>
-                </li>
-                <li>
-                    <a href="voice.html">
-                        <i class="fas fa-bullhorn"></i><br><span class="mini-text">ボイス</span></a>
-                </li>
+            </li>
+            <li>
+                <a href="qrreader.html"><i class="fas fa-qrcode"></i><br><span class="mini-text">読取</span></a>
+            </li>
+            <li>
+                <a href="voice.html">
+                    <i class="fas fa-bullhorn"></i><br><span class="mini-text">ボイス</span></a>
+            </li>
 
 
-            </ul>
-            <!-- Fotter End -->
+        </ul>
+        <!-- Fotter End -->
 
-            <!-- モーダルウィンドウ -->
-            <section id="d_modal" class="hidden">
-                <div class="modal_box">
-                    <a id="m_item_name">商品名</a>
-                    <br>
-                    <img src="" id="modal_image" />
-                    <br>
-                    <table class="modal_table">
-                        <tr>
-                            <th class="modal_table">出品者</th>
-                            <td id="m_give_userID">S3A2情報太郎</td>
-                        </tr>
-                        <tr>
-                            <th class="modal_table">受渡期間</th>
-                            <td id="m_delivery_date">値</td>
-                        </tr>
-                        <tr>
-                            <th class="modal_table">受渡時間帯</th>
-                            <td id="m_delivery_time">値</td>
-                        </tr>
-                        <tr>
-                            <th class="modal_table">受渡場所</th>
-                            <td id="m_location">値</td>
-                        </tr>
-                    </table>
-                </div>
+        <!-- モーダルウィンドウ -->
+        <section id="d_modal" class="hidden">
+            <div class="modal_box">
+                <a id="m_item_name">商品名</a>
                 <br>
-                <a>この取引を開始しますか？</a>
-                <div id="d_button">
-                    <div id="d_cancel">
-                        閉じる
-                    </div>
-                    <div id="d_ok">
-                        進める
-                    </div>
+                <img src="" id="modal_image" />
+                <br>
+                <table class="modal_table">
+                    <tr>
+                        <th class="modal_table">出品者</th>
+                        <td id="m_give_userID">S3A2情報太郎</td>
+                    </tr>
+                    <tr>
+                        <th class="modal_table">受渡期間</th>
+                        <td id="m_delivery_date">値</td>
+                    </tr>
+                    <tr>
+                        <th class="modal_table">受渡時間帯</th>
+                        <td id="m_delivery_time">値</td>
+                    </tr>
+                    <tr>
+                        <th class="modal_table">受渡場所</th>
+                        <td id="m_location">値</td>
+                    </tr>
+                </table>
+            </div>
+            <br>
+            <a>この取引を開始しますか？</a>
+            <div id="d_button">
+                <div id="d_cancel">
+                    閉じる
                 </div>
-            </section>
+                <div id="d_ok">
+                    進める
+                </div>
+            </div>
+        </section>
+
+        <!-- modal start -->
+        <section id="cancel_modal" class="hidden">
+            <br>
+            <a>本当にこの取引を削除しますか？</a>
+            <div id="d_button">
+                <div id="c_close">
+                    考え直す
+                </div>
+                <div id="d_delete">
+                    削除する
+                </div>
+            </div>
+        </section>
+        <!-- modal end -->
 
 </body>
 
