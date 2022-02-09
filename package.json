@@ -7,7 +7,8 @@
         "cordova-plugin-whitelist": "1.3.5",
         "monaca-plugin-monaca-core": "3.3.1",
         "cordova-plugin-camera": "5.0.1",
-        "cordova-custom-config": "5.1.0"
+        "cordova-custom-config": "5.1.1",
+        "cordova-plugin-androidx-adapter": ""
     },
     "scripts": {
         "monaca:preview": "npm run dev",
@@ -19,7 +20,8 @@
             "cordova-plugin-splashscreen": {},
             "monaca-plugin-monaca-core": {},
             "cordova-plugin-camera": {},
-            "cordova-custom-config": {}
+            "cordova-custom-config": {},
+            "cordova-plugin-androidx-adapter": {}
         }
     },
     "devDependencies": {
