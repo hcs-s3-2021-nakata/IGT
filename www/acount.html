@@ -60,12 +60,12 @@
                     //メールアドレスを表示させる
                     if((item.mailAddress === null) || (item.mailAddress === "") || (typeof (item.mailAddress) === "undefined")) {
                         //なし
-                        document.getElementById('userMailAddress').innerHTML = "<a><img class='acount' src='img/glass.png'>MailAddress</a><label class='ef2'><span class='acountErrMsg' id='mailErr'></span><nobr><input id='userMailAddressInput' class='acount' type='text' placeholder='20xxyyyy-winewindow' value=''><b><a>@hcs.ac.jp</a></b></nobr></lavel>";
+                        document.getElementById('userMailAddress').innerHTML = "<a><img class='acount' src='img/glass.png'>MailAddress</a><label class='ef2'><span class='acountErrMsg' id='mailErr'></span><nobr><input id='userMailAddressInput' class='acount' type='text' placeholder='20xxyyyy-winewindow' value=''><span class='hcs'>@hcs.ac.jp</span></nobr></lavel>";
                     // } else if((item.mailAddress).indexOf('@hcs.ac.jp') != -1){
                     } else if((item.mailAddress).slice(-10) === "@hcs.ac.jp"){
                         //あり
                         var afterAddress = (item.mailAddress).replace('@hcs.ac.jp', '');
-                        document.getElementById('userMailAddress').innerHTML = "<a><img class='acount' src='img/glass.png'>MailAddress</a><label class='ef2'><span class='acountErrMsg' id='mailErr'></span><nobr><input id='userMailAddressInput' class='acount' type='text' placeholder='20xxyyyy-winewindow' value=" + afterAddress + "><b><a>@hcs.ac.jp</a></b></nobr></lavel>";
+                        document.getElementById('userMailAddress').innerHTML = "<a><img class='acount' src='img/glass.png'>MailAddress</a><label class='ef2'><span class='acountErrMsg' id='mailErr'></span><nobr><input id='userMailAddressInput' class='acount' type='text' placeholder='20xxyyyy-winewindow' value=" + afterAddress + "><span class='hcs'>@hcs.ac.jp</span></nobr></lavel>";
                     }
                 })
                 .catch(e => {
@@ -159,7 +159,7 @@
                                 //もともとあり（エラー）
                                 console.log("もともとメルアドあるよ");
                                 var afterAddress = address.replace('@hcs.ac.jp', '');
-                                document.getElementById('userMailAddress').innerHTML = "<a><img class='acount' src='img/glass.png'>MailAddress</a><label class='ef2'><br><span class='acountErrMsg' id='mailErr'>メールアドレスは削除できません</span><nobr><input id='userMailAddressInput' class='acount' type='text' placeholder='20xxyyyy-winewindow' value=" + afterAddress + "><b><a>@hcs.ac.jp</a></b></nobr></lavel>";
+                                document.getElementById('userMailAddress').innerHTML = "<a><img class='acount' src='img/glass.png'>MailAddress</a><label class='ef2'><br><span class='acountErrMsg' id='mailErr'>メールアドレスは削除できません</span><nobr><input id='userMailAddressInput' class='acount' type='text' placeholder='20xxyyyy-winewindow' value=" + afterAddress + "><span class='hcs'>@hcs.ac.jp</span></nobr></lavel>";
                                 returnFlag = true;
                             }
 

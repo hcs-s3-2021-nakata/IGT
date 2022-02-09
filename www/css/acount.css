@@ -51,3 +51,7 @@
     display: none;
 }
 
+.hcs{
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: pre;
+}
