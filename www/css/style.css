@@ -595,6 +595,34 @@ a.acount{
 	border-bottom: 2px solid #832742da;
 	outline: none;
 }
+
+.ef2 {
+	position: relative;
+	width: 80%;
+	margin: 40px 3%;
+}
+
+.ef2_first {
+	padding: 2rem 0rem 2rem 0.6rem;
+}
+
+.ef2 input[type='text'] {
+	font: 15px/24px sans-serif;
+	box-sizing: border-box;
+	width: 75%;
+	padding: 0rem 0rem 0.1rem 2rem;
+	transition: 0.3s;
+	letter-spacing: 1px;
+	color: #000000;
+	border: none;
+	border-bottom: 2px solid #1b2538;
+	background: transparent;
+}
+
+.ef2 input[type='text']:focus {
+	border-bottom: 2px solid #832742da;
+	outline: none;
+}
 div.ef_img{
   position: relative;
   padding: 0.05em 0.5em 0.05em 0.5em;
@@ -613,6 +641,10 @@ div.ef_div{
 	border: none;
 	border-bottom: 1.75px solid #0a1b3a;
 	background: transparent;
+}
+
+a.mailDomain{
+    font-size: 20px;
 }
 
 div.acountSend{

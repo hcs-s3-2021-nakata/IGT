@@ -54,14 +54,18 @@
                     document.getElementById('userAccountName').innerHTML = "<span class='acountErrMsg' id='nameErr'></span><input id='userAccountNameInput' class='acount' type='text' placeholder='ワイン一郎' value=" + item.user_account_name + ">";
 
                     //メールアドレスを表示させる
-                    if ((item.mailAddress !== null) && (item.mailAddress !== "")) {
-                        document.getElementById('userMailAddress').innerHTML = "<span class='acountErrMsg' id='mailErr'></span><input id='userMailAddressInput' class='acount' type='text' placeholder='20xx-winewindow' value=" + item.mailAddress + "><a>@hcs.ac.jp</a>";
-                    } else {
-                        document.getElementById('userMailAddress').innerHTML = "<span class='acountErrMsg' id='mailErr'></span><input id='userMailAddressInput' class='acount' type='text' placeholder='20xx-winewindow' value=''><a>@hcs.ac.jp</a>";
+                    if(item.mailAddress === null || item.mailAddress === "") {
+                        //なし
+                        document.getElementById('userMailAddress').innerHTML = "<a><img class='acount' src='img/glass.png'>MailAddress</a><label class='ef2'><span class='acountErrMsg' id='mailErr'></span><nobr><input id='userMailAddressInput' class='acount' type='text' placeholder='20xxyyyy-winewindow' value=''><b><a>@hcs.ac.jp</a></b></nobr></lavel>";
+                    // } else if((item.mailAddress).indexOf('@hcs.ac.jp') != -1){
+                    } else if((item.mailAddress).slice(-10) === "@hcs.ac.jp"){
+                        //あり
+                        var afterAddress = (item.mailAddress).replace('@hcs.ac.jp', '');
+                        document.getElementById('userMailAddress').innerHTML = "<a><img class='acount' src='img/glass.png'>MailAddress</a><label class='ef2'><span class='acountErrMsg' id='mailErr'></span><nobr><input id='userMailAddressInput' class='acount' type='text' placeholder='20xxyyyy-winewindow' value=" + afterAddress + "><b><a>@hcs.ac.jp</a></b></nobr></lavel>";
                     }
                 })
                 .catch(e => {
-                    console.log('取得データなし');
+                    console.log('取得データなし'+e);
                 });
         }
 
@@ -101,14 +105,24 @@
                 returnFlag = true;
             }
 
+            //メルアド形式か
+            var mailPattern = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*$/;//ユーザ名までの正規表現
+            if (!userMailAddress.match(mailPattern)) {
+                if (userMailAddress != "") {
+                    //エラー判定のときの処理
+                    document.getElementById('mailErr').innerHTML = "不正な文字が入っています";
+                    returnFlag = true;
+                }
+            }
+
             //問題なしで変更処理を実行
             if (!returnFlag) {
-                accountUpdate(userClass, userNumber, userAccountName, userMailAddress);
+                accountUpdate(userClass, userNumber, userAccountName, userMailAddress,returnFlag);
             }
         }
 
         ////エラーチェックの後で動くやつ（更新処理）////
-        function accountUpdate(userClass, userNumber, userAccountName, userMailAddress) {
+        function accountUpdate(userClass, userNumber, userAccountName, userMailAddress,returnFlag) {
             //変更しますかアラート
             changeFlag = confirm("アカウント情報を変更すると一度ログアウトします。よろしいですか？");
 
@@ -123,19 +137,26 @@
                 var item = User
                     .fetchById(currentUser.get("objectId"))
                     .then(item => {
-                        var address = item.MailAddress;
+                        var address = item.mailAddress;
+                        var afterAddress = address.replace('@hcs.ac.jp', '');
 
+                        console.log("DB上のメルアドは"+address);
                         if (userMailAddress === "") {
                             //入力なし
-
-                            if (address === "") {
+                            console.log("入力してないよ");
+                            
+                            if ((typeof address === "undefined")||(address === null)) {
                                 //もともとなし(アプデ不要）
+                                console.log("もともとメルアドないよ");
                                 item.set("user_class", userClass)
                                     .set("user_number", userNumber)
                                     .set("user_account_name", userAccountName).update();
+                                returnFlag = false;
                             } else {
                                 //もともとあり（エラー）
-                                document.getElementById('mailErr').innerHTML = "メールアドレスは削除できません";
+                                console.log("もともとメルアドあるよ");
+                                document.getElementById('userMailAddress').innerHTML = "<a><img class='acount' src='img/glass.png'>MailAddress</a><label class='ef2'><br><span class='acountErrMsg' id='mailErr'>メールアドレスは削除できません</span><nobr><input id='userMailAddressInput' class='acount' type='text' placeholder='20xxyyyy-winewindow' value=" + afterAddress + "><b><a>@hcs.ac.jp</a></b></nobr></lavel>";
+                                returnFlag = true;
                             }
 
                         } else {
@@ -148,11 +169,16 @@
                                 .set("user_account_name", userAccountName)
                                 .set("mailAddress", userMailAddressUpdate).update();
                         }
+                        console.log("前"+returnFlag);
 
                     }).then(function() {
-                        console.log('変更できた');
-                        alert("ログイン画面に戻ります");
-                        logout_button();
+
+                        console.log("後"+returnFlag);
+                        if(!returnFlag){
+                            console.log('変更できた');
+                            alert("ログイン画面に戻ります");
+                            logout_button();
+                        }
                     })
                     .catch(e => {
                         console.log('変更失敗');
@@ -252,10 +278,8 @@
                 <label id="userAccountName" class="ef">
             </label>
             </li>
-            <li class="acount">
-                <a><img class="acount" src="img/glass.png">MailAddress</a>
-                <label id="userMailAddress" class="ef">
-            </label>
+            <li id="userMailAddress" class="acount">
+                
             </li>
         </ul>
     </div>
@@ -265,7 +289,7 @@
     <br>
     <div class="acountSend">
         <button class="acountWithdrawal" type="submit" onclick="unsubscribeConform()"><b>退会する！</b></button>
-    </div>
+    </div><br><br><br><br>
     <!-- Body End -->
 
     <!-- Footer Start -->
