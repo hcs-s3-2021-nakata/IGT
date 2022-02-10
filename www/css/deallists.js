@@ -151,7 +151,7 @@ async function deal_give_lists() {
                 var objectId = object.objectId;
                 // 商品の箱を追加していく
                 var itemlist_element = document.getElementById('itemlist_give');
-                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <button class="lists_btn" onclick="location.href=\'dealDetail.html?' + objectId + '\'"><div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <i class="fas fa-angle-right size"></i></div></div></button></div>');
+                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <button class="lists_btn" value="'+objectId+'" onclick="g_link(this)"><div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <i class="fas fa-angle-right size"></i></div></div></button></div>');
                 g_imgs[i] = object.item_image;
             }
         })
@@ -212,7 +212,7 @@ async function deal_trade_lists() {
                 var objectId = object.objectId;
                 // 商品の箱を追加していく
                 var itemlist_element = document.getElementById('itemlist_trade');
-                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <button class="lists_btn" onclick="location.href=\'dealDetail.html?' + objectId + '\'"><div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <i class="fas fa-angle-right size"></i></div></div></button></div>');
+                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <button class="lists_btn" value="'+objectId+'" onclick="t_link(this)"><div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <i class="fas fa-angle-right size"></i></div></div></button></div>');
                 t_imgs[i] = object.item_image;
             }
         })
@@ -284,12 +284,23 @@ function t_count() {
 // リンク先の画面に遷移する
 function g_link(objectId) {
     localStorage.setItem("dealflg", "give");
+    window.location.href = 'dealDetail.html?' + objectId.value;
 }
 
 function t_link(objectId) {
     localStorage.setItem("dealflg", "trade");
+    window.location.href = 'dealDetail.html?' + objectId.value;
 }
 
+function g_history_link(objectId){
+    localStorage.setItem("dealflg", "give");
+    window.location.href = 'historyDetail.html?' + objectId.value;
+}
+
+function g_history_link(objectId){
+    localStorage.setItem("dealflg", "trade");
+    window.location.href = 'historyDetail.html?' + objectId.value;
+}
 
 
 // 取引履歴
@@ -320,7 +331,7 @@ async function history_give_lists() {
                 var objectId = object.objectId;
                 // 商品の箱を追加していく
                 var itemlist_element = document.getElementById('itemlist_give');
-                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <button class="lists_btn" onclick="location.href=\'historyDetail.html?' + objectId + '\'"><div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <i class="fas fa-angle-right size"></i></div></div></button></div>');
+                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <button class="lists_btn" value="'+objectId+'" onclick="g_history_link(this)"><div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <i class="fas fa-angle-right size"></i></div></div></button></div>');
                 g_imgs[i] = object.item_image;
             }
         })
@@ -381,7 +392,7 @@ async function history_trade_lists() {
                 var objectId = object.objectId;
                 // 商品の箱を追加していく
                 var itemlist_element = document.getElementById('itemlist_trade');
-                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <button class="lists_btn" onclick="location.href=\'historyDetail.html?' + objectId + '\'"><div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <i class="fas fa-angle-right size"></i></div></div></button></div>');
+                itemlist_element.insertAdjacentHTML("beforebegin", '<div class="container" id="item_box"> <button class="lists_btn" value="'+objectId+'" onclick="t_history_link(this)"><div class="container_parent"> <div class="container_left"> <img src="img/loading.png" id="' + image_id + '" width="200" height="200"/> </div> <div class="container_center"> <a id="item_name">' + object.item_name + '</a> </div> <div class="container_right"> <i class="fas fa-angle-right size"></i></div></div></button></div>');
                 t_imgs[i] = object.item_image;
             }
         })
