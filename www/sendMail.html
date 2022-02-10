@@ -19,7 +19,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=RocknRoll+One&family=Yusei+Magic&display=swap" rel="stylesheet">
   <script>
     // APIキーの設定とSDK初期化
     // API key.
@@ -50,6 +50,12 @@
 
     }
   </script>
+  <script>
+      function reverse() {
+          document.location.href='login.html';
+      }
+  </script>
+
 </head>
 
 <body id="boddy">
@@ -64,15 +70,15 @@
 
 
 
- <a class="btn btn-custom01">
+ <button class="btn btn-custom01">
   <span class="btn-custom01-front" onclick="wineRePass();">PUSH</span>
   <i class="fas fa-angle-right fa-position-right"></i>
-</a>
+ </button>
 
 
 
   </div>
-<a href="login.html">戻る</a>
+<button class="reverse" onclick="reverse()">戻る</button>
 
 
 </body>
