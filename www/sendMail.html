@@ -54,28 +54,36 @@
                     console.log("ないよ");
                     document.getElementById('errMessageMail').innerHTML = "該当するユーザ情報が見つかりません";
                 }
-            })
+            }).catch(function(err) {
+                console.log("処理失敗:" + err);
+                document.getElementById('errMessageMail').innerHTML = "該当するユーザ情報が見つかりません";
+            });
 
 
         }
 
         function mailConfirm(mail, number) {
             return new Promise(function(resolve, reject) {
+                var returnFlag = false;
                 ncmb.User.fetchAll()
                     .then(users => {
                         users.forEach(user => {
                             //ここで登録されている学籍番号かチェック
                             if (user.userName === number && user.mailAddress === mail) {
                                 console.log(user.user_account_name);
-                                resolve(true);
+                                returnFlag = true;
+                                resolve(returnFlag);
                             }
                         })
+                        reject(returnFlag);
 
                     }).catch(err => {
                         console.log("変数データ取得エラー" + err);
-                        reject(false);
+                        document.getElementById('errMessageMail').innerHTML = "該当するユーザ情報が見つかりません";
+                        returnFlag = false;
+                        reject(returnFlag);
                     });
-                reject(false);
+                
             })
 
         }
