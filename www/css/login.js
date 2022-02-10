@@ -17,6 +17,7 @@ function createNewUserCheck() {
   var createP = document.getElementById("cP").value;
   var createSN = document.getElementById("cSN").value;
   var createTOS = document.getElementById("wineTOS").checked;
+  var createPrivacy = document.getElementById("winePrivacy").checked;
   //エラーメッセージ
   var checkFlag = true;
   searchStudentNumber(createSN).then(function (checkFlag) {
@@ -63,11 +64,21 @@ function createNewUserCheck() {
         document.getElementById('errMessageTOS').innerHTML = "";
         returnTosFlag = false;
     } else {
-        document.getElementById('errMessageTOS').innerHTML = "利用規約に同意してください。";
+        document.getElementById('errMessageTOS').innerHTML = "利用規約に同意してください";
         returnTosFlag = true;
-
     }
-    if (!returnSnFlag && !returnPFlag && !returnNFlag && !returnTosFlag) {
+
+    var returnPrivacyFlag = false;
+    if(createPrivacy){
+        document.getElementById('errMessagePrivacy').innerHTML = "";
+        returnPrivacyFlag = false;
+    } else {
+        document.getElementById('errMessagePrivacy').innerHTML = "プライバシーポリシーに同意してください";
+        returnPrivacyFlag = true;
+    }
+
+
+    if (!returnSnFlag && !returnPFlag && !returnNFlag && !returnTosFlag && !returnPrivacyFlag) {
       //チェックが無ければユーザ新規登録
        createNewUser();
     }

@@ -182,8 +182,29 @@ ul{
 #my_modal1{
     display: none;
 }
+#my_modal2{
+    display: none;
+}
 /* モーダル */
 .my_modal_body1{    
+    display: none;
+    position: fixed;
+    z-index: 100000;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    -webkit-transform: translateY(-50%) translateX(-50%);
+    background-color: #FFF;
+    overflow-y: auto;
+    /* スマホ用スクロール */
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+    /* お好みで */
+    width: 90%;
+    max-height: 80%;
+    max-width: 600px;
+}
+.my_modal_body2{    
     display: none;
     position: fixed;
     z-index: 100000;
@@ -277,6 +298,9 @@ ul{
 
 /* チェック時オーバーレイとコンテンツを表示 */
 #my_modal1:checked ~ .my_modal_body1, #my_modal1:checked ~ .my_modal_overlay{
+    display: block;
+}
+#my_modal2:checked ~ .my_modal_body2, #my_modal2:checked ~ .my_modal_overlay{
     display: block;
 }
 
@@ -377,7 +401,15 @@ li{
     margin-left: 3rem;
     text-indent: -2rem;
 }
+#tos3{
+    margin-left: 4rem;
+    text-indent: -3rem;
+}
 #TOScheck{
+    text-align: center;
+    font-size: 20px;
+}
+#PrivacyCheck{
     text-align: center;
     font-size: 20px;
 }
