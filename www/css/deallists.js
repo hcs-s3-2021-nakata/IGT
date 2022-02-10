@@ -297,7 +297,7 @@ function g_history_link(objectId){
     window.location.href = 'historyDetail.html?' + objectId.value;
 }
 
-function g_history_link(objectId){
+function t_history_link(objectId){
     localStorage.setItem("dealflg", "trade");
     window.location.href = 'historyDetail.html?' + objectId.value;
 }
