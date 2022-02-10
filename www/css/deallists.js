@@ -112,6 +112,7 @@ var t_cntSwitch = 1;
 
 // 一覧のロード
 async function deallists_load() {
+    console.log(localStorage.length);
     console.log("give");
     deal_give_lists();
     await wait(6);
@@ -295,6 +296,7 @@ function t_link(objectId) {
 
 // 一覧のロード
 async function historys_load() {
+    console.log(localStorage.length);
     console.log("give");
     history_give_lists();
     await wait(6);
