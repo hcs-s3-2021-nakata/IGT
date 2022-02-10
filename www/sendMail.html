@@ -2,81 +2,112 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
-  <script src="components/loader.js"></script>
-  <script src="css/jquery-3.6.0.min.js"></script>
-  <script src="css/jquery.qrcode.min.js"></script>
-  <link rel="stylesheet" href="components/loader.css">
-  <link href="https://fonts.googleapis.com/css?family=Oswald:700 rel=" stylesheet ">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <script src="components/loader.js"></script>
+    <script src="css/jquery-3.6.0.min.js"></script>
+    <script src="css/jquery.qrcode.min.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:700 rel=" stylesheet ">
   <link rel="stylesheet " href="css/rePassword.css ">
   
 
 <link href="https://fonts.googleapis.com/css?family=Montserrat+Subrayada rel="stylesheet">
 
-  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=RocknRoll+One&family=Yusei+Magic&display=swap" rel="stylesheet">
-  <script>
-    // APIキーの設定とSDK初期化
-    // API key.
-    var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
-    var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
-    // SDK initialization.
-    var ncmb = new NCMB(applicationKey, clientKey);
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=RocknRoll+One&family=Yusei+Magic&display=swap" rel="stylesheet">
+    <script>
+        // APIキーの設定とSDK初期化
+        // API key.
+        var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+        var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+        // SDK initialization.
+        var ncmb = new NCMB(applicationKey, clientKey);
 
-    //ざっくり
-    function wineRePass() {
-      //document.getElementById('repass').innerHTML = "回ってるよ";
-      var studentNumber = document.getElementById("number").value;
-      var mailAddress = document.getElementById("mail").value;
+        //ざっくり
+        function wineRePass() {
+            //document.getElementById('repass').innerHTML = "回ってるよ";
+            var studentNumber = document.getElementById("number").value;
+            var mailAddress = document.getElementById("mail").value;
 
-      var user = new ncmb.User();
-      user.set("mailAddress", mailAddress);
-      user.requestPasswordReset()
-        .then(function(data) {
-          // 送信後処理
-          console.log("送信した");
-          location.href = "./login.html";
-        })
-        .catch(function(err) {
-          // エラー処理
-          console.log("エラった");
-        });
+            mailConfirm(mailAddress, studentNumber).then(function(confirmFlag) {
+                if (confirmFlag) {
+                    var user = new ncmb.User();
+                    user.set("mailAddress", mailAddress);
+                    user.requestPasswordReset()
+                        .then(function(data) {
+                            // 送信後処理
+                            console.log("送信した");
+                            document.getElementById('errMessageMail').innerHTML = "";
+                            location.href = "./login.html";
+                        })
+                        .catch(function(err) {
+                            // エラー処理
+                            console.log("エラった" + err);
+                            document.getElementById('errMessageMail').innerHTML = "該当するユーザ情報が見つかりません";
+                        });
+                } else {
+                    console.log("ないよ");
+                    document.getElementById('errMessageMail').innerHTML = "該当するユーザ情報が見つかりません";
+                }
+            })
 
 
-    }
-  </script>
-  <script>
-      function reverse() {
-          document.location.href='login.html';
-      }
-  </script>
+        }
+
+        function mailConfirm(mail, number) {
+            return new Promise(function(resolve, reject) {
+                ncmb.User.fetchAll()
+                    .then(users => {
+                        users.forEach(user => {
+                            //ここで登録されている学籍番号かチェック
+                            if (user.userName === number && user.mailAddress === mail) {
+                                console.log(user.user_account_name);
+                                resolve(true);
+                            }
+                        })
+
+                    }).catch(err => {
+                        console.log("変数データ取得エラー" + err);
+                        reject(false);
+                    });
+                reject(false);
+            })
+
+        }
+    </script>
+    <script>
+        function reverse() {
+            document.location.href = 'login.html';
+        }
+    </script>
 
 </head>
 
 <body id="boddy">
 
-  <div class="kakomi-tape3"">
-    <span class="title-tape3">パスワード再設定画面</span>
-    <p>StudentNumber</p>
-  <input type="number" id="number" />
-  <p>メールアドレス</p>
-  <input type="email" id="mail" />
-  <br>
+    <div class="kakomi-tape3">
+        <span class="title-tape3">パスワード再設定画面</span>
+        <p>StudentNumber</p>
+        <input type="number" id="number" />
+        <p>メールアドレス</p>
+        <input type="email" id="mail" />
+        <br>
+        <span id="errMessageMail" class="errMessage"></span>
 
 
 
-  <button class="btn btn-custom01 btn-custom01-front" onclick="wineRePass();"><span>PUSH</span>
+        <button class="btn btn-custom01 btn-custom01-front" onclick="wineRePass();"><span>PUSH</span>
  </button>
 
 
 
-  </div>
-<button class="reverse" onclick="reverse()">戻る</button>
+    </div>
+    <button class="reverse " onclick="reverse() ">戻る</button>
 
 
 </body>
