@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/acount.css">
+    <link rel="stylesheet" href="css/tos.css">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="css/logout.js"></script>
+    <script>
+        // APIキーの設定とSDK初期化
+        // API key.
+        var applicationKey = "4d9d122337ca0de373857821e96b10ad1952a9133ffea44e66bcee94c282fccf";
+        var clientKey = "00902e576a265322a217a2b2706056ca26048d4bd4f9096744fdd7e565d0f377";
+        // SDK initialization.
+        var ncmb = new NCMB(applicationKey, clientKey);
+        var reader = new FileReader();
+
+
+
+        //アカウント退会機能
+        function unsubscribe() {
+            // カレントユーザー情報の取得
+            var currentUser = ncmb.User.getCurrentUser();
+
+            //ユーザーテーブルから値を取得
+            var User = ncmb.User;
+            var item = User
+
+                .fetchById(currentUser.get("objectId"))
+                .then(item => {
+                    item.set("effectiveness", 1)
+                        .update();
+                }).then(function() {
+                    logout_button();
+                })
+                .catch(e => {
+                    console.log('変更失敗');
+                });
+        }
+
+        //退会確認ダイアログ
+        function unsubscribeConform() {
+            var result = window.confirm('本当に退会しますか？');
+            if (result) {
+                unsubscribe();
+            }
+
+        }
+    </script>
+</head>
+
+<body id="prodact_lists">
+    <!-- Header Start -->
+    <header class="site-header">
+        <div class="wrapper site-header__wrapper">
+            <nav class="nav">
+                <div class="detail_head">
+                    <div class="back_button">
+
+                    </div>
+                    <div class="page_title">
+                        <input class="hidden" type="checkbox" id="menu-btn-check"><span class="acountCenter">出品禁止物一覧</span>
+                        <label for="menu-btn-check" class="acountMenu-btn"><span></span></label>
+                        <div style="text-align: left" class="menu-content">
+                            <ul>
+                                <li><a href="acount.html">アカウント詳細</a></li>
+                                <li><a href="message.html">通知</a></li>
+                                <li><a href="dealHistory.html">取引履歴</a></li>
+                                <li><a href="myGiveItem.html">出品した譲渡品</a></li>
+                                <li><a href="myTradeItem.html">出品した交換品</a></li>
+                                <li><a href="tos.html">利用規約</a></li>
+                                <li><a href="privacyPolicy.html">プライバシーポリシー</a></li>
+                                <li><a href="banned.html">出品禁止物一覧</a></li>
+                                <li><a onclick="logout_button()">ログアウト</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="header_right">
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- Header End -->
+
+    <!-- Body Start -->
+
+    <div class="Inner-Box">
+        以下の商品の出品を禁止する
+        <p id="tos1">
+            　・偽ブランド品、正規品と確証のないもの
+        </p>
+        <p id="tos1">　・知的財産権を侵害するもの</p>
+        <p id="tos1">　・盗品など不正な経路で入手した商品</p>
+        <p id="tos1">　・犯罪や違法行為に使用される可能性のあるもの</p>
+        <p id="tos1">　・殺傷能力があり武器として使用されるもの</p>
+        <p id="tos1">　・危険物や安全性に問題性があるもの</p>
+        <p id="tos1">　・児童ポルノやそれに類するとみなされるもの</p>
+        <p id="tos1">　・18禁、アダルト関連</p>
+        <p id="tos1">　・使用済みの下着類</p>
+        <p id="tos1">　・使用済みのスクール水着、体操着、学生服など</p>
+        <p id="tos1">　・医薬品、医療機器</p>
+        <p id="tos1">　・許可なく製造した化粧品類や小分けした化粧品類</p>
+        <p id="tos1">　・法令に抵触するサプリメント類</p>
+        <p id="tos1">　・食品類</p>
+        <p id="tos1">　・たばこ</p>
+        <p id="tos1">　・農薬、肥料</p>
+        <p id="tos1">　・現金、金券、カード類</p>
+        <p id="tos1"> 　・チケット類</p>
+        <p id="tos1">　・領収書や公的証明書類</p>
+        <p id="tos1">　・ゲームアカウントやゲーム内通貨、アイテムなどの電子データ</p>
+        <p id="tos1">　・サービス・権利など実体のないもの</p>
+        <p id="tos1">　・受け渡しに伴う手続きが複雑なもの</p>
+        <p id="tos1">　・手元にないもの</p>
+        <p id="tos1">　・福袋</p>
+        <p id="tos1">　・サンプル画像のないオーダーメイド品</p>
+        <p id="tos1">　・利用制限がある、または契約や支払いが残っている携帯端末</p>
+        <p id="tos1">　・規制薬物・危険ドラッグ類</p>
+        <p id="tos1">　・外交為替及び外国貿易法に抵触する商品</p>
+        <p id="tos1">　・生物</p>
+        <p id="tos1">　・その他、不適切と判断されるもの</p>
+
+        <p style="text-align:right">以上</p>
+                <br><br>
+
+
+    </div>
+
+    <!-- Body End -->
+
+    <!-- Footer Start -->
+    <ul class="bottom-menu">
+        <li>
+            <a href="index.html">
+                <i class="far fa-list-alt"></i><br><span class="mini-text">商品一覧</span></a>
+        </li>
+        <li>
+            <a href="deal.html"><i class="fas fa-random"></i><br><span class="mini-text">取引一覧</span></a>
+        </li>
+        <li>
+            <a href="insert.html"><i class="fas fa-plus"></i><br><span class="mini-text">新規登録</span></a>
+        </li>
+        <li>
+            <a href="qrreader.html"><i class="fas fa-qrcode"></i><br><span class="mini-text">読取</span></a>
+        </li>
+        <li>
+            <a href="voice.html">
+                <i class="fas fa-bullhorn"></i><br><span class="mini-text">ボイス</span></a>
+        </li>
+    </ul>
+    <!-- Fotter End -->
+</body>
+
+</html>
