@@ -27,7 +27,7 @@
   </feature>
   <preference name="UIWebViewDecelerationSpeed" value="normal"/>
   <platform name="ios">
-    <preference name="orientation" value="portrait"/>
+    <preference name="Orientation" value="portrait-primary"/>
     <icon src="/res/ios/icon/icon.png" width="57" height="57"/>
     <icon src="/res/ios/icon/icon@2x.png" width="114" height="114"/>
     <icon src="/res/ios/icon/icon-72.png" width="72" height="72"/>
@@ -105,7 +105,7 @@
   <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
     <string>need to photo library access to save pictures there</string>
   </edit-config>
-  <preference name="KeepRunning" value="true"/>
+  <preference name="KeepRunning" value="false"/>
   <preference name="monaca:AndroidIsPackageNameSeparate" value="false"/>
   <preference name="Orientation" value="portrait"/>
   <preference name="SplashScreenDelay" value="1500"/>
@@ -116,5 +116,5 @@
   <preference name="ShowSplashScreenSpinner" value="false"/>
   <access origin="*"/>
   <preference name="DisallowOverscroll" value="true"/>
-  <preference name="EnableViewportScale" value="false"/>
+  <preference name="EnableViewportScale" value="true"/>
 </widget>
