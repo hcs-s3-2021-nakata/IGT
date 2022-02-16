@@ -1,4 +1,58 @@
-/* This is a CSS file */
+/*ヘッダーの文字中央寄せ*/
+.ppCenter {
+  display: block;
+  text-align: center;
+  font-weight: bolder;
+  font-size: 25px;
+  font-family: 'Hachi Maru Pop', cursive;
+}
+
+/*ハンバーガーリンク*/
+.ppMenu-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    height: 65px;
+    width: 65px;
+    justify-content: center;
+    align-items: center;
+    z-index: 90;
+    background-color: #e6dfb3;
+}
+.ppMenu-btn span,
+.ppMenu-btn span:before,
+.ppMenu-btn span:after {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 25px;
+    border-radius: 3px;
+    background-color: #000000;
+    position: absolute;
+}
+.ppMenu-btn span:before {
+    bottom: 8px;
+}
+.ppMenu-btn span:after {
+    top: 8px;
+}
+/*ハンバーガーリンク押下した時の線の移動*/
+#menu-btn-check:checked ~ .ppMenu-btn span {
+    background-color: rgba(255, 255, 255, 0);/*メニューオープン時は真ん中の線を透明にする*/
+}
+#menu-btn-check:checked ~ .ppMenu-btn span::before {
+    bottom: 0;
+    transform: rotate(45deg);
+}
+#menu-btn-check:checked ~ .ppMenu-btn span::after {
+    top: 0;
+    transform: rotate(-45deg);
+}
+#menu-btn-check {
+    display: none;
+}
+
 
 /* 利用規約本文の装飾 */
 .Inner {
